@@ -56,10 +56,15 @@ ok(a > 0 && b > a, 'I0b the landing page is locatable');
 const start = html.slice(a, b);
 
 /* ------------------- I1 · site-absolute links resolve through the route map */
+/* This file ships in the public repo, so it must name no private build path.
+   In the export the route map is at the tree root; in the monorepo it lives in
+   repo-root tooling, and the (private, unexported) Makefile passes that location
+   through MFG_ROUTE_MAP. The env var is undefined in the public tree, where the
+   root candidate resolves. */
 const ROUTE_MAPS = [
-  path.join(ROOT, 'vercel.json'),                                   // the export: at the tree root
-  path.join(ROOT, '..', 'tools', 'public-skel', 'vercel.json'),     // the monorepo: repo-root tooling, one level above academic/
-];
+  process.env.MFG_ROUTE_MAP,           // monorepo override, set by the private Makefile
+  path.join(ROOT, 'vercel.json'),      // the export: at the tree root
+].filter(Boolean);
 const mapFile = ROUTE_MAPS.find(f => fs.existsSync(f));
 if (!mapFile) {
   console.error('   FAIL  I1 no route map found — looked in:\n     ' + ROUTE_MAPS.join('\n     '));

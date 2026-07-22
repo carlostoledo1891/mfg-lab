@@ -83,10 +83,10 @@ venv:
 		exit 1 ; \
 	fi ; \
 	echo "building $(VENV) on $$PYBIN ($$($$PYBIN --version))" ; \
-	$$PYBIN -m venv $(VENV) ; \
-	$(PY) -m pip install -q --upgrade pip ; \
-	$(PY) -m pip install -q -r requirements-dev.txt ; \
-	$(VENV)/bin/playwright install chromium ; \
+	$$PYBIN -m venv $(VENV) && \
+	$(PY) -m pip install -q --upgrade pip && \
+	$(PY) -m pip install -q -r requirements-dev.txt && \
+	$(VENV)/bin/playwright install chromium && \
 	echo "venv ready. run 'make check-all' for the full suite."
 
 clean:

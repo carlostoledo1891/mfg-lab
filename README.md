@@ -1,5 +1,7 @@
 # MFG Lab — certificate-first mean-field games
 
+[![verify](https://github.com/carlostoledo1891/mfg-lab/actions/workflows/verify.yml/badge.svg)](https://github.com/carlostoledo1891/mfg-lab/actions/workflows/verify.yml)
+
 A certification toolkit, a computer-assisted proof, two single-file
 zero-dependency interactive laboratories, and a validated Python kernel — for
 mean-field games and network equilibria in the monotonicity school. Every solve
