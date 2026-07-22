@@ -18,7 +18,7 @@ mathematical claim labeled **[PROVED] / [STANDARD] / [SKETCHED] / [OPEN]**.
 | **[`eqcert/`](eqcert/)** | the certification toolkit and the bottom of the stack: one interval library, one exact-rational library, radii-polynomial and Krawczyk operators, and a `Certificate` that **cannot be constructed without a falsifier**. |
 | **[`mfg-cap/`](mfg-cap/)** | computer-assisted proofs for a stationary mean-field game — existence, local uniqueness, a validated ergodic constant, density positivity, and **certified multiplicity** where uniqueness theory is silent. |
 | **[`mfg-lab/`](mfg-lab/)** · **[`sin-mfg/`](sin-mfg/)** | the two interactive artifacts, below. |
-| **[`mfg-lab/mfglab/`](mfg-lab/mfglab/)** | the Python package, held to the shipped JS by cross-language differentials. |
+| **[`mfg-lab/python/`](mfg-lab/python/)** | the Python package, held to the shipped JS by cross-language differentials. |
 
 ### `eqcert` — the toolkit
 
@@ -147,7 +147,7 @@ batteries (real Chromium; run `make venv` first).
 
 ## The Python package
 
-[`mfg-lab/mfglab/`](mfg-lab/mfglab/) — two kernels, each held to the shipped
+[`mfg-lab/python/`](mfg-lab/python/) — two kernels, each held to the shipped
 JS by a cross-language differential run at test time with sha256 provenance:
 
 - **Wardrop/HRF** (`mfglab.wardrop`): integrate → active-set Newton polish →

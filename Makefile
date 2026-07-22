@@ -59,7 +59,7 @@ check-all: check layout check-py
 check-py:
 	@echo "== Python batteries =="
 	@if [ -x "$(PY)" ] && $(PY) -c "import numpy" 2>/dev/null; then \
-		$(PY) -m pytest -q mfg-lab/mfglab && \
+		$(PY) -m pytest -q mfg-lab/python && \
 		echo "-- PLD martingale selftest --" && \
 		$(PY) sin-mfg/tests/pld_martingale_test.py --selftest >/dev/null && \
 		echo "PLD selftest: ALL PASS" ; \

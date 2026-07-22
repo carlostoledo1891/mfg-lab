@@ -495,7 +495,7 @@ certificates going red, which is the system working):
 ## The literal discrete KKT — closed at the agent level (2026-07-21, later session)
 
 The A1 status's last deferred clause is done. Three measured facts
-(`mfglab.continuum`, certified in `mfg-lab/mfglab/tests/test_continuum.py`):
+(`mfglab.continuum`, certified in `mfg-lab/python/tests/test_continuum.py`):
 
 - **The lab's time-staggering breaks the discrete duality at O(Δt).** With the
   semi-implicit convention (HJB freezing controls from u^{t+1}, FP from u^t —
