@@ -21,6 +21,11 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
+/* __dirname is <tree>/eqcert/tests. The tree it scans is two levels up. In the
+   monorepo that is `academic/`; in the public repo it is the repo root. Either
+   way the scanner walks its whole tree and the constants below are expressed
+   relative to it, so the file is location-independent and reads the same in
+   both places — which matters, because it ships to the public repo. */
 const ROOT = path.resolve(__dirname, '..', '..');
 const sha = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 16);
 let fails = 0;
@@ -38,10 +43,12 @@ const OWNER = {
    second copy anywhere is a failure, with no allowance to argue about. */
 const VENDORED = {};
 /* Generated files legitimately contain a spliced copy; their own gates check it.
-   Export staging trees are matched by shape (`<name>-site/`) rather than named
-   one by one: this file ships publicly, and a public file must not narrate the
-   private build (the same defect as naming the build tooling in robots.txt). */
-const GENERATED = [/\.html$/, /^public\//, /^site\//, /^[a-z0-9-]+-site\//,
+   Everything that is not source now lives under one dot-directory, so a single
+   pattern replaces the list of staging trees this used to name by shape. That
+   is also better for this file specifically: it ships publicly, and a public
+   file must not narrate the private build (the same defect as naming the build
+   tooling in robots.txt) — one neutral entry says less than four. */
+const GENERATED = [/\.html$/, /^\.work\//, /^public\//, /^[a-z0-9-]+-site\//,
                    /^\.git\//, /^node_modules\//, /^\.venv\//];
 /* the scanner necessarily contains the fingerprints it searches for */
 const SELF = 'eqcert/tests/test-single-source.js';

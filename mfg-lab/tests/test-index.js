@@ -56,7 +56,10 @@ ok(a > 0 && b > a, 'I0b the landing page is locatable');
 const start = html.slice(a, b);
 
 /* ------------------- I1 · site-absolute links resolve through the route map */
-const ROUTE_MAPS = [path.join(ROOT, 'vercel.json'), path.join(ROOT, 'tools', 'public-skel', 'vercel.json')];
+const ROUTE_MAPS = [
+  path.join(ROOT, 'vercel.json'),                                   // the export: at the tree root
+  path.join(ROOT, '..', 'tools', 'public-skel', 'vercel.json'),     // the monorepo: repo-root tooling, one level above academic/
+];
 const mapFile = ROUTE_MAPS.find(f => fs.existsSync(f));
 if (!mapFile) {
   console.error('   FAIL  I1 no route map found — looked in:\n     ' + ROUTE_MAPS.join('\n     '));
