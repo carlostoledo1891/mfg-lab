@@ -23,7 +23,8 @@
    Claims discipline: method components are standard (Krawczyk; verified
    complementarity: Alefeld school; interval Nash: Kubica-Wozniak;
    certified KKT zeros: Breiding-Rose-Timme; exact rational solves:
-   folklore/mfg-cert heritage). The instance is what is new. The
+   folklore, and standard exact-arithmetic practice). The instance is what
+   is new. The
    enclosure adds LOCATION and LOCAL uniqueness; existence on a compact
    polyhedron is classical (Hartman-Stampacchia). S2 global uniqueness
    is the paper's Thm 4 [STANDARD] — cited, never claimed here.

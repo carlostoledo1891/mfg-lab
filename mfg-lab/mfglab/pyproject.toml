@@ -3,21 +3,25 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mfglab"
-version = "0.1.0"
-description = "Certified kernels for mean-field games and network equilibria in the monotonicity school"
+# `mfglab` (no hyphen) is TAKEN on PyPI by an unrelated package — verified
+# against the PyPI JSON API 2026-07-22, not remembered. So the distribution is
+# `mfg-lab` and the import name stays `mfglab`:  pip install mfg-lab
+name = "mfg-lab"
+version = "0.3.0"
+description = "Certificate-first instruments for numerical solvers, and certified mean-field-game kernels. Install as mfg-lab, import as mfglab."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Carlos Toledo" }]
-keywords = ["mean-field-games", "wardrop", "variational-inequality", "numerical-certificates"]
+keywords = ["mean-field-games", "wardrop", "variational-inequality", "numerical-certificates", "code-verification", "convergence-study"]
 dependencies = ["numpy>=1.26"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 
 [project.urls]
-Homepage = "https://github.com/"
+Homepage = "https://mfg-lab.vercel.app"
+Source = "https://github.com/carlostoledo1891/mfg-lab"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/mfglab"]

@@ -37,6 +37,10 @@ check-cap:
 check-lab:
 	@echo "== mfg-lab batteries =="
 	@$(NODE) $(LAB)/smoke.js
+	@$(NODE) $(LAB)/test-order-study.js
+	@$(NODE) $(LAB)/test-failure-map.js
+	@$(NODE) $(LAB)/test-lab-artifact.js
+	@$(NODE) $(LAB)/test-index.js
 	@$(NODE) $(LAB)/test-wardrop.js
 	@$(NODE) $(LAB)/test-wardrop-diff.js
 	@$(NODE) $(LAB)/test-wardrop-interval.js

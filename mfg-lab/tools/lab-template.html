@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Lab — bring your solver</title>
+<meta name="description" content="Run a convergence study that refuses to lie, and find where your solver stops working. Your kernel, in the page, with a certificate that cannot exist without a falsifier.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEF0F2; --ink:#12171C; --ink-soft:#626C78; --grid:#D4D9DE;
+    --card:#FAFBFC;
+    --fp:#0E7C7B; --fp-deep:#0A4E4D;
+    --hjb:#8C2F39;
+    --amber:#A8720A;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  .mono,.status,.eyebrow,.ro .v,.ro .k,.chip,table.mono td,table.mono th,
+  .verdict .vlabel,textarea,input,select{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);
+    font-family:var(--body);font-size:15px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+  .eyebrow{font-family:var(--data);font-size:11px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(23px,3.2vw,32px);
+    letter-spacing:-.02em;line-height:1.12;margin:4px 0 6px}
+  h2{font-family:var(--ui);font-weight:600;font-size:16px;letter-spacing:-.01em;margin:0 0 10px}
+  .lede{max-width:64ch;color:var(--ink-soft);margin-bottom:22px}
+  .lede b{color:var(--ink);font-weight:600}
+  a{color:var(--fp-deep)}
+
+  .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:start}
+  @media(max-width:940px){.cols{grid-template-columns:minmax(0,1fr)}}
+  .card{background:var(--card);border:1px solid var(--grid);border-radius:10px;padding:16px}
+  .card + .card{margin-top:14px}
+
+  label{display:block;font-family:var(--data);font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+  select,input[type=text],input[type=number],textarea{
+    width:100%;font-family:var(--data);font-size:13px;color:var(--ink);
+    background:#fff;border:1px solid var(--grid);border-radius:6px;padding:7px 9px}
+  textarea{line-height:1.5;resize:vertical;min-height:280px;white-space:pre;overflow-x:auto}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px}
+  button{font-family:var(--ui);font-weight:600;font-size:14px;color:#fff;background:var(--fp-deep);
+    border:1px solid var(--fp-deep);border-radius:7px;padding:9px 16px;cursor:pointer}
+  button:hover{background:var(--fp)}
+  button.ghost{background:transparent;color:var(--fp-deep)}
+  button.ghost:hover{background:#E4EBEB}
+  button[disabled]{opacity:.55;cursor:default}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+  /* Dimensional stability: hover/active change colour only, never a dimension. */
+  .seg{display:inline-flex;border:1px solid var(--grid);border-radius:7px;overflow:hidden;background:#fff}
+  .seg button{background:transparent;color:var(--ink-soft);border:0;border-radius:0;
+    padding:7px 14px;font-size:13px}
+  .seg button.on{background:var(--fp-deep);color:#fff}
+
+  .status{font-family:var(--data);font-size:12px;color:var(--ink-soft);
+    min-height:2.9em;margin-top:10px}
+
+  .verdict{display:flex;gap:10px;align-items:flex-start;border-radius:8px;padding:12px 14px;
+    border:1px solid var(--grid);background:#fff}
+  .verdict .vlabel{font-family:var(--data);font-size:11px;letter-spacing:.12em;
+    padding:2px 8px;border-radius:4px;white-space:nowrap;color:#fff;background:var(--ink-soft)}
+  .verdict.ok .vlabel{background:var(--amber)}
+  .verdict.no .vlabel{background:var(--hjb)}
+  .verdict .vtext{font-size:14px}
+  .verdict .vwhy{color:var(--ink-soft);font-size:13.5px;margin-top:4px}
+
+  details{border-top:1px solid var(--grid);padding-top:10px;margin-top:12px}
+  summary{cursor:pointer;font-family:var(--data);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  details ul{margin:8px 0 0 18px;font-size:13.5px;color:var(--ink-soft)}
+  details li{margin-bottom:4px}
+
+  table.mono{width:100%;border-collapse:collapse;font-family:var(--data);font-size:12.5px;margin-top:12px}
+  table.mono th{text-align:right;font-weight:500;color:var(--ink-soft);
+    border-bottom:1px solid var(--grid);padding:6px 8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+  table.mono th:first-child,table.mono td:first-child{text-align:left}
+  table.mono td{text-align:right;padding:5px 8px;border-bottom:1px solid #EDF0F2}
+
+  .ro{display:flex;justify-content:space-between;gap:12px;font-family:var(--data);
+    font-size:12.5px;padding:3px 0}
+  .ro .k{color:var(--ink-soft)}
+  .ro .v{color:var(--ink)}
+
+  canvas{display:block;width:100%;border:1px solid var(--grid);border-radius:8px;background:#fff}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--data);font-size:11px;
+    color:var(--ink-soft);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:10px}
+  footer{margin-top:34px;border-top:1px solid var(--grid);padding-top:16px;
+    font-size:12.5px;color:var(--ink-soft)}
+  code{font-family:var(--data);font-size:12.5px;background:#E9ECEF;padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">MFG Lab · instruments</p>
+  <h1>Bring your solver. Find out what your tests cannot see.</h1>
+  <p class="lede">Two instruments run here, in this page, on the kernel in the box below —
+  edit it, or paste your own. A <b>convergence study that refuses to lie</b> when the number
+  it measured is a property of your stopping criterion rather than of your scheme, and a
+  <b>failure map</b> that finds where in a parameter box your solver stops working.
+  Every answer arrives as a certificate that <b>cannot exist without a falsifier</b>.</p>
+
+  <div class="cols">
+    <div>
+      <div class="card">
+        <h2>Your kernel</h2>
+        <div class="row">
+          <div>
+            <label for="ex">start from</label>
+            <select id="ex"></select>
+          </div>
+        </div>
+        <label for="src">solve(n, tol, params) · exact(n, params)</label>
+        <textarea id="src" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
+        <p class="note" id="knote"></p>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="btns" style="justify-content:space-between;margin-bottom:14px">
+          <div class="seg" id="tabs">
+            <button data-inst="study" class="on">Order study</button>
+            <button data-inst="map">Failure map</button>
+          </div>
+          <div class="btns">
+            <button id="run">Run</button>
+            <button id="link" class="ghost">Copy link</button>
+          </div>
+        </div>
+
+        <div id="ctlStudy">
+          <div class="row">
+            <div><label for="tol">working tolerance</label><input id="tol" type="text" value="1e-9"></div>
+            <div><label for="levels">levels</label><input id="levels" type="text" value="16, 32, 64"></div>
+            <div><label for="exp">order you expect</label><input id="exp" type="text" value="2" placeholder="blank = don't declare"></div>
+          </div>
+        </div>
+
+        <div id="ctlMap" hidden>
+          <div class="row">
+            <div><label for="pname">parameter</label><input id="pname" type="text" value="k"></div>
+            <div><label for="plo">from</label><input id="plo" type="text" value="0.5"></div>
+            <div><label for="phi">to</label><input id="phi" type="text" value="6"></div>
+          </div>
+          <div class="row">
+            <div><label for="samples">samples</label><input id="samples" type="text" value="12"></div>
+            <div><label for="mapn">resolution n</label><input id="mapn" type="text" value="32"></div>
+            <div><label for="maptol">tolerance</label><input id="maptol" type="text" value="1e-6"></div>
+          </div>
+        </div>
+
+        <p class="status" id="status">Ready. Pick an example or paste a kernel, then Run.</p>
+      </div>
+
+      <div class="card" id="out" hidden>
+        <div class="verdict" id="verdict">
+          <span class="vlabel" id="vlabel">—</span>
+          <span><span class="vtext" id="vtext"></span><span class="vwhy" id="vwhy"></span></span>
+        </div>
+
+        <div id="evid"></div>
+        <div id="mapWrap" hidden>
+          <canvas id="cv"></canvas>
+          <div class="legend">
+            <span><i style="background:var(--fp)"></i>reached tolerance</span>
+            <span><i style="background:var(--amber)"></i>stalled — converging, out of budget</span>
+            <span><i style="background:var(--hjb)"></i>diverged — went backwards</span>
+            <span><i style="background:#6B7280"></i>threw</span>
+          </div>
+        </div>
+        <div id="tableWrap"></div>
+
+        <div class="btns" style="margin-top:14px">
+          <button id="tex" class="ghost">Copy LaTeX table</button>
+          <button id="rep" class="ghost">Copy certificate</button>
+        </div>
+
+        <details id="detAssume"><summary>Assumptions — not checked here</summary><ul id="assume"></ul></details>
+        <details id="detFals"><summary>What would make this go red</summary><ul id="fals"></ul></details>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p><b>What this page is.</b> The instruments are the same code the batteries run and the
+    <code>mfg-lab</code> Python package ships — this page is <b>generated</b> from them, and a gate
+    asserts the embedded copies are byte-identical to their sources, so what your browser runs is
+    what the tests proved. Your kernel is evaluated in this page only; nothing is uploaded.</p>
+    <p style="margin-top:8px">The same two instruments exist in Python, as
+    <code>mfglab.lab</code> — <b>not published to PyPI yet</b>, so install it from the repository
+    rather than with <code>pip install</code>. A cross-language differential holds the two
+    implementations to the same decisions, so the toggle between them is a checked claim.</p>
+  </footer>
+</div>
+
+<script>
+/*__ENGINE__*/
+</script>
+<script>
+'use strict';
+/* ── UI. The instruments above are generated from source and never edited here;
+   this layer only collects inputs, calls them, and renders what comes back. ── */
+(function(){
+const $ = id => document.getElementById(id);
+const LabAPI = window.__lab;
+
+/* ---- examples. Kept short enough to read in the box, which is the point:
+   a contract you cannot see is a contract nobody implements. ---- */
+const EXAMPLES = {
+  'poisson1d — order 2, Jacobi': {
+    note: 'Central differences on -u″ = f, solved by Jacobi. Manufactured u = x(1-x)eˣ — deliberately NOT sin(πx), which is an eigenvector of the discrete Laplacian and would make the tolerance knob inert.',
+    map: {pname:'unused', plo:'0', phi:'1', samples:'4', mapn:'32', maptol:'1e-6'},
+    src: `// -u'' = f on (0,1), u(0)=u(1)=0.  Manufactured: u = x(1-x)e^x
+const uex = x => x*(1-x)*Math.exp(x);
+const f_  = x => x*(3+x)*Math.exp(x);
+
+function jacobi(m, h, f, k2, tol, maxit){
+  const h2=h*h, diag=2-h2*k2;
+  let u=new Float64Array(m), v=new Float64Array(m), nf=0;
+  for(let i=0;i<m;i++) nf+=f[i]*f[i];
+  nf=Math.sqrt(nf);
+  const res = w => { let s=0;
+    for(let i=0;i<m;i++){ const l=i>0?w[i-1]:0, r=i<m-1?w[i+1]:0;
+      const Aw=(2*w[i]-l-r)/h2 - k2*w[i]; s+=(f[i]-Aw)*(f[i]-Aw); }
+    return Math.sqrt(s)/nf; };
+  let it=0, rel=1;
+  while(it<maxit){
+    rel=res(u);
+    if(rel<tol || !isFinite(rel)) break;
+    for(let i=0;i<m;i++){ const l=i>0?u[i-1]:0, r=i<m-1?u[i+1]:0;
+      v[i]=(l+r+h2*f[i])/diag; }
+    u.set(v); it++;
+  }
+  return {u:Array.from(u), iters:it, residual:rel};
+}
+
+return {
+  name: 'poisson1d',
+  levels: [16, 32, 64],
+  h: n => 1/n,
+  solve({n, tol}){
+    const h=1/n, m=n-1, f=new Float64Array(m);
+    for(let i=0;i<m;i++) f[i]=f_((i+1)*h);
+    return jacobi(m, h, f, 0, tol, 400000);
+  },
+  exact({n}){
+    const h=1/n, m=n-1, u=new Array(m);
+    for(let i=0;i<m;i++) u[i]=uex((i+1)*h);
+    return u;
+  }
+};`},
+  'helmholtz1d — has a failure boundary': {
+    note: 'Jacobi on -u″ - k²u = f. Its iteration matrix has spectral radius 2cos(πh)/(2-h²k²), which crosses 1 at k ≈ π. Run the failure map over k and watch it bracket a number theory fixes in advance.',
+    inst: 'map',
+    map: {pname:'k', plo:'0.5', phi:'6', samples:'12', mapn:'32', maptol:'1e-6'},
+    src: `// -u'' - k^2 u = f.  Jacobi fails past k ~ pi (the first eigenvalue).
+const uex = x => x*(1-x)*Math.exp(x);
+
+function jacobi(m, h, f, k2, tol, maxit){
+  const h2=h*h, diag=2-h2*k2;
+  let u=new Float64Array(m), v=new Float64Array(m), nf=0;
+  for(let i=0;i<m;i++) nf+=f[i]*f[i];
+  nf=Math.sqrt(nf);
+  const res = w => { let s=0;
+    for(let i=0;i<m;i++){ const l=i>0?w[i-1]:0, r=i<m-1?w[i+1]:0;
+      const Aw=(2*w[i]-l-r)/h2 - k2*w[i]; s+=(f[i]-Aw)*(f[i]-Aw); }
+    return Math.sqrt(s)/nf; };
+  let it=0, rel=1;
+  while(it<maxit){
+    rel=res(u);
+    if(rel<tol || !isFinite(rel)) break;
+    for(let i=0;i<m;i++){ const l=i>0?u[i-1]:0, r=i<m-1?u[i+1]:0;
+      v[i]=(l+r+h2*f[i])/diag; }
+    u.set(v); it++;
+  }
+  return {u:Array.from(u), iters:it, residual:rel};
+}
+
+return {
+  name: 'helmholtz1d',
+  levels: [16, 32, 64],
+  h: n => 1/n,
+  solve({n, tol, params}){
+    const k=(params&&params.k)||0, k2=k*k, h=1/n, m=n-1;
+    const f=new Float64Array(m);
+    for(let i=0;i<m;i++){ const x=(i+1)*h;
+      f[i]=x*(3+x)*Math.exp(x) - k2*uex(x); }
+    return jacobi(m, h, f, k2, tol, 50000);
+  },
+  exact({n}){
+    const h=1/n, m=n-1, u=new Array(m);
+    for(let i=0;i<m;i++) u[i]=uex((i+1)*h);
+    return u;
+  }
+};`},
+  'stalled — a dropped term, order 2 declared': {
+    note: 'The same second-order scheme carrying a fixed modelling error, the shape of a dropped term or a wrong boundary condition. Its errors still fall and its spread stays narrow, so it passes both other rules. Declare order 2 and watch the study refuse; blank the declaration and watch it report 0.0–0.4 instead — true, and exactly the kind of true statement that gets skimmed.',
+    src: `// poisson1d plus a fixed modelling error. Converges beautifully to the
+// wrong thing. Only a DECLARED order catches this one.
+const uex = x => x*(1-x)*Math.exp(x);
+
+function jacobi(m, h, f, tol, maxit){
+  const h2=h*h;
+  let u=new Float64Array(m), v=new Float64Array(m), nf=0;
+  for(let i=0;i<m;i++) nf+=f[i]*f[i];
+  nf=Math.sqrt(nf);
+  const res = w => { let s=0;
+    for(let i=0;i<m;i++){ const l=i>0?w[i-1]:0, r=i<m-1?w[i+1]:0;
+      const Aw=(2*w[i]-l-r)/h2; s+=(f[i]-Aw)*(f[i]-Aw); }
+    return Math.sqrt(s)/nf; };
+  let it=0, rel=1;
+  while(it<maxit){
+    rel=res(u);
+    if(rel<tol || !isFinite(rel)) break;
+    for(let i=0;i<m;i++){ const l=i>0?u[i-1]:0, r=i<m-1?u[i+1]:0;
+      v[i]=(l+r+h2*f[i])/2; }
+    u.set(v); it++;
+  }
+  return {u:Array.from(u), iters:it, residual:rel};
+}
+
+return {
+  name: 'stalled',
+  levels: [16, 32, 64],
+  h: n => 1/n,
+  solve({n, tol}){
+    const h=1/n, m=n-1, f=new Float64Array(m);
+    for(let i=0;i<m;i++){ const x=(i+1)*h; f[i]=x*(3+x)*Math.exp(x); }
+    const out=jacobi(m, h, f, tol, 400000);
+    for(let i=0;i<m;i++) out.u[i] += 1e-3*Math.sin(2*Math.PI*(i+1)*h);  // <- the bug
+    return out;
+  },
+  exact({n}){
+    const h=1/n, m=n-1, u=new Array(m);
+    for(let i=0;i<m;i++) u[i]=uex((i+1)*h);
+    return u;
+  }
+};`}
+};
+
+/* ---- state, and the permalink that carries it ---- */
+const F = ['ex','tol','levels','exp','pname','plo','phi','samples','mapn','maptol'];
+let inst = 'study';
+
+function serialize(){
+  const p = new URLSearchParams();
+  p.set('i', inst);
+  F.forEach(id => p.set(id, $(id).value));
+  /* The kernel source travels too, so a link reproduces the RUN and not merely
+     the settings. Base64 of the UTF-8 bytes, which survives a URL. */
+  p.set('k', btoa(unescape(encodeURIComponent($('src').value))));
+  return '#' + p.toString();
+}
+function applyHash(){
+  if (!location.hash || location.hash.length < 2) return false;
+  try {
+    const p = new URLSearchParams(location.hash.slice(1));
+    if (p.get('i')) setInst(p.get('i'));
+    F.forEach(id => { if (p.get(id) !== null) $(id).value = p.get(id); });
+    if (p.get('k')) $('src').value = decodeURIComponent(escape(atob(p.get('k'))));
+    return true;
+  } catch (e) { return false; }
+}
+
+function setInst(v){
+  inst = (v === 'map') ? 'map' : 'study';
+  [...$('tabs').children].forEach(b => b.classList.toggle('on', b.dataset.inst === inst));
+  $('ctlStudy').hidden = inst !== 'study';
+  $('ctlMap').hidden = inst === 'study';
+}
+
+function loadExample(name){
+  const e = EXAMPLES[name];
+  if (!e) return;
+  $('src').value = e.src;
+  $('knote').textContent = e.note;
+  if (e.map) Object.keys(e.map).forEach(k => { $(k).value = e.map[k]; });
+  if (e.inst) setInst(e.inst);
+}
+
+/* ---- compiling the user's kernel ----
+   `new Function` with the body the user typed. This runs in the page, on their
+   machine, and nothing is uploaded — said plainly in the footer because a box
+   that accepts code owes the reader that sentence. */
+function compile(src){
+  try {
+    const k = (new Function('"use strict";' + src))();
+    if (!k || typeof k !== 'object') throw new Error('the code must RETURN a kernel object');
+    return {kernel: k};
+  } catch (e) { return {error: e.message}; }
+}
+
+/* ---- rendering ----
+   THE VERDICT RULE IS FACTORED OUT AND EXPOSED. A previous page in this repo
+   shipped a verdict that survived being mutated to ignore its own inputs,
+   because nothing could feed it an adversarial certificate. `verdictClass` is
+   pure, and the battery drives it directly through window.__labAudit. */
+function verdictClass(cert){
+  if (!cert || typeof cert.verdict !== 'string') return 'no';
+  return cert.verdict === 'PROVED' ? 'ok' : 'no';
+}
+window.__labAudit = { verdictClass };
+
+function num(x){
+  if (x === null || x === undefined) return '—';
+  if (typeof x !== 'number') return String(x);
+  if (!isFinite(x)) return String(x);
+  if (x === 0) return '0';
+  const a = Math.abs(x);
+  return (a < 1e-4 || a >= 1e6) ? x.toExponential(3) : String(Number(x.toPrecision(8)));
+}
+function li(list){ return list.map(t => '<li>' + esc(t) + '</li>').join(''); }
+function esc(s){ return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+function showCert(cert){
+  $('out').hidden = false;
+  const cls = verdictClass(cert);
+  const v = $('verdict');
+  v.className = 'verdict ' + cls;
+  $('vlabel').textContent = cert.verdict === 'PROVED' ? 'CERTIFIED' : 'NOT PROVED';
+  $('vtext').textContent = cert.claim;
+  $('vwhy').textContent = cert.why ? ' — ' + cert.why : '';
+  $('evid').innerHTML = Object.keys(cert.evidence || {}).map(k =>
+    '<div class="ro"><span class="k">' + esc(k) + '</span><span class="v">' +
+    esc(Array.isArray(cert.evidence[k]) ? '[' + cert.evidence[k].map(num).join(', ') + ']' : num(cert.evidence[k])) +
+    '</span></div>').join('');
+  $('assume').innerHTML = li(cert.assumes || []);
+  $('fals').innerHTML = li(cert.falsifier || []);
+}
+
+let last = null;
+
+function renderStudy(r){
+  showCert(r.certificate);
+  $('mapWrap').hidden = true;
+  const rows = r.table.map(t =>
+    '<tr><td>' + t.n + '</td><td>' + num(t.h) + '</td><td>' + num(t.error) + '</td><td>' +
+    (t.order === undefined ? '—' : t.order.toFixed(4)) + '</td><td>' + num(t.iters) + '</td><td>' +
+    num(t.residual) + '</td></tr>').join('');
+  $('tableWrap').innerHTML = r.table.length ?
+    '<table class="mono"><thead><tr><th>n</th><th>h</th><th>error</th><th>observed order</th>' +
+    '<th>iters</th><th>rel. residual</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<p class="note">The table is shown for refusals too — "we will not call this an order, and here is ' +
+    'exactly what we saw" is checkable; a bare reason is not.</p>' : '';
+}
+
+function renderMap(r){
+  showCert(r.certificate);
+  $('tableWrap').innerHTML = '';
+  $('mapWrap').hidden = false;
+  drawMap(r);
+}
+
+const COLOR = {ok:'--fp', stalled:'--amber', diverged:'--hjb', threw:null};
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+function drawMap(r){
+  const cv = $('cv');
+  const DPR = Math.min(2, window.devicePixelRatio || 1);
+  const W = cv.clientWidth || 520, H = 190;
+  cv.setAttribute('width', Math.round(W * DPR));
+  cv.setAttribute('height', Math.round(H * DPR));
+  cv.style.height = H + 'px';
+  const c = cv.getContext('2d');
+  c.setTransform(DPR, 0, 0, DPR, 0, 0);
+  c.clearRect(0, 0, W, H);
+
+  const ax = r.axes[0], vals = ax.values, n = vals.length;
+  const padL = 44, padR = 16, padT = 18, padB = 34;
+  const bw = (W - padL - padR) / n;
+  const rowH = r.axes[1] ? (H - padT - padB) / r.axes[1].values.length : (H - padT - padB);
+
+  r.points.forEach(p => {
+    const tok = COLOR[p.outcome];
+    c.fillStyle = tok ? css(tok) : '#6B7280';
+    const x = padL + p.i * bw, y = padT + (r.axes[1] ? p.j * rowH : 0);
+    c.fillRect(x + 1, y + 1, Math.max(1, bw - 2), Math.max(1, rowH - 2));
+  });
+
+  /* Brackets: the answer a reader acts on, drawn as a rule between the two
+     samples that disagree — never as a line pretending to be the boundary. */
+  c.strokeStyle = css('--ink');
+  c.lineWidth = 1.5;
+  c.setLineDash([4, 3]);
+  (r.brackets || []).filter(b => b.axis === ax.name).forEach(b => {
+    const i = vals.indexOf(b.from);
+    if (i < 0) return;
+    const x = padL + (i + 1) * bw;
+    c.beginPath(); c.moveTo(x, padT - 4); c.lineTo(x, H - padB + 4); c.stroke();
+  });
+  c.setLineDash([]);
+
+  c.fillStyle = css('--ink-soft');
+  c.font = '11px ' + css('--data');
+  c.textAlign = 'center';
+  const step = Math.max(1, Math.round(n / 8));
+  for (let i = 0; i < n; i += step)
+    c.fillText(Number(vals[i].toPrecision(3)), padL + (i + 0.5) * bw, H - padB + 16);
+  c.textAlign = 'left';
+  c.fillText(ax.name, 6, padT + 10);
+  /* The caption carries the disclaimer, so it must never be the thing that
+     gets clipped — the first render ran it off the right edge and cut it at
+     "(sampled, not proved". Measure, and drop to the short form if it does not
+     fit rather than letting the qualifier disappear. */
+  if (r.brackets && r.brackets.length) {
+    const long = 'dashed rule = bracket containing the change (sampled, not proved)';
+    const short = 'dashed = bracket (sampled, not proved)';
+    const avail = W - padL - padR;
+    c.fillText(c.measureText(long).width <= avail ? long : short, padL, H - padB + 30);
+  }
+}
+
+/* ---- LaTeX: where the tool meets the labour. Everyone in this field builds
+   these tables by hand for a paper. ---- */
+function toLatex(r){
+  if (inst !== 'study' || !r.table || !r.table.length) return '';
+  const L = [];
+  L.push('% generated by the MFG Lab — ' + r.certificate.verdict + ': ' + r.certificate.claim);
+  if (r.certificate.why) L.push('% ' + r.certificate.why.replace(/\s+/g, ' '));
+  L.push('\\begin{tabular}{rlll}');
+  L.push('\\hline');
+  L.push('$n$ & $h$ & error & observed order \\\\');
+  L.push('\\hline');
+  r.table.forEach(t => {
+    L.push(t.n + ' & ' + t.h.toExponential(2) + ' & ' + t.error.toExponential(3) + ' & ' +
+           (t.order === undefined ? '--' : t.order.toFixed(3)) + ' \\\\');
+  });
+  L.push('\\hline');
+  L.push('\\end{tabular}');
+  return L.join('\n');
+}
+
+/* ---- run ---- */
+function parseLevels(s){
+  return s.split(/[,\s]+/).filter(Boolean).map(Number).filter(x => isFinite(x) && x > 0);
+}
+function run(){
+  const t0 = Date.now();
+  $('status').textContent = 'Running…';
+  $('run').disabled = true;
+  /* Yield once so the status paints before a synchronous solve blocks the
+     thread — a spinner that never appears is worse than none. */
+  setTimeout(() => {
+    try {
+      const c = compile($('src').value);
+      if (c.error) { $('status').textContent = 'Your kernel did not compile: ' + c.error; return; }
+      let r;
+      if (inst === 'study') {
+        const expRaw = $('exp').value.trim();
+        r = LabAPI.study(c.kernel, {
+          tol: Number($('tol').value),
+          levels: parseLevels($('levels').value),
+          expectedOrder: expRaw === '' ? undefined : Number(expRaw)
+        });
+        renderStudy(r);
+      } else {
+        r = LabAPI.map(c.kernel, {
+          sweep: {[$('pname').value.trim() || 'p']: [Number($('plo').value), Number($('phi').value)]},
+          samples: Math.round(Number($('samples').value)),
+          n: Math.round(Number($('mapn').value)),
+          tol: Number($('maptol').value)
+        });
+        renderMap(r);
+      }
+      last = r;
+      history.replaceState(null, '', serialize());
+      $('status').textContent = r.code + ' · ' + (Date.now() - t0) + ' ms · this link now reproduces the run';
+    } catch (e) {
+      $('status').textContent = 'The instrument stopped: ' + e.message;
+    } finally {
+      $('run').disabled = false;
+    }
+  }, 0);
+}
+
+function copy(text, what){
+  const done = () => { $('status').textContent = what + ' copied to the clipboard.'; };
+  if (navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(text).then(done, () => { $('status').textContent = 'Copy failed — select and copy manually.'; });
+  else done();
+}
+
+/* ---- wiring ---- */
+Object.keys(EXAMPLES).forEach(k => {
+  const o = document.createElement('option'); o.value = k; o.textContent = k; $('ex').appendChild(o);
+});
+[...$('tabs').children].forEach(b => b.addEventListener('click', () => setInst(b.dataset.inst)));
+$('ex').addEventListener('change', () => loadExample($('ex').value));
+$('run').addEventListener('click', run);
+$('link').addEventListener('click', () => { history.replaceState(null, '', serialize()); copy(location.href, 'Link'); });
+$('tex').addEventListener('click', () => { const t = toLatex(last); copy(t || '(the LaTeX table is for the order study)', 'LaTeX table'); });
+$('rep').addEventListener('click', () => copy(last ? report(last.certificate) : '(nothing has run yet)', 'Certificate'));
+window.addEventListener('resize', () => { if (last && inst === 'map' && last.axes) drawMap(last); });
+
+function report(c){
+  const L = ['' + c.verdict + ': ' + c.claim];
+  if (c.evidence && Object.keys(c.evidence).length) {
+    L.push('  evidence');
+    Object.keys(c.evidence).forEach(k => L.push('    ' + k + '  ' +
+      (Array.isArray(c.evidence[k]) ? '[' + c.evidence[k].map(num).join(', ') + ']' : num(c.evidence[k]))));
+  }
+  if (c.why) L.push('  reason  ' + c.why);
+  if (c.assumes && c.assumes.length) { L.push('  ASSUMED (not checked here)'); c.assumes.forEach(a => L.push('    · ' + a)); }
+  L.push('  falsified by'); (c.falsifier || []).forEach(f => L.push('    · ' + f));
+  L.push('  state  ' + location.href);
+  return L.join('\n');
+}
+
+const restored = applyHash();
+if (!restored) { $('ex').value = Object.keys(EXAMPLES)[0]; loadExample($('ex').value); }
+else { $('knote').textContent = 'Restored from a link — the kernel below is the one that ran.'; }
+window.__labReady = true;
+})();
+</script>
+</body>
+</html>
