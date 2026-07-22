@@ -16,8 +16,8 @@
   :root{
     /* Ground: cool instrument enamel, not paper stock. The panel is neutral so
        the signal colours below carry all the meaning. */
-    --paper:#EEF0F2; --ink:#12171C; --ink-soft:#626C78; --grid:#D4D9DE;
-    --card:#FAFBFC;
+    --paper:#FBFBFC; --ink:#12171C; --ink-soft:#626C78; --grid:#E4E7EB;
+    --card:#FFFFFF;
     /* Signal colours are semantic and load-bearing: the canvas code, legends and
        prose all bind meaning to them. Ground changes; signal does not. */
     --fp:#0E7C7B; --fp-deep:#0A4E4D;      /* forward / density m */
@@ -77,9 +77,9 @@
   .receipts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 30px}
   @media(max-width:900px){.receipts{grid-template-columns:1fr}}
   .rcp{position:relative;display:block;width:100%;text-align:left;background:var(--card);
-    border:1px solid var(--grid);border-radius:8px;padding:14px 15px 13px;cursor:pointer;
-    transition:border-color .14s,background .14s,box-shadow .14s}
-  .rcp:hover{border-color:var(--ink-soft);background:#fff;box-shadow:0 1px 3px rgba(18,23,28,.07)}
+    border:1px solid var(--grid);border-radius:10px;padding:15px 16px 14px;cursor:pointer;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);transition:border-color .14s,box-shadow .16s}
+  .rcp:hover{border-color:#D7DBE0;box-shadow:0 4px 12px rgba(16,24,40,.08),0 1px 2px rgba(16,24,40,.04)}
   .rcp:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
   .rcp .rk{font-family:var(--data);font-size:9.5px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--amber);display:block}
@@ -232,9 +232,9 @@
 
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   @media(max-width:840px){.grid2{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--grid);border-radius:8px;
-    padding:15px 17px 13px;position:relative;
-    box-shadow:0 1px 2px rgba(18,23,28,.04),0 0 0 1px rgba(18,23,28,.01)}
+  .card{background:var(--card);border:1px solid var(--grid);border-radius:12px;
+    padding:16px 18px 14px;position:relative;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
   .card h2{font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:-.005em;margin-bottom:2px;padding-right:76px}
   .card h2 .tag{font-family:var(--data);font-size:10px;font-weight:400;letter-spacing:.09em;text-transform:uppercase;margin-left:8px}
   .card h2 .tag.f{color:var(--fp)} .card h2 .tag.b{color:var(--hjb)}
@@ -357,7 +357,8 @@
   .labcard{display:block;text-decoration:none;color:inherit;background:var(--card);
     border:1px solid var(--grid);border-left:3px solid var(--fp-deep);border-radius:10px;
     padding:18px 20px;margin:0 0 18px;transition:background .15s,box-shadow .15s}
-  .labcard:hover{background:#fff;box-shadow:0 1px 3px rgba(18,23,28,.07)}
+  .labcard{box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .labcard:hover{box-shadow:0 4px 12px rgba(16,24,40,.08),0 1px 2px rgba(16,24,40,.04)}
   .labcard .lk{display:block;font-family:var(--data);font-size:11px;letter-spacing:.14em;
     text-transform:uppercase;color:var(--ink-soft)}
   .labcard .lt{display:block;font-family:var(--ui);font-weight:600;font-size:21px;
