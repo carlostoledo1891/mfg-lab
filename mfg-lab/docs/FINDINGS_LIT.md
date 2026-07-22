@@ -462,3 +462,42 @@ artifact is a claim about a *field*, and no battery can check it. It rests on a
 13-repo topic listing plus two searches — a weak sample. It is written to be
 narrow enough to survive (finite-state vs continuum, score vs certificate) and
 should be re-checked before any stronger version of it is used in writing.
+
+---
+
+# Yan–Yang–Zhang: the time-dependent HRF extension (checked 2026-07-22)
+
+Checked at source before citing, after the MF-OMO episode above made the cost of
+not doing so concrete.
+
+**Hanwei Yan, Xianjin Yang, Jingguo Zhang**, *A Globally Convergent Flow for
+Time-Dependent Mean Field Games and a Solver-Agnostic Framework for Inverse
+Problems*, arXiv:2603.10336 (submitted 11 Mar 2026, revised 18 Jun 2026). It
+extends the **Hessian–Riemannian flow, previously developed for stationary
+MFGs, to time-dependent MFGs**, and the flow "preserves the initial density and
+terminal value function, and maintains positivity and mass of the density".
+
+**Why it matters here, in three parts.**
+
+1. **It is the same structural claim this lab makes, one setting further on.**
+   The Wardrop page's honest contrast is *feasibility by geometry vs feasibility
+   by repair* — the flow conserves Kirchhoff to ~1e-14 by construction while a
+   projected gradient repairs a 4.0e+1 violation each step. Yan–Yang–Zhang make
+   exactly that property (positivity and mass preserved along the flow) their
+   selling point for the time-dependent PDE problem. Citing it is not courtesy;
+   it is where the idea goes next.
+2. **Lineage.** Xianjin Yang is the Yang of **Gomes & Yang**, *The Hessian
+   Riemannian flow and Newton's method for effective Hamiltonians and Mather
+   measures*, ESAIM: M2AN **54**(6) 1883–1915 (2020), arXiv:1810.03483 — the
+   paper this lab already named as HRF's origin, but bare, with no venue or
+   number until now. Both were KAUST/AMCS. The lineage citation was upgraded in
+   the same pass.
+3. **No pre-emption of anything shipped here.** Their object is time-dependent
+   MFG on a PDE; ours is a finite multi-population Wardrop equilibrium on a
+   network, plus its exact-rational and interval certificates. They present a
+   solver, not a certification standard. Nothing retracted.
+
+**Consequence for direction-setting, and it is a live one:** *"extend HRF to
+time-dependent problems"* is **TAKEN**, by Gomes's own former collaborator, four
+months before this check. Anyone proposing that here should read this paper
+first. Recorded in the scoreboard.
