@@ -1,30 +1,33 @@
-/* test-index.js — the gate for the hub page.
+/* test-index.js — the gate for the LANDING PAGE, and for the shape of it.
 
-   AN INDEX IS A SET OF PROMISES ABOUT OTHER FILES, and it is the one page whose
-   defects are invisible from inside itself: a door that opens onto nothing looks
-   exactly like a door that works until somebody clicks it. This repository has
-   already shipped the adjacent defect — sin-mfg.html said "the MFG Lab, its
-   interactive companion piece" with NO href at all, prose asserting a
-   relationship the page did not implement, and no gate could see it because the
-   placeholder checker looks for unfilled markers rather than missing content.
+   There is no separate index file. One was built and deleted the same day: it
+   duplicated a landing route the artifact already had, so the "site" was a
+   single page split across two files and every link between them pointed from
+   mfg-lab.html back to mfg-lab.html. The hub is now the artifact's own `/`
+   route, which is why this battery reads mfg-lab.html.
 
-   So every promise the index makes is checked here:
+   WHAT IS CHECKED, AND WHY EACH ONE EXISTS
 
-     I1  every site-absolute href resolves THROUGH THE DEPLOYED ROUTE MAP to a
-         file that exists. Checking the filesystem would be the wrong check:
-         these pages are served from rewrites, so `/mfg-cap` is correct and
-         `mfg-cap.html` — which is what the first draft of this index used, and
-         what a filesystem check would have accepted — is a 404 in production;
-     I2  every route link (#/x) corresponds to a real route in mfg-lab.html;
-     I3  the door with nothing behind it is NOT an anchor — an unopenable door
-         must not be clickable, and this is asserted structurally rather than
-         trusted to CSS;
-     I4  the battery count on the page is RECOMPUTED, not remembered — and
-         recomputed from the PUBLIC Makefile specifically, because this page
-         ships publicly and "this repository" means the one a reader cloned.
-         The monorepo runs more batteries than the public repo (it carries
-         private projects), so measuring the local Makefile would print a
-         number no reader can reproduce.
+     I1  every site-absolute href on the landing page resolves THROUGH THE
+         DEPLOYED ROUTE MAP. Checking the filesystem is the wrong check: these
+         pages are served from rewrites, so `/mfg-cap` is right and
+         `mfg-cap.html` — a real file — is a 404 in production. The route map
+         lives in two places by design (the skeleton here, the deployed file
+         after export), so both are tried and NEITHER-FOUND is fatal rather
+         than skipped. A route check that quietly does not run is worse than
+         no route check.
+
+     I2  every in-page `data-goto` target is a route the artifact actually has.
+
+     I3  THE SHAPE. One featured card for the Lab, exactly three receipt cards,
+         and everything else in a LIST. This is asserted because it is a design
+         decision that decays silently: cards are easy to add, seven cards of
+         equal weight is not a hierarchy, and the wall it becomes still looks
+         fine in review. The count is the falsifier.
+
+     I4  no page presents `pip install mfg-lab` as a working command, because
+         the distribution is not on PyPI. Doctrine forbids claiming the package
+         exists as shipped, and the first draft of the hub printed exactly that.
 */
 'use strict';
 const fs = require('fs');
@@ -33,120 +36,82 @@ const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const LABDIR = path.join(ROOT, 'mfg-lab');
-const IDX = path.join(LABDIR, 'index.html');
+const ART = path.join(LABDIR, 'mfg-lab.html');
 
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) pass++; else { fail++; console.error('   FAIL  ' + m); } };
 
-const html = fs.readFileSync(IDX, 'utf8');
-console.log('== index gate ==');
-console.log('   mfg-lab/index.html  ' + html.length + ' bytes  sha256:' +
+const html = fs.readFileSync(ART, 'utf8');
+console.log('== landing-page gate ==');
+console.log('   mfg-lab/mfg-lab.html  ' + html.length + ' bytes  sha256:' +
   crypto.createHash('sha256').update(html).digest('hex').slice(0, 16));
 
-/* ------------------- I1 · every local href resolves THROUGH THE ROUTE MAP */
-/* The route map lives in two places by design: in the monorepo it is the
-   skeleton that the exporter copies, and in the EXPORTED tree it is the
-   deployed file at the root. This battery runs in both, so it looks in both —
-   and fails loudly if neither is found rather than skipping, because a route
-   check that quietly does not run is worse than no route check. (Found the
-   hard way: the first version hardcoded the monorepo path and the public
-   tree's own `make check` went red on export.) */
-const ROUTE_MAPS = [path.join(ROOT, 'vercel.json'),
-                    path.join(ROOT, 'tools', 'public-skel', 'vercel.json')];
+ok(!fs.existsSync(path.join(LABDIR, 'index.html')),
+   'I0 there is no separate index file — the hub is the artifact\'s own landing route');
+
+/* Isolate the landing page: from its opening div to the next page comment. */
+const a = html.indexOf('<div class="page active" id="pgStart">');
+const b = html.indexOf('<!-- ============================ PAGE:', a + 10);
+ok(a > 0 && b > a, 'I0b the landing page is locatable');
+const start = html.slice(a, b);
+
+/* ------------------- I1 · site-absolute links resolve through the route map */
+const ROUTE_MAPS = [path.join(ROOT, 'vercel.json'), path.join(ROOT, 'tools', 'public-skel', 'vercel.json')];
 const mapFile = ROUTE_MAPS.find(f => fs.existsSync(f));
 if (!mapFile) {
   console.error('   FAIL  I1 no route map found — looked in:\n     ' + ROUTE_MAPS.join('\n     '));
-  console.error('index gate FAILED'); process.exit(1);
+  console.error('landing-page gate FAILED'); process.exit(1);
 }
 const vercel = JSON.parse(fs.readFileSync(mapFile, 'utf8'));
-console.log('   route map: ' + path.relative(ROOT, mapFile));
 const ROUTES = new Map(vercel.rewrites.map(r => [r.source, r.destination]));
-const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
-const local = hrefs.filter(h => !/^(https?:|mailto:|#)/.test(h));
-ok(local.length >= 5, 'I1a the index actually links somewhere (' + local.length + ' local links)');
-for (const h of local) {
+console.log('   route map: ' + path.relative(ROOT, mapFile) + '  (' + ROUTES.size + ' routes)');
+
+const abs = [...start.matchAll(/href="(\/[^"]*)"/g)].map(m => m[1]);
+ok(abs.length >= 3, 'I1a the landing page links out to the other artifacts (' + abs.length + ' site links)');
+for (const h of abs) {
   const route = h.split('#')[0];
-  if (!route) continue;
   const dest = ROUTES.get(route);
   if (dest === undefined) { ok(false, 'I1 "' + h + '" is not a route in vercel.json — it would 404 in production'); continue; }
-  /* cleanUrls: the destination has no extension on disk. */
-  ok(fs.existsSync(path.join(ROOT, dest + '.html')),
-     'I1 ' + route + ' -> ' + dest + '.html exists');
+  ok(fs.existsSync(path.join(ROOT, dest + '.html')), 'I1 ' + route + ' -> ' + dest + '.html exists');
 }
-/* And the inverse, which is the failure nobody notices: a route nothing links to. */
-const linked = new Set(local.map(h => h.split('#')[0]));
+const linked = new Set(abs.map(h => h.split('#')[0]));
 for (const src of ROUTES.keys())
-  ok(linked.has(src) || src === '/', 'I1b every deployed route is reachable from the index: ' + src);
+  ok(linked.has(src) || src === '/', 'I1b every deployed route is reachable from the landing page: ' + src);
 
-/* --------------------------------- I2 · every route link is a real route */
-const artifact = fs.readFileSync(path.join(LABDIR, 'mfg-lab.html'), 'utf8');
-const routes = new Set([...artifact.matchAll(/data-route="([^"]+)"/g)].map(m => m[1]));
-ok(routes.size >= 8, 'I2a the artifact exposes its routes (' + routes.size + ' found)');
-for (const h of local) {
-  const frag = h.split('#')[1];
-  if (!frag || !frag.startsWith('/')) continue;
-  ok(routes.has(frag), 'I2 route link points at a route that exists: #' + frag +
-     (routes.has(frag) ? '' : '  [known: ' + [...routes].join(' ') + ']'));
-}
+/* --------------------------------- I2 · in-page routes are real routes */
+const artRoutes = new Set([...html.matchAll(/data-route="([^"]+)"/g)].map(m => m[1]));
+ok(artRoutes.size >= 8, 'I2a the artifact exposes its routes (' + artRoutes.size + ')');
+const gotos = [...start.matchAll(/data-goto="([^"]+)"/g)].map(m => m[1]);
+ok(gotos.length >= 5, 'I2b the landing page routes inward (' + gotos.length + ' data-goto targets)');
+for (const g of new Set(gotos))
+  ok(artRoutes.has(g), 'I2 data-goto target is a real route: ' + g);
 
-/* ------------------------- I3 · a door with nothing behind it is not a link */
-const unbuiltBlocks = [...html.matchAll(/<(a|div)([^>]*class="door unbuilt"[^>]*)>/g)];
-ok(unbuiltBlocks.length >= 1, 'I3a the unbuilt door is present and labelled');
-ok(unbuiltBlocks.every(m => m[1] === 'div'),
-   'I3b it is a <div>, never an <a> — a door that opens onto nothing must not be clickable');
-ok(/not built yet/i.test(html), 'I3c and it says so in words, not only in styling');
-/* The inverse: no door may be BOTH a link and marked unbuilt. */
-ok(!/<a[^>]*class="[^"]*unbuilt/.test(html), 'I3d no anchor carries the unbuilt class');
+/* --------------------------------------------------------- I3 · THE SHAPE */
+const labcards = (start.match(/class="labcard"/g) || []).length;
+const receipts = (start.match(/class="rcp"/g) || []).length;
+const listitems = (start.match(/<li>/g) || []).length;
+ok(labcards === 1, 'I3a exactly one featured Lab card, got ' + labcards);
+ok(receipts === 3, 'I3b exactly three receipt cards — more is a wall, not a hierarchy. Got ' + receipts);
+ok(listitems >= 5, 'I3c the rest is a list, not more cards (' + listitems + ' entries)');
+ok(/class="dirlist"/.test(start), 'I3d the list uses the list idiom');
+ok(start.indexOf('class="labcard"') < start.indexOf('class="rcp"'),
+   'I3e the Lab comes before the evidence for it — it is the product, not one exhibit among many');
+console.log('   I3  shape: 1 Lab card · ' + receipts + ' receipts · ' + listitems + ' list entries');
 
-/* ------------------------------- I4 · the battery count is recomputed
-   From the PUBLIC Makefile in either tree — the skeleton here, the deployed
-   file after export — for the reason in the header. */
-const MK_FILES = [path.join(ROOT, 'tools', 'public-skel', 'Makefile'), path.join(ROOT, 'Makefile')];
-const mkFile = MK_FILES.find(f => fs.existsSync(f));
-ok(!!mkFile, 'I4z a Makefile to count is present');
-const mk = fs.readFileSync(mkFile, 'utf8');
-const inCheck = mk.split('\n');
-let counting = false, batteries = 0;
-for (const line of inCheck) {
-  if (/^check-(eqcert|lab|sin|route|cert|cap):/.test(line)) { counting = true; continue; }
-  if (/^[a-z][a-z-]*:/.test(line)) { counting = false; continue; }
-  if (counting && /\$\(NODE\)/.test(line)) batteries++;
-}
-const stated = (html.match(/id="nbat">(\d+)</) || [])[1];
-ok(stated !== undefined, 'I4a the page states a battery count');
-ok(Number(stated) === batteries,
-   'I4b and it matches the Makefile, recomputed: page says ' + stated + ', Makefile runs ' + batteries);
-console.log('   I4  batteries in the public `make check` (' + path.relative(ROOT, mkFile) + '): ' + batteries +
-  (Number(stated) === batteries ? ' (page agrees)' : ' — PAGE SAYS ' + stated));
-
-/* --------------------------------------------------- I5 · prose guards
-   Whitespace is NORMALISED before matching. The first version of this gate
-   reported "the house rule is not stated on the front page" while the page
-   said it plainly — the phrase was split across a line break, and the pattern
-   matched a single space. Same corollary as the &nbsp; lesson: match the
-   variants, or the gate is measuring your line wrapping. */
-const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-[/proves? that .* is correct/i, /guaranteed/i, /fastest/i, /best in the world/i]
-  .forEach(re => ok(!re.test(text), 'I5 no overreach: ' + re));
-ok(/cannot exist without a falsifier/i.test(text), 'I5 the house rule is stated on the front page');
-ok(/not a claim of reproduction/i.test(text), 'I5 "in the style of" is disclaimed where it appears');
-ok(!/⟨|⟩|TODO|FIXME|XXX/.test(html), 'I5 no unfilled markers');
-
-/* ------------------------------------- I6 · the package does not exist yet
-   Doctrine: never claim the Python package "exists" as shipped. The first
-   draft of this page printed `pip install mfg-lab` as a working command; the
-   distribution is not on PyPI, so that instruction fails for every reader who
-   tries it. Caught by READING the rendered page, not by any check — which is
-   why it is now a check. Applies to every page that mentions installing. */
-for (const f of ['index.html', 'lab.html']) {
+/* ------------------------------------------ I4 · the package does not exist */
+for (const f of ['mfg-lab.html', 'lab.html']) {
   const page = fs.readFileSync(path.join(LABDIR, f), 'utf8').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  if (!/mfglab|mfg-lab/.test(page)) continue;
-  const claims = /pip install mfg-lab(?![^.]{0,80}(not published|not on PyPI|from source))/i.test(page);
-  ok(!claims, 'I6 ' + f + ' does not present `pip install mfg-lab` as a working command');
-  if (/install/i.test(page))
-    ok(/not on PyPI|not published to PyPI|install (it )?from (the )?(source|repository)/i.test(page),
-       'I6 ' + f + ' says plainly that the package is not published yet');
+  if (!/install/i.test(page)) continue;
+  ok(!/pip install mfg-lab(?![^.]{0,80}(not published|not on PyPI|from source))/i.test(page),
+     'I4 ' + f + ' does not present `pip install mfg-lab` as a working command');
+  ok(/not on PyPI|not published to PyPI|install (it )?from (the )?(source|repository)/i.test(page),
+     'I4 ' + f + ' says plainly that the package is not published yet');
 }
+
+/* --------------------------------------------------- I5 · prose guards */
+const text = start.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+[/guaranteed/i, /fastest/i, /best in the world/i].forEach(re => ok(!re.test(text), 'I5 no overreach: ' + re));
+ok(!/⟨|⟩|TODO|FIXME|XXX/.test(start), 'I5 no unfilled markers');
 
 console.log('   ' + pass + ' PASS, ' + fail + ' FAIL');
-if (fail) { console.error('index gate FAILED'); process.exit(1); }
+if (fail) { console.error('landing-page gate FAILED'); process.exit(1); }

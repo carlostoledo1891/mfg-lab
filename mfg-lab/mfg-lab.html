@@ -351,6 +351,30 @@
     .notes{font-size:12.5px}
     .legend{gap:10px 14px;font-size:11.5px}
   }
+
+  /* The Lab card: the product, ahead of the evidence for it. Hover changes
+     colour and shadow only — never a dimension (dimensional-stability rule). */
+  .labcard{display:block;text-decoration:none;color:inherit;background:var(--card);
+    border:1px solid var(--grid);border-left:3px solid var(--fp-deep);border-radius:10px;
+    padding:18px 20px;margin:0 0 18px;transition:background .15s,box-shadow .15s}
+  .labcard:hover{background:#fff;box-shadow:0 1px 3px rgba(18,23,28,.07)}
+  .labcard .lk{display:block;font-family:var(--data);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .labcard .lt{display:block;font-family:var(--ui);font-weight:600;font-size:21px;
+    letter-spacing:-.015em;margin:4px 0 6px}
+  .labcard .ld{display:block;max-width:72ch;color:var(--ink-soft);font-size:14.5px}
+  .labcard .lgo{display:inline-block;margin-top:10px;font-family:var(--data);font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--fp-deep)}
+  /* Everything that is not featured is a LIST, not a card. Cards of equal weight
+     are not a hierarchy; seven of them is a wall. */
+  ul.dirlist{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--grid)}
+  ul.dirlist li{display:grid;grid-template-columns:minmax(140px,190px) 1fr;gap:16px;
+    padding:11px 2px;border-bottom:1px solid var(--grid);align-items:baseline}
+  ul.dirlist li a{font-family:var(--ui);font-weight:600;font-size:14.5px;color:var(--fp-deep);
+    cursor:pointer;text-decoration:none}
+  ul.dirlist li a:hover{text-decoration:underline}
+  ul.dirlist li span{color:var(--ink-soft);font-size:14px}
+  @media(max-width:640px){ul.dirlist li{grid-template-columns:1fr;gap:2px}}
 </style>
 </head>
 <body>
@@ -378,12 +402,22 @@
   <div class="page active" id="pgStart">
     <div class="hero">
       <h2>Equilibria you can check.</h2>
-      <p class="lede">Eight mean-field games and network equilibria, every solve running <b>live in this page</b> —
+      <p class="lede">Mean-field games and network equilibria, every solve running <b>live in this page</b> —
       no precomputed data, no fitted curves, no library. Every claim ships with the certificate that would expose it
       if it were wrong. For the Wardrop network the certificate has been upgraded to a <b>proof</b>: the equilibrium is
       solved in exact rational arithmetic and enclosed in a verified interval box. Where a scheme fails, the page says
       so and explains the failure in the language of the theory.</p>
     </div>
+
+    <a class="labcard" href="/lab">
+      <span class="lk">the instruments · bring your own kernel</span>
+      <span class="lt">The Lab</span>
+      <span class="ld">Everything below is <i>our</i> problem. The Lab runs <b>yours</b>: paste a kernel and get a
+      convergence study that <b>refuses to report an order</b> when the number it measured is a property of your
+      stopping criterion rather than of your scheme, and a failure map that finds where in a parameter box your solver
+      stops working. Runs in the page, on your machine; nothing is uploaded.</span>
+      <span class="lgo">open the Lab &rarr;</span>
+    </a>
 
     <div class="receipts">
       <button class="rcp" data-goto="/wardrop">
@@ -433,6 +467,17 @@
         retracted twice and the retraction is pinned by a regression test. <b>The record of being wrong is on the
         Verification page</b>, because a laboratory that only shows its successes is showing you a brochure.</p></div></div>
     </div>
+
+    <h3 class="sec">The rest of it</h3>
+    <ul class="dirlist">
+      <li><a data-goto="/bench">The bench</a><span>Four experiments on one grid: crowd aversion, an LQ benchmark against a Riccati reference, a two-exit pitchfork, and a stationary system that stalls honestly.</span></li>
+      <li><a data-goto="/water-value">Water value</a><span>Stock-constrained price formation on a scenario tree, one kernel shared byte-identically with the SIN-MFG note.</span></li>
+      <li><a data-goto="/certificates">Certificates</a><span>The standard itself: what is certified per module, what is only measured, and where the difference lies.</span></li>
+      <li><a data-goto="/verification">Verification</a><span>The record of being wrong — retracted claims, fabricated floors, and the regression tests that pin them.</span></li>
+      <li><a data-goto="/program">Program</a><span>Thirteen directions through a formal literature check; ten pre-empted and killed, three surviving with their verdicts.</span></li>
+      <li><a href="/mfg-cap">A computer-assisted proof</a><span>Existence, local uniqueness, a validated ergodic constant, density positivity — and certified multiplicity where uniqueness theory is silent. Separate artifact.</span></li>
+      <li><a href="/sin-mfg">SIN-MFG note</a><span>Price formation with a stock constraint on a hydro-dominated grid, with the verdict gated on a structural audit rather than a residual. Separate artifact.</span></li>
+    </ul>
 
     <h3 class="sec">What this notebook is for <span class="tag">the ask</span></h3>
     <p class="lede2">I am looking for a collaboration in the monotonicity school — specifically on <b>certification</b>:

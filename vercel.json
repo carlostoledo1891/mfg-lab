@@ -2,8 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/mfg-lab/index" },
-    { "source": "/experiments", "destination": "/mfg-lab/mfg-lab" },
+    { "source": "/", "destination": "/mfg-lab/mfg-lab" },
     { "source": "/lab", "destination": "/mfg-lab/lab" },
     { "source": "/sin-mfg", "destination": "/sin-mfg/sin-mfg" },
     { "source": "/mfg-cap", "destination": "/mfg-cap/mfg-cap" }
