@@ -1363,7 +1363,14 @@
     <p><b>Certificates.</b> The fixed-point residual is a diagnostic of the iteration; the game-theoretic certificate is
     <b>exploitability</b>: ε = ∫(V<sup>π</sup> − u<sup>BR</sup>)(·,0) m₀ dx, the most any deviating agent gains against
     the computed flow. V<sup>π</sup> is one linear policy-evaluation sweep re-using the equilibrium's own upwind switches,
-    u<sup>BR</sup> one best-response solve — so ε vanishes identically at the discrete fixed point. Away from it, ε is
+    u<sup>BR</sup> one best-response solve — so ε vanishes identically at the discrete fixed point.
+    The notion is standard, not ours: for <i>discrete-time</i> mean-field games, Guo, Hu &amp; Zhang
+    (MF-OMO, <i>SIAM J. Control Optim.</i> <b>62</b>(1) 243–270, 2024; arXiv:2206.09608) prove that finding Nash
+    equilibria is equivalent to a bounded-variable, convex-constrained optimisation problem, assuming neither
+    contraction, nor monotonicity, nor uniqueness; their Theorem 8 bounds exploitability by the optimisation
+    residual with an <i>explicit</i> constant — for finite state, action and horizon, and with a constant that
+    can grow exponentially in the horizon. No continuum analogue exists, which is why ε is reported here
+    beside the residual that limits it rather than converted into a distance, and why no floor is printed. Away from it, ε is
     limited by the iteration rather than by the grid: measured on this kernel, ε falls linearly with the fictitious-play
     residual and saturates exactly when the residual does. We therefore print ε beside that residual instead of quoting
     an absolute floor — the method tab records why no such floor is derivable here. At the 2D herding stall the residual
@@ -1610,11 +1617,17 @@
       <tr><td>certifying monotonicity by sums of squares</td><td class="mono">PRE-EMPTED</td><td>Leon–Sakos–Sim–Varvitsiotis, NeurIPS 2025 — <b>one month earlier</b></td></tr>
       <tr><td>conservation laws / first integrals in MFG</td><td class="mono">PRE-EMPTED</td><td>Kozlov; and Gomes' own arXiv:1704.07209</td></tr>
       <tr><td>exact welfare-gap identity for a groundwater commons</td><td class="mono">PRE-EMPTED ×3</td><td>Gisser–Sánchez 1980; Carmona–Graves–Tan 2018; Cardaliaguet–Rainer, SICON 2019</td></tr>
-      <tr><td>exploitability as a certificate</td><td class="mono">SETTLED</td><td>MF-OMO, SICON 2024</td></tr>
+      <tr><td>exploitability as a certificate</td><td class="mono">SETTLED</td><td>MF-OMO — Guo, Hu &amp; Zhang, SICON 62(1) 2024; arXiv:2206.09608</td></tr>
       <tr><td>exact / SOS / modular certificates</td><td class="mono">SETTLED</td><td>Peyrl–Parrilo; Dumas–Kaltofen; Otti</td></tr>
       <tr><td>interval-certified network equilibrium, as a <i>method</i></td><td class="mono">PARTIAL</td><td>Kubica–Woźniak; Alefeld; Klimm–Warode — the instance survived, the method did not</td></tr>
       <tr><td>an algebra of test-battery completeness</td><td class="mono">PRE-EMPTED</td><td>analog-circuit testability theory, 1989 — the same null space, forty years earlier</td></tr>
     </table>
+    <p><b>Where this sits.</b> The open-source work in this area is largely finite-state or
+    learning-based: MFGLib — which implements MF-OMO among its algorithms — solves discrete-time
+    mean-field games over finite state and action spaces and reports exploitability as a score. This lab is
+    the continuum complement: HJB/Fokker–Planck on a grid, a network variational inequality, and a
+    stationary system certified in interval arithmetic — a setting where explicit constants are not
+    available, so each certificate is earned instance by instance rather than inherited from a theorem.</p>
 
     <h3 class="sec">What survived, and what I would like to do with it</h3>
     <div class="beats">

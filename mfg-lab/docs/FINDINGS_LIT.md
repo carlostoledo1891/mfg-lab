@@ -383,3 +383,82 @@ hand-checkable, and is precisely the one-line failure of the standard
 first-integral test `D_α(I)=0`. It kills *that* candidate invariant, which is a
 smaller claim than the rank computation attempts and the one that survives
 review.
+
+---
+
+# The MF-OMO citation, and the open-source landscape (2026-07-22)
+
+Prompted by a direct question — how does this work compare to MFGLib and the
+other MFG repositories? — and run as a check before any prose was written, per
+the house rule. It changed what ships and corrected two things we believed.
+
+## What was actually verified, at source
+
+**MF-OMO.** Xin Guo, Anran Hu, **Junzi** Zhang, *MF-OMO: An Optimization
+Formulation of Mean-Field Games*, SIAM J. Control Optim. **62**(1) 243–270
+(2024); **arXiv:2206.09608**. From the abstract, read directly: finding Nash
+equilibria for a general class of **discrete-time** mean-field games is
+equivalent to an optimisation problem with bounded variables and simple convex
+constraints. It assumes neither contraction, nor monotonicity, nor uniqueness,
+and can retrieve multiple (possibly all) equilibria.
+
+**MFGLib** (github.com/radar-research-lab/MFGLib, JOSS; arXiv:2304.08630) —
+Python, **discrete-time, finite horizon, finite state and action spaces**.
+Algorithms include Fictitious Play, Prior Descent and MF-OMO, with auto-tuners.
+**Exploitability is its convergence criterion.** 67 stars; pre-release used
+internally by Amazon Advertising. It makes **no verification or certification
+claim** — which is not a criticism, it is a different objective.
+
+**The tagged ecosystem is 13 repositories.** MFGLib at 67 stars; every other is
+≤5 and most are single-paper code drops. Caveat, load-bearing: GitHub topics
+undersample badly — OpenSpiel carries MFG environments and is not tagged, and
+there is **no maintained library implementing the canonical Achdou–Laurière
+finite-difference MFG numerics at all**. That literature is papers, not
+packages.
+
+## What this corrected
+
+1. **A prior planning note recorded that MF-OMO "bounds exploitability by the
+   optimisation residual with an explicit constant". On an abstract-only read
+   that looked unsupported, and it was briefly written off as unverified. That
+   was the error, and it is the most useful thing in this entry.** The *abstract*
+   indeed does not state it — but an earlier check in this project had already
+   **read the SICON full text**, and recorded that **Theorem 8 IS an
+   explicit-constant residual→exploitability bound, fully written out**, with
+   exponential blowup `(C_P+1)^(T+1)` when the dynamics depend on the mean
+   field, and **finite state / action / horizon only**. The note was right; the
+   verification rule had been applied to the wrong artefact, and a correct
+   internal record was contradicted on the strength of an abstract. The shipped
+   prose now states Theorem 8 *and* both of its limits — a stronger and
+   better-informed citation than the one first drafted.
+   **RULES: the abstract is not the paper — never conclude a body-level claim
+   is absent from one; and before declaring an internal claim unverified, search
+   this project's own findings records, because the evidence is usually already
+   here.**
+2. **"Uncited" was itself half wrong.** mfg-lab.html already named `MF-OMO,
+   SICON 2024` once, in the killed-ideas scoreboard — bare, with no authors and
+   no arXiv number. sin-mfg.html, the artifact the outreach email actually
+   sends, mentioned it **zero** times while using exploitability as a
+   certificate. The handoff's description of the artifact was not checked
+   against the artifact.
+3. **A citation written from memory is a claim, and this one was wrong twice
+   in one session.** arXiv:2304.08630 was attached to MF-OMO — that is
+   *MFGLib's own* paper, not MF-OMO's (2206.09608). And the third author was
+   nearly written as "Jiacheng" Zhang; it is **Junzi**. Both errors were caught
+   only by fetching the source. Same species as the composite "prime" and the
+   remembered iteration range: a number or name that looks like a fact because
+   it is written down.
+
+## The honest positioning, and its limit
+
+Rigour in this field is **not** absent — MF-OMO is a rigorous result. It is
+finite-state. The accurate statement, consistent with `FINDINGS_LIT_CAP.md`, is
+that rigorous formulations exist in the finite-state world, do not exist in the
+continuum, and that computer-assisted proof of an MFG equilibrium has no
+counterpart anywhere. **Never write "nobody does rigour in MFG".**
+
+**Limit of the landscape claim.** The "Where this sits" paragraph now in the
+artifact is a claim about a *field*, and no battery can check it. It rests on a
+13-repo topic listing plus two searches — a weak sample. It is written to be
+narrow enough to survive (finite-state vs continuum, score vs certificate) and
+should be re-checked before any stronger version of it is used in writing.
