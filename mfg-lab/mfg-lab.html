@@ -288,6 +288,8 @@
   .status{font-family:var(--data);font-size:11px;letter-spacing:.03em;line-height:1.45;
     color:var(--amber);min-height:2.9em;margin-bottom:4px;text-wrap:pretty;
     overflow-wrap:anywhere;display:block}
+    a{color:var(--fp);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+    a:hover,a:focus-visible{color:var(--hjb)}
   .status.done{color:var(--fp-deep)}
   .status.warn{color:var(--hjb)}
 
@@ -1277,7 +1279,7 @@
       <p>Every tab displays quantities that would expose the solver if it were wrong. Two rules govern them.
       <b>First:</b> prefer identities that hold at machine precision to tolerances that merely pass.
       <b>Second:</b> report <b>pre-update residuals only</b>. A residual evaluated after the update it measures is
-      trivially small — a <i>fake certificate</i> — and never appears here: the clearing residual of Tab&nbsp;05 and the
+      trivially small — a <i>fake certificate</i> — and never appears here: the clearing residual of the price page and the
       fictitious-play residuals are all computed before the step they judge.</p>
       <table class="mtable">
         <tr><th>tab</th><th>certificate</th><th>typical value</th></tr>
@@ -1295,14 +1297,14 @@
     <div class="card span2">
       <h2>Iterations matched to structure <span class="tag">solvers</span></h2>
       <p>No universal iteration exists for these systems; each tab uses the dynamics its structure calls for.
-      <b>Fictitious play</b> where monotonicity guarantees it (Tab&nbsp;01) — and the tab lets you break the averaging
-      (β&nbsp;=&nbsp;0.40) to see why the rate matters. <b>Anderson-1</b> on the clearing map (Tab&nbsp;05), where the
+      <b>Fictitious play</b> where monotonicity guarantees it (on the bench) — and the control lets you break the averaging
+      (β&nbsp;=&nbsp;0.40) to see why the rate matters. <b>Anderson-1</b> on the clearing map (the price page), where the
       spectrum near the fixed point rewards one-step extrapolation. A <b>proximal-implicit integrator</b> for the crossed
-      monotone flow (Tab&nbsp;04), because the flow's Jacobian is skew-dominated — the explicit toggle is left in so the
-      stall can be felt, not just asserted. And for the network VI (Tab&nbsp;07), <b>RK4 under a merit rule</b> — a step
+      monotone flow (the bench's stationary probe), because the flow's Jacobian is skew-dominated — the explicit toggle is left in so the
+      stall can be felt, not just asserted. And for the network VI (the Wardrop page), <b>RK4 under a merit rule</b> — a step
       is accepted only if the Wardrop gap does not increase, the discrete analog of the Bregman–Lyapunov decay — followed
       by an <b>active-set Newton polish</b> on the used-edge KKT system that lands the certificate at machine zero: the
-      same flow→Newton pattern as Tab&nbsp;04. Exposed failure modes are part of the method: the β&nbsp;=&nbsp;0.40 break,
+      same flow→Newton pattern as the bench's stationary probe. Exposed failure modes are part of the method: the β&nbsp;=&nbsp;0.40 break,
       the explicit-Euler stall, the herding pitchfork past the monotonicity threshold, and Scenario&nbsp;1's non-unique
       population split (cost monotone, not strictly — totals unique, split not; the tab demonstrates it by reseeding
       rather than hiding it).</p>
@@ -1320,9 +1322,9 @@
       do not agree. Our total there is 52. The other two deviations, on (5,6) and (3,7), are one-unit rounding
       differences. We read this as a rounding or typesetting artifact in a table the authors round to integers, not as
       an error in their method: their totals satisfy Kirchhoff exactly (100+100 in, 100+100 out). Reproducibility is a first-class control: the common-noise seed of
-      Tab&nbsp;06 is displayed and editable, and the URL hash carries the active tab, parameters, and seed — any
+      the random-supply page is displayed and editable, and the URL hash carries the active page, parameters, and seed — any
       configuration is a shareable, re-runnable link; every certificate block copies as text with that state attached.
-      One measurement is published here <i>against</i> the headline method, on purpose: in the Tab&nbsp;07 duel, a tuned
+      One measurement is published here <i>against</i> the headline method, on purpose: in the Wardrop duel, a tuned
       projected gradient reaches coarse tolerance in fewer steps than the HRF on this small instance. The structural
       contrast is what survives measurement — PG violates conservation by O(10) every step and repairs it by an
       active-set projection; the flow never leaves the manifold. Feasibility by geometry versus feasibility by repair.</p>
@@ -1332,13 +1334,12 @@
       <h2>Lineage and scope <span class="tag b">citations · caveats</span></h2>
       <p><b>Lineage.</b> Monotone finite differences: Achdou &amp; Capuzzo-Dolcetta. The MFG system: Lasry–Lions.
       Crossed monotone flow: Almulla, Ferreira &amp; Gomes. Price formation: Gomes &amp; Saúde (Dyn. Games Appl.).
-      Common-noise price model: Gomes, Gutierrez &amp; Ribeiro (2021; arXiv:2003.01945), reproduced verbatim in
-      Tab&nbsp;06. Hessian–Riemannian flows: Alvarez, Bolte &amp; Brahic (2004); Gomes &amp; Yang (2020); multi-population
-      Wardrop: Bakaryan, Aoun, Ribeiro, Hovakimyan &amp; Gomes (arXiv:2504.16028), Scenarios 1–2 verbatim in Tab&nbsp;07.</p>
+      Common-noise price model: Gomes, Gutierrez &amp; Ribeiro (2021; arXiv:2003.01945), reproduced verbatim on the random-supply page. Hessian–Riemannian flows: Alvarez, Bolte &amp; Brahic (2004); Gomes &amp; Yang (2020); multi-population
+      Wardrop: Bakaryan, Aoun, Ribeiro, Hovakimyan &amp; Gomes (arXiv:2504.16028), Scenarios 1–2 verbatim on the Wardrop page.</p>
       <p><b>Scope, stated plainly.</b> "Crowd aversion" here is a local coupling cost — it is <i>not</i> the Lions
       congestion Hamiltonian, which appears only where named. "Reflecting dynamics" are not state constraints. The upwind
       kernel carries O(h|v|) numerical diffusion and its σ→0 limit is polluted — a known cost of monotonicity, disclosed
-      rather than hidden, and the reason a semi-Lagrangian comparison is on the roadmap. Tab&nbsp;07's emissions scenario
+      rather than hidden, and the reason a semi-Lagrangian comparison is on the roadmap. The Wardrop page's emissions scenario
       follows the paper's cost structure on illustrative edge lengths ("in the style of", not a reproduction — the
       Fig.&nbsp;3a lengths are not given in the text). Where a claim is qualitative, the tab says so; where it is
       quantitative, there is a number on screen you can check.</p>
@@ -1649,6 +1650,7 @@
     theorems already exist to check the machinery against.</p>
     <p class="lede2">If any of this is interesting: <b>carlos@carlostoledo.co</b>. The batteries, the failure log and
     the literature verdicts are all available — including the ones that killed my own ideas.</p>
+    <p class="lede2">Companion artifacts, same kernel and the same certificate standard: the <a href="/sin-mfg">SIN-MFG note</a> (price formation with a stock constraint) and the <a href="/mfg-cap">computer-assisted proof</a> (machine-checked enclosures of an equilibrium).</p>
 
     <div class="pager">
       <button class="pg" data-goto="/verification">← Verification</button>
