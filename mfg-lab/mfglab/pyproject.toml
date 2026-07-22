@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mfglab"
+version = "0.1.0"
+description = "Certified kernels for mean-field games and network equilibria in the monotonicity school"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Carlos Toledo" }]
+keywords = ["mean-field-games", "wardrop", "variational-inequality", "numerical-certificates"]
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mfglab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Put the package on the path directly, so the suite does not depend on a
+# (flaky, for src-layout) editable install. `pip install -e .` still works for
+# interactive use; this makes `pytest` self-contained.
+pythonpath = ["src"]

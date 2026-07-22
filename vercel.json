@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/mfg-lab/mfg-lab" },
+    { "source": "/sin-mfg", "destination": "/sin-mfg/sin-mfg" },
+    { "source": "/mfg-cap", "destination": "/mfg-cap/mfg-cap" }
+  ]
+}

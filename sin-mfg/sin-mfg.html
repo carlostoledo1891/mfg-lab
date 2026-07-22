@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIN-MFG · Price formation with a stock constraint — a living note</title>
+<meta name="description" content="A mean-field model of a hydro-dominated power system, solved live in this page, every claim carrying its certificate.">
+<meta property="og:title" content="SIN-MFG — price formation with a stock constraint, solved live">
+<meta property="og:description" content="A living note: mean-field crowd, Hotelling hydro, and Brazil's price band meet in one equilibrium — computed in your browser, with machine-checked certificates.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
+<style>
+  :root{
+    /* Ground: cool instrument enamel — matches mfg-lab's identity (the lab
+       Ribeiro has seen). The three SIGNAL colours (teal/oxblood/amber) are
+       load-bearing in the canvas code and every legend, so they are KEPT
+       unchanged; only the paper ground and text greys move. Type is sans+mono
+       only, per the house style decision (DESIGN_PLAN); no serif. */
+    --paper:#EEF0F2; --card:#FAFBFC; --ink:#12171C; --ink-soft:#626C78; --grid:#D4D9DE;
+    --fp:#0E7C7B; --fp-deep:#0A4E4D; --hjb:#8C2F39; --amber:#A8720A;
+    --ui:'Inter Tight',system-ui,-apple-system,sans-serif;
+    --body:'Inter',system-ui,-apple-system,sans-serif;
+    --data:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:34px 20px 60px}
+  .eyebrow{font-family:var(--data);font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
+  h1{font-family:var(--ui);font-size:31px;font-weight:600;line-height:1.18;letter-spacing:-.015em}
+  h1 .m{color:var(--fp)} h1 .u{color:var(--hjb)}
+  .sub{font-size:15.5px;color:var(--ink-soft);margin:8px 0 4px;max-width:78ch}
+  .byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin:10px 0 26px}
+  .abstract{background:var(--card);border:1px solid var(--grid);border-left:3px solid var(--amber);
+    border-radius:3px;padding:14px 18px;margin:0 0 26px;max-width:100ch}
+  .abstract b{font-weight:600}
+  h2.sec{font-family:var(--ui);font-size:19px;font-weight:600;margin:30px 0 10px}
+  p.body{max-width:100ch;margin:0 0 10px}
+  .eqs{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0 18px}
+  .eq{background:var(--card);border:1px solid var(--grid);border-radius:3px;padding:10px 66px 10px 14px;
+    font-family:var(--data);font-size:12.5px;line-height:1.65;position:relative}
+  .eq .dir{position:absolute;right:12px;top:9px;font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .eq .m{color:var(--fp);font-weight:600}.eq .u{color:var(--hjb);font-weight:600}.eq .a{color:var(--amber);font-weight:600}
+  .controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:flex-end;
+    background:var(--card);border:1px solid var(--grid);border-radius:3px;padding:14px 16px;margin:0 0 14px}
+  .ctl label{display:block;font-family:var(--data);font-size:10px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
+  .ctl label b{color:var(--ink);font-weight:500}
+  input[type=range]{width:150px;accent-color:var(--amber)}
+  .btns{display:flex;gap:8px;margin-left:auto}
+  button.main{font-family:var(--data);font-size:12px;padding:9px 16px;
+    border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;border-radius:2px}
+  button.ghost{font-family:var(--data);font-size:12px;padding:9px 14px;
+    border:1px solid var(--grid);background:var(--card);color:var(--ink);cursor:pointer;border-radius:2px}
+  button.main:hover{background:#000}button.ghost:hover{border-color:var(--ink-soft);background:var(--paper)}
+  /* status reserves ~5-6 lines (matching mfg-lab): sin-mfg's messages run long
+     ("stalled honestly — residual … no equilibrium is claimed. The panel audits
+     the last iterate …", ~186 chars) and at 390px wrap to several lines; 2 lines
+     was not enough and the box grew mid-solve, pushing the canvas down. 5.8em at
+     10.5px absorbs the worst message at every viewport (proven by the layout
+     battery at 390/640/900/1280/1600). */
+  .status{font-family:var(--data);font-size:10.5px;color:var(--ink-soft);
+    padding:8px 2px;min-height:5.2em;text-wrap:pretty}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--grid);border-radius:3px;
+    padding:14px 16px 12px;position:relative}
+  .span2{grid-column:1/-1}
+  .card h3{font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.01em;margin-bottom:6px}
+  .card h3 .tag{font-family:var(--data);font-size:9.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  /* per-canvas aspect-ratio FLOOR so first paint / resize does not jump; the JS
+     sizing then sets an explicit style.height, which overrides it. Ratios from
+     the HF map (h/w): cvPrice .32, cvStack/cvDens .58, cvResid .12. */
+  canvas{width:100%;height:auto;display:block}
+  #cvPrice{aspect-ratio:3.13} #cvStack{aspect-ratio:1.72} #cvDens{aspect-ratio:1.72} #cvResid{aspect-ratio:8.33} #cvPLD{aspect-ratio:3.33}
+  canvas[style*='height']{aspect-ratio:auto}
+  .leg{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--data);
+    font-size:10px;color:var(--ink-soft);margin-top:8px}
+  .leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  .readouts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 18px;margin:8px 0 2px}
+  .ro{display:flex;justify-content:space-between;border-bottom:1px dashed var(--grid);padding:4px 0;
+    font-family:var(--data);font-size:11.5px}
+  .ro .k{color:var(--ink-soft)}
+  .ro .v{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums;
+    line-height:1.4;min-height:1.4em;text-align:right}
+  .notes{margin-top:30px;border-top:1px solid var(--grid);padding-top:16px;
+    font-size:13.5px;color:var(--ink-soft);line-height:1.66}
+  .notes p{max-width:74ch;margin-bottom:16px}
+  .notes b{font-weight:600;color:var(--ink)}
+  /* run-in lead: the first bold of a notes paragraph reads as a mini-heading */
+  .notes p>b:first-child{font-family:var(--ui);font-weight:600;letter-spacing:.005em}
+  .stag{font-family:var(--data);font-size:10px;color:var(--amber);letter-spacing:.08em}
+  @media print{.controls,.btns,.status{display:none}body{background:#fff}}
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  /* status reservation grows as the viewport narrows and the long messages wrap
+     to more lines (measured natural heights of the 225-char stall message: 4.7em
+     ≥900px, 6.2em at 640px, 9.2em at 390px). Reserve per band so the box never
+     grows mid-solve at any width. */
+  @media(max-width:900px){.status{min-height:6.5em}}
+  @media(max-width:640px){.status{min-height:10em}}
+  @media(max-width:700px){
+    .grid2{grid-template-columns:1fr}
+    h1{font-size:24px}
+    .btns{margin-left:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">SIN-MFG · a living note · v0.3 · everything below is solved live in this page — no libraries, no precomputed data</div>
+  <h1>Price formation with a stock constraint:<br>a mean-field model of a <span class="m">hydro-dominated</span> power system</h1>
+  <div class="sub">Storage agents and log-utility consumers meet a Hotelling-type hydro resource under an administrative price band. Three clearing regimes emerge; the water value pins the price; every <i>numerical</i> claim on this page carries a machine-checked certificate, and the structural results are labeled by proof status.</div>
+  <div class="byline">Carlos Toledo · carlos@carlostoledo.co · working note in the tradition of Gomes–Saúde (2021), Gomes–Gutierrez–Ribeiro (2021), Bakaryan–Aoun–Ribeiro–Hovakimyan–Gomes (2025) · Brazil, 2026</div>
+
+  <div class="abstract">
+    <b>Abstract.</b> I couple a mean field of small storage/consumption agents — quasi-linear preferences with
+    log (unit-elastic) demand, truncated at an exogenous consumption cap c̄, giving closed-form demand min(a(t)/ϖ, c̄) — to a price-taking hydro resource with an
+    intertemporal stock constraint and a convex thermal fringe, clearing under an exogenous price band
+    (Brazil's PLD floor/cap). The model contains three regimes — curtailment, interior, scarcity — and two
+    structural results: the equilibrium is the KKT/VI system of a convex program projected onto the band
+    [<span class="stag">SKETCHED</span>], and the water value pins the price flat on hydro-marginal windows —
+    <b>proved</b> in the deterministic interior-reservoir case this page runs (Hotelling; it is the clearing
+    system the certificates check to machine zero), and a martingale between constraint events in the stochastic
+    form — <b>proved in discrete time</b> (scenario trees, by LP duality; machine-certified in the repository
+    battery) [<span class="stag">PROVED</span>], with the continuum well-posedness open
+    [<span class="stag">OPEN</span>] — a prediction testable on public hourly PLD data. The figure below is not an illustration: it is the equilibrium, computed in your browser
+    as you read, with its certificates printed beside it.
+  </div>
+
+  <h2 class="sec">1 · The model in four lines</h2>
+  <div class="eqs">
+    <div class="eq"><span class="dir">agent</span>max<sub>c,α</sub> ∫ [ a(t)·log c − ϖ(c+α) − ½η α² ] dt + Ψ(x_T), &nbsp; dx = α dt + σ dW, &nbsp; x ∈ [0, x̄] reflecting &nbsp;⇒&nbsp; c* = min(a/ϖ, c̄), &nbsp; α* = clamp((<span class="u">u</span>_x − ϖ)/η)</div>
+    <div class="eq"><span class="dir">field</span>−∂_t <span class="u">u</span> − ½σ²∂_xx <span class="u">u</span> − H(∂_x <span class="u">u</span> − ϖ) = 0, &nbsp; H(p) = max<sub>|α|≤ᾱ</sub> ( α·p − ½η α² ) &nbsp;·&nbsp; ∂_t <span class="m">m</span> − ½σ²∂_xx <span class="m">m</span> + ∂_x(<span class="m">m</span> α*) = 0 &nbsp; (conservative flux form — mass exact; diffusion self-adjoint)</div>
+    <div class="eq"><span class="dir">clearing</span>D(ϖ) + L + φ·A[<span class="m">m</span>,<span class="u">u</span>] = h + q*(ϖ) + S − κ + d, &nbsp; 0 ≤ κ ⟂ (ϖ − ϖ_min) ≥ 0, &nbsp; 0 ≤ d ⟂ (ϖ_max − ϖ) ≥ 0 &nbsp; — <span class="a">the residual of this line is the first certificate below</span></div>
+    <div class="eq"><span class="dir">hydro</span>dR = (I − h)dt, &nbsp; Σh·dt = E_hydro, &nbsp; h interior ⇒ ϖ = <span class="a">w</span> &nbsp; — Hotelling-type: on hydro-marginal hours the price is pinned to the water value <span class="a">w</span> (the stock's shadow price), constant here because this benchmark imposes only the daily budget — the interior-reservoir reduction [T3]</div>
+  </div>
+
+  <div class="controls">
+    <div class="ctl"><label>solar amplitude <b id="vSol"></b></label><input type="range" id="pSol" min="0.6" max="1.8" step="0.05" value="1.25"></div>
+    <div class="ctl"><label>evening peak <b id="vPk"></b></label><input type="range" id="pPk" min="0.2" max="0.8" step="0.05" value="0.50"></div>
+    <div class="ctl"><label>fleet size φ <b id="vPhi"></b></label><input type="range" id="pPhi" min="0" max="2" step="0.1" value="1.0"></div>
+    <div class="ctl"><label>hydro budget <b id="vEh"></b></label><input type="range" id="pEh" min="2.0" max="5.0" step="0.1" value="3.2"></div>
+    <div class="ctl"><label>price floor <b id="vFl"></b></label><input type="range" id="pFl" min="0.02" max="0.30" step="0.01" value="0.05"></div>
+    <div class="ctl"><label>price cap <b id="vCp"></b></label><input type="range" id="pCp" min="1.5" max="4.0" step="0.1" value="3.0"></div>
+    <div class="btns">
+      <button class="main" id="solveBtn">Solve equilibrium</button>
+      <button class="ghost" id="resetBtn">Reset</button>
+    </div>
+  </div>
+  <div class="status" id="status">idle</div>
+
+  <div class="grid2">
+    <div class="card span2">
+      <h3>Fig. 1 — the day, cleared <span class="tag">price · regimes · water value</span></h3>
+      <canvas id="cvPrice" width="1040" height="330" role="img" aria-label="Hourly equilibrium price with regime shading and the water value line"></canvas>
+      <div class="leg">
+        <span><i style="background:var(--ink)"></i>equilibrium price ϖ(t)</span>
+        <span><i style="background:var(--amber)"></i>water value w (dashed)</span>
+        <span><i style="background:rgba(14,124,123,.18)"></i>curtailment regime (floor, κ&gt;0)</span>
+        <span><i style="background:rgba(140,47,57,.16)"></i>scarcity regime (cap, d&gt;0)</span>
+        <span><i style="background:var(--grid)"></i>administrative band</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Fig. 2 — who serves the load <span class="tag">stack</span></h3>
+      <canvas id="cvStack" width="512" height="300" role="img" aria-label="Hourly generation stack: VRE, hydro, thermal, deficit, curtailed"></canvas>
+      <div class="leg">
+        <span><i style="background:rgba(14,124,123,.55)"></i>VRE used</span>
+        <span><i style="background:var(--fp-deep)"></i>hydro</span>
+        <span><i style="background:#9aa0ae"></i>thermal</span>
+        <span><i style="background:var(--hjb)"></i>deficit</span>
+        <span><i style="background:none;border:1px dashed var(--fp)"></i>curtailed VRE</span>
+        <span><i style="background:var(--ink)"></i>total demand</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Fig. 3 — the fleet, as a density <span class="tag">m(x,t) · storage</span></h3>
+      <canvas id="cvDens" width="512" height="300" role="img" aria-label="Population density over storage state and time"></canvas>
+      <div class="leg"><span><i style="background:var(--fp)"></i>population density over state-of-charge (dark = dense) — charging into the solar hours, discharging into the peak</span></div>
+    </div>
+
+    <div class="card span2">
+      <h3>Certificates <span class="tag">every claim above, checked — pre-update residuals only</span></h3>
+      <div class="status" id="cstat">—</div>
+      <div class="readouts">
+        <div class="ro"><span class="k">clearing residual (worst slice)</span><span class="v" id="roClear">—</span></div>
+        <div class="ro"><span class="k">mass of m (drift)</span><span class="v" id="roMass">—</span></div>
+        <div class="ro"><span class="k">min m (positivity)</span><span class="v" id="roMin">—</span></div>
+        <div class="ro"><span class="k">hydro budget error</span><span class="v" id="roBud">—</span></div>
+        <div class="ro"><span class="k">hydro complementarity</span><span class="v" id="roComp">—</span></div>
+        <div class="ro"><span class="k">T3 · Hotelling complementarity (marginal hours)</span><span class="v" id="roT3">—</span></div>
+        <div class="ro"><span class="k">band complementarity</span><span class="v" id="roBand">—</span></div>
+        <div class="ro"><span class="k">w dual feasibility (±1% bracket)</span><span class="v" id="roDual">—</span></div>
+        <div class="ro"><span class="k">exploitability (independent DP audit)</span><span class="v" id="roEps">—</span></div>
+        <div class="ro"><span class="k">regimes today (C · I · S hours)</span><span class="v" id="roReg">—</span></div>
+        <div class="ro"><span class="k">curtailed energy · this fleet vs φ=0</span><span class="v" id="roCurt">—</span></div>
+        <div class="ro"><span class="k">welfare gap of a posted TOU tariff</span><span class="v" id="roG">—</span></div>
+        <div class="ro"><span class="k">fixed-point residual (price path)</span><span class="v" id="roFP">—</span></div>
+      </div>
+      <canvas id="cvResid" width="1040" height="120"></canvas>
+      <div class="leg"><span><i style="background:var(--amber)"></i>price-path residual per Picard iteration (log)</span></div>
+    </div>
+
+    <div class="card span2">
+      <h3>Real data — a look, not a proof <span class="tag">SE hourly PLD · CCEE PLD_HORARIO · Jul 2024</span></h3>
+      <canvas id="cvPLD" width="1040" height="300" role="img" aria-label="Two weeks of real Southeast hourly PLD showing flat hydro-marginal windows, the price level stepping between them, and evening jumps"></canvas>
+      <div class="leg"><span><i style="background:var(--ink)"></i>hourly PLD</span><span><i style="background:var(--fp)"></i>flat hydro-marginal windows</span><span><i style="background:var(--amber)"></i>administrative floor</span></div>
+      <p class="body" style="margin-top:8px;font-size:12.5px;color:var(--ink-soft)">The shape T3 predicts is <i>descriptively</i> present in two real weeks: prices sit flat within hydro-marginal windows (shaded), the level steps between them (~R$95 → ~R$78, the water value as a day-to-day martingale), and jumps arrive at the evening peak. <b>This is consistency, not a test:</b> PLD is the <i>administered</i> CMO of the official dispatch model, whose hydro-marginal value <i>is</i> the constructed water value, so flatness here partly reflects the price's own construction — and the flatness statistic measures persistence, on windows selected to be non-extreme. The five-year picture (2021–2025), including the 2021 water crisis as the flattest year, is in the note text and the companion script; a clean test needs a persistence-matched null on a market — not administered — price.</p>
+    </div>
+  </div>
+
+  <div class="notes">
+    <p><b>What you just watched.</b> The solve animates a damped Picard iteration on the price path: field
+    (HJB backward, FP forward in conservative flux form) → hydro water value by bisection on the energy
+    budget → three-regime clearing per hour. The price lands flat on the water value across the
+    hydro-marginal hours. Stated carefully: the Hotelling rule <i>assigns</i> ϖ = w on marginal hours — the
+    emergent, checked content is <i>which hours are marginal</i>, that a single constant w closes the hydro
+    energy budget through the fixed point (dual-feasibility receipt: perturbing w by ±1% breaks the budget in
+    the correct directions), and the complementarity pattern off the marginal set. The fully falsifiable form
+    of T3 — w a martingale, flat windows in data — lives in the stochastic model and in the PLD test below. Slide the solar amplitude
+    up and watch the curtailment regime widen at the floor; slide the fleet φ up and watch it shrink — the
+    curtailment line in the certificates is Theorem-target T4's sign, live. The welfare-gap line prices posted time-of-use tariffs against the equilibrium signal — including the <i>best</i> two-level tariff found by grid search, so the gap is not an artifact of a badly chosen strawman: the gap is the deadweight cost of pricing a
+    crowd without pricing its reaction to itself.</p>
+    <p><b>Status of the mathematics, stated plainly.</b> What is new here is the object, not the machinery: a
+    mean-field storage crowd cleared against a Hotelling hydro stock, with the administrative band as a
+    first-class equilibrium object, and most certificates read as a constraint residual or an adjoint
+    martingale. The tools it stands on are standard — Benamou–Brenier convexity, Lasry–Lions monotonicity, the
+    Hotelling water value — and each claim here is labeled proved, standard, or open, nothing blurred. The
+    equilibrium is characterized as the KKT system of
+    a convex program (convexified field, convex costs, linear constraints) projected
+    onto the administrative band — a monotone variational inequality <span class="stag">[SKETCHED — continuum
+    convex structure standard (Lasry–Lions/Cardaliaguet); reflecting-boundary duality open. An <i>exact</i>
+    discrete KKT needs the transport to be adjoint-matched (FP = HJBᵀ), the block-symmetric monotone scheme of
+    Achdou–Capuzzo-Dolcetta — an upwind HJB with its exact-transpose FP; this page's diffusion is already
+    adjoint-matched, but it pairs a centered HJB gradient with an upwind FP, so the transport is not, and
+    conservation comes from the flux form instead. Not self-adjointness (A ≠ Aᵀ) — adjoint-matching between the
+    two operators]</span>. The water-value result [T3] splits by
+    regime, and the split is honest about what is proved: in the <b>deterministic interior-reservoir case this
+    benchmark runs, T3 is a theorem</b> <span class="stag">[PROVED]</span> — the water value w is the constant
+    KKT multiplier of the daily energy budget, so on hydro-marginal hours ϖ = w by complementary slackness. That
+    is exactly the <i>hydro dispatch</i> rule the certificate panel checks to machine zero (marginal-hour
+    |ϖ−w| = 0, the withhold/marginal/full complementarity p&lt;w⇒h=0 / p&gt;w⇒h=h̄, budget monotone in w) — the
+    demand-side band regimes (curtailment/scarcity) are the separate κ,d saturations, not this KKT. The <b>stochastic form</b> — w a
+    martingale between constraint events, the costate of the reservoir with vanishing drift wherever the
+    Hamiltonian does not see the stock — is the same mechanism as Lemma 3.1 of Gomes–Gutierrez–Ribeiro (Π a
+    martingale), and in <b>discrete time it is now a theorem</b> <span class="stag">[PROVED]</span>: on any
+    finite scenario tree the water value satisfies w = E[w<sub>child</sub> | node] at every node with interior
+    post-release stock, stepping down across full-reservoir events and up across empty ones — one page of LP
+    duality — the constraints are linear, so strong duality is automatic and no constraint qualification has
+    to be assumed; that is a property of finite LPs, not a strength of this argument — certified to machine precision in the repository battery
+    (test-water-value.js: zero duality gap, off-binding martingale residual ~1e-13 across a 120-tree random
+    sweep; spilling nodes get w = 0, the floor-spill regime as a dual complementarity). What remains
+    <span class="stag">[OPEN]</span> is the continuum statement — reflected-FBSDE
+    well-posedness through the mean-field coupling. Either way the organizing principle behind every
+    number in the certificate panel falls into one of a few kinds, and it is worth being exact about how many,
+    because the tempting one-liner — that a certificate is <i>always</i> either a constraint residual or an
+    adjoint martingale — is falsified by this page's own panel. What is actually here is <b>four classes</b>: constraint residuals
+    (clearing, mass, hydro budget), complementarity and feasibility checks (the band, the box, positivity),
+    adjoint identities and martingales (the water value between binding events), and an <b>independent
+    optimality gap</b> — the exploitability ε, measured by a separately coded DP best response, which is none
+    of the first three. Whether these are instances of one calculus or genuinely different certificate
+    geometries is the one question this note deliberately leaves open; the honest guess today is the latter.</p>
+    <p><b>The falsifiable part — a first look at real data, and its limits.</b> T3's deterministic form predicts
+    that within hydro-marginal windows, strictly inside the band, the price is flat — jumping only at constraint
+    events. Five years of Southeast hourly PLD (CCEE PLD_HORARIO, 2021–2025) show that shape
+    <i>descriptively</i>: interior windows are flat, with the level stepping between windows, and the flatness
+    tracks the hydro-marginal <i>regime</i>, not the calendar — the flattest year is <b>2021, the water
+    crisis</b>, when scarcity kept hydro marginal almost year-round, while in abundant years the wet season sits
+    at the floor (curtailment) instead, so the naive wet-vs-dry seasonal proxy is refuted. But this is
+    consistency, not yet a clean test, and the note says so plainly: PLD horário is the <b>administered</b> price
+    — the capped CMO of the official dispatch model (DESSEM) — and in hydro-marginal hours that CMO <i>is</i> the
+    constructed water value, so flatness there partly reflects the price's own construction rather than an
+    independent market fact; the permutation null measures persistence, not pinning; and interior windows are
+    selected and split at jumps. The honest statement: the model's water-value structure is consistent with how
+    Brazil's official hourly price behaves — a starting point for a real test (a persistence-matched null on a
+    market, not administered, price), not the test itself.</p>
+    <p><b>Disclosures.</b> Units are dimensionless and profiles stylized — this page validates a
+    <i>formulation</i>, not Brazil; calibration (ONS/CCEE series, CVU merit order, LRCAP fleet) is the next
+    phase and is where the demand-side parameters are weakest. Reflecting dynamics approximate state-of-charge
+    constraints (they are not state constraints). Controls are power-limited (|α| ≤ ᾱ enters the Hamiltonian).
+    The forward operator has self-adjoint diffusion (verified to machine zero) and upwind transport (chosen for
+    positivity, verified strict); unlike the adjoint-matched HJB⇄FP pair of the continuum-lab tabs (upwind HJB
+    with its exact-transpose FP, à la Achdou–Capuzzo-Dolcetta — certified there by an operator-level transpose
+    check), this page's transport is <i>not</i> the exact discrete adjoint of its centered HJB drift, so mass
+    conservation here comes from the conservative flux form (verified at the operator level: the transport
+    matrix has machine-zero column sums), not from an adjoint identity. The exploitability certificate is computed by an independently
+    coded Markov-chain best response and is reported on its own, to be read beside the Picard residual that
+    limits it. No absolute floor is printed: an earlier O(h+Δt) "floor" was removed as fabricated (|ε|/floor
+    is measured to span several orders across the slider box, so no single constant bounds ε — the same
+    retraction made in the lab). When the hydro budget cannot be absorbed even at the price floor, the model spills the surplus and says so; when the water value pins to the cap, hydro is indifferent between selling and withholding and the dispatch mixes (θ reported) — both degenerate-dual cases are handled and labeled, not hidden. This benchmark imposes only the daily energy budget Σh·dt = E_hydro — the <i>interior-reservoir reduction</i>,
+    in which the reservoir state R_t and inflows are not resolved (there is no R_t in the solver, and nothing
+    that could bind), which is exactly the regime where a single constant water value w appears; the piecewise-w
+    regime with binding stock bounds and spill/empty events belongs to the deferred stochastic version with R_t. Four further honesty notes: the 24h horizon ends on a
+    storage-target terminal condition, which shapes late-evening fleet behavior — the cleaner object is the
+    periodic-day (cycle) equilibrium, on the roadmap; the welfare-gap's nonnegativity is exact as a continuum
+    claim and holds numerically here with wide margin, but at coarse grids small negative values would indicate
+    discretization, not a theorem failure; convergence of the damped Picard iteration is observed, not proven —
+    the trust object is the end-state certificate panel, never the path; and slice prices can be set-valued on
+    measure-zero plateaus (satiated demand + capped thermal + clamped fleet), a third benign degeneracy of the
+    same species as the floor-spill and cap-mixed cases — aggregates remain unique throughout. Related literature I build beside, not instead of:
+    Alasseur–Ben Tahar–Matoussi (storage MFG), Aïd–Basei–Pham (McKean–Vlasov distributed generation), Féron–Tankov–Tinsi
+    (intraday markets); and, on the economics side, the rational-storage price theory of
+    Scheinkman–Schechtman and Deaton–Laroque, of which T3's flat-when-interior / spike-at-constraint pattern
+    is the hydro-MFG incarnation — the delta over that tradition is the mean-field coupling, the administrative band as a
+    first-class object, and the certified national-calibration program. Deferred, not hidden: the
+    Hessian–Riemannian solve of the market VI at scale, spill-event scenarios (piecewise water value),
+    grid-refinement study, common-noise (reflected FBSDE) version.</p>
+    <p><b>For discussion.</b> (1) Does the Gomes–Saúde multiplier formulation extend as sketched through the
+    elastic-demand, banded balance — or is there a subtlety I owe more respect? (2) The adjoint-martingale
+    half of this is standard Pontryagin — when the state derivative of the Hamiltonian vanishes the costate is
+    a local martingale, and I am not claiming otherwise. The question I actually have is the other half:
+    equilibrium <i>clearing</i> can force an exact pathwise first integral of the coupled price–aggregate–adjoint
+    system, which is a different mechanism. In the LQ case that integral is linear and exactly solvable; is
+    there a criterion for when the closure forces one at all, and does anything survive non-LQ demand — a
+    nonlinear invariant, or only an asymptotic one? (3) The market VI shares its class with the Wardrop flow of arXiv:2504.16028 —
+    is the Hessian–Riemannian flow the right solver for it at national scale?</p>
+    <p><b>Colophon.</b> One HTML file, no libraries; the numerics were developed headless-first and are
+    validated by a battery that EXTRACTS this page's kernel at run time (so it cannot certify a stale copy)
+    and checks it in two layers — the mathematics, and the artifact's own display path — including the
+    independent DP audit, every regime and degenerate-dual case, the operator-level conservation and
+    self-adjoint-diffusion structure, and a permutation-null contrast that tested and <i>rejected</i> the naive
+    seasonal proxy (the flatness tracks the hydro-marginal regime, not the month). Every fix is
+    mutation-proven (reverted to confirm the check goes red). Built with the same kernel and certificate
+    discipline as the MFG Lab, its interactive companion piece.</p>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ============ SIN-MFG living note ==================================
+   Battery of record: test-sin.js — run it, do not trust this comment.
+   It EXTRACTS this kernel from this file at run time, so it cannot
+   validate a stale copy, and it prints the sha256 of what it read.
+
+   This header previously claimed the kernel was "ported verbatim from
+   the validated headless battery test-sinmfg.js (ALL PASS)". That
+   claim is retired: test-sinmfg.js embedded its own copy of the kernel
+   and never opened this file, and the kernel has since diverged from it
+   (reordered clearSlice withholding branch, pooled mixed dispatch,
+   fmtG->fmtE, S.cert structural audit). A comment asserting a
+   certification is not a certification. See FINDINGS_SIN.md.
+   =================================================================== */
+const $=id=>document.getElementById(id);
+const NT=24, dt=1.0, NX=16, XBAR=4.0, hx=XBAR/NX;
+const SIG=0.10, ETA=8.0, AMAX=0.35;
+const KAPT=0.6, XSTAR=2.0, GAM=2.5, QBAR=0.42, HBAR=0.30, CBAR=0.5;
+const bump=(t,c,s)=>Math.exp(-0.5*((t-c)/s)**2);
+const xs=Array.from({length:NX},(_,i)=>(i+0.5)*hx);
+const P={sol:1.25,pk:0.50,phi:1.0,EHYD:3.2,PMIN:0.05,PMAX:3.0};
+const Lt=t=>0.42+P.pk*bump(t,19,1.8);
+const St=t=>P.sol*bump(t,12.5,2.6);
+const At_=t=>0.30+0.22*bump(t,19.5,2.4);
+
+function thomas(a,b,c,d){
+  const n=d.length,cp=new Float64Array(n),dp=new Float64Array(n),x=new Float64Array(n);
+  cp[0]=c[0]/b[0];dp[0]=d[0]/b[0];
+  for(let i=1;i<n;i++){const m=b[i]-a[i]*cp[i-1];cp[i]=c[i]/m;dp[i]=(d[i]-a[i]*dp[i-1])/m;}
+  x[n-1]=dp[n-1];
+  for(let i=n-2;i>=0;i--)x[i]=dp[i]-cp[i]*x[i+1];
+  return x;
+}
+function solveField(price){
+  const u=[...Array(NT+1)].map(()=>new Float64Array(NX));
+  const Psi=xs.map(x=>-KAPT*(x-XSTAR)**2);
+  u[NT].set(Psi);
+  const nu=0.5*SIG*SIG;
+  function diffuse(v,dtf){
+    const a=new Float64Array(NX),b=new Float64Array(NX),c=new Float64Array(NX);
+    const r=nu*dtf/(hx*hx);
+    for(let i=0;i<NX;i++){a[i]=-r;b[i]=1+2*r;c[i]=-r;}
+    b[0]=1+r;b[NX-1]=1+r;a[0]=0;c[NX-1]=0;
+    return thomas(a,b,c,v);
+  }
+  const NSUB=4,dtf=dt/NSUB;
+  for(let t=NT-1;t>=0;t--){
+    let v=Float64Array.from(u[t+1]);
+    for(let s=0;s<NSUB;s++){
+      const w=new Float64Array(NX);
+      for(let i=0;i<NX;i++){
+        const uxp=(i<NX-1?(v[i+1]-v[i])/hx:0),uxm=(i>0?(v[i]-v[i-1])/hx:0);
+        const ux=0.5*(uxp+uxm);
+        const ac=Math.max(-AMAX,Math.min(AMAX,(ux-price[t])/ETA));
+        w[i]=v[i]+dtf*(ac*(ux-price[t])-0.5*ETA*ac*ac);
+      }
+      v=diffuse(w,dtf);
+    }
+    u[t].set(v);
+  }
+  const m=[...Array(NT+1)].map(()=>new Float64Array(NX));
+  {const sd=0.7;let Z=0;
+   for(let i=0;i<NX;i++){m[0][i]=Math.exp(-0.5*((xs[i]-1.2)/sd)**2);Z+=m[0][i]*hx;}
+   for(let i=0;i<NX;i++)m[0][i]/=Z;}
+  const A=new Float64Array(NT),Ux=new Float64Array(NT);
+  for(let t=0;t<NT;t++){
+    const al=new Float64Array(NX);
+    let uxi=0;
+    for(let i=0;i<NX;i++){
+      const uxp=(i<NX-1?(u[t][i+1]-u[t][i])/hx:0),uxm=(i>0?(u[t][i]-u[t][i-1])/hx:0);
+      const ux=0.5*(uxp+uxm);
+      al[i]=Math.max(-AMAX,Math.min(AMAX,(ux-price[t])/ETA));
+      uxi+=ux*m[t][i]*hx;
+    }
+    Ux[t]=uxi;
+    let mv=Float64Array.from(m[t]);
+    const amax=Math.max(...al.map(Math.abs));
+    const ns=Math.min(64,Math.max(NSUB,Math.ceil(amax*dt/(0.8*hx))));
+    const dts=dt/ns;
+    for(let s=0;s<ns;s++){
+      const flux=new Float64Array(NX+1);
+      for(let f=1;f<NX;f++){
+        const a=0.5*(al[f-1]+al[f]);
+        flux[f]=a>0?a*mv[f-1]:a*mv[f];
+      }
+      const w=new Float64Array(NX);
+      for(let i=0;i<NX;i++)w[i]=mv[i]-dts*(flux[i+1]-flux[i])/hx;
+      mv=diffuse(w,dts);
+    }
+    m[t+1].set(mv);
+    let Ai=0;for(let i=0;i<NX;i++)Ai+=al[i]*m[t][i]*hx;
+    A[t]=Ai;
+  }
+  return {u,m,A,Ux};
+}
+function makeN(t,Ux){
+  const ab=At_(t),L=Lt(t),S=St(t);
+  return p=>{
+    const fleet=P.phi*Math.max(-AMAX,Math.min(AMAX,(Ux-p)/ETA));
+    return Math.min(ab/p,CBAR)+L+fleet-Math.min(p/GAM,QBAR)-S;
+  };
+}
+function bisect(f,lo,hi){
+  let flo=f(lo);
+  for(let k=0;k<60;k++){const mid=0.5*(lo+hi),fm=f(mid);
+    if(flo*fm<=0)hi=mid;else{lo=mid;flo=fm;}}
+  return 0.5*(lo+hi);
+}
+function clearSlice(t,Ux,w){
+  /* complete case analysis — every branch balances by construction:
+     curtailment | w>cap (hydro withholds) | scarcity |
+     hydro-marginal at max(w,floor) | hydro off | hydro capped.
+     ORDER IS LOad-BEARING: withholding is tested before scarcity, because
+     the Hotelling condition h=0 for p<w must not be preempted by a capacity
+     test. Branch coverage is asserted by test-sin.js A7 — a case analysis
+     claimed "complete" that is never exercised proves nothing. */
+  const N=makeN(t,Ux);
+  let p,h=0,k=0,d=0;
+  if(N(P.PMIN)<=0){ p=P.PMIN; k=-N(P.PMIN); }
+  else if(w>P.PMAX){
+    /* Hotelling stock optimality. The band caps the attainable price at
+       PMAX, so w > PMAX gives p <= PMAX < w on EVERY hour, and the KKT
+       condition h = 0 for p < w is forced: hydro withholds rather than
+       sell below its own water value; the deficit d absorbs the shortfall.
+
+       This test MUST precede the scarcity branch below. Tested after it, a
+       scarcity hour pinned h = HBAR regardless of w, so tot(w) saturated at
+       a positive constant, the stock constraint became unenforceable, and
+       the water-value bisection walked to its bracket ceiling (PMAX+5) and
+       returned that as the answer. Measured before the fix: seven evening
+       hours pinned at HBAR gave sum h dt = 2.10 against a budget of 2.00,
+       with tot(w) = 2.100 unchanged out to w = 1e6.
+       See FINDINGS_SIN.md Defect 1; pinned by test-sin.js A9/A10/A12/A16. */
+    if(N(P.PMAX)>=0){ p=P.PMAX; d=N(P.PMAX); }
+    else { p=bisect(N,P.PMIN,P.PMAX); }
+  }
+  else if(N(P.PMAX)>=HBAR){ p=P.PMAX; h=HBAR; d=N(P.PMAX)-HBAR; }
+  else{
+    const wc=Math.max(w,P.PMIN);
+    const Nw=N(wc);
+    if(Nw>=0&&Nw<=HBAR){ p=wc; h=Nw; }
+    else if(Nw<0){ h=0; p=bisect(N,P.PMIN,P.PMAX); }
+    else { h=HBAR; p=bisect(x=>N(x)-HBAR,wc,P.PMAX); }
+  }
+  const q=Math.min(p/GAM,QBAR);
+  return {p,h,k,d,q};
+}
+function dispatch(Ux){
+  const tot=w=>{let s=0;for(let t=0;t<NT;t++)s+=clearSlice(t,Ux[t],w).h*dt;return s;};
+  let lo=1e-4,hi=P.PMAX+5;
+  for(let k=0;k<70;k++){const mid=0.5*(lo+hi);(tot(mid)>P.EHYD)?lo=mid:hi=mid;}
+  let w=0.5*(lo+hi),spill=0,mix=null;
+  const totW=tot(w);
+  if(totW<P.EHYD-1e-6&&w<=P.PMIN+1e-3){
+    // budget cannot be absorbed even at the floor: real dams spill.
+    spill=P.EHYD-totW;
+    w=P.PMIN;
+  }else if(Math.abs(totW-P.EHYD)>1e-6&&Math.abs(w-P.PMAX)<1e-3){
+    // dual kink at the cap: tot(w) jumps at w = PMAX because hydro is
+    // exactly indifferent between selling at the cap and withholding.
+    // Classical resolution: MIXED dispatch — fraction theta of the
+    // indifferent volume runs, chosen to close the budget; the rest is
+    // withheld and served as deficit at the cap.
+    w=P.PMAX;
+    /* At w = PMAX every hour clearing AT the cap has p = w, so hydro is
+       indifferent on ALL of them and the KKT condition leaves h free in
+       [0, cap_t]. The previous version pinned the scarcity hours
+       (N(PMAX) >= HBAR) to full output and scaled only the remainder, so
+       whenever those hours alone exceeded the budget theta clamped to 0 and
+       the stock constraint overshot by up to 1e-1 -- the same preemption
+       defect as clearSlice, duplicated inline.
+
+       Pool every indifferent hour and scale uniformly. Which allocation is
+       chosen among the optimal set is a declared modelling choice (all are
+       optimal for hydro); closing the budget is not a choice.
+       Pinned by test-sin.js A11. */
+    const sl=[],pool=[];
+    for(let t=0;t<NT;t++){
+      const N=makeN(t,Ux[t]);
+      if(N(P.PMIN)<=0){sl.push({p:P.PMIN,h:0,k:-N(P.PMIN),d:0,q:Math.min(P.PMIN/GAM,QBAR)});}
+      else if(N(P.PMAX)<0){sl.push(clearSlice(t,Ux[t],P.PMAX));}
+      else{pool.push({t,cap:Math.min(HBAR,N(P.PMAX)),nd:N(P.PMAX)});sl.push(null);}
+    }
+    const avail=pool.reduce((a,x)=>a+x.cap,0);
+    const th=Math.min(1,Math.max(0,(P.EHYD/dt)/Math.max(avail,1e-12)));
+    for(const {t,cap,nd} of pool){
+      const hh=th*cap;
+      sl[t]={p:P.PMAX,h:hh,k:0,d:nd-hh,q:Math.min(P.PMAX/GAM,QBAR)};
+    }
+    mix=th;
+    return {w,sl,spill:0,mix};
+  }
+  const sl=[];for(let t=0;t<NT;t++)sl.push(clearSlice(t,Ux[t],w));
+  return {w,sl,spill,mix};
+}
+function dpAudit(price,field){
+  const NC=41;
+  const acts=Array.from({length:NC},(_,j)=>-AMAX+2*AMAX*j/(NC-1));
+  const nu=0.5*SIG*SIG,pdif=nu*dt/(hx*hx);
+  const Psi=xs.map(x=>-KAPT*(x-XSTAR)**2);
+  const ev=(V,i,a)=>{
+    let xn=xs[i]+a*dt;xn=Math.min(Math.max(xn,xs[0]),xs[NX-1]);
+    const f=(xn-xs[0])/hx,i0=Math.min(NX-2,Math.floor(f)),th=f-i0;
+    let e=(1-th)*V[i0]+th*V[i0+1];
+    const iu=Math.min(NX-1,i+1),idn=Math.max(0,i-1);
+    return (1-2*pdif)*e+pdif*(V[iu]+V[idn]);
+  };
+  let Vbr=Float64Array.from(Psi),Vpi=Float64Array.from(Psi);
+  for(let t=NT-1;t>=0;t--){
+    const u=field.u[t],pol=new Float64Array(NX);
+    for(let i=0;i<NX;i++){
+      const uxp=(i<NX-1?(u[i+1]-u[i])/hx:0),uxm=(i>0?(u[i]-u[i-1])/hx:0);
+      pol[i]=Math.max(-AMAX,Math.min(AMAX,(0.5*(uxp+uxm)-price[t])/ETA));
+    }
+    const nb=new Float64Array(NX),np=new Float64Array(NX);
+    for(let i=0;i<NX;i++){
+      let best=-1e18;
+      for(const a of acts){
+        const v=(-price[t]*a-0.5*ETA*a*a)*dt+ev(Vbr,i,a);
+        if(v>best)best=v;
+      }
+      nb[i]=best;
+      const a=pol[i];
+      np[i]=(-price[t]*a-0.5*ETA*a*a)*dt+ev(Vpi,i,a);
+    }
+    Vbr=nb;Vpi=np;
+  }
+  let eps=0;
+  for(let i=0;i<NX;i++)eps+=(Vbr[i]-Vpi[i])*field.m[0][i]*hx;
+  let pm=0;for(const p of price)pm+=p/NT;
+  let arb=0;for(const p of price)arb+=Math.abs(p-pm)*AMAX*dt;
+  return {eps,floor:(hx/XBAR+dt/NT)*arb};
+}
+function welfareOf(price,field,disp){
+  let J=0;
+  for(let t=0;t<NT;t++){
+    const p=disp.sl[t].p,ab=At_(t),c=Math.min(ab/p,CBAR);
+    let stor=0;const u=field.u[t];
+    for(let i=0;i<NX;i++){
+      const uxp=(i<NX-1?(u[i+1]-u[i])/hx:0),uxm=(i>0?(u[i]-u[i-1])/hx:0);
+      const a=Math.max(-AMAX,Math.min(AMAX,(0.5*(uxp+uxm)-price[t])/ETA));
+      stor+=0.5*ETA*a*a*field.m[t][i]*hx;
+    }
+    const {q,d}=disp.sl[t];
+    J+=dt*(ab*Math.log(c)-P.phi*stor-0.5*GAM*q*q-P.PMAX*d);
+  }
+  for(let i=0;i<NX;i++)J+=(-KAPT*(xs[i]-XSTAR)**2)*field.m[NT][i]*hx;
+  return J;
+}
+function touCounterfactual(peak,off,w0,w1){
+  peak=peak??1.6;off=off??0.55;w0=w0??17;w1=w1??21;
+  const tau=new Float64Array(NT);
+  for(let t=0;t<NT;t++)tau[t]=(t>=w0&&t<=w1)?peak:off;
+  const f=solveField(tau);
+  const need=new Float64Array(NT);
+  for(let t=0;t<NT;t++){
+    const c=Math.min(At_(t)/tau[t],CBAR);
+    need[t]=c+Lt(t)+P.phi*f.A[t]-St(t);
+  }
+  const hOf=w=>need.map(n=>Math.min(Math.max(n-Math.min(w/GAM,QBAR),0),HBAR));
+  let lo=1e-4,hi=P.PMAX+5;
+  for(let k=0;k<70;k++){const mid=0.5*(lo+hi);
+    (hOf(mid).reduce((a,b)=>a+b,0)*dt>P.EHYD)?lo=mid:hi=mid;}
+  const h=hOf(0.5*(lo+hi));
+  let J=0;
+  for(let t=0;t<NT;t++){
+    const c=Math.min(At_(t)/tau[t],CBAR);
+    let stor=0;const u=f.u[t];
+    for(let i=0;i<NX;i++){
+      const uxp=(i<NX-1?(u[i+1]-u[i])/hx:0),uxm=(i>0?(u[i]-u[i-1])/hx:0);
+      const a=Math.max(-AMAX,Math.min(AMAX,(0.5*(uxp+uxm)-tau[t])/ETA));
+      stor+=0.5*ETA*a*a*f.m[t][i]*hx;
+    }
+    const rem=need[t]-h[t];
+    const q=Math.min(Math.max(rem,0),QBAR);
+    const d=Math.max(rem-q,0);
+    J+=dt*(At_(t)*Math.log(c)-P.phi*stor-0.5*GAM*q*q-P.PMAX*d);
+  }
+  for(let i=0;i<NX;i++)J+=(-KAPT*(xs[i]-XSTAR)**2)*f.m[NT][i]*hx;
+  return J;
+}
+
+/* ---------------- canvases (dpr-crisp; logical coordinates) ---------------- */
+const DPR=Math.min(2,window.devicePixelRatio||1);
+function sizeCanvas(cv,w,h){
+  cv.setAttribute('width',Math.round(w*DPR));
+  cv.setAttribute('height',Math.round(h*DPR));
+  cv.style.height=h+'px';
+  if(!cv._lg){
+    Object.defineProperty(cv,'width',{configurable:true,get(){return cv._w;}});
+    Object.defineProperty(cv,'height',{configurable:true,get(){return cv._h;}});
+    cv._lg=1;
+  }
+  cv._w=w;cv._h=h;
+  cv.getContext('2d').setTransform(DPR,0,0,DPR,0,0);
+}
+const HF={cvPrice:w=>Math.round(Math.min(360,Math.max(240,w*0.32))),
+          cvStack:w=>Math.round(Math.min(320,Math.max(220,w*0.58))),
+          cvDens:w=>Math.round(Math.min(320,Math.max(220,w*0.58))),
+          cvResid:w=>Math.round(Math.min(130,Math.max(100,w*0.12))),
+          cvPLD:w=>Math.round(Math.min(300,Math.max(210,w*0.30)))};
+function fit(){
+  ['cvPrice','cvStack','cvDens','cvResid','cvPLD'].forEach(id=>{
+    const cv=$(id),w=cv.clientWidth|0;
+    if(!w)return;
+    const h=HF[id](w);
+    if(!cv._lg||cv.width!==w||cv.height!==h)sizeCanvas(cv,w,h);
+  });
+}
+const CSSv=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const fmtE=v=>{if(!isFinite(v))return '—';if(v===0)return '0';
+  const e=Math.floor(Math.log10(Math.abs(v)));
+  return (v/Math.pow(10,e)).toFixed(2)+'e'+(e>=0?'+':'')+e;};
+/* Certificates print their real digits. A previous version rendered anything
+   below 1e-14 as the constant string '< 1e-14'. Measured over 48 corners, mass
+   drift never exceeds 5.55e-15 and the clearing and band residuals stay under
+   the floor too -- so THREE readouts were constant across the entire reachable
+   slider box, and a hardcoded string was byte-identical to the real
+   computation. A mutant that replaced the mass computation with that literal
+   passed undetected. A certificate you cannot falsify by reading it is not a
+   certificate. See FINDINGS_SIN.md Defect 3; pinned by test-sin.js B12. */
+const fmtG=fmtE;
+
+/* ---------------- state & animated Picard ---------------- */
+const S={price:new Float64Array(NT).fill(0.8),field:null,disp:null,
+         it:0,res:1,running:false,done:false,hist:[]};
+function iterate(){
+  S.field=solveField(S.price);
+  S.disp=dispatch(S.field.Ux);
+  const pNew=S.disp.sl.map(s=>s.p);
+  let r=0;for(let t=0;t<NT;t++)r=Math.max(r,Math.abs(pNew[t]-S.price[t]));
+  S.res=r;S.it++;S.hist.push(Math.max(r,1e-16));
+  const th=0.5;
+  for(let t=0;t<NT;t++)S.price[t]=(1-th)*S.price[t]+th*pNew[t];
+  return r;
+}
+function certificates(light){
+  const {field,disp}=S;
+  let worst=0;
+  for(let t=0;t<NT;t++){
+    const sl=disp.sl[t],N=makeN(t,field.Ux[t]);
+    worst=Math.max(worst,Math.abs(N(sl.p)-sl.h+sl.k-sl.d));
+  }
+  $('roClear').textContent=fmtG(worst);
+  let dm=0,mn=1e9;
+  for(let t=0;t<=NT;t++){
+    let s=0;for(let i=0;i<NX;i++){s+=field.m[t][i]*hx;mn=Math.min(mn,field.m[t][i]);}
+    dm=Math.max(dm,Math.abs(s-1));
+  }
+  $('roMass').textContent=fmtG(dm);
+  $('roMin').textContent=fmtE(mn)+' > 0';
+  const tot=disp.sl.reduce((a,s)=>a+s.h*dt,0);
+  $('roBud').textContent=(disp.spill>1e-6)
+    ?('spill '+disp.spill.toFixed(3)+' (budget infeasible at floor — water spilled, reported)')
+    :fmtG(tot-P.EHYD);
+  let comp=0,flat=0,nm=0;
+  for(const s of disp.sl){
+    if(s.h>1e-9&&s.h<HBAR-1e-9){nm++;flat=Math.max(flat,Math.abs(s.p-disp.w));}
+    if(s.p<disp.w-1e-6)comp=Math.max(comp,s.h);
+    if(s.p>disp.w+1e-6)comp=Math.max(comp,HBAR-s.h);
+  }
+  $('roComp').textContent=fmtG(comp);
+  $('roT3').textContent=nm+' hours · max |ϖ−w| '+fmtG(flat);
+  let band=0;
+  for(const s of disp.sl)band=Math.max(band,s.k*Math.abs(s.p-P.PMIN),s.d*Math.abs(P.PMAX-s.p));
+  $('roBand').textContent=fmtG(band);
+  const nC=disp.sl.filter(s=>s.k>1e-9).length,nS=disp.sl.filter(s=>s.d>1e-9).length;
+  $('roReg').textContent=`${nC} · ${NT-nC-nS} · ${nS}`;
+  // w dual feasibility: perturbing w must break the budget monotonically
+  let dualOK=true;
+  if(disp.spill>1e-6){
+    $('roDual').textContent='floor-pinned (spill regime — w has no interior bracket)';
+  }else if(disp.mix!==null&&disp.mix!==undefined){
+    $('roDual').textContent='cap-pinned indifference — mixed dispatch θ = '+disp.mix.toFixed(4)+' closes the budget';
+  }else{
+    const totw=w=>{let x=0;for(let t=0;t<NT;t++)x+=clearSlice(t,field.Ux[t],w).h*dt;return x;};
+    const up=totw(disp.w*1.01),dn=totw(disp.w*0.99);
+    dualOK=(dn>=P.EHYD-1e-9)&&(up<=P.EHYD+1e-9);
+    $('roDual').textContent=dualOK?('bracket holds: '+dn.toFixed(3)+' ≥ '+P.EHYD.toFixed(2)+' ≥ '+up.toFixed(3)):'VIOLATED';
+  }
+
+  /* STRUCTURAL AUDIT — the verdict must not outrank its own certificates.
+     finish() and solveSync previously gated the word "converged" on
+     S.res < 1e-10, the PICARD residual alone, and never consulted these
+     numbers. A run could therefore announce "converged — certificates below,
+     all pre-update" while displaying a hydro-budget miss of 1e-1 and a
+     complementarity violation of 3e-1, with only roDual self-flagging.
+     Stash every structural residual so the verdict can be gated on all of
+     them. See FINDINGS_SIN.md Defect 2; pinned by test-sin.js B11. */
+  S.cert={
+    clear:worst, mass:dm, comp:comp, band:band, dualOK:dualOK,
+    bud:(disp.spill>1e-6)?0:Math.abs(tot-P.EHYD),      // spill is a declared regime
+    spill:disp.spill, marginalHours:nm
+  };
+  S.cert.violations=[];
+  if(!(worst<1e-9))  S.cert.violations.push('clearing '+fmtE(worst));
+  if(!(dm<1e-12))    S.cert.violations.push('mass '+fmtE(dm));
+  if(!(comp<1e-9))   S.cert.violations.push('complementarity '+fmtE(comp));
+  if(!(band<1e-9))   S.cert.violations.push('band '+fmtE(band));
+  if(!(S.cert.bud<1e-6)) S.cert.violations.push('hydro budget '+fmtE(S.cert.bud));
+  if(!dualOK)        S.cert.violations.push('w dual feasibility');
+  S.certOK=S.cert.violations.length===0;
+  if(light){$('roEps').textContent='—';$('roCurt').textContent='—';$('roG').textContent='—';
+    $('roFP').textContent=fmtE(S.res);
+    $('cstat').textContent='water value w = '+disp.w.toFixed(6)+' · light audit (structural receipts only)';
+    return;}
+  const a=dpAudit(S.price,field);
+  /* Report the exploitability on its own — the value from the independently
+     coded DP best-response, to be read beside the Picard residual (roFP) that
+     limits it. NO absolute floor is printed: an earlier O(h+Δt) "floor" was
+     fabricated (|eps|/floor spans several orders across the slider box, so no
+     single constant bounds eps), and is removed here as it was for mfg-lab.
+     See FINDINGS.md and FINDINGS_SIN.md Defect 4. */
+  $('roEps').textContent=fmtE(a.eps)+' · independent DP best-response';
+  // fleet exhibit (T4)
+  const Ux0=new Float64Array(NT),phi0=P.phi;
+  P.phi=0;const d0=dispatch(Ux0);P.phi=phi0;
+  const kF=disp.sl.reduce((x,s)=>x+s.k*dt,0),k0=d0.sl.reduce((x,s)=>x+s.k*dt,0);
+  $('roCurt').textContent=kF.toFixed(3)+' vs '+k0.toFixed(3)+(kF<k0?'  (fleet absorbs '+(100*(k0-kF)/Math.max(k0,1e-9)).toFixed(0)+'%)':'');
+  // welfare gap (T2): naive posted tariff AND the best two-level tariff
+  const Jstar=welfareOf(S.price,field,disp);
+  const Jnaive=touCounterfactual(1.6,0.55,17,21);
+  const Gn=Jstar-Jnaive;
+  $('roG').textContent=(Gn>=0?'+':'')+(100*Gn/Math.abs(Jstar)).toFixed(1)+'% naive · optimizing best two-level…';
+  // grid-search the tariff (chunked so the page stays live)
+  S.optQ=[];let bestJ=-1e18;
+  for(const pk of [1.0,1.3,1.6,1.9,2.2])
+    for(const off of [0.3,0.45,0.6,0.75,0.9])
+      for(const wn of [[17,21],[18,22]])
+        S.optQ.push(()=>{const J=touCounterfactual(pk,off,wn[0],wn[1]);if(J>bestJ)bestJ=J;});
+  S.optDone=()=>{
+    const Go=Jstar-bestJ;
+    $('roG').textContent=(Gn>=0?'+':'')+(100*Gn/Math.abs(Jstar)).toFixed(1)+'% naive · '
+      +(Go>=0?'+':'')+(100*Go/Math.abs(Jstar)).toFixed(1)+'% vs BEST two-level TOU (50-point grid)';
+    S.optDone=null;
+  };
+  $('roFP').textContent=fmtE(S.res);
+  $('cstat').textContent=`water value w = ${disp.w.toFixed(6)} · Picard ${S.it} iterations · every residual below is computed before the update it judges`;
+}
+/* ---------------- drawing ---------------- */
+function drawPrice(){
+  const cv=$('cvPrice'),cx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  cx.clearRect(0,0,w,h);
+  const L=44,R=10,T=10,B=26;
+  const ymax=Math.max(P.PMAX*1.08,...S.disp?S.disp.sl.map(s=>s.p):[1]);
+  const X=t=>L+(t/NT)*(w-L-R), Y=p=>h-B-(p/ymax)*(h-T-B);
+  // regime shading
+  if(S.disp)for(let t=0;t<NT;t++){
+    const s=S.disp.sl[t];
+    if(s.k>1e-9){cx.fillStyle='rgba(14,124,123,.18)';cx.fillRect(X(t),T,X(t+1)-X(t),h-T-B);}
+    if(s.d>1e-9){cx.fillStyle='rgba(140,47,57,.16)';cx.fillRect(X(t),T,X(t+1)-X(t),h-T-B);}
+  }
+  // band + axis
+  cx.strokeStyle=CSSv('--grid');cx.lineWidth=1;
+  [[P.PMIN,'floor'],[P.PMAX,'cap']].forEach(([v,lab])=>{
+    cx.setLineDash([4,4]);cx.beginPath();cx.moveTo(L,Y(v));cx.lineTo(w-R,Y(v));cx.stroke();cx.setLineDash([]);
+    cx.fillStyle=CSSv('--ink-soft');cx.font='9.5px "IBM Plex Mono",monospace';
+    cx.fillText(lab+' '+v.toFixed(2),L+4,Y(v)-3);
+  });
+  cx.beginPath();cx.moveTo(L,h-B);cx.lineTo(w-R,h-B);cx.stroke();
+  for(let t=0;t<=NT;t+=4){
+    cx.fillStyle=CSSv('--ink-soft');cx.font='9.5px "IBM Plex Mono",monospace';
+    cx.fillText(String(t)+'h',X(t)-6,h-10);
+  }
+  if(!S.disp)return;
+  // water value
+  cx.strokeStyle=CSSv('--amber');cx.lineWidth=1.4;cx.setLineDash([6,4]);
+  cx.beginPath();cx.moveTo(L,Y(S.disp.w));cx.lineTo(w-R,Y(S.disp.w));cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=CSSv('--amber');cx.font='10px "IBM Plex Mono",monospace';
+  cx.fillText('w = '+S.disp.w.toFixed(4),w-R-96,Y(S.disp.w)-5);
+  // stepped price
+  cx.strokeStyle=CSSv('--ink');cx.lineWidth=2;
+  cx.beginPath();
+  for(let t=0;t<NT;t++){
+    const y=Y(S.disp.sl[t].p);
+    if(t===0)cx.moveTo(X(0),y);else cx.lineTo(X(t),y);
+    cx.lineTo(X(t+1),y);
+  }
+  cx.stroke();
+}
+function drawStack(){
+  const cv=$('cvStack'),cx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  cx.clearRect(0,0,w,h);
+  if(!S.disp)return;
+  const L=34,R=6,T=8,B=22;
+  let mx=0.1;
+  for(let t=0;t<NT;t++){
+    const s=S.disp.sl[t];
+    mx=Math.max(mx,s.h+s.q+St(t)+s.d);
+  }
+  const X=t=>L+(t/NT)*(w-L-R),Y=v=>h-B-(v/mx)*(h-T-B);
+  for(let t=0;t<NT;t++){
+    const s=S.disp.sl[t],x=X(t),ww=X(t+1)-x-1;
+    let y0=0;
+    const seg=(v,style,dash)=>{
+      if(v<=1e-9)return;
+      if(dash){cx.strokeStyle=style;cx.setLineDash([3,3]);cx.strokeRect(x,Y(y0+v),ww,Y(y0)-Y(y0+v));cx.setLineDash([]);}
+      else{cx.fillStyle=style;cx.fillRect(x,Y(y0+v),ww,Y(y0)-Y(y0+v));y0+=v;}
+    };
+    seg(St(t)-s.k,'rgba(14,124,123,.55)');
+    seg(s.h,CSSv('--fp-deep'));
+    seg(s.q,'#9aa0ae');
+    seg(s.d,CSSv('--hjb'));
+    seg(s.k,CSSv('--fp'),true);       // curtailed, hollow on top
+  }
+  // demand line
+  cx.strokeStyle=CSSv('--ink');cx.lineWidth=1.8;cx.beginPath();
+  for(let t=0;t<NT;t++){
+    const s=S.disp.sl[t];
+    const dem=Math.min(At_(t)/s.p,0.5)+Lt(t)+P.phi*Math.max(-AMAX,Math.min(AMAX,(S.field.Ux[t]-s.p)/ETA));
+    const y=Y(dem);
+    if(t===0)cx.moveTo(X(t),y);
+    cx.lineTo(X(t)+ (X(t+1)-X(t))/2,y);
+  }
+  cx.stroke();
+  cx.strokeStyle=CSSv('--grid');cx.beginPath();cx.moveTo(L,h-B);cx.lineTo(w-R,h-B);cx.stroke();
+  cx.fillStyle=CSSv('--ink-soft');cx.font='9.5px "IBM Plex Mono",monospace';
+  for(let t=0;t<=NT;t+=6)cx.fillText(t+'h',X(t)-6,h-8);
+}
+const offD=document.createElement('canvas');offD.width=NT+1;offD.height=NX;
+function drawDens(){
+  const cv=$('cvDens'),cx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  cx.clearRect(0,0,w,h);
+  if(!S.field)return;
+  const img=offD.getContext('2d').createImageData(NT+1,NX);
+  let mmax=1e-12;
+  for(let t=0;t<=NT;t++)for(let i=0;i<NX;i++)mmax=Math.max(mmax,S.field.m[t][i]);
+  for(let i=0;i<NX;i++)for(let t=0;t<=NT;t++){
+    const v=Math.pow(S.field.m[t][i]/mmax,0.65);
+    const o=((NX-1-i)*(NT+1)+t)*4;
+    // paper -> teal ramp
+    img.data[o]  =Math.round(247+(14-247)*v);
+    img.data[o+1]=Math.round(246+(124-246)*v);
+    img.data[o+2]=Math.round(242+(123-242)*v);
+    img.data[o+3]=255;
+  }
+  offD.getContext('2d').putImageData(img,0,0);
+  const L=34,R=6,T=8,B=22;
+  cx.imageSmoothingEnabled=true;
+  cx.drawImage(offD,L,T,w-L-R,h-T-B);
+  cx.strokeStyle=CSSv('--grid');cx.strokeRect(L,T,w-L-R,h-T-B);
+  cx.fillStyle=CSSv('--ink-soft');cx.font='9.5px "IBM Plex Mono",monospace';
+  cx.fillText('x = x̄',4,T+10);cx.fillText('x = 0',4,h-B-2);
+  for(let t=0;t<=NT;t+=6)cx.fillText(t+'h',L+(t/NT)*(w-L-R)-6,h-8);
+}
+function drawResid(){
+  const cv=$('cvResid'),cx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  cx.clearRect(0,0,w,h);
+  const lo=-11,hi=0.5,Y=r=>{const l=Math.log10(Math.max(r,1e-12));return h-6-(l-lo)/(hi-lo)*(h-14);};
+  cx.strokeStyle=CSSv('--grid');cx.lineWidth=1;
+  [-10,-5,0].forEach(l=>{const y=Y(Math.pow(10,l));
+    cx.beginPath();cx.moveTo(38,y);cx.lineTo(w-6,y);cx.stroke();
+    cx.fillStyle=CSSv('--ink-soft');cx.font='9.5px "IBM Plex Mono",monospace';
+    cx.fillText('1e'+l,4,y+3);});
+  if(S.hist.length>1){
+    cx.strokeStyle=CSSv('--amber');cx.lineWidth=1.6;cx.beginPath();
+    S.hist.forEach((r,i)=>{
+      const x=38+i/(S.hist.length-1)*(w-46),y=Y(r);
+      i?cx.lineTo(x,y):cx.moveTo(x,y);
+    });
+    cx.stroke();
+  }
+}
+/* Real SE hourly PLD, 2024-07-08..21 (CCEE PLD_HORARIO, Dados Abertos) — a
+   STATIC illustration, not the model solve. It shows the descriptive shape T3
+   predicts: flat hydro-marginal windows (shaded), the price level stepping
+   between them (~95 → ~78, the martingale), and jumps at the evening peak.
+   HONEST CAVEAT (see the note text): PLD is the administered CMO, so flatness
+   here partly reflects the price's own construction — this is consistency, not
+   an independent test. */
+const PLD_SEG={floor:61.07,p:[95.8,94.1,92.8,92.8,93.0,94.6,95.6,95.3,95.0,94.7,95.0,95.2,95.2,95.7,97.0,98.8,103.8,107.2,127.1,108.9,107.0,105.9,100.8,98.0,97.0,95.5,95.1,94.7,95.1,95.5,96.0,95.7,95.4,95.0,95.1,95.0,94.9,95.8,97.2,98.2,101.4,107.5,129.3,107.6,105.4,102.5,99.5,98.1,96.3,94.9,94.3,94.1,94.4,95.1,95.8,95.6,95.3,95.0,95.2,94.8,94.3,95.0,96.4,97.7,103.3,108.5,150.7,107.4,105.3,103.5,99.3,97.5,95.8,93.7,93.2,92.6,93.2,94.0,94.4,94.1,93.7,93.6,93.7,93.3,92.4,93.8,95.1,97.1,99.7,109.8,188.7,114.2,105.6,104.8,99.8,96.8,95.8,93.7,92.9,91.9,92.5,93.5,93.8,93.8,93.8,93.6,93.4,93.3,92.5,93.2,94.2,96.6,100.9,110.3,110.1,107.5,101.6,101.0,97.5,94.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,78.7,78.7,78.7,78.7,77.5,77.5,76.2,73.6,72.4,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,76.3,82.8,88.0,84.5,82.9,81.1,79.1,77.8,78.0,76.2,74.5,71.6,74.3,75.2,77.3,77.4,77.3,76.7,75.9,75.5,75.1,75.7,77.6,79.7,84.0,88.3,90.6,89.2,87.6,85.7,82.6,79.9,77.8,75.4,75.3,75.1,75.7,76.3,77.3,77.3,77.2,76.5,75.8,75.3,74.2,75.2,76.7,78.7,83.9,88.9,93.1,90.5,89.5,87.4,82.4,79.8,79.9,78.1,77.3,76.9,77.1,77.8,79.1,79.2,79.0,77.7,76.8,76.5,75.4,76.9,78.6,80.7,84.6,88.1,91.5,90.1,89.3,87.1,84.3,81.4,79.9,78.4,78.2,77.8,77.9,78.3,79.3,78.6,78.1,77.3,77.0,76.9,76.5,77.4,78.7,80.5,85.6,92.5,163.2,97.6,91.5,88.1,84.5,80.6,79.2,77.9,77.6,77.2,77.5,78.1,78.7,78.5,77.9,77.2,76.8,75.6,74.9,75.9,77.1,78.2,81.4,86.5,88.2,86.9,83.5,82.6,80.8,79.5,70.7,69.4,68.9,68.3,68.8,69.0,68.9,67.9,63.4,61.1,61.1,61.1,61.1,61.1,61.1,65.1,71.9,78.8,84.5,79.8,78.6,77.5,75.3,71.6,71.4,69.9,69.4,68.2,67.7,67.6,66.5,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,61.1,68.1,75.1,82.2,78.7,76.2,73.8,72.6,71.3]};
+function drawPLD(){
+  const cv=$('cvPLD'),cx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  cx.clearRect(0,0,w,h);
+  const p=PLD_SEG.p,N=p.length,fl=PLD_SEG.floor,L=40,R=10,T=10,B=22;
+  let pmax=0;for(const v of p)pmax=Math.max(pmax,v);pmax=Math.ceil(pmax/40)*40;
+  const pmin=40;
+  const X=i=>L+i/(N-1)*(w-L-R),Y=v=>h-B-(v-pmin)/(pmax-pmin)*(h-T-B);
+  cx.font='9.5px "IBM Plex Mono",monospace';
+  cx.strokeStyle=CSSv('--grid');cx.lineWidth=1;cx.fillStyle=CSSv('--ink-soft');
+  for(let v=pmin;v<=pmax;v+=40){const y=Y(v);cx.beginPath();cx.moveTo(L,y);cx.lineTo(w-R,y);cx.stroke();cx.fillText(String(v),6,y+3);}
+  for(let d=1;d<Math.round(N/24);d++){const x=X(d*24);cx.globalAlpha=0.45;cx.beginPath();cx.moveTo(x,T);cx.lineTo(x,h-B);cx.stroke();cx.globalAlpha=1;}
+  cx.fillText('R$/MWh · SE · 14 days (Jul 2024)',L,h-6);
+  /* shade flat hydro-marginal windows: contiguous interior runs split at jumps, ≥4h */
+  const tol=0.02+fl*1e-3,interior=p.map(v=>v>fl+tol);
+  const dif=[];for(let i=1;i<N;i++)if(interior[i]&&interior[i-1])dif.push(Math.abs(p[i]-p[i-1]));
+  dif.sort((a,b)=>a-b);const med=dif.length?dif[dif.length>>1]:1,cut=Math.max(5*med,1e-6);
+  cx.fillStyle=CSSv('--fp');cx.globalAlpha=0.12;let st=-1;
+  for(let i=0;i<=N;i++){
+    const ok=i<N&&interior[i]&&!(i>0&&interior[i-1]&&Math.abs(p[i]-p[i-1])>cut);
+    if(ok&&st<0)st=i;
+    if(!ok&&st>=0){if(i-st>=4)cx.fillRect(X(st),T,X(i-1)-X(st),h-T-B);st=(i<N&&interior[i])?i:-1;}
+  }
+  cx.globalAlpha=1;
+  /* floor line */
+  cx.strokeStyle=CSSv('--amber');cx.setLineDash([4,3]);cx.beginPath();cx.moveTo(L,Y(fl));cx.lineTo(w-R,Y(fl));cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=CSSv('--amber');cx.textAlign='right';cx.fillText('floor '+fl.toFixed(0),w-R,Y(fl)-3);cx.textAlign='left';
+  /* price line */
+  cx.strokeStyle=CSSv('--ink');cx.lineWidth=1.3;cx.beginPath();
+  for(let i=0;i<N;i++){const x=X(i),y=Y(p[i]);i?cx.lineTo(x,y):cx.moveTo(x,y);}
+  cx.stroke();
+}
+function drawAll(){drawPrice();drawStack();drawDens();drawResid();drawPLD();}
+
+/* ---------------- wiring ---------------- */
+function labels(){
+  $('vSol').textContent=P.sol.toFixed(2);$('vPk').textContent=P.pk.toFixed(2);
+  $('vPhi').textContent=P.phi.toFixed(1);$('vEh').textContent=P.EHYD.toFixed(1);
+  $('vFl').textContent=P.PMIN.toFixed(2);$('vCp').textContent=P.PMAX.toFixed(1);
+}
+function readP(){
+  P.sol=+$('pSol').value;P.pk=+$('pPk').value;P.phi=+$('pPhi').value;
+  P.EHYD=+$('pEh').value;P.PMIN=+$('pFl').value;P.PMAX=+$('pCp').value;
+  labels();
+}
+function reset(){
+  readP();
+  S.price=new Float64Array(NT).fill(0.8);
+  S.field=null;S.disp=null;S.it=0;S.res=1;S.hist=[];S.running=false;S.done=false;S.conv=false;S.optQ=null;S.optDone=null;
+  ['roClear','roMass','roMin','roBud','roComp','roT3','roBand','roDual','roEps','roReg','roCurt','roG','roFP']
+    .forEach(id=>$(id).textContent='—');
+  $('cstat').textContent='—';
+  $('status').textContent='parameters set — press Solve equilibrium';
+  drawAll();
+}
+['pSol','pPk','pPhi','pEh','pFl','pCp'].forEach(id=>{
+  $(id).addEventListener('input',readP);
+  $(id).addEventListener('change',reset);
+});
+$('solveBtn').addEventListener('click',()=>{
+  if(S.done)reset();
+  if(!S.running){S.running=true;
+    $('status').textContent='solving — damped Picard on the price path (field → water value → three-regime clearing)';}
+});
+$('resetBtn').addEventListener('click',reset);
+function finish(){
+  S.running=false;S.done=true;
+  /* The price path being a fixed point is necessary, NOT sufficient: the
+     dispatch attached to it must also satisfy its own certificates. Gate the
+     verdict on both. See FINDINGS_SIN.md Defect 2. */
+  const picardOK=(S.res<1e-10);
+  certificates(false);
+  S.conv=picardOK&&S.certOK;
+  if(picardOK&&S.certOK){
+    $('status').textContent=`converged — ${S.it} iterations to price-path residual ${fmtE(S.res)} · certificates below, all pre-update`;
+  }else if(picardOK){
+    $('status').textContent=`NOT AN EQUILIBRIUM — the price path is a fixed point (residual ${fmtE(S.res)}) but the dispatch violates ${S.cert.violations.join(', ')}. A converged iteration is necessary, not sufficient; no equilibrium is claimed here.`;
+  }else{
+    $('status').textContent=`stalled honestly — residual ${fmtE(S.res)} after ${S.it} iterations; no equilibrium is claimed. The panel audits the last iterate (pre-update) so you can see exactly how far it is.`;
+  }
+}
+let tick=0;
+function loop(){
+  if(S.running){
+    tick++;
+    if(tick%2===0){                       // paced: one iteration every 2 frames
+      const r=iterate();
+      if(r<1e-10||S.it>=250)finish();
+    }
+    if(S.running)$('status').textContent=`iteration ${S.it} — price-path residual ${fmtE(S.res)}`;
+    drawAll();
+  }else if(S.optQ&&S.optQ.length){
+    for(let k=0;k<8&&S.optQ.length;k++)S.optQ.shift()();
+    if(!S.optQ.length&&S.optDone)S.optDone();
+    drawAll();
+  }
+  requestAnimationFrame(loop);
+}
+/* test hook: synchronous solve + full certificates (not used by the UI) */
+window.__sin={
+  solveSync(light){
+    readP();
+    S.price=new Float64Array(NT).fill(0.8);
+    S.it=0;S.res=1;S.hist=[];S.running=false;S.done=false;
+    for(let k=0;k<250;k++){const r=iterate();if(r<1e-10)break;}
+    const picardOK=(S.res<1e-10);
+    S.done=true;
+    certificates(light===true);
+    while(S.optQ&&S.optQ.length)S.optQ.shift()();
+    if(S.optDone)S.optDone();
+    /* Same gate as finish(): a fixed point whose dispatch violates its
+       certificates is not an equilibrium and must not be reported as one. */
+    S.conv=picardOK&&S.certOK;
+    if(picardOK&&S.certOK)$('status').textContent='converged — '+S.it+' iterations';
+    else if(picardOK)$('status').textContent='NOT AN EQUILIBRIUM — fixed point reached but the dispatch violates '+S.cert.violations.join(', ');
+    else $('status').textContent='stalled honestly — residual '+fmtE(S.res);
+    return {it:S.it,res:S.res,conv:S.conv,picardOK:picardOK,certOK:S.certOK,violations:S.cert.violations};
+  }
+};
+labels();
+fit();
+reset();
+window.addEventListener('resize',()=>{fit();drawAll();});
+$('solveBtn').click();          // the page opens alive
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

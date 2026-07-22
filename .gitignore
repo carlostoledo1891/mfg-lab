@@ -1,0 +1,12 @@
+# Generated / transient
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+node_modules/
+.DS_Store
+
+# Raw CCEE PLD data — large, public, re-downloadable from
+# dadosabertos.ccee.org.br; not redistributed here (see sin-mfg/docs/pld-data-run.md).
+pld-data/
