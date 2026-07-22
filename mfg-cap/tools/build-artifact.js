@@ -60,7 +60,14 @@ const tpl = fs.readFileSync(path.join(ROOT, 'tools', 'artifact-template.html'), 
 if (tpl.indexOf('/*@@KERNELS@@*/') < 0) throw new Error('template lost its kernel marker');
 const out = tpl.replace('/*@@KERNELS@@*/', bundle);
 const dest = path.join(ROOT, 'mfg-cap.html');
-fs.writeFileSync(dest, out);
+/* Guard the write: a builder that writes at import scope silently repairs the
+   staleness a freshness gate exists to detect (a bug this project shipped once
+   elsewhere in the tree). Importing this file must have no side effect. */
+if (require.main === module) {
+  fs.writeFileSync(dest, out);
+} else {
+  module.exports = { build: () => out, dest };
+}
 console.log('built ' + dest);
 console.log('  interval.js  ' + sha(interval) + '  ' + Buffer.byteLength(interval) + ' bytes  (from ' + path.relative(ROOT, EQ) + ')');
 console.log('  mfg1d.js     ' + sha(mfg1d) + '  ' + Buffer.byteLength(mfg1d) + ' bytes');

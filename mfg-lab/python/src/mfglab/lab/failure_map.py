@@ -107,7 +107,10 @@ def _probe(K: ValidatedKernel, params: dict, n: int, tol: float) -> dict:
     except Exception as e:  # noqa: BLE001 — classifying failures is the job
         return dict(outcome=THREW, detail=str(e), iters=None, residual=None, error=None)
 
-    u = list(out.get("u") or [])
+    # NOT `out.get("u") or []`: numpy arrays raise on bool(), and a researcher's
+    # Python kernel commonly returns np.ndarray for u. Truth-test None explicitly.
+    raw = out.get("u")
+    u = list(raw) if raw is not None else []
     if not u or not _all_finite(u):
         return dict(outcome=DIVERGED, detail="the returned solution contains non-finite values",
                     iters=out.get("iters"), residual=out.get("residual"), error=None)

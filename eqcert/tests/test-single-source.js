@@ -21,12 +21,24 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-/* __dirname is <tree>/eqcert/tests. The tree it scans is two levels up. In the
-   monorepo that is `academic/`; in the public repo it is the repo root. Either
-   way the scanner walks its whole tree and the constants below are expressed
-   relative to it, so the file is location-independent and reads the same in
-   both places — which matters, because it ships to the public repo. */
-const ROOT = path.resolve(__dirname, '..', '..');
+/* TWO ROOTS, because this file ships to the public repo AND runs in the private
+   monorepo, and after the academic/ reorg those trees have DIFFERENT shapes.
+
+     BASE  = <tree containing eqcert> : `academic/` in the monorepo, the repo
+             root in the flat public tree. The owner/consumer/self constants
+             below are expressed relative to it (eqcert/..., mfg-cap/...), so
+             they read identically in both places.
+     WALK  = the tree the scanner must SWEEP for a second copy. In the monorepo
+             that is the WHOLE repo — other tracks vendor from the toolkit, so a
+             pasted copy anywhere must be caught (doctrine). BASE alone would
+             miss the sibling tracks, which is the regression a reorg introduced.
+   `canon` strips the academic prefix so a swept path compares against the
+   BASE-relative constants; a path in a sibling track keeps its name and,
+   carrying a fingerprint, is flagged — which is the point. */
+const BASE = path.resolve(__dirname, '..', '..');
+const WALK = path.basename(BASE) === 'academic' ? path.dirname(BASE) : BASE;
+const ACAD = path.basename(BASE) === 'academic' ? 'academic/' : '';
+const canon = rel => (ACAD && rel.startsWith(ACAD)) ? rel.slice(ACAD.length) : rel;
 const sha = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 16);
 let fails = 0;
 const check = (n, c, d) => { console.log((c ? 'PASS' : 'FAIL') + '  ' + n + (d !== undefined ? '   [' + d + ']' : '')); if (!c) fails++; };
@@ -63,7 +75,7 @@ function walk(dir, out) {
   out = out || [];
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, e.name);
-    const rel = path.relative(ROOT, full);
+    const rel = path.relative(WALK, full);
     if (GENERATED.some(re => re.test(rel))) continue;
     if (e.isDirectory()) walk(full, out);
     else if (/\.(js|mjs|py)$/.test(e.name)) out.push(rel);
@@ -71,19 +83,20 @@ function walk(dir, out) {
   return out;
 }
 
-const files = walk(ROOT);
-console.log('scanned ' + files.length + ' source files under ' + ROOT + '\n');
+const files = walk(WALK);
+console.log('scanned ' + files.length + ' source files under ' + WALK + '\n');
 
 for (const kind of Object.keys(SIGNS)) {
   const owner = OWNER[kind];
   const hits = [];
   for (const rel of files) {
-    const txt = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const txt = fs.readFileSync(path.join(WALK, rel), 'utf8');
     const isImpl = SIGNS[kind].every(re => re.test(txt));
     if (!isImpl) continue;
-    if (rel === owner || rel === SELF) continue;
-    if (VENDORED[rel] === owner) {
-      const same = fs.readFileSync(path.join(ROOT, rel), 'utf8') === fs.readFileSync(path.join(ROOT, owner), 'utf8');
+    const c = canon(rel);
+    if (c === owner || c === SELF) continue;
+    if (VENDORED[c] === owner) {
+      const same = fs.readFileSync(path.join(WALK, rel), 'utf8') === fs.readFileSync(path.join(BASE, owner), 'utf8');
       if (!same) hits.push(rel + ' (vendored copy has DRIFTED)');
       continue;
     }
@@ -96,7 +109,7 @@ for (const kind of Object.keys(SIGNS)) {
 
 /* The owners must actually exist and be the files the consumers import. */
 for (const kind of Object.keys(OWNER)) {
-  const f = path.join(ROOT, OWNER[kind]);
+  const f = path.join(BASE, OWNER[kind]);
   check(OWNER[kind] + ' exists and is loadable', fs.existsSync(f) && !!require(f),
     fs.existsSync(f) ? sha(fs.readFileSync(f, 'utf8')) : 'MISSING');
 }
@@ -109,7 +122,7 @@ for (const kind of Object.keys(OWNER)) {
   ];
   let ok = true, detail = [];
   for (const [rel, needle] of consumers) {
-    const txt = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const txt = fs.readFileSync(path.join(BASE, rel), 'utf8');
     if (txt.indexOf(needle) < 0) { ok = false; detail.push(rel + ' no longer references ' + needle); }
   }
   check('every declared consumer imports the shared toolkit', ok,
@@ -119,11 +132,12 @@ for (const kind of Object.keys(OWNER)) {
 /* Falsifier: the scan must actually be able to find a second copy. */
 console.log('\n    executing falsifiers');
 {
-  const tmp = path.join(ROOT, 'eqcert', '.copy-probe.js');
+  const tmp = path.join(BASE, 'eqcert', '.copy-probe.js');
   fs.writeFileSync(tmp, 'const _b=new ArrayBuffer(8);const _u64=new BigUint64Array(_b);\n_u64[0] += 1n;\n');
-  const after = walk(ROOT).filter(rel => {
-    const txt = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-    return SIGNS.interval.every(re => re.test(txt)) && rel !== OWNER.interval && rel !== SELF && !VENDORED[rel];
+  const after = walk(WALK).filter(rel => {
+    const txt = fs.readFileSync(path.join(WALK, rel), 'utf8');
+    const c = canon(rel);
+    return SIGNS.interval.every(re => re.test(txt)) && c !== OWNER.interval && c !== SELF && !VENDORED[c];
   });
   fs.unlinkSync(tmp);
   if (after.length > 0) console.log('       RED ok  X1 a planted second implementation IS detected (' + after[0] + ')');
