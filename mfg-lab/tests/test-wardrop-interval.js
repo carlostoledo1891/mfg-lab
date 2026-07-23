@@ -139,9 +139,10 @@ function selfTest(add,sub,mul,div){
    (S3's a/v division form equals the polynomial form exactly in ℝ:
    a/v = a(1+5(jeff/50)^3)/50; identity asserted numerically in W0). */
 function makeICost(scen,wT){
-  const IwT=iv(wT),IH=iv(0.5);
+  const IwT=iv(wT),IH=iv(0.5),IE3=iv(1e-3);
   let IA=IZERO,IS=IZERO;
-  for(const [a,b,w] of EM){IA=iadd(IA,imul(iv(w),iv(b)));IS=iadd(IS,imul(iv(w),iv(a)));}
+  /* base carries the 10^-3 emission factor (kernel: base+=w*1e-3*(a/v+b)) */
+  for(const [a,b,w] of EM){const wf=imul(iv(w),IE3);IA=iadd(IA,imul(wf,iv(b)));IS=iadd(IS,imul(wf,iv(a)));}
   const IS50=idiv(IS,iv(50));
   return {
     scen,wT,
@@ -150,7 +151,7 @@ function makeICost(scen,wT){
         const own=(r===1?IJ1:IJ2);
         return iadd(imul(IH,iadd(IJ1,imul(IwT,IJ2))),imul(IH,own));
       }
-      const jeff=iadd(IJ1,imul(IwT,IJ2));
+      const jeff=iadd(IJ1,IJ2); /* PLAIN total: j1+j2 (no wT inside the speed) */
       const g=idiv(jeff,iv(50));
       const base=iadd(IA,imul(IS50,iadd(IONE,imul(iv(5),icube(g)))));
       const M=idiv(imul(iv(SLEN[k]),iv(r===1?1:3)),iv(2));
@@ -163,12 +164,13 @@ function makeICost(scen,wT){
         const d2=iadd(imul(IH,IwT),(r===2?IH:IZERO));
         return [d1,d2];
       }
-      const jeff=iadd(IJ1,imul(IwT,IJ2));
+      const jeff=iadd(IJ1,IJ2); /* PLAIN total: d(jeff)/dj1 = d(jeff)/dj2 = 1 */
       const g=idiv(jeff,iv(50));
-      const db=idiv(imul(imul(IS50,iv(15)),isqr(g)),iv(50)); /* dbase/djeff */
+      /* dbase/djeff carries the 10^-3 factor via IS50 (base = IA + IS50*(1+5g^3)) */
+      const db=idiv(imul(imul(IS50,iv(15)),isqr(g)),iv(50));
       const M=idiv(imul(iv(SLEN[k]),iv(r===1?1:3)),iv(2));
       const d1=iadd(imul(M,db),(r===1?IH:IZERO));
-      const d2=iadd(imul(imul(M,db),IwT),(r===2?IH:IZERO));
+      const d2=iadd(imul(M,db),(r===2?IH:IZERO));
       return [d1,d2];
     }
   };
@@ -553,10 +555,42 @@ let reds=0;const redTotal=5;
   else console.log('       RED FAIL  M3 certified a wrong support');
 }
 {
-  /* M4: mismatched cost model (S2 point vs S3 costs) -> refused */
+  /* M4: mismatched cost model -> refused. The wrong model is the PRE-FIX,
+     physically-wrong S3 cost — jeff = j1 + wT*j2 inside the speed and NO 10^-3
+     emission factor — whose equilibrium is emission-DOMINATED and genuinely far
+     from the S2 point, so Krawczyk finds no zero within any radius cap.
+     (NB: the CORRECTED S3 cost is deliberately NOT used here. With emissions at
+     their true 10^-3 scale the S3 cost is dominated by the same 0.5·own-flow
+     term as S2, so the two problems share a nearby equilibrium on this support
+     and Krawczyk HONESTLY encloses it — the whitelisted shifted-midpoint success
+     of the header note, not a verifier defect. A negative control must fire on a
+     model whose equilibrium is actually elsewhere; the pre-fix cost is exactly
+     that, and doubles as a regression guard on the emission-scale fix.) */
   const {lay,x0}=S2res;
-  const res=krawczyk(makeICost(3,2),lay,x0,{maxRadCap:1});
-  if(!res.ok){reds++;console.log('       RED ok  M4 mismatched cost model refused');}
+  const IwT=iv(2),IH=iv(0.5);
+  let IA=IZERO,IS=IZERO;
+  for(const [a,b,w] of EM){IA=iadd(IA,imul(iv(w),iv(b)));IS=iadd(IS,imul(iv(w),iv(a)));}
+  const IS50=idiv(IS,iv(50));
+  const preFixS3={scen:3,
+    cost(k,IJ1,IJ2,r){
+      const jeff=iadd(IJ1,imul(IwT,IJ2));               /* pre-fix: wT inside speed */
+      const g=idiv(jeff,iv(50));
+      const base=iadd(IA,imul(IS50,iadd(IONE,imul(iv(5),icube(g))))); /* pre-fix: no 1e-3 */
+      const M=idiv(imul(iv(SLEN[k]),iv(r===1?1:3)),iv(2));
+      const own=(r===1?IJ1:IJ2);
+      return iadd(imul(M,base),imul(IH,own));
+    },
+    dcost(k,IJ1,IJ2,r){
+      const jeff=iadd(IJ1,imul(IwT,IJ2));
+      const g=idiv(jeff,iv(50));
+      const db=idiv(imul(imul(IS50,iv(15)),isqr(g)),iv(50));
+      const M=idiv(imul(iv(SLEN[k]),iv(r===1?1:3)),iv(2));
+      const d1=iadd(imul(M,db),(r===1?IH:IZERO));
+      const d2=iadd(imul(imul(M,db),IwT),(r===2?IH:IZERO));
+      return [d1,d2];
+    }};
+  const res=krawczyk(preFixS3,lay,x0,{maxRadCap:50});
+  if(!res.ok){reds++;console.log('       RED ok  M4 mismatched cost model refused (pre-fix emission-dominated S3)');}
   else console.log('       RED FAIL  M4 certified against the wrong cost function');
 }
 {

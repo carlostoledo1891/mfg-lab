@@ -1318,7 +1318,7 @@
     <p class="lede2"><b>Scenario 3 is enclosed.</b> Its speed–flow relation is a rational function with a cubic, so the
     KKT system is genuinely nonlinear and exact solution is not available. Instead a <b>Krawczyk operator</b> in
     outward-rounded interval arithmetic proves that a solution exists and is <b>locally unique inside an explicit box</b>
-    of radius 2.3e−10 around the computed point, with support positivity and <b>strict complementarity verified over the
+    of radius 7.3e−13 around the computed point, with support positivity and <b>strict complementarity verified over the
     entire box</b> — not at a point. That is the step from "our solver stopped here" to "the equilibrium is in here."</p>
     <p class="lede2"><b>Scenario 1 refuses, and the battery demands that it refuse.</b> Its cost c&nbsp;=&nbsp;j¹+j² is
     monotone but not <i>strictly</i> monotone across populations, so the split direction lies in the null space of the
@@ -1357,7 +1357,7 @@
       <b>battery</b>&nbsp;&nbsp;&nbsp;&nbsp;mfg-lab/tests/test-wardrop-interval.js · 15 checks, 5 falsifiers, inside <b>make check</b><br>
       <b>kernel</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extracted from the validated kernel at run time; sha256 printed on every run<br>
       <b>S2</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exact rational · 38 unknowns · residual ≡ 0 · interval cross-check radius 2.6e−12<br>
-      <b>S3</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Krawczyk enclosure · 34 unknowns · max radius 2.3e−10 · min off-support slack 7.5<br>
+      <b>S3</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Krawczyk enclosure · 38 unknowns · max radius 7.3e−13 · min off-support slack 0.33<br>
       <b>S1</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;refuses to certify — asserted as a <i>required</i> failure<br>
       <b>rigor</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outward-rounded intervals, validated against exact BigInt rationals on 8000 random operations<br>
       <b>falsifiers</b>&nbsp;skipped rounding · corrupted derivative · wrong active set · wrong cost model · corrupted inflow
@@ -1962,8 +1962,8 @@ function makeCost(scen,wT){
       if(scen===1)      out[k]=j1+j2;                                   // paper S1
       else if(scen===2) out[k]=0.5*(j1+wT*j2)+0.5*(r===1?j1:j2);        // paper S2 (wT=2)
       else{                                                              // S3-style
-        const jeff=j1+wT*j2, v=50/(1+5*Math.pow(jeff/50,3));
-        let base=0; for(const [a,b,w] of EM)base+=w*(a/v+b);
+        const jeff=j1+j2, v=50/(1+5*Math.pow(jeff/50,3));
+        let base=0; for(const [a,b,w] of EM)base+=w*1e-3*(a/v+b);
         const mult=(r===1?1:3);
         out[k]=SLEN[k]*mult*base/2+0.5*(r===1?j1:j2);
       }

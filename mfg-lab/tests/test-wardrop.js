@@ -118,8 +118,8 @@ function makeCost(scen,wT){
       if(scen===1)      out[k]=j1+j2;                                   // paper S1
       else if(scen===2) out[k]=0.5*(j1+wT*j2)+0.5*(r===1?j1:j2);        // paper S2 (wT=2)
       else{                                                              // S3-style
-        const jeff=j1+wT*j2, v=50/(1+5*Math.pow(jeff/50,3));
-        let base=0; for(const [a,b,w] of EM)base+=w*(a/v+b);
+        const jeff=j1+j2, v=50/(1+5*Math.pow(jeff/50,3));
+        let base=0; for(const [a,b,w] of EM)base+=w*1e-3*(a/v+b);
         const mult=(r===1?1:3);
         out[k]=SLEN[k]*mult*base/2+0.5*(r===1?j1:j2);
       }

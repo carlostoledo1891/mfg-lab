@@ -153,11 +153,11 @@ def make_cost(scen: int, wT: float):
             elif scen == 2:
                 out[k] = 0.5 * (j1 + wT * j2) + 0.5 * (j1 if r == 1 else j2)
             else:
-                jeff = j1 + wT * j2
+                jeff = j1 + j2
                 v = 50.0 / (1.0 + 5.0 * (jeff / 50.0) ** 3)
                 base = 0.0
                 for (a, b, w) in EM:
-                    base += w * (a / v + b)
+                    base += w * 1e-3 * (a / v + b)
                 mult = 1.0 if r == 1 else 3.0
                 out[k] = SLEN[k] * mult * base / 2.0 + 0.5 * (j1 if r == 1 else j2)
     return cost
