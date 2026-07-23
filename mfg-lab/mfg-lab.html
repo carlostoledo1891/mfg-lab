@@ -223,11 +223,27 @@
     font-family:var(--data);font-size:11px;cursor:pointer}
   .seg button.on{background:var(--ink);color:var(--paper)}
   .btns{display:flex;gap:10px;margin-left:auto}
-  button.main{font-family:var(--data);font-size:12.5px;letter-spacing:.05em;
-    padding:9px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
-    cursor:pointer;border-radius:2px}
-  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);
-    font-family:var(--data);font-size:12.5px;padding:9px 18px;cursor:pointer;border-radius:2px}
+  /* THE PRIMARY ACTION — the one button that runs the flow. Teal signal colour
+     = "the action", matching the Lab's Run button so the whole surface has one
+     primary. */
+  button.main{font-family:var(--ui);font-weight:600;font-size:13px;letter-spacing:0;
+    padding:10px 20px;border:1px solid var(--fp-deep);background:var(--fp-deep);color:#fff;
+    cursor:pointer;border-radius:8px;transition:background .14s,box-shadow .16s}
+  button.main:hover{background:var(--fp)}
+  /* RE-RUN NEEDED — an input changed since the last solve. Light the button so
+     it is obvious which one re-runs, and append a re-run glyph to say so. */
+  button.main.needs-run{box-shadow:0 0 0 3px color-mix(in srgb,var(--fp) 22%,transparent)}
+  button.main.needs-run::after{content:'\00A0\21BB'}
+  @keyframes runpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fp) 30%,transparent)}
+    50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--fp) 6%,transparent)}}
+  @media(prefers-reduced-motion:no-preference){button.main.needs-run{animation:runpulse 1.9s ease-in-out infinite}}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--grid);
+    font-family:var(--ui);font-weight:500;font-size:13px;padding:10px 16px;cursor:pointer;border-radius:8px;transition:border-color .14s,background .14s}
+  button.ghost:hover{border-color:var(--ink-soft);background:#F3F5F7}
+  /* STALE CERTIFICATE — the shown values no longer match the current inputs.
+     Dim them until a re-solve, so a certificate is never read as current when
+     it is not. Opacity only: no dimension change. */
+  .page.stale .ro .v{opacity:.4;transition:opacity .2s}
   button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -4928,6 +4944,22 @@ const LEGACY={'1':'/bench','lq':'/bench','2d':'/bench','st':'/bench',
 let route='/';
 const NAVBTNS=Array.prototype.slice.call(document.querySelectorAll('.nav'));
 const _autoSolved={};
+/* THE PRIMARY ACTION + STALENESS — one rule for every module. Change an input
+   and the certificate no longer matches it: the readouts dim (visibly stale)
+   and the ONE button that re-runs the flow lights up. Pressing it clears the
+   state. Makes "which button runs this" unmistakable and keeps a shown
+   certificate honest about the current inputs. Touches no numerics. */
+function wireStaleness(){
+  Object.keys(SOLVE_BTN).forEach(tab=>{
+    const btn=$(SOLVE_BTN[tab]), sec=SECS[tab];
+    if(!btn||!sec)return;
+    const stale=()=>{sec.classList.add('stale');btn.classList.add('needs-run');};
+    const fresh=()=>{sec.classList.remove('stale');btn.classList.remove('needs-run');};
+    sec.addEventListener('input',stale);
+    sec.addEventListener('change',stale);
+    btn.addEventListener('click',fresh);
+  });
+}
 function showRoute(r,push){
   if(!ROUTES[r])r='/';
   route=r;
@@ -5089,6 +5121,7 @@ document.querySelectorAll('.card').forEach(card=>{
 /* ---------------- boot: restore shared state, then bring the page alive ----------------
    showRoute auto-solves the section a route owns, the first time that route is
    opened, so landing on a result page shows a live solve rather than a still. */
+wireStaleness();
 applyHash();
 
 function loop(){

@@ -54,8 +54,14 @@
   .ctl label b{color:var(--ink);font-weight:500}
   input[type=range]{width:150px;accent-color:var(--amber)}
   .btns{display:flex;gap:8px;margin-left:auto}
-  button.main{font-family:var(--data);font-size:12px;padding:9px 16px;
-    border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;border-radius:2px}
+  button.main{font-family:var(--ui);font-weight:600;font-size:13px;padding:10px 20px;
+    border:1px solid var(--fp-deep);background:var(--fp-deep);color:#fff;cursor:pointer;border-radius:8px;transition:background .14s,box-shadow .16s}
+  button.main:hover{background:var(--fp)}
+  button.main.needs-run{box-shadow:0 0 0 3px color-mix(in srgb,var(--fp) 22%,transparent)}
+  button.main.needs-run::after{content:'\00A0\21BB'}
+  @keyframes runpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fp) 30%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--fp) 6%,transparent)}}
+  @media(prefers-reduced-motion:no-preference){button.main.needs-run{animation:runpulse 1.9s ease-in-out infinite}}
+  body.stale .ro .v{opacity:.4;transition:opacity .2s}
   button.ghost{font-family:var(--data);font-size:12px;padding:9px 14px;
     border:1px solid var(--grid);background:var(--card);color:var(--ink);cursor:pointer;border-radius:2px}
   button.main:hover{background:#000}button.ghost:hover{border-color:var(--ink-soft);background:var(--paper)}
@@ -1036,6 +1042,18 @@ reset();
 window.addEventListener('resize',()=>{fit();drawAll();});
 $('solveBtn').click();          // the page opens alive
 requestAnimationFrame(loop);
+
+/* Primary-action + staleness, matching the lab: a changed input dims the
+   certificate and lights the one button that re-runs. Touches no numerics. */
+(function(){
+  var btn=document.getElementById('solveBtn'); if(!btn)return;
+  function stale(){document.body.classList.add('stale');btn.classList.add('needs-run');}
+  function fresh(){document.body.classList.remove('stale');btn.classList.remove('needs-run');}
+  document.querySelectorAll('input[type=range]').forEach(function(r){
+    r.addEventListener('input',stale); r.addEventListener('change',stale);
+  });
+  btn.addEventListener('click',fresh);
+})();
 </script>
 </body>
 </html>
