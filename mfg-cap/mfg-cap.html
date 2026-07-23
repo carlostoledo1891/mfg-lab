@@ -1184,7 +1184,17 @@ function drawBif() {
   ctx.fillText('coupling c', w - pad - 62, h - 10);
 }
 
-['sig', 'cc', 'aa', 'nn'].forEach(id => $(id).addEventListener('input', run));
+/* Panel 1 recomputes the whole proof on every change. Coalesce with rAF so a
+   drag fires at most one recompute per frame instead of one per input event —
+   the proof solve is expensive and per-tick recompute janks. run() reads the
+   live slider values, so coalescing to the latest is exact. */
+let _runQueued = false;
+function runCoalesced() {
+  if (_runQueued) return;
+  _runQueued = true;
+  requestAnimationFrame(() => { _runQueued = false; run(); });
+}
+['sig', 'cc', 'aa', 'nn'].forEach(id => $(id).addEventListener('input', runCoalesced));
 $('bMono').addEventListener('click', () => {
   $('sig').value = 0.5; $('cc').value = 1; $('aa').value = 1; $('nn').value = 16; run();
 });

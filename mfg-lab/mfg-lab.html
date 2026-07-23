@@ -67,6 +67,16 @@
   .nav.active{color:var(--ink)}
   .nav.active::before{background:var(--amber)}
   .nav:focus-visible{outline:2px solid var(--amber);outline-offset:-3px}
+  /* The Lab is the product; it belongs in the persistent nav, and reads as
+     distinct (teal, an arrow) because it leaves this page for the instruments.
+     Not class .nav, so the in-page router ignores it and the href navigates. */
+  .navlab{font-family:var(--ui);font-size:13.5px;font-weight:600;color:var(--fp-deep);
+    text-decoration:none;padding:9px 13px 11px;display:inline-flex;align-items:center;gap:4px;transition:color .14s}
+  .navlab:hover{color:var(--fp)}
+  /* Split the row: interactive experiments on the left, the "why trust it"
+     reading pages (Certificates/Verification/Program) pushed right. */
+  .nav.metagroup{margin-left:auto}
+  @media(max-width:760px){.nav.metagroup{margin-left:0}}
   .page{display:none} .page.active{display:block}
 
   .hero{max-width:76ch;margin:2px 0 28px}
@@ -405,12 +415,13 @@
 
   <nav class="pagenav" aria-label="Sections">
     <button class="nav active" data-route="/" aria-current="page">Start</button>
+    <a class="navlab" href="/lab">The Lab &rarr;</a>
     <button class="nav" data-route="/wardrop" aria-current="false">Wardrop</button>
     <button class="nav" data-route="/price" aria-current="false">Price formation</button>
     <button class="nav" data-route="/water-value" aria-current="false">Water value</button>
     <button class="nav" data-route="/random-supply" aria-current="false">Random supply</button>
     <button class="nav" data-route="/bench" aria-current="false">The bench</button>
-    <button class="nav" data-route="/certificates" aria-current="false">Certificates</button>
+    <button class="nav metagroup" data-route="/certificates" aria-current="false">Certificates</button>
     <button class="nav" data-route="/verification" aria-current="false">Verification</button>
     <button class="nav" data-route="/program" aria-current="false">Program</button>
   </nav>
