@@ -85,6 +85,47 @@
     .nav-div{display:none}
     .cta{padding:8px 12px}
   }
+
+  /* ── dropdown navigation: two menus reunite the sections and save the bar ── */
+  .navdrop{position:relative}
+  .navtrig{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;cursor:pointer;
+    font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink-soft);padding:8px 11px;border-radius:7px;transition:color .14s,background .14s}
+  .navtrig:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .navdrop.has-active .navtrig{color:var(--ink);font-weight:600}
+  .navtrig .caret{font-size:9px;color:var(--ink-soft);transition:transform .15s}
+  .navdrop:hover .navtrig .caret,.navdrop:focus-within .navtrig .caret{transform:rotate(180deg)}
+  .navmenu{position:absolute;top:calc(100% + 6px);left:0;min-width:216px;background:var(--card);
+    border:1px solid var(--grid);border-radius:10px;box-shadow:0 10px 30px rgba(16,24,40,.13),0 2px 6px rgba(16,24,40,.06);
+    padding:6px;display:none;flex-direction:column;z-index:70}
+  .navdrop:hover .navmenu,.navdrop:focus-within .navmenu{display:flex}
+  .navmenu button,.navmenu a{display:block;text-align:left;background:transparent;border:0;cursor:pointer;text-decoration:none;
+    font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink);padding:8px 10px;border-radius:7px;white-space:nowrap;transition:background .12s,color .12s}
+  .navmenu button:hover,.navmenu a:hover{background:color-mix(in srgb,var(--fp) 8%,transparent);color:var(--fp-deep)}
+  .navmenu button.active{color:var(--fp-deep)}
+  .navmenu .mtag{color:var(--ink-soft);font-family:var(--data);font-size:10px;margin-left:6px}
+  .navmenu-sep{height:1px;background:var(--grid);margin:6px 4px}
+  .navlink{text-decoration:none}
+  @media(max-width:720px){.navmenu{position:static;box-shadow:none;border:0;padding:0 0 0 10px;min-width:0}}
+
+  /* ── site footer ── */
+  .sitefoot{margin-top:56px;border-top:1px solid var(--grid)}
+  .sitefoot-in{max-width:1180px;margin:0 auto;padding:38px 20px 22px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1.55fr);gap:44px}
+  @media(max-width:820px){.sitefoot-in{grid-template-columns:1fr;gap:26px}}
+  .foot-brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;letter-spacing:-.015em;color:var(--ink)}
+  .foot-brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--fp-deep);color:#fff;font-size:14px}
+  .foot-collab{color:var(--ink-soft);font-size:13.5px;line-height:1.62;max-width:54ch;margin-top:13px}
+  .foot-collab b{color:var(--ink);font-weight:600}
+  .foot-collab a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+  .foot-collab a:hover{text-decoration:underline}
+  .foot-links{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:520px){.foot-links{grid-template-columns:1fr 1fr}}
+  .foot-col{display:flex;flex-direction:column;gap:9px}
+  .foot-h{font-family:var(--data);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .foot-col a{font-size:13.5px;color:var(--ink);text-decoration:none}
+  .foot-col a:hover{color:var(--fp-deep);text-decoration:underline}
+  .foot-base{max-width:1180px;margin:0 auto;padding:16px 20px 44px;border-top:1px solid var(--grid);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-soft)}
+  .foot-base a{color:var(--ink-soft)}
+
   .page{display:none} .page.active{display:block}
 
   .hero{max-width:76ch;margin:2px 0 28px}
@@ -418,15 +459,28 @@
     <a class="brand" href="/" aria-label="MFG Lab home"><span class="mk">⇄</span><span class="wordmark">MFG&nbsp;Lab</span></a>
     <nav class="mainnav" aria-label="Sections">
       <button class="nav active" data-route="/" aria-current="page">Overview</button>
-      <button class="nav" data-route="/wardrop" aria-current="false">Wardrop</button>
-      <button class="nav" data-route="/price" aria-current="false">Price formation</button>
-      <button class="nav" data-route="/water-value" aria-current="false">Water value</button>
-      <button class="nav" data-route="/random-supply" aria-current="false">Random supply</button>
-      <button class="nav" data-route="/bench" aria-current="false">The bench</button>
-      <span class="nav-div"></span>
-      <button class="nav" data-route="/certificates" aria-current="false">Certificates</button>
-      <button class="nav" data-route="/verification" aria-current="false">Verification</button>
-      <button class="nav" data-route="/program" aria-current="false">Program</button>
+      <div class="navdrop">
+        <button class="navtrig" type="button" aria-haspopup="true">Experiments <span class="caret">▾</span></button>
+        <div class="navmenu">
+          <button class="nav" data-route="/wardrop" aria-current="false">Wardrop equilibrium</button>
+          <button class="nav" data-route="/price" aria-current="false">Price formation</button>
+          <button class="nav" data-route="/water-value" aria-current="false">Water value</button>
+          <button class="nav" data-route="/random-supply" aria-current="false">Random supply</button>
+          <button class="nav" data-route="/bench" aria-current="false">The bench <span class="mtag">4 experiments</span></button>
+          <span class="navmenu-sep"></span>
+          <a href="/sin-mfg">SIN-MFG note</a>
+          <a href="/mfg-cap">Computer-assisted proof</a>
+        </div>
+      </div>
+      <div class="navdrop">
+        <button class="navtrig" type="button" aria-haspopup="true">Method <span class="caret">▾</span></button>
+        <div class="navmenu">
+          <button class="nav" data-route="/certificates" aria-current="false">Certificates</button>
+          <button class="nav" data-route="/verification" aria-current="false">Verification</button>
+          <button class="nav" data-route="/program" aria-current="false">Program</button>
+        </div>
+      </div>
+      <a class="navlink nav" href="/byo">Bring your own MFG</a>
     </nav>
     <a class="cta" href="/lab">Open the Lab &rarr;</a>
   </div>
@@ -4989,6 +5043,7 @@ function showRoute(r,push){
     b.classList.toggle('active',on);
     b.setAttribute('aria-current',on?'page':'false');
   });
+  document.querySelectorAll('.navdrop').forEach(d=>d.classList.toggle('has-active',!!d.querySelector('.nav.active')));
   for(const key in ROUTES){
     const el=$(ROUTES[key].page);
     if(el&&el.classList)el.classList.toggle('active',key===r);
@@ -5043,7 +5098,7 @@ function applyHash(){
   }
   syncHash();
 }
-NAVBTNS.forEach(b=>b.addEventListener('click',()=>showRoute(b.dataset.route)));
+NAVBTNS.forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.route){ showRoute(b.dataset.route); if(document.activeElement&&document.activeElement.blur)document.activeElement.blur(); } }));
 document.querySelectorAll('[data-goto]').forEach(el=>{
   el.addEventListener('click',()=>{
     showRoute(el.dataset.goto);
@@ -5152,5 +5207,44 @@ function loop(){
 }
 requestAnimationFrame(loop);
 </script>
+
+<footer class="sitefoot">
+  <div class="sitefoot-in">
+    <div>
+      <div class="foot-brand"><span class="mk">⇄</span>MFG&nbsp;Lab</div>
+      <p class="foot-collab"><b>Working toward a collaboration in the monotonicity school of mean-field games</b> — specifically on
+      <b>certification</b>: turning the estimates this field states with generic constants into numbers a machine can check.
+      If you work on MFG numerics, validated computation, or want a paper's results turned into a certified interactive
+      bench, I'd like to hear from you — <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>.</p>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <div class="foot-col">
+        <div class="foot-h">Explore</div>
+        <a href="/">Overview</a>
+        <a href="/lab">The Lab</a>
+        <a href="/byo">Bring your own MFG</a>
+        <a href="/#/bench">The bench</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">Results</div>
+        <a href="/#/wardrop">Wardrop</a>
+        <a href="/#/price">Price formation</a>
+        <a href="/sin-mfg">SIN-MFG note</a>
+        <a href="/mfg-cap">Computer-assisted proof</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">More</div>
+        <a href="/#/certificates">Certificates</a>
+        <a href="/#/program">Program</a>
+        <a href="https://github.com/carlostoledo1891/mfg-lab">GitHub</a>
+        <a href="mailto:carlos@carlostoledo.co">Contact</a>
+      </div>
+    </nav>
+  </div>
+  <div class="foot-base">
+    <span>MIT licensed · Carlos Toledo · <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a></span>
+    <span>In the style of the monotonicity school — "in the style of" is not a claim of reproduction.</span>
+  </div>
+</footer>
 </body>
 </html>

@@ -101,7 +101,9 @@ with sync_playwright() as p:
         for t in ['lq','2d','st','1']:
             s_pg.click(f'.tab[data-tab="{t}"]'); s_pg.wait_for_timeout(400)
         for r in ROUTES:
-            s_pg.click(f'.nav[data-route="{r}"]'); s_pg.wait_for_timeout(400)
+            # route via the router, not a nav click: the sections now live in
+            # dropdown menus that are display:none until hovered.
+            s_pg.evaluate("(r) => { location.hash = '#' + r; }", r); s_pg.wait_for_timeout(400)
         samples.append(s_pg.evaluate("() => +window.__cls.toFixed(5)"))
         s_pg.close()
     cls = max(samples)
@@ -135,7 +137,7 @@ with sync_playwright() as p:
     pg2.goto(URL_BENCH, wait_until='load'); pg2.wait_for_timeout(2500)
     pg2.click('#solveBtn'); pg2.wait_for_timeout(2000)
     for r in ROUTES:
-        pg2.click(f'.nav[data-route="{r}"]'); pg2.wait_for_timeout(500)
+        pg2.evaluate("(r) => { location.hash = '#' + r; }", r); pg2.wait_for_timeout(500)
     check('no uncaught page errors', not errs, '; '.join(errs)[:120])
 
     # 6. Routing is the new navigation, so it is gated like everything else:
