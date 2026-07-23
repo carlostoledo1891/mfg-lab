@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="MFG Lab — one page. Nine mean-field games and network equilibria plus two live instruments, solved live in the browser, each claim shipped with the certificate that would expose it if it were wrong. Open, MIT.">
 <title>MFG Lab — equilibria you can check · one page</title>
+<link rel="canonical" href="https://mfg-lab.vercel.app/onepager">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="keywords" content="mean-field games, MFG, network equilibrium, Wardrop equilibrium, Hessian-Riemannian flow, price formation, computer-assisted proof, certified numerics, interval arithmetic, exploitability certificate, monotonicity, Gomes, Ribeiro">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MFG Lab">
+<meta property="og:title" content="MFG Lab — equilibria you can check">
+<meta property="og:description" content="Nine mean-field games and network equilibria plus two live instruments, solved live in the browser, each claim shipped with a certificate that would expose it if it were wrong. Open, MIT.">
+<meta property="og:url" content="https://mfg-lab.vercel.app/onepager">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MFG Lab — equilibria you can check">
+<meta name="twitter:description" content="Nine mean-field games solved live in the browser, each with a machine certificate. Open, MIT.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"MFG Lab","url":"https://mfg-lab.vercel.app/","applicationCategory":"EducationalApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"An open, MIT-licensed interactive laboratory for mean-field games and network equilibria in the monotonicity school. Nine modules and two live instruments solve in the browser; every claim ships with a machine certificate that would expose it if it were wrong.","author":{"@type":"Person","name":"Carlos Toledo","url":"https://carlostoledo.co"},"codeRepository":"https://github.com/carlostoledo1891/mfg-lab","license":"https://opensource.org/licenses/MIT","keywords":"mean-field games, network equilibrium, Wardrop equilibrium, computer-assisted proof, certified numerics"}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
@@ -75,6 +91,11 @@
     color:#fff;background:var(--fp-deep);border:1px solid var(--fp-deep);border-radius:8px;padding:8px 15px;
     text-decoration:none;transition:background .14s,box-shadow .16s;white-space:nowrap}
   .cta:hover{background:var(--fp);box-shadow:0 2px 8px rgba(14,124,123,.22)}
+  .ghbtn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;color:var(--ink-soft);transition:color .15s,background .15s}
+  .ghbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+  .ghlink{display:inline-flex;align-items:center;gap:6px;color:var(--ink-soft);text-decoration:none}
+  .ghlink svg{width:15px;height:15px}
+  .ghlink:hover{color:var(--ink)}
   @media(max-width:720px){
     .topbar-in{gap:12px;padding:0 14px}
     .brand span.wordmark{display:none}
@@ -489,7 +510,10 @@
 
   .modwrap{scroll-margin-top:76px;margin:0 0 8px;padding-top:30px;border-top:1px solid var(--grid)}
   .modwrap:first-of-type{border-top:0}
-  .modtag{display:flex;align-items:baseline;gap:11px;margin-bottom:6px}
+  /* the block header pins below the 60px nav so the reader always sees which module they're in */
+  .modtag{position:sticky;top:60px;z-index:40;display:flex;align-items:baseline;gap:11px;margin:0 0 6px;padding:10px 0 9px;
+    background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--grid)}
   .modtag .mno{font-family:var(--data);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
   .modtag .mnm{font-family:var(--ui);font-size:12.5px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em}
 
@@ -514,23 +538,14 @@
     <button class="brand" type="button" data-scroll="top" aria-label="MFG Lab — top" style="background:transparent;border:0;cursor:pointer"><span class="mk">⇄</span><span class="wordmark">MFG&nbsp;Lab</span></button>
     <nav class="mainnav" aria-label="Sections">
       <button class="nav" type="button" data-scroll="go-cards">Modules</button>
-      <div class="navdrop">
-        <button class="navtrig" type="button" aria-haspopup="true">Experiments <span class="caret">▾</span></button>
-        <div class="navmenu">
-          <button class="nav" type="button" data-scroll="go-wd">Wardrop equilibrium</button>
-          <button class="nav" type="button" data-scroll="go-pr">Price formation</button>
-          <button class="nav" type="button" data-scroll="go-wv">Water value</button>
-          <button class="nav" type="button" data-scroll="go-gg">Random supply</button>
-          <span class="navmenu-sep"></span>
-          <button class="nav" type="button" data-scroll="go-1">Crowd · 1D</button>
-          <button class="nav" type="button" data-scroll="go-lq">LQ benchmark</button>
-          <button class="nav" type="button" data-scroll="go-2d">Two exits</button>
-          <button class="nav" type="button" data-scroll="go-st">Stationary</button>
-        </div>
-      </div>
+      <button class="nav" type="button" data-scroll="go-wd">Wardrop</button>
+      <button class="nav" type="button" data-scroll="go-pr">Price</button>
+      <button class="nav" type="button" data-scroll="go-wv">Water value</button>
+      <button class="nav" type="button" data-scroll="go-gg">Random supply</button>
       <button class="nav" type="button" data-scroll="go-me">Certificates</button>
-      <button class="nav" type="button" data-scroll="go-byo">Bring your own MFG</button>
+      <button class="nav" type="button" data-scroll="go-byo">Your own MFG</button>
     </nav>
+    <a class="ghbtn" href="https://github.com/carlostoledo1891/mfg-lab" target="_blank" rel="noopener noreferrer" aria-label="Source on GitHub" title="Source on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
     <button class="cta" type="button" data-scroll="go-lab" style="cursor:pointer;font-family:var(--ui)">Open the Lab &rarr;</button>
   </div>
 </header>
@@ -573,9 +588,9 @@
 <button class="mcard" data-scroll="go-byo" type="button"><span class="mk2">type a game</span><span class="mt2">Bring your own MFG</span><span class="md2">Type a cost formula; get the certified equilibrium — density, value, and an exploitability certificate, solved live.</span><span class="mbadge">certified exploitability</span></button>
   </div>
 
-<div class="modwrap" id="go-wd"><div class="modtag"><span class="mno">Module 07</span><span class="mnm">Wardrop equilibrium</span></div><section id="secwd" role="tabpanel" aria-labelledby="tbwd">
+<div class="modwrap" id="go-wd"><div class="modtag"><span class="mno">Module 01</span><span class="mnm">Wardrop equilibrium</span></div><section id="secwd" role="tabpanel" aria-labelledby="tbwd">
   <header class="shead">
-    <h2>07 · Multi-population Wardrop, by Hessian–Riemannian flow</h2>
+    <h2>01 · Multi-population Wardrop, by Hessian–Riemannian flow</h2>
     <p>Bakaryan–Aoun–Ribeiro–Hovakimyan–Gomes (2025): two populations route through one road network. The flow keeps Kirchhoff and positivity by geometry; an active-set Newton polish lands the Wardrop certificate at machine zero.</p>
   </header>
   <div class="eqs">
@@ -638,9 +653,9 @@
     </div>
   </div>
   </section></div>
-<div class="modwrap" id="go-pr"><div class="modtag"><span class="mno">Module 05</span><span class="mnm">Price formation</span></div><section id="secpr" role="tabpanel" aria-labelledby="tbpr">
+<div class="modwrap" id="go-pr"><div class="modtag"><span class="mno">Module 02</span><span class="mnm">Price formation</span></div><section id="secpr" role="tabpanel" aria-labelledby="tbpr">
   <header class="shead">
-    <h2>05 · Price formation, in a battery fleet</h2>
+    <h2>02 · Price formation, in a battery fleet</h2>
     <p>The Gomes–Saúde clearing price against a posted time-of-use tariff on the same overnight window — the synchronized rebound is the exhibit, and the clearing residual <i>is</i> the convergence criterion.</p>
   </header>
   <div class="eqs">
@@ -709,9 +724,9 @@
     </div>
   </div>
   </section></div>
-<div class="modwrap" id="go-wv"><div class="modtag"><span class="mno">Module 09</span><span class="mnm">Water value</span></div><section id="secwv" role="tabpanel" aria-label="Water value on a scenario tree">
+<div class="modwrap" id="go-wv"><div class="modtag"><span class="mno">Module 03</span><span class="mnm">Water value</span></div><section id="secwv" role="tabpanel" aria-label="Water value on a scenario tree">
   <header class="shead">
-    <h2>The water value on a scenario tree — solved exactly, certified by duality</h2>
+    <h2>03 · The water value on a scenario tree — solved exactly, certified by duality</h2>
     <p>Price-taking hydro on a finite tree: release h ∈ [0, h̄] against price ϖ, spill s ≥ 0, carry stock
     R′ ∈ [0, R̄], linear salvage φR′ at the leaves. The solver is a guess; the certificate is the proof.</p>
   </header>
@@ -773,9 +788,9 @@
     </div>
   </div>
   </section></div>
-<div class="modwrap" id="go-gg"><div class="modtag"><span class="mno">Module 06</span><span class="mnm">Random supply · common noise</span></div><section id="secgg" role="tabpanel" aria-labelledby="tbgg">
+<div class="modwrap" id="go-gg"><div class="modtag"><span class="mno">Module 04</span><span class="mnm">Random supply · common noise</span></div><section id="secgg" role="tabpanel" aria-labelledby="tbgg">
   <header class="shead">
-    <h2>06 · Random supply — GGR 2021, verbatim</h2>
+    <h2>04 · Random supply — GGR 2021, verbatim</h2>
     <p>Section 4 of Gomes–Gutierrez–Ribeiro, <i>A mean field game price model with noise</i>: explicit coefficients, common noise, and a pathwise clearing invariant conserved to machine precision — reproducible by seed.</p>
   </header>
   <div class="eqs">
@@ -834,9 +849,9 @@
     </div>
   </div>
   </section></div>
-<div class="modwrap" id="go-1"><div class="modtag"><span class="mno">Module 01</span><span class="mnm">Crowd · 1D</span></div><section id="sec1" class="active" role="tabpanel" aria-labelledby="tb1">
+<div class="modwrap" id="go-1"><div class="modtag"><span class="mno">Module 05</span><span class="mnm">Crowd · 1D</span></div><section id="sec1" class="active" role="tabpanel" aria-labelledby="tb1">
   <header class="shead">
-    <h2>01 · A crowd in one dimension</h2>
+    <h2>05 · A crowd in one dimension</h2>
     <p>A population moves to a target through its own density — local aversion cost, or a genuine Lions congestion Hamiltonian — certified by exploitability, not fixed-point residual alone.</p>
   </header>
   <div class="eqs">
@@ -913,9 +928,9 @@
     </div>
   </div>
   </section></div>
-<div class="modwrap" id="go-lq"><div class="modtag"><span class="mno">Module 02</span><span class="mnm">LQ benchmark</span></div><section id="seclq" role="tabpanel" aria-labelledby="tblq">
+<div class="modwrap" id="go-lq"><div class="modtag"><span class="mno">Module 06</span><span class="mnm">LQ benchmark</span></div><section id="seclq" role="tabpanel" aria-labelledby="tblq">
   <header class="shead">
-    <h2>02 · The LQ control experiment</h2>
+    <h2>06 · The LQ control experiment</h2>
     <p>Quadratic structure collapses this MFG to a small Riccati system; the PDE solver doesn't know that. Its error against the RK4 reference is measured on a grid sequence — slope −1 is the pass condition.</p>
   </header>
   <div class="eqs">
@@ -960,9 +975,9 @@
     </div>
   </div>
   </section></div>
-<div class="modwrap" id="go-2d"><div class="modtag"><span class="mno">Module 03</span><span class="mnm">Two exits</span></div><section id="sec2d" role="tabpanel" aria-labelledby="tb2d">
+<div class="modwrap" id="go-2d"><div class="modtag"><span class="mno">Module 07</span><span class="mnm">Two exits</span></div><section id="sec2d" role="tabpanel" aria-labelledby="tb2d">
   <header class="shead">
-    <h2>03 · Two exits, one pitchfork</h2>
+    <h2>07 · Two exits, one pitchfork</h2>
     <p>Crowd aversion splits the crowd evenly, with a full certificate. Herding is anti-monotone: sweep the coupling with both tilt signs and trace the symmetry breaking yourself — one solve deposits one point.</p>
   </header>
   <div class="eqs">
@@ -1029,9 +1044,9 @@
     </div>
   </div>
   </section></div>
-<div class="modwrap" id="go-st"><div class="modtag"><span class="mno">Module 04</span><span class="mnm">Stationary</span></div><section id="secst" role="tabpanel" aria-labelledby="tbst">
+<div class="modwrap" id="go-st"><div class="modtag"><span class="mno">Module 08</span><span class="mnm">Stationary</span></div><section id="secst" role="tabpanel" aria-labelledby="tbst">
   <header class="shead">
-    <h2>04 · The stationary system, solved by flow</h2>
+    <h2>08 · The stationary system, solved by flow</h2>
     <p>The ergodic MFG integrated by the crossed monotone flow of Almulla–Ferreira–Gomes — proximal-implicit, because the explicit toggle stalls, and it should: the flow's Jacobian is skew-dominated.</p>
   </header>
   <div class="eqs">
@@ -1106,7 +1121,7 @@
 
 <div class="modwrap" id="go-me"><div class="modtag"><span class="mno">Method</span><span class="mnm">The certificate standard</span></div><section id="secme" role="tabpanel" aria-labelledby="tbme">
   <header class="shead">
-    <h2>08 · Method — why these numbers can be trusted</h2>
+    <h2>09 · Method — why these numbers can be trusted</h2>
     <p>The lab's working principle: numerical honesty is the product. This page states the schemes, the certificates, the validation workflow, and — deliberately — the failure modes and caveats.</p>
   </header>
 
@@ -1134,14 +1149,14 @@
       fictitious-play residuals are all computed before the step they judge.</p>
       <table class="mtable">
         <tr><th>tab</th><th>certificate</th><th>typical value</th></tr>
-        <tr><td>01 crowd</td><td>mass drift (flux form) · exact positivity · exploitability ε of the frozen best response</td><td class="mono">5e−14 · exact · ε reported beside the residual that limits it</td></tr>
-        <tr><td>02 LQ</td><td>PDE error vs an independent Riccati/RK4 reference on a grid sequence; observed order is the pass condition</td><td class="mono">slope −1.0</td></tr>
-        <tr><td>03 two exits</td><td>full certificate in the monotone (aversion) regime; in the herding regime the certificate honestly degrades and the pitchfork is traced solve-by-solve</td><td class="mono">ε &lt; floor · symmetric split</td></tr>
-        <tr><td>04 stationary</td><td>stationary flux at machine zero; residual of the crossed monotone flow</td><td class="mono">~1e−13</td></tr>
-        <tr><td>05 price</td><td>pre-update clearing residual — the fixed-point residual IS the market imbalance</td><td class="mono">≤ 1e−9</td></tr>
-        <tr><td>06 GGR</td><td>pathwise invariant ϖ+Π+cQ along every noise realization · closed form ϖ̄ = −3+2α · displayed seed · ray unique in the linear ansatz; the relation is the paper's §3.1 balance condition (test-invariant.js)</td><td class="mono">~5e−15 · exact · reproducible · wrong ray drifts 3.1e−1</td></tr>
-        <tr><td>07 Wardrop</td><td>relative Wardrop gap via Bellman potentials (the 1952 principle as a readout) · Kirchhoff along the whole trajectory · independent single-population KKT on totals</td><td class="mono">&lt; 1e−16 · ~1e−14 · ~1e−16</td></tr>
-        <tr><td>08 water value</td><td>ZERO duality gap on a finite LP — optimality proved, not approached — then the trichotomy, dual wedge signs and complementary slackness; the martingale residual is read off the certified dual, over interior nodes only</td><td class="mono">~1e−15 · exact · ~1e−15</td></tr>
+        <tr><td>01 Wardrop</td><td>relative Wardrop gap via Bellman potentials (the 1952 principle as a readout) · Kirchhoff along the whole trajectory · independent single-population KKT on totals</td><td class="mono">&lt; 1e−16 · ~1e−14 · ~1e−16</td></tr>
+        <tr><td>02 price</td><td>pre-update clearing residual — the fixed-point residual IS the market imbalance</td><td class="mono">≤ 1e−9</td></tr>
+        <tr><td>03 water value</td><td>ZERO duality gap on a finite LP — optimality proved, not approached — then the trichotomy, dual wedge signs and complementary slackness; the martingale residual is read off the certified dual, over interior nodes only</td><td class="mono">~1e−15 · exact · ~1e−15</td></tr>
+        <tr><td>04 GGR</td><td>pathwise invariant ϖ+Π+cQ along every noise realization · closed form ϖ̄ = −3+2α · displayed seed · ray unique in the linear ansatz; the relation is the paper's §3.1 balance condition (test-invariant.js)</td><td class="mono">~5e−15 · exact · reproducible · wrong ray drifts 3.1e−1</td></tr>
+        <tr><td>05 crowd</td><td>mass drift (flux form) · exact positivity · exploitability ε of the frozen best response</td><td class="mono">5e−14 · exact · ε reported beside the residual that limits it</td></tr>
+        <tr><td>06 LQ</td><td>PDE error vs an independent Riccati/RK4 reference on a grid sequence; observed order is the pass condition</td><td class="mono">slope −1.0</td></tr>
+        <tr><td>07 two exits</td><td>full certificate in the monotone (aversion) regime; in the herding regime the certificate honestly degrades and the pitchfork is traced solve-by-solve</td><td class="mono">ε &lt; floor · symmetric split</td></tr>
+        <tr><td>08 stationary</td><td>stationary flux at machine zero; residual of the crossed monotone flow</td><td class="mono">~1e−13</td></tr>
       </table>
     </div>
 
@@ -1280,7 +1295,7 @@
     </div>
   </div>
   <div class="foot-base">
-    <span>Designed &amp; built by <b>Carlos&nbsp;Toledo</b> · carlostoledo.co</span>
+    <span>Designed &amp; built by <b>Carlos&nbsp;Toledo</b> · carlostoledo.co · <a class="ghlink" href="https://github.com/carlostoledo1891/mfg-lab" target="_blank" rel="noopener noreferrer" aria-label="Source on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub</a></span>
     <span>MFG Lab · MIT · certificates over tolerances, failure modes shown</span>
   </div>
 </footer>
