@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/", "destination": "/mfg-lab/mfg-lab" },
+    { "source": "/onepager", "destination": "/mfg-lab/onepager" },
     { "source": "/lab", "destination": "/mfg-lab/lab" },
     { "source": "/byo", "destination": "/mfg-lab/byo" },
     { "source": "/sin-mfg", "destination": "/sin-mfg/sin-mfg" },
