@@ -58,7 +58,7 @@ with a sign error it caught in our own algebra.
 
 ## The two interactive artifacts
 
-Open either file in a browser — no build, no server, no libraries.
+Open either file in a browser — no build, no server, no libraries. The deployed homepage (`/`) is [`mfg-lab/onepager.html`](mfg-lab/onepager.html) — every experiment collapsed onto one scrolling page; the routed lab is at `/mfg-lab`.
 
 **[`mfg-lab/mfg-lab.html`](mfg-lab/mfg-lab.html)** — one page, eight live
 experiments, organised as an argument rather than a menu. Every section has its
@@ -91,7 +91,7 @@ The eight experiments:
    invariant ϖ+Π+cQ conserved at ~5e-15 along every realization, seed
    displayed and editable (a reproducibility receipt).
 7. Multi-population Wardrop equilibrium by Hessian–Riemannian flow
-   (Bakaryan–Aoun–Ribeiro–Hovakimyan–Gomes, arXiv:2504.16028) — machine-zero
+   (Bakaryan–Aoun–de Lima Ribeiro–Hovakimyan–Gomes, *AIMS Mathematics* 11(5):15143–15162, 2026, doi:10.3934/math.2026623; arXiv:2504.16028) — machine-zero
    KKT certificates, an independent single-population KKT audit of the
    totals, the projected-gradient duel measured honestly, and the S1
    split non-uniqueness demonstrated rather than hidden. Its equilibrium is
