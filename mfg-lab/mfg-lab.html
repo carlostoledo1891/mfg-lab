@@ -53,34 +53,42 @@
      navigation did. One document, one kernel of each solver, one stylesheet;
      every page is addressable as #/route so any result can be linked directly.
      Active states change colour and an inset bar only — never a dimension. */
-  .mast{margin-bottom:14px}
-  .mast h1{font-size:19px;letter-spacing:-.01em}
-  .mast .sub{margin-bottom:0;font-size:13.5px}
-  .pagenav{display:flex;flex-wrap:wrap;gap:2px;margin:14px 0 26px;
+  /* ── GLOBAL CHROME: a real sticky top bar. Brand · sections · one primary CTA.
+     Replaces the notebook masthead + flat tab row. ── */
+  .topbar{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);
+    backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);
     border-bottom:1px solid var(--grid)}
-  .nav{position:relative;background:transparent;border:0;
-    font-family:var(--ui);font-size:13.5px;font-weight:600;color:var(--ink-soft);
-    padding:9px 13px 11px;cursor:pointer;transition:color .14s}
-  .nav::before{content:'';position:absolute;left:9px;right:9px;bottom:-1px;height:2px;
-    background:transparent;transition:background .14s}
-  .nav:hover{color:var(--ink)}
-  .nav.active{color:var(--ink)}
-  .nav.active::before{background:var(--amber)}
-  .nav:focus-visible{outline:2px solid var(--amber);outline-offset:-3px}
-  /* The Lab is the product; it belongs in the persistent nav, and reads as
-     distinct (teal, an arrow) because it leaves this page for the instruments.
-     Not class .nav, so the in-page router ignores it and the href navigates. */
-  .navlab{font-family:var(--ui);font-size:13.5px;font-weight:600;color:var(--fp-deep);
-    text-decoration:none;padding:9px 13px 11px;display:inline-flex;align-items:center;gap:4px;transition:color .14s}
-  .navlab:hover{color:var(--fp)}
-  /* Split the row: interactive experiments on the left, the "why trust it"
-     reading pages (Certificates/Verification/Program) pushed right. */
-  .nav.metagroup{margin-left:auto}
-  @media(max-width:760px){.nav.metagroup{margin-left:0}}
+  .topbar-in{max-width:1180px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:20px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap;flex:none}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;
+    background:var(--fp-deep);color:#fff;font-size:14px;font-weight:600}
+  .brand:hover{color:var(--fp-deep)}
+  .mainnav{display:flex;align-items:center;gap:1px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .mainnav::-webkit-scrollbar{display:none}
+  .nav{position:relative;background:transparent;border:0;white-space:nowrap;
+    font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink-soft);
+    padding:8px 11px;cursor:pointer;border-radius:7px;transition:color .14s,background .14s}
+  .nav:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .nav::before{content:'';position:absolute;left:11px;right:11px;bottom:-1px;height:2px;background:transparent;border-radius:2px;transition:background .14s}
+  .nav.active{color:var(--ink);font-weight:600}
+  .nav.active::before{background:var(--fp-deep)}
+  .nav:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
+  .nav-div{flex:none;width:1px;height:18px;background:var(--grid);margin:0 7px}
+  .cta{flex:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-weight:600;font-size:13.5px;
+    color:#fff;background:var(--fp-deep);border:1px solid var(--fp-deep);border-radius:8px;padding:8px 15px;
+    text-decoration:none;transition:background .14s,box-shadow .16s;white-space:nowrap}
+  .cta:hover{background:var(--fp);box-shadow:0 2px 8px rgba(14,124,123,.22)}
+  @media(max-width:720px){
+    .topbar-in{gap:12px;padding:0 14px}
+    .brand span.wordmark{display:none}
+    .nav-div{display:none}
+    .cta{padding:8px 12px}
+  }
   .page{display:none} .page.active{display:block}
 
   .hero{max-width:76ch;margin:2px 0 28px}
-  .hero h2{font-family:var(--ui);font-weight:600;font-size:clamp(27px,4.2vw,41px);
+  .hero h1{font-family:var(--ui);font-weight:600;font-size:clamp(27px,4.2vw,41px);
     line-height:1.08;letter-spacing:-.028em;margin-bottom:15px}
   .hero .lede{font-size:16px;line-height:1.62;color:var(--ink-soft);text-wrap:pretty}
   .hero .lede b{color:var(--ink);font-weight:600}
@@ -405,31 +413,31 @@
 </style>
 </head>
 <body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="MFG Lab home"><span class="mk">⇄</span><span class="wordmark">MFG&nbsp;Lab</span></a>
+    <nav class="mainnav" aria-label="Sections">
+      <button class="nav active" data-route="/" aria-current="page">Overview</button>
+      <button class="nav" data-route="/wardrop" aria-current="false">Wardrop</button>
+      <button class="nav" data-route="/price" aria-current="false">Price formation</button>
+      <button class="nav" data-route="/water-value" aria-current="false">Water value</button>
+      <button class="nav" data-route="/random-supply" aria-current="false">Random supply</button>
+      <button class="nav" data-route="/bench" aria-current="false">The bench</button>
+      <span class="nav-div"></span>
+      <button class="nav" data-route="/certificates" aria-current="false">Certificates</button>
+      <button class="nav" data-route="/verification" aria-current="false">Verification</button>
+      <button class="nav" data-route="/program" aria-current="false">Program</button>
+    </nav>
+    <a class="cta" href="/lab">Open the Lab &rarr;</a>
+  </div>
+</header>
 <div class="wrap">
-
-  <header class="mast">
-    <div class="eyebrow">MFG Lab · monotonicity school · everything solved live, nothing precomputed</div>
-    <h1>Mean-field games: <span class="u">HJB</span> ⇄ <span class="m">Fokker–Planck</span></h1>
-    <div class="sub">Carlos Toledo · a working notebook on mean-field games and network equilibria</div>
-  </header>
-
-  <nav class="pagenav" aria-label="Sections">
-    <button class="nav active" data-route="/" aria-current="page">Start</button>
-    <a class="navlab" href="/lab">The Lab &rarr;</a>
-    <button class="nav" data-route="/wardrop" aria-current="false">Wardrop</button>
-    <button class="nav" data-route="/price" aria-current="false">Price formation</button>
-    <button class="nav" data-route="/water-value" aria-current="false">Water value</button>
-    <button class="nav" data-route="/random-supply" aria-current="false">Random supply</button>
-    <button class="nav" data-route="/bench" aria-current="false">The bench</button>
-    <button class="nav metagroup" data-route="/certificates" aria-current="false">Certificates</button>
-    <button class="nav" data-route="/verification" aria-current="false">Verification</button>
-    <button class="nav" data-route="/program" aria-current="false">Program</button>
-  </nav>
 
   <!-- ============================ PAGE: START ============================ -->
   <div class="page active" id="pgStart">
     <div class="hero">
-      <h2>Equilibria you can check.</h2>
+      <p class="eyebrow" style="margin-bottom:8px">Mean-field games · <span class="u">HJB</span> ⇄ <span class="m">Fokker–Planck</span> · monotonicity school</p>
+      <h1>Equilibria you can check.</h1>
       <p class="lede">Mean-field games and network equilibria, every solve running <b>live in this page</b> —
       no precomputed data, no fitted curves, no library. Every claim ships with the certificate that would expose it
       if it were wrong. For the Wardrop network the certificate has been upgraded to a <b>proof</b>: the equilibrium is

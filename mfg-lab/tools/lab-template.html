@@ -59,6 +59,22 @@
   button.ghost:hover{background:#E4EBEB}
   button[disabled]{opacity:.55;cursor:default}
   .btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  /* Lab header: a title and the ONE primary action, clearly separated from the
+     labelled instrument controls below. No mode toggle competing with Run. */
+  .labtop{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:16px}
+  .labtop-t{font-family:var(--ui);font-weight:600;font-size:15px}
+  .labtop-s{font-size:13px;color:var(--ink-soft);margin-top:2px;max-width:34ch}
+  button.main.needs-run{box-shadow:0 0 0 3px color-mix(in srgb,var(--fp) 22%,transparent)}
+  button.main.needs-run::after{content:'\00A0\21BB'}
+  @keyframes rp{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fp) 30%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--fp) 6%,transparent)}}
+  @media(prefers-reduced-motion:no-preference){button.main.needs-run{animation:rp 1.9s ease-in-out infinite}}
+  /* Each instrument's controls sit in a labelled block; both are always visible. */
+  .instctl{border-top:1px solid var(--grid);padding-top:12px;margin-top:12px}
+  .ictl-h{font-family:var(--data);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fp-deep);font-weight:500;margin-bottom:9px}
+  .ictl-h .ictl-sub{color:var(--ink-soft);margin-left:4px}
+  /* Each result panel names its instrument, so the two are never confused. */
+  .resultcard{position:relative}
+  .reshead{font-family:var(--data);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--grid)}
 
   /* Dimensional stability: hover/active change colour only, never a dimension. */
   .seg{display:inline-flex;border:1px solid var(--grid);border-radius:7px;overflow:hidden;background:#fff}
@@ -134,26 +150,27 @@
 
     <div>
       <div class="card">
-        <div class="btns" style="justify-content:space-between;margin-bottom:14px">
-          <div class="seg" id="tabs">
-            <button data-inst="study" class="on">Order study</button>
-            <button data-inst="map">Failure map</button>
+        <div class="labtop">
+          <div>
+            <div class="labtop-t">Two instruments, one run</div>
+            <div class="labtop-s">A convergence study and a failure map — both on your kernel, at once.</div>
           </div>
           <div class="btns">
-            <button id="run">Run</button>
+            <button class="main" id="run">Run</button>
             <button id="link" class="ghost">Copy link</button>
           </div>
         </div>
 
-        <div id="ctlStudy">
+        <div class="instctl">
+          <div class="ictl-h">Convergence study</div>
           <div class="row">
             <div><label for="tol">working tolerance</label><input id="tol" type="text" value="1e-9"></div>
             <div><label for="levels">levels</label><input id="levels" type="text" value="16, 32, 64"></div>
             <div><label for="exp">order you expect</label><input id="exp" type="text" value="2" placeholder="blank = don't declare"></div>
           </div>
         </div>
-
-        <div id="ctlMap" hidden>
+        <div class="instctl">
+          <div class="ictl-h">Failure map <span class="ictl-sub">sweep a parameter</span></div>
           <div class="row">
             <div><label for="pname">parameter</label><input id="pname" type="text" value="k"></div>
             <div><label for="plo">from</label><input id="plo" type="text" value="0.5"></div>
@@ -166,34 +183,38 @@
           </div>
         </div>
 
-        <p class="status" id="status">Ready. Pick an example or paste a kernel, then Run.</p>
+        <p class="status" id="status">Ready. Pick an example or paste a kernel &mdash; it runs automatically.</p>
       </div>
 
-      <div class="card" id="out" hidden>
-        <div class="verdict" id="verdict">
-          <span class="vlabel" id="vlabel">—</span>
-          <span><span class="vtext" id="vtext"></span><span class="vwhy" id="vwhy"></span></span>
+      <div class="card resultcard" id="outStudy" hidden>
+        <div class="reshead">Convergence study</div>
+        <div class="verdict" id="verdictStudy"><span class="vlabel" id="vlabelStudy">&mdash;</span><span><span class="vtext" id="vtextStudy"></span><span class="vwhy" id="vwhyStudy"></span></span></div>
+        <div id="evidStudy"></div>
+        <div id="tableWrap"></div>
+        <div class="btns" style="margin-top:12px">
+          <button id="tex" class="ghost">Copy LaTeX table</button>
+          <button id="repS" class="ghost">Copy certificate</button>
         </div>
+        <details id="detAssumeS"><summary>Assumptions &mdash; not checked here</summary><ul id="assumeStudy"></ul></details>
+        <details id="detFalsS"><summary>What would make this go red</summary><ul id="falsStudy"></ul></details>
+      </div>
 
-        <div id="evid"></div>
-        <div id="mapWrap" hidden>
+      <div class="card resultcard" id="outMap" hidden>
+        <div class="reshead">Failure map</div>
+        <div class="verdict" id="verdictMap"><span class="vlabel" id="vlabelMap">&mdash;</span><span><span class="vtext" id="vtextMap"></span><span class="vwhy" id="vwhyMap"></span></span></div>
+        <div id="evidMap"></div>
+        <div id="mapWrap">
           <canvas id="cv"></canvas>
           <div class="legend">
             <span><i style="background:var(--fp)"></i>reached tolerance</span>
-            <span><i style="background:var(--amber)"></i>stalled — converging, out of budget</span>
-            <span><i style="background:var(--hjb)"></i>diverged — went backwards</span>
+            <span><i style="background:var(--amber)"></i>stalled &mdash; converging, out of budget</span>
+            <span><i style="background:var(--hjb)"></i>diverged &mdash; went backwards</span>
             <span><i style="background:#6B7280"></i>threw</span>
           </div>
         </div>
-        <div id="tableWrap"></div>
-
-        <div class="btns" style="margin-top:14px">
-          <button id="tex" class="ghost">Copy LaTeX table</button>
-          <button id="rep" class="ghost">Copy certificate</button>
-        </div>
-
-        <details id="detAssume"><summary>Assumptions — not checked here</summary><ul id="assume"></ul></details>
-        <details id="detFals"><summary>What would make this go red</summary><ul id="fals"></ul></details>
+        <div class="btns" style="margin-top:12px"><button id="repM" class="ghost">Copy certificate</button></div>
+        <details id="detAssumeM"><summary>Assumptions &mdash; not checked here</summary><ul id="assumeMap"></ul></details>
+        <details id="detFalsM"><summary>What would make this go red</summary><ul id="falsMap"></ul></details>
       </div>
     </div>
   </div>
@@ -361,7 +382,6 @@ let inst = 'study';
 
 function serialize(){
   const p = new URLSearchParams();
-  p.set('i', inst);
   F.forEach(id => p.set(id, $(id).value));
   /* The kernel source travels too, so a link reproduces the RUN and not merely
      the settings. Base64 of the UTF-8 bytes, which survives a URL. */
@@ -372,19 +392,13 @@ function applyHash(){
   if (!location.hash || location.hash.length < 2) return false;
   try {
     const p = new URLSearchParams(location.hash.slice(1));
-    if (p.get('i')) setInst(p.get('i'));
     F.forEach(id => { if (p.get(id) !== null) $(id).value = p.get(id); });
     if (p.get('k')) $('src').value = decodeURIComponent(escape(atob(p.get('k'))));
     return true;
   } catch (e) { return false; }
 }
 
-function setInst(v){
-  inst = (v === 'map') ? 'map' : 'study';
-  [...$('tabs').children].forEach(b => b.classList.toggle('on', b.dataset.inst === inst));
-  $('ctlStudy').hidden = inst !== 'study';
-  $('ctlMap').hidden = inst === 'study';
-}
+/* the mode toggle is gone: both instruments run and show together. */
 
 function loadExample(name){
   const e = EXAMPLES[name];
@@ -392,7 +406,6 @@ function loadExample(name){
   $('src').value = e.src;
   $('knote').textContent = e.note;
   if (e.map) Object.keys(e.map).forEach(k => { $(k).value = e.map[k]; });
-  if (e.inst) setInst(e.inst);
 }
 
 /* ---- compiling the user's kernel ----
@@ -429,27 +442,24 @@ function num(x){
 function li(list){ return list.map(t => '<li>' + esc(t) + '</li>').join(''); }
 function esc(s){ return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 
-function showCert(cert){
-  $('out').hidden = false;
-  const cls = verdictClass(cert);
-  const v = $('verdict');
-  v.className = 'verdict ' + cls;
-  $('vlabel').textContent = cert.verdict === 'PROVED' ? 'CERTIFIED' : 'NOT PROVED';
-  $('vtext').textContent = cert.claim;
-  $('vwhy').textContent = cert.why ? ' — ' + cert.why : '';
-  $('evid').innerHTML = Object.keys(cert.evidence || {}).map(k =>
+function showCert(cert, sfx){
+  $('out' + sfx).hidden = false;
+  $('verdict' + sfx).className = 'verdict ' + verdictClass(cert);
+  $('vlabel' + sfx).textContent = cert.verdict === 'PROVED' ? 'CERTIFIED' : 'NOT PROVED';
+  $('vtext' + sfx).textContent = cert.claim;
+  $('vwhy' + sfx).textContent = cert.why ? ' — ' + cert.why : '';
+  $('evid' + sfx).innerHTML = Object.keys(cert.evidence || {}).map(k =>
     '<div class="ro"><span class="k">' + esc(k) + '</span><span class="v">' +
     esc(Array.isArray(cert.evidence[k]) ? '[' + cert.evidence[k].map(num).join(', ') + ']' : num(cert.evidence[k])) +
     '</span></div>').join('');
-  $('assume').innerHTML = li(cert.assumes || []);
-  $('fals').innerHTML = li(cert.falsifier || []);
+  $('assume' + sfx).innerHTML = li(cert.assumes || []);
+  $('fals' + sfx).innerHTML = li(cert.falsifier || []);
 }
 
-let last = null;
+let lastStudy = null, lastMap = null;
 
 function renderStudy(r){
-  showCert(r.certificate);
-  $('mapWrap').hidden = true;
+  showCert(r.certificate, 'Study');
   const rows = r.table.map(t =>
     '<tr><td>' + t.n + '</td><td>' + num(t.h) + '</td><td>' + num(t.error) + '</td><td>' +
     (t.order === undefined ? '—' : t.order.toFixed(4)) + '</td><td>' + num(t.iters) + '</td><td>' +
@@ -462,9 +472,8 @@ function renderStudy(r){
 }
 
 function renderMap(r){
-  showCert(r.certificate);
-  $('tableWrap').innerHTML = '';
-  $('mapWrap').hidden = false;
+  showCert(r.certificate, 'Map');
+  $('mapWrap').style.display = '';
   drawMap(r);
 }
 
@@ -530,7 +539,7 @@ function drawMap(r){
 /* ---- LaTeX: where the tool meets the labour. Everyone in this field builds
    these tables by hand for a paper. ---- */
 function toLatex(r){
-  if (inst !== 'study' || !r.table || !r.table.length) return '';
+  if (!r || !r.table || !r.table.length) return '';
   const L = [];
   L.push('% generated by the MFG Lab — ' + r.certificate.verdict + ': ' + r.certificate.claim);
   if (r.certificate.why) L.push('% ' + r.certificate.why.replace(/\s+/g, ' '));
@@ -551,42 +560,36 @@ function toLatex(r){
 function parseLevels(s){
   return s.split(/[,\s]+/).filter(Boolean).map(Number).filter(x => isFinite(x) && x > 0);
 }
+/* Run BOTH instruments on the one kernel and show both — no mode to pick, no
+   second click. The map runs in its own try so a bad sweep spec can never lose
+   the study. */
 function run(){
   const t0 = Date.now();
-  $('status').textContent = 'Running…';
-  $('run').disabled = true;
-  /* Yield once so the status paints before a synchronous solve blocks the
-     thread — a spinner that never appears is worse than none. */
+  $('status').textContent = 'Running…'; $('run').disabled = true; $('run').classList.remove('needs-run');
   setTimeout(() => {
     try {
       const c = compile($('src').value);
-      if (c.error) { $('status').textContent = 'Your kernel did not compile: ' + c.error; return; }
-      let r;
-      if (inst === 'study') {
-        const expRaw = $('exp').value.trim();
-        r = LabAPI.study(c.kernel, {
-          tol: Number($('tol').value),
-          levels: parseLevels($('levels').value),
-          expectedOrder: expRaw === '' ? undefined : Number(expRaw)
-        });
-        renderStudy(r);
-      } else {
-        r = LabAPI.map(c.kernel, {
-          sweep: {[$('pname').value.trim() || 'p']: [Number($('plo').value), Number($('phi').value)]},
-          samples: Math.round(Number($('samples').value)),
-          n: Math.round(Number($('mapn').value)),
-          tol: Number($('maptol').value)
-        });
-        renderMap(r);
+      if (c.error) { $('status').textContent = 'Your kernel did not compile: ' + c.error; $('outStudy').hidden = true; $('outMap').hidden = true; return; }
+      const expRaw = $('exp').value.trim();
+      const rs = LabAPI.study(c.kernel, { tol: Number($('tol').value), levels: parseLevels($('levels').value),
+        expectedOrder: expRaw === '' ? undefined : Number(expRaw) });
+      renderStudy(rs); lastStudy = rs;
+      let mapMsg = '';
+      try {
+        const rm = LabAPI.map(c.kernel, { sweep: {[$('pname').value.trim() || 'p']: [Number($('plo').value), Number($('phi').value)]},
+          samples: Math.round(Number($('samples').value)), n: Math.round(Number($('mapn').value)), tol: Number($('maptol').value) });
+        renderMap(rm); lastMap = rm; mapMsg = ' · map ' + rm.code;
+      } catch (me) {
+        lastMap = null; $('outMap').hidden = false; $('verdictMap').className = 'verdict no';
+        $('vlabelMap').textContent = 'NEEDS A SWEEP'; $('vtextMap').textContent = ''; $('vwhyMap').textContent = '';
+        $('evidMap').innerHTML = ''; $('mapWrap').style.display = 'none';
+        $('vtextMap').textContent = 'Give the failure map a parameter your kernel reads and a valid range: ' + me.message;
       }
-      last = r;
       history.replaceState(null, '', serialize());
-      $('status').textContent = r.code + ' · ' + (Date.now() - t0) + ' ms · this link now reproduces the run';
+      $('status').textContent = 'study ' + rs.code + mapMsg + ' · ' + (Date.now() - t0) + ' ms · this link reproduces the run';
     } catch (e) {
       $('status').textContent = 'The instrument stopped: ' + e.message;
-    } finally {
-      $('run').disabled = false;
-    }
+    } finally { $('run').disabled = false; }
   }, 0);
 }
 
@@ -601,13 +604,16 @@ function copy(text, what){
 Object.keys(EXAMPLES).forEach(k => {
   const o = document.createElement('option'); o.value = k; o.textContent = k; $('ex').appendChild(o);
 });
-[...$('tabs').children].forEach(b => b.addEventListener('click', () => setInst(b.dataset.inst)));
-$('ex').addEventListener('change', () => loadExample($('ex').value));
+$('ex').addEventListener('change', () => { loadExample($('ex').value); run(); });
 $('run').addEventListener('click', run);
 $('link').addEventListener('click', () => { history.replaceState(null, '', serialize()); copy(location.href, 'Link'); });
-$('tex').addEventListener('click', () => { const t = toLatex(last); copy(t || '(the LaTeX table is for the order study)', 'LaTeX table'); });
-$('rep').addEventListener('click', () => copy(last ? report(last.certificate) : '(nothing has run yet)', 'Certificate'));
-window.addEventListener('resize', () => { if (last && inst === 'map' && last.axes) drawMap(last); });
+$('tex').addEventListener('click', () => { const t = toLatex(lastStudy); copy(t || '(run the study first)', 'LaTeX table'); });
+$('repS').addEventListener('click', () => copy(lastStudy ? report(lastStudy.certificate) : '(nothing has run yet)', 'Certificate'));
+$('repM').addEventListener('click', () => copy(lastMap ? report(lastMap.certificate) : '(no map for this run)', 'Certificate'));
+/* Editing the kernel marks a re-run rather than auto-running arbitrary
+   code on every keystroke: the one button lights up, waiting for you. */
+$('src').addEventListener('input', () => $('run').classList.add('needs-run'));
+window.addEventListener('resize', () => { if (lastMap && lastMap.axes) drawMap(lastMap); });
 
 function report(c){
   const L = ['' + c.verdict + ': ' + c.claim];
@@ -626,6 +632,7 @@ function report(c){
 const restored = applyHash();
 if (!restored) { $('ex').value = Object.keys(EXAMPLES)[0]; loadExample($('ex').value); }
 else { $('knote').textContent = 'Restored from a link — the kernel below is the one that ran.'; }
+run();                       // a page you land on should already show its results
 window.__labReady = true;
 })();
 </script>
