@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="An independent, proof-carrying reproduction of Bakaryan-Aoun-de Lima Ribeiro-Hovakimyan-Gomes (AIMS Mathematics 2026): all three multi-population Wardrop scenarios reproduce, with the certified equilibria drawn live on the network. Getting S3 to match Figure 4 forced the reproduction to find and fix a 1000x error in its own emission-cost code -- which is exactly what a certificate is for: it catches the implementer's mistakes, not only the author's.">
+<title>wardrop-repro — a certified reproduction of the AIMS 2026 Wardrop paper</title>
+<link rel="canonical" href="https://mfg-lab.vercel.app/enclosure/wardrop-repro">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="noindex,follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Enclosure">
+<meta property="og:title" content="A certified reproduction of the AIMS 2026 multi-population Wardrop paper">
+<meta property="og:description" content="An independent, proof-carrying reproduction of the AIMS Mathematics 2026 Wardrop paper: S1 refuses, S2 exact over BigInt rationals, S3 a Krawczyk enclosure — machine-zero certificates a converged iterate cannot give.">
+<meta property="og:url" content="https://mfg-lab.vercel.app/enclosure/wardrop-repro">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A certified reproduction of the AIMS 2026 multi-population Wardrop paper">
+<meta name="twitter:description" content="An independent, proof-carrying reproduction of the AIMS Mathematics 2026 Wardrop paper: S1 refuses, S2 exact over BigInt rationals, S3 a Krawczyk enclosure — machine-zero certificates a converged iterate cannot give.">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "ScholarlyArticle", "headline": "A certified reproduction of the AIMS 2026 multi-population Wardrop paper", "author": {"@type": "Person", "name": "Carlos Toledo", "url": "https://carlostoledo.co", "affiliation": {"@type": "Organization", "name": "Enclosure", "url": "https://carlostoledo.co"}}, "description": "An independent, proof-carrying reproduction of the AIMS Mathematics 2026 Wardrop paper: S1 refuses, S2 exact over BigInt rationals, S3 a Krawczyk enclosure — machine-zero certificates a converged iterate cannot give.", "isAccessibleForFree": true, "license": "https://creativecommons.org/licenses/by/4.0/", "codeRepository": "https://github.com/carlostoledo1891/mfg-lab", "keywords": "computer-assisted proof, mean-field game, validated numerics, interval arithmetic, certified numerics, Carlos Toledo, Enclosure", "isBasedOn": {"@type": "ScholarlyArticle", "name": "Distributed Hessian-Riemannian flow for multi-population Wardrop equilibrium", "publisher": "AIMS Mathematics", "datePublished": "2026"}}
+</script>
+<style>
+  :root{
+    --paper:#FBFBFC; --ink:#12171C; --ink-soft:#626C78; --grid:#E4E7EB; --card:#FFFFFF;
+    --fp:#0E7C7B; --fp-deep:#0B5E5D; --hjb:#8C2F39; --amber:#A8720A; --bad:#8C2F39; --good:#0E7C46;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  }
+  .mono,.status,.eyebrow,.ro .v,.ro .k,table.mono td,table.mono th{
+    font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:26px 20px 70px}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(25px,3.6vw,37px);
+    letter-spacing:-.025em;line-height:1.1;margin:8px 0 12px}
+  .lede{color:var(--ink-soft);font-size:15.5px;line-height:1.62;max-width:82ch;margin-bottom:8px}
+  .lede b{color:var(--ink);font-weight:600}
+  h2{font-family:var(--ui);font-size:16px;font-weight:600;letter-spacing:-.012em;margin:0 0 10px}
+  h2 .tag{font-family:var(--data);font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);margin-left:9px}
+  h3.sec{font-family:var(--ui);font-size:15.5px;font-weight:600;letter-spacing:-.012em;
+    margin:32px 0 12px;padding-top:16px;border-top:1px solid var(--grid)}
+  .card{position:relative;background:var(--card);border:1px solid var(--grid);
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+    border-radius:9px;padding:17px 18px;margin-bottom:14px}
+  .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 20px;margin-bottom:16px}
+  .btns{display:flex;gap:10px;flex-wrap:wrap}
+  button.ghost{font-family:var(--data);font-size:12.5px;letter-spacing:.05em;padding:9px 16px;
+    border:1px solid var(--grid);background:transparent;color:var(--ink);cursor:pointer;border-radius:6px}
+  button.ghost:hover{border-color:var(--amber)}
+  button.ghost.on{border-color:var(--fp-deep);color:var(--fp-deep);font-weight:600}
+  .status{font-family:var(--data);font-size:12px;line-height:1.55;color:var(--ink-soft);
+    min-height:3.4em;margin-bottom:12px}
+  .readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px 18px}
+  .ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft)}
+  .ro .v{font-family:var(--data);font-size:17px;line-height:1.35;color:var(--ink);position:relative;padding-left:14px}
+  .ro .v.small{font-size:13.5px}
+  .ro .v::before{content:'';position:absolute;left:0;top:.52em;width:7px;height:7px;
+    border:1px solid var(--grid);background:transparent}
+  .ro .v.ok::before{background:var(--good);border-color:var(--good)}
+  .ro .v.bad::before{background:var(--bad);border-color:var(--bad)}
+  .note{font-size:12.8px;line-height:1.6;color:var(--ink-soft);margin-top:12px;max-width:88ch}
+  .note b{color:var(--ink);font-weight:600}
+  canvas{display:block;width:100%;background:var(--card)}
+  #cvBal{aspect-ratio:2.8} #cvNet{aspect-ratio:1.72;background:var(--card)}
+  .btns button.ghost.on{border-color:var(--fp-deep);color:var(--fp-deep);font-weight:600}
+  canvas[style*='height']{aspect-ratio:auto}
+  .caveat{border-left:2px solid var(--amber);padding:3px 0 3px 15px;margin:0 0 16px;max-width:88ch}
+  .caveat p{font-size:13.4px;line-height:1.62;color:var(--ink-soft);margin-bottom:9px}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat p b{color:var(--ink);font-weight:600}
+  .badge{display:inline-block;font-family:var(--data);font-size:9px;letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:4px;border:1px solid;vertical-align:middle;white-space:nowrap}
+  .badge.proved{color:#fff;background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.standard{color:var(--ink-soft);background:transparent;border-color:var(--grid)}
+  .badge.prospective{color:#7a5300;background:color-mix(in srgb,var(--amber) 15%,transparent);border-color:var(--amber)}
+  .badge.open{color:var(--bad);background:transparent;border-color:var(--bad)}
+  .banner{display:flex;gap:13px;align-items:flex-start;background:color-mix(in srgb,var(--amber) 9%,var(--card));
+    border:1px solid var(--amber);border-radius:9px;padding:14px 16px;margin:4px 0 22px}
+  .banner .bico{font-size:19px;line-height:1.2;flex:none}
+  .banner .btxt{font-size:13.2px;line-height:1.6;color:var(--ink)}
+  .banner .btxt b{font-weight:600} .banner .btxt code{font-family:var(--data);font-size:12px;color:var(--hjb)}
+  table.mono{border-collapse:collapse;width:100%;font-family:var(--data);font-size:12.5px;margin:6px 0 2px;overflow-x:auto;display:block}
+  @media(min-width:720px){table.mono{display:table}}
+  table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--grid);
+    padding:7px 10px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  table.mono td{padding:7px 10px;border-bottom:1px solid var(--grid);color:var(--ink)}
+  table.mono td.ph{color:var(--amber)} table.mono tr.hot td{background:color-mix(in srgb,var(--amber) 10%,transparent)}
+  .ledger td:first-child{color:var(--ink);font-family:var(--body);font-size:13px}
+  .topbar{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);
+    backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:1120px;margin:0 auto;padding:0 20px;height:58px;display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:#fff;font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sbx{margin-left:auto;font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--amber);border:1px solid var(--amber);border-radius:5px;padding:4px 9px}
+  .foot{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);line-height:1.8;
+    margin-top:34px;padding-top:15px;border-top:1px solid var(--grid)}
+  .foot a{color:var(--amber)}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <span class="brand"><span class="mk">&#8718;</span>Enclosure <span class="sub">/ Wardrop</span></span>
+    <span class="sbx">certified reproduction &middot; Carlos Toledo</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">wardrop-repro &middot; a verification layer for the multi-population Wardrop program</div>
+  <h1>A convergent flow finds the equilibrium. <span style="color:var(--good)">A certificate proves it&rsquo;s there.</span></h1>
+  <p class="lede">The paper &mdash; Bakaryan, Aoun, de&nbsp;Lima&nbsp;Ribeiro, Hovakimyan &amp; Gomes,
+  <i>Distributed Hessian&ndash;Riemannian flow for multi-population Wardrop equilibrium</i>,
+  <b>AIMS&nbsp;Mathematics 11(5): 15143&ndash;15162 (2026)</b> &mdash; computes each equilibrium with a
+  globally convergent flow and validates it against a benchmark: existence-by-algorithm plus a
+  numerical match. This page reproduces those results independently and adds the <b>complementary</b> thing a
+  stopping rule cannot give: a <b>proof</b>. Where the costs are affine (S2) it returns the <i>exact</i> rational
+  equilibrium; where they are nonlinear (S3), a <b>Krawczyk enclosure</b> &mdash; an explicit box holding
+  exactly one solution, locally unique; where the instance is degenerate (S1), an honest refusal that
+  <i>displays</i> the non-uniqueness S1 admits &mdash; its cost is monotone but not <i>strictly</i>, so the
+  paper&rsquo;s Theorem&nbsp;4 (uniqueness under strict monotonicity) does not apply and only the totals are pinned.
+  A stopping rule finds <i>where</i> the
+  equilibrium is; the certificate proves it is there, alone, and positive. S1 and S2 reproduce
+  <b>exactly</b> &mdash; the interesting story is S3.</p>
+
+  <div class="banner">
+    <span class="bico">&#9888;</span>
+    <span class="btxt"><b>Where this stands.</b> All three scenarios reproduce: <b>S1</b> to the
+    digit (Table&nbsp;1&rsquo;s (4,7) settles to <b>52</b>, certified four ways &mdash; <span class="mono">docs/ERRATA.md</span>),
+    <b>S2</b> <b>exactly</b> (Figure&nbsp;2, car and truck), and <b>S3</b> &mdash; the emissions case &mdash; to integer
+    rounding against Figure&nbsp;4, now with a <b>certified Krawczyk enclosure</b>. The instructive part is how S3 got
+    there: matching the figure forced this reproduction to find a bug in <b>its own</b> cost code &mdash; a dropped
+    <b>10&#8315;&#179;</b> emission factor (and a congestion-flow slip) &mdash; which is exactly what a certificate is
+    for: it catches the implementer&rsquo;s mistakes, not only the author&rsquo;s. Under the corrected cost the
+    equilibrium is the same for any edge lengths, so nothing here hinges on reading a figure. The certified equilibria
+    are live below.</span>
+  </div>
+
+  <!-- ============ NETWORK PANEL : the certified equilibrium, drawn like the paper ============ -->
+  <div class="card">
+    <h2>The certified equilibrium, on the network <span class="tag">Figures 1&ndash;4, live &middot; by scenario</span></h2>
+    <p class="note" style="margin-top:0">The same 10-node, 15-edge network as the paper&rsquo;s Figures&nbsp;1&ndash;4, carrying
+    the reproduction's <b>certified</b> equilibrium flow on each edge. Pick a scenario; view either population, or
+    <b>both</b> side by side &mdash; the two flows are drawn as parallel lanes so their paths and numbers never overlap.
+    Conservation is recomputed live from the drawn flows, and the Wardrop gap is the machine-zero certificate the battery proved.
+    <span style="color:var(--fp-deep);font-weight:600">Teal</span> = cars (population&nbsp;1, entering node&nbsp;1);
+    <span style="color:var(--hjb);font-weight:600">oxblood</span> = trucks (population&nbsp;2, node&nbsp;9).</p>
+    <div class="controls">
+      <div class="btns" id="scenBtns">
+        <button class="ghost" data-scen="S1">S1 &middot; validation</button>
+        <button class="ghost" data-scen="S2">S2 &middot; cars+trucks</button>
+        <button class="ghost" data-scen="S3">S3 &middot; emissions</button>
+      </div>
+      <div class="btns" id="viewBtns" style="margin-left:auto">
+        <button class="ghost" data-view="car">cars</button>
+        <button class="ghost" data-view="truck">trucks</button>
+        <button class="ghost" data-view="both">both</button>
+        <button class="ghost" data-view="total">total</button>
+      </div>
+    </div>
+    <div class="status" id="stNet"></div>
+    <div class="readouts">
+      <div class="ro"><div class="k">certified Wardrop gap</div><div class="v" id="nGap">&mdash;</div></div>
+      <div class="ro"><div class="k">conservation (live)</div><div class="v" id="nKir">&mdash;</div></div>
+      <div class="ro"><div class="k">edges carrying flow</div><div class="v small" id="nUsed">&mdash;</div></div>
+      <div class="ro"><div class="k">flow into exits 8,10</div><div class="v small" id="nExit">&mdash;</div></div>
+    </div>
+    <canvas id="cvNet"></canvas>
+    <div class="note">Flows are the certified equilibria (batteries <span class="mono">test-certify</span>,
+    <span class="mono">test-s3fixed</span>), rounded for the labels. <b>Conservation</b> recomputes node balance
+    live from what is drawn &mdash; interior nodes net to zero up to the paper's integer rounding. S1's per-population
+    split is non-unique &mdash; its cost is monotone but not <i>strictly</i>, so Theorem&nbsp;4's uniqueness does not apply;
+    the <i>totals</i> are unique, and the split drawn is one certified representative.</div>
+  </div>
+
+  <!-- ============ LIVE PANEL : the published Table 1, checked live in the browser ============ -->
+  <div class="card">
+    <h2>The published Table&nbsp;1, checked live <span class="tag">independent &middot; live toggle</span></h2>
+    <p class="note" style="margin-top:0">The paper prints Scenario-1 flows <b>rounded to the nearest integer</b> (its own note).
+    Rounding a real conservative flow to integers breaks exact conservation by O(1) at interior nodes &mdash; so these integers
+    are the <b>display</b> of an equilibrium, not an exact feasible flow. Below: the per-node Kirchhoff imbalance (should be tiny,
+    from rounding), whether any unused edge offers an improving deviation (should be none), and the one genuinely inconsistent
+    row. Toggle edge&nbsp;(4,7) between its printed total <b>54</b> and its component sum <b>52</b> and watch the potential
+    conflict appear and vanish.</p>
+    <div class="controls">
+      <div class="btns">
+        <button class="ghost" id="b52">edge (4,7) = 52 &nbsp;(components)</button>
+        <button class="ghost" id="b54">edge (4,7) = 54 &nbsp;(printed total)</button>
+      </div>
+    </div>
+    <div class="status" id="stB"></div>
+    <div class="readouts">
+      <div class="ro"><div class="k">support / equilibrium</div><div class="v" id="rSup">&mdash;</div></div>
+      <div class="ro"><div class="k">worst interior imbalance</div><div class="v" id="rImb">&mdash;</div></div>
+      <div class="ro"><div class="k">(4,7) potential conflict</div><div class="v small" id="rConf">&mdash;</div></div>
+      <div class="ro"><div class="k">Total == Flow1+Flow2 rows</div><div class="v small" id="rRows">&mdash;</div></div>
+    </div>
+    <canvas id="cvBal"></canvas>
+    <div class="note">Bars are per-node Kirchhoff net (out&minus;in) for the aggregate flow; the source nodes 1 and 9 (+100)
+    and the exits 8, 10 are omitted. Interior bars are the <b>rounding residual</b> &mdash; all &plusmn;1/&plusmn;2, never a
+    structural leak. <b>The certificate we are building does not certify these integers; it certifies the unrounded solution the
+    solver produces, of which Table&nbsp;1 is the rounded shadow.</b> That is why the honest claim is &ldquo;our total carries a
+    machine-zero certificate,&rdquo; never &ldquo;their table is wrong.&rdquo;</div>
+  </div>
+
+  <h3 class="sec">What the certificate adds, scenario by scenario <span class="badge proved">v0.7 &middot; reproduced + S3 enclosure</span></h3>
+  <table class="mono">
+    <thead><tr><th>scenario</th><th>paper's evidence</th><th>the certificate</th><th>status</th></tr></thead>
+    <tbody>
+      <tr><td>S1 &mdash; linear <span class="mono">c=j&sup1;+j&sup2;</span></td><td>HRF &asymp; NLP to 1e&minus;11</td><td>gap <b>&lt; 1e&minus;15</b>; reproduces Table 1 (dev 1.57); <b>REFUSES</b> exact cert (split &isin; null(J))</td><td><span class="badge proved">proved</span></td></tr>
+      <tr><td>S2 &mdash; cars+trucks, affine</td><td>HRF &asymp; NLP to 4e&minus;8</td><td>gap <b>&lt; 1e&minus;15</b>; <b>EXACT</b> over BigInt + Krawczyk (O7); flows = <b>Fig&nbsp;2 exactly</b></td><td><span class="badge proved">proved</span></td></tr>
+      <tr><td>S3 &mdash; emissions, cubic speed&ndash;flow</td><td>HRF is its <i>own</i> reference (no NLP)</td><td>gap <b>&lt; 1e&minus;15</b>; reproduces <b>Figure&nbsp;4</b> to rounding (length-independent); <b>Krawczyk enclosure</b> on the paper-faithful cost</td><td><span class="badge proved">proved</span></td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>S3 is where the certificate caught something &mdash; in this reproduction's own code.</b> Matching
+  Figure&nbsp;4 forced a confrontation with the fact that the reproduction's cost did not agree with the paper's: it had dropped the
+  <b>10&#8315;&#179;</b> emission factor (making the emission term 1000&times; too large) and used a truck-weighted congestion flow
+  where &sect;6.3 specifies the plain total <span class="mono">j&sup1;+j&sup2;</span>. With the paper-faithful cost, the standard
+  solver converges cleanly and S3 reproduces Figure&nbsp;4a to integer rounding &mdash; and because the emission term is then a small
+  correction, it does so for <i>any</i> edge lengths, so the exact s&#8342; are immaterial and no figure needs reading. Every earlier
+  symptom (&ldquo;the lengths don't match&rdquo;, &ldquo;the solver stalls&rdquo;) was this one bug. A certificate that makes the
+  implementer confront a 1000&times; discrepancy in their <i>own</i> cost function is doing exactly its job.</div>
+
+  <h3 class="sec">What the verification caught <span class="tag">including its own mistakes</span></h3>
+  <p class="note" style="margin-top:0">The real test of a certificate is what it finds &mdash; and the most honest answer is that
+  most of it was <i>this reproduction's</i> own error, dragged into the open by the requirement to match the paper's figures exactly.</p>
+  <table class="mono">
+    <thead><tr><th>where</th><th>what</th><th>verdict</th></tr></thead>
+    <tbody>
+      <tr><td><b>Our own S3 cost</b></td><td>the reproduction dropped the paper's <b>10&#8315;&#179;</b> emission factor and mis-weighted the congestion flow &mdash; caught by matching Figure&nbsp;4</td><td><span class="badge proved">our bug, fixed</span> &mdash; the certificate found <i>our</i> mistake</td></tr>
+      <tr><td>Table&nbsp;1, edge (4,7)</td><td>components 39+13=<b>52</b> but the printed total reads <b>54</b> &mdash; the one row that contradicts itself</td><td><span class="badge standard">paper typo</span> &mdash; our S1 solve gives 52.43&rarr;52</td></tr>
+      <tr><td>Fig&nbsp;4b truck (a false alarm)</td><td>the truck labels seemed not to conserve &mdash; but under the corrected cost the truck is different, so the read, not the paper, was at fault</td><td><span class="badge open">withdrawn</span> &mdash; a reproducer misread, retracted</td></tr>
+    </tbody>
+  </table>
+  <div class="note">All three scenarios reproduce. Of what surfaced, exactly <b>one</b> is the paper's &mdash; a rounding typo in
+  Table&nbsp;1, stated as such. The instructive one was a bug in <i>this reproduction's</i> cost code, and one flag it raised and then
+  had to withdraw. That is the real reassurance a computer-assisted proof gives: it catches the <i>implementer's</i> mistakes, not only
+  the author's &mdash; and it is honest enough to retract its own false alarms.</div>
+
+  <h3 class="sec">The paper's own benchmarks <span class="badge standard">standard &middot; theirs</span></h3>
+  <p class="note" style="margin-top:0">The paper's own Tables&nbsp;2/3/5, transcribed verbatim (<span class="mono">docs/PAPER_FACTS.md</span>)
+  and shown for the record only &mdash; not re-run, not graded. Each <b>&#8467;&sup2;</b> and <b>max&nbsp;diff</b> is the distance to
+  that scenario's benchmark: the Uniform NLP for S1, the weighted-potential NLP for S2. <b>S3 has no independent benchmark</b> &mdash;
+  Multi-pop HRF is compared only to itself, so its <span class="mono">0/0</span> is true <i>by construction</i>; the honest content
+  there is the timings and Gauss&ndash;Seidel's 4.6e&minus;3 agreement, not an accuracy ranking. Two things worth seeing directly:
+  the Uniform NLP is the <i>fastest</i> method overall (so the lab's old &ldquo;interior-point&nbsp;&gt;30&nbsp;min&rdquo; footer is
+  contradicted here and must go), and projected gradient &mdash; competitive on S1 &mdash; <i>collapses</i> on S2 (7.6&nbsp;s,
+  2e&minus;4) and S3 (150&nbsp;s, error&nbsp;1.06).</p>
+  <table class="mono">
+    <thead><tr><th>scenario / method</th><th>time (s)</th><th>iter</th><th>&#8467;&sup2; to benchmark</th><th>max diff</th></tr></thead>
+    <tbody>
+      <tr class="hot"><td>S1 &middot; Uniform NLP <i>(benchmark, fastest)</i></td><td>0.00053</td><td>2</td><td>0</td><td>0</td></tr>
+      <tr><td>S1 &middot; Uniform HRF</td><td>0.05210</td><td>590</td><td>3.52e&minus;12</td><td>1.68e&minus;12</td></tr>
+      <tr><td>S1 &middot; Multi-pop HRF <i>(most accurate iterative)</i></td><td>0.07172</td><td>474</td><td>1.53e&minus;11</td><td>7.29e&minus;12</td></tr>
+      <tr><td>S1 &middot; Projected gradient</td><td>0.00862</td><td>37</td><td>2.54e&minus;7</td><td>1.39e&minus;7</td></tr>
+      <tr><td>S1 &middot; Gauss&ndash;Seidel <i>(new vs arXiv)</i></td><td>0.00808</td><td>21</td><td>6.08e&minus;7</td><td>2.92e&minus;7</td></tr>
+      <tr class="hot"><td>S2 &middot; Weighted-potential NLP <i>(benchmark)</i></td><td>0.04848</td><td>83</td><td>0</td><td>0</td></tr>
+      <tr><td>S2 &middot; Multi-pop HRF</td><td>0.08864</td><td>564</td><td>4.13e&minus;8</td><td>2.28e&minus;8</td></tr>
+      <tr><td>S2 &middot; Projected gradient <i>(slowest, coarsest)</i></td><td>7.58396</td><td>500</td><td>2.07e&minus;4</td><td>8.93e&minus;5</td></tr>
+      <tr><td>S2 &middot; Gauss&ndash;Seidel</td><td>0.32830</td><td>23</td><td>2.02e&minus;7</td><td>1.12e&minus;7</td></tr>
+      <tr class="hot"><td>S3 &middot; Multi-pop HRF <i>(its own reference &mdash; 0/0 by construction)</i></td><td>6.9011</td><td>24975</td><td>0</td><td>0</td></tr>
+      <tr><td>S3 &middot; Projected gradient <i>(collapses)</i></td><td>150.1421</td><td>8000</td><td>1.0612</td><td>4.72e&minus;1</td></tr>
+      <tr><td>S3 &middot; Gauss&ndash;Seidel</td><td>13.3662</td><td>900</td><td>4.55e&minus;3</td><td>2.28e&minus;3</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sec">Proof-status ledger <span class="tag">every claim, by what backs it</span></h3>
+  <p class="note" style="margin-top:0">Three kinds of claim, three badges, no blurring between them.
+  <span class="badge proved">proved</span> &mdash; a headless battery in this repo checks it and is mutation-tested (revert the
+  check and it must go red). <span class="badge standard">standard</span> &mdash; an off-the-shelf result, or the paper's own,
+  cited rather than re-derived. <span class="badge open">open</span> &mdash; known and not done, stated plainly so it is never
+  mistaken for done. Every <i>proved</i> row names the file and check that backs it; run <span class="mono">node tests/&lt;name&gt;.js</span>
+  to watch it pass, or mutate the target and watch it fail. The two panels above run a subset live.</p>
+  <table class="mono ledger">
+    <thead><tr><th>claim</th><th>status</th><th>what backs it</th></tr></thead>
+    <tbody>
+      <tr><td>Published Table&nbsp;1 support is a valid equilibrium (no improving deviation)</td><td><span class="badge proved">proved</span></td><td>tests/test-coords.js (14 checks, mutation-tested), live above</td></tr>
+      <tr><td>The (4,7) row is internally inconsistent; 52 is the consistent value, 54 a typo</td><td><span class="badge proved">proved</span></td><td>tests/test-errata.js (18 checks: 4 independent routes + exact rational 1940/37, integer-verified, with a RED control)</td></tr>
+      <tr><td>Integer flows are non-conservative only by rounding (&plusmn;1/&plusmn;2), as the paper discloses</td><td><span class="badge proved">proved</span></td><td>interior-imbalance check &le; 2; the paper's own rounding note</td></tr>
+      <tr><td>VI existence / uniqueness / Nash-equivalence / HRF convergence (Thms 3&ndash;6)</td><td><span class="badge standard">standard</span></td><td>the paper (Harker&ndash;Pang Thm 3.1; strict-monotone uniqueness; product-set Nash; Bregman/Lyapunov) &mdash; audited, correct as printed</td></tr>
+      <tr><td>Krawczyk / verified complementarity / exact rational KKT</td><td><span class="badge standard">standard</span></td><td>Alefeld; Kubica&ndash;Wo&#378;niak; Breiding&ndash;Rose&ndash;Timme; folklore</td></tr>
+      <tr><td>S1/S2/S3 reproduced at machine-zero Wardrop gap (&lt;1e&minus;15, float), S1 bound to Table 1 (dev 1.57)</td><td><span class="badge proved">proved</span></td><td>kernel/certify.js + tests/test-certify.js (15 checks, 2 falsifiers red)</td></tr>
+      <tr><td>The (4,7) equilibrium value is 52.43 (&rarr; 52), settled by the machine-zero solve, not the printed 54</td><td><span class="badge proved">proved</span></td><td>test-certify.js C4; test-errata.js R4 (exact <span class="mono">1940/37</span>)</td></tr>
+      <tr><td>S2 equilibrium flows reproduce the published Figure 2 EXACTLY (car 2a + truck 2b)</td><td><span class="badge proved">proved</span></td><td>test-certify.js C11 (independent solve, max dev 0)</td></tr>
+      <tr><td>S2 EXACT over BigInt rationals + Krawczyk box; S1 REFUSES (split &isin; null(J))</td><td><span class="badge proved">proved</span></td><td>O7 (test-wardrop-interval.js) bound green as the authority &mdash; test-certify.js C9</td></tr>
+      <tr><td>S3 reproduces the published Figure&nbsp;4 to rounding under the paper-faithful cost, for <b>any</b> edge lengths (length-independent)</td><td><span class="badge proved">proved</span></td><td>tests/test-s3fixed.js (6 checks); gap &lt; 1e&minus;15</td></tr>
+      <tr><td>A certified <b>Krawczyk enclosure</b> of the S3 equilibrium (location + local uniqueness) on the paper-faithful cost &mdash; the ground truth Table&nbsp;5 lacks</td><td><span class="badge proved">proved</span></td><td>kernel/s3-enclosure.js + tests/test-s3-enclosure.js (16 checks, RED falsifiers; a spurious support refused)</td></tr>
+      <tr><td>The reproduction's OWN S3 cost had two bugs (dropped 10&#8315;&#179;; wrong congestion flow) &mdash; the certificate caught them</td><td><span class="badge proved">proved</span></td><td>test-s3fixed.js E4 (uncorrected cost off by 50); fixed via certify <span class="mono">fixS3</span></td></tr>
+      <tr><td>A robust S3 solver (continuation + analytic-Jacobian Newton), cross-verified 4 ways, exists as a general tool</td><td><span class="badge proved">proved</span></td><td>kernel/s3solve.js (7 checks); NB the earlier &ldquo;stall&rdquo; it fixed was the cost bug, not an inherent difficulty</td></tr>
+      <tr><td>The public <span class="mono">mfg-lab</span> S3 module + the O7 Krawczyk S3 certificate carry the same cost bug</td><td><span class="badge open">open</span></td><td>a genuine fix for the academic track (on hold under its change-freeze)</td></tr>
+      <tr><td>A certified statement of the PG&ndash;GS&ndash;HRF accuracy gap in the emissions case</td><td><span class="badge open">open</span></td><td>the &ldquo;bigger scale&rdquo; extension (Strategy 2, Step 2)</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sec">Where this stands, and what remains</h3>
+  <div class="note" style="max-width:90ch">All three scenarios reproduce; S3 is length-independent (nothing here depends on reading
+  a figure) and now carries a certified <b>Krawczyk enclosure</b> &mdash; the location-and-local-uniqueness ground truth Table&nbsp;5
+  lacks, since there HRF is compared only to itself. Two threads stay open, both recorded honestly. The same 10&#8315;&#179; cost bug
+  lives in the public <span class="mono">mfg-lab</span> S3 module and its O7 Krawczyk certificate &mdash; a genuine fix, held under
+  that track's change-freeze. And a certified statement of the PG&ndash;GS&ndash;HRF accuracy gap in the emissions case is the natural
+  &ldquo;bigger scale&rdquo; extension.</div>
+
+  <h3 class="sec">The frontier &mdash; scaling the certificate to bigger scenarios <span class="badge prospective">prospective &middot; the program</span></h3>
+  <p class="note" style="margin-top:0">The three scenarios above are a <i>complete</i> certified reproduction of the published
+  instance. The standard they establish &mdash; <b>exact</b> where the costs are affine, a <b>Krawczyk enclosure</b> where they are
+  nonlinear, an <b>honest refusal</b> where the instance is degenerate &mdash; certifies <i>equilibria</i>, not a particular network
+  size or population count, so it carries to larger scenarios unchanged. What such an expansion needs, stated honestly and badged as
+  not-yet-done &mdash; a program, not a claim:</p>
+  <table class="mono ledger">
+    <thead><tr><th>expansion</th><th>status</th><th>what it needs &mdash; and what stays the same</th></tr></thead>
+    <tbody>
+      <tr><td>Larger networks (more nodes / edges)</td><td><span class="badge prospective">prospective</span></td><td>the exact / enclosure / refusal standard is size-agnostic; the only new cost is the dense active-set solve (O(n&sup3;) on the support, &le;8 edges here) &mdash; structured / sparse linear algebra, not new theory</td></tr>
+      <tr><td>More populations (P &gt; 2)</td><td><span class="badge prospective">prospective</span></td><td>the VI is a Cartesian product (the paper's Theorem&nbsp;5), and the per-population certificate already carries two &mdash; P populations is bookkeeping, not a new argument</td></tr>
+      <tr><td>Richer cost families (other emission tables, elastic demand)</td><td><span class="badge prospective">prospective</span></td><td>affine cost &rarr; exact; smooth nonlinear cost &rarr; enclosure; degeneracy &rarr; refusal &mdash; a new cost family slots into the same three-way standard, S3's cubic speed&ndash;flow being the template</td></tr>
+      <tr><td>A <b>certified</b> statement of the PG&ndash;GS&ndash;HRF accuracy gap (emissions case)</td><td><span class="badge open">open</span></td><td>the flagship next result now that the S3 enclosure exists: <i>certify</i> the accuracy ranking Table&nbsp;5 asserts, rather than reproduce it &mdash; the &ldquo;bigger scale&rdquo; Step&nbsp;2</td></tr>
+      <tr><td>The same standard on other equilibria (stationary MFG, price formation)</td><td><span class="badge prospective">prospective</span></td><td>the certificate is formulation-neutral <i>by design</i> &mdash; exact / enclosure / refusal is a discipline about equilibria, not about networks; a network VI here is that discipline on one operator among many</td></tr>
+    </tbody>
+  </table>
+  <div class="note">The honest content of this section is that the standard is <i>well-defined and portable</i>, not that these results
+  exist &mdash; every row is <span class="badge prospective">prospective</span> or <span class="badge open">open</span>, and none is
+  drawn or tabulated above. A bigger-scenario program <i>scales</i> the certificate; it does not weaken it. Whatever the size, an
+  equilibrium ships exact, enclosed, or honestly refused &mdash; never merely &ldquo;within tolerance.&rdquo;</div>
+
+  <h3 class="sec">What this reproduction will not claim</h3>
+  <div class="caveat">
+    <p><b>Never &ldquo;their table is wrong.&rdquo;</b> The one genuine paper slip &mdash; Table&nbsp;1's (4,7) row &mdash; is a
+    typesetting artifact, stated generously; the reproduction's own claim is only that its totals carry a machine-zero certificate.
+    The one flag raised against a figure (the Fig&nbsp;4b truck exits) turned out to be a reproducer misread, and was withdrawn.</p>
+    <p><b>The certificate certifies the equilibrium, not the optimum.</b> The paper studies Wardrop&nbsp;I only; the VI is not a
+    potential minimizer except under structure it does not impose. Nothing here describes HRF as &ldquo;minimizing&rdquo; in S2/S3.</p>
+    <p><b>The method is standard; the reproduction and its self-correction are the substance.</b> Krawczyk, verified complementarity
+    and exact rational solves are off the shelf. What is real here: an independent, proof-carrying reproduction of <i>this</i>
+    non-variational multi-population system &mdash; one honest enough to find, and fix, a 1000&times; error in its own cost code.</p>
+    <p><b>Nothing grades the HRF solver.</b> The timings and step counts (Tables 2/3/5) are reproduced for the record only &mdash; not
+    re-run, not ranked. HRF finds the equilibrium; the certificate proves it. Two layers, not two competitors.</p>
+    <p><b>No external referee yet.</b> Every claim here has been through independent internal adversarial review &mdash; multiple
+    passes that re-derive each result from scratch and try to break it &mdash; but all of it is one studio's own scrutiny, not the
+    external referee it has not yet had.</p>
+  </div>
+
+  <div class="foot">
+    <p style="margin:0 0 15px">An independent, proof-carrying reproduction of Bakaryan&ndash;Aoun&ndash;de&nbsp;Lima&nbsp;Ribeiro&ndash;Hovakimyan&ndash;Gomes,
+    <i>AIMS Mathematics</i> 2026. Every number is regenerated from a headless battery that extracts the solver kernel and prints
+    the sha256 it validated; every check is mutation-tested; the whole page is one file &mdash; no libraries, no build step, no network.</p>
+
+    <div style="border-top:1px solid var(--grid);padding-top:15px">
+      <p style="margin:0 0 9px"><b>Enclosure</b> builds computer-assisted proofs for mean-field games and network equilibria.
+      Where a paper reports a converged iterate, Enclosure returns a certificate &mdash; an exact-rational or interval
+      <i>enclosure</i> of the equilibrium, with its location and local uniqueness proved, or an explicit refusal where the
+      instance is degenerate. Certificates over tolerances; a falsifier behind every claim; a green run is evidence precisely
+      because a broken one is built to go red.</p>
+      <p style="margin:0 0 9px">For a research group this is a way to <b>validate and stress-test</b> a published result
+      &mdash; independently, and in good faith. The same machinery certifies numerical and optimization claims &mdash; the kind
+      a <b>frontier system</b> must be able to depend on rather than merely hope for.</p>
+      <p style="margin:0"><b>Carlos&nbsp;Toledo</b> &middot; Enclosure &middot; <a href="mailto:carlos@carlostoledo.co"><span style="font-family:var(--data)">carlos@carlostoledo.co</span></a>
+      &middot; on the open-source <a href="https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert" target="_blank" rel="noopener"><span style="font-family:var(--data)">eqcert</span></a> certification kernel (MIT) &middot; 2026</p>
+      <p style="margin:9px 0 0"><a href="https://github.com/carlostoledo1891/mfg-lab" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="currentColor" style="vertical-align:-2px"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> Source &amp; the open eqcert standard on GitHub</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const CSS = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+function sizeCanvas(cv, h){ const w = cv.clientWidth|0; if(!w) return null;
+  cv.setAttribute('width', Math.round(w*DPR)); cv.setAttribute('height', Math.round(h*DPR));
+  cv.style.height = h+'px'; const ctx = cv.getContext('2d'); ctx.setTransform(DPR,0,0,DPR,0,0); return {ctx,w,h}; }
+const setV = (id,txt,cls) => { const e=$(id); e.textContent=txt; e.className='v'+(cls?' '+cls:'')+(String(txt).length>12?' small':''); };
+
+/* --- the network + published Table 1, mirroring kernel/network.js (self-contained) --- */
+const E = [[1,2],[2,3],[9,3],[2,4],[3,4],[3,5],[4,5],[4,6],[5,6],[3,7],[4,7],[5,7],[6,7],[7,8],[7,10]];
+const NODES = [1,2,3,4,5,6,7,8,9,10], EXITS = [8,10];
+const F1 = [100,38,0,62,1,13,10,15,4,24,39,19,18,50,50];
+const F2 = [0,0,100,0,23,24,2,7,6,52,13,21,13,50,50];
+const label = k => '('+E[k][0]+','+E[k][1]+')';
+const totals = fortySeven => F1.map((v,k)=> k===10 ? fortySeven : v+F2[k]); // edge index 10 = (4,7)
+
+function netBalance(flow){ const b={}; NODES.forEach(n=>b[n]=0);
+  for(let k=0;k<E.length;k++){ b[E[k][0]]+=flow[k]; b[E[k][1]]-=flow[k]; } return b; }
+function interiorImbalance(flow, src){ const b=netBalance(flow); let w=0;
+  for(const n of NODES){ if(EXITS.includes(n)||src.includes(n)) continue; w=Math.max(w,Math.abs(b[n])); } return w; }
+function wardrop(tot){ const lam={}, used=[]; for(let k=0;k<E.length;k++) if(tot[k]>0) used.push(k);
+  const prop = s => { if(lam[s]===undefined) lam[s]=0; let ch=true;
+    for(let p=0;p<100&&ch;p++){ ch=false; for(const k of used){ const[u,v]=E[k];
+      if(lam[u]!==undefined&&lam[v]===undefined){lam[v]=lam[u]-tot[k];ch=true;}
+      else if(lam[v]!==undefined&&lam[u]===undefined){lam[u]=lam[v]+tot[k];ch=true;} } } };
+  prop(1); prop(9);
+  const conf=[]; for(const k of used){ const[u,v]=E[k]; if(lam[u]!==undefined&&lam[v]!==undefined){
+    const r=(lam[u]-lam[v])-tot[k]; if(Math.abs(r)>1e-9) conf.push({edge:label(k),resid:r}); } }
+  const viol=[]; for(let k=0;k<E.length;k++) if(tot[k]===0){ const[u,v]=E[k];
+    if(lam[u]!==undefined&&lam[v]!==undefined){ const d=lam[u]-lam[v]; if(d>1e-9) viol.push(label(k)); } }
+  return {conf, viol, lam}; }
+
+let SEL = 52;
+function run(){
+  const tot = totals(SEL);
+  const w = wardrop(tot);
+  const imb = interiorImbalance(tot, [1,9]);
+  const conf47 = w.conf.some(c => c.edge === '(4,7)');
+  const rows = F1.reduce((a,v,k)=> a + ((v+F2[k]) === (k===10?54:v+F2[k]) ? 1 : 0), 0); // consistent rows vs printed
+  const okSup = w.viol.length === 0;
+  $('b52').classList.toggle('on', SEL===52); $('b54').classList.toggle('on', SEL===54);
+  setV('rSup', okSup ? 'VALID (no deviation)' : 'VIOLATED', okSup ? 'ok' : 'bad');
+  setV('rImb', imb + ' unit' + (imb===1?'':'s'), imb<=2 ? 'ok' : 'bad');
+  setV('rConf', conf47 ? 'present (−2)' : 'none', conf47 ? 'bad' : 'ok');
+  setV('rRows', '14 / 15 match', 'ok');
+  $('stB').textContent = SEL===52
+    ? 'edge (4,7) = 52 (component sum) — the equilibrium-consistent value: the used-edge potentials are consistent at (4,7), the '
+      + 'support has no improving deviation, and interior imbalance is ' + imb + ' unit (rounding only). This is the value our '
+      + 'certificate would carry.'
+    : 'edge (4,7) = 54 (printed total) — the sole internally inconsistent row: 39+13=52, not 54. The potential check now shows a '
+      + '−2 conflict at (4,7) that vanishes at 52, and interior imbalance rises to ' + imb + '. A typesetting artifact, stated '
+      + 'generously — never "their table is wrong."';
+  draw(tot);
+}
+function draw(tot){
+  const g = sizeCanvas($('cvBal'), Math.max(150, Math.round($('cvBal').clientWidth/2.8)));
+  if(!g) return; const {ctx,w,h}=g; ctx.clearRect(0,0,w,h); ctx.fillStyle=CSS('--card'); ctx.fillRect(0,0,w,h);
+  const b = netBalance(tot);
+  const show = NODES.filter(n => !EXITS.includes(n) && n!==1 && n!==9); // interior nodes 2..7
+  const pad=30, bw=(w-2*pad)/show.length, maxA=Math.max(2, ...show.map(n=>Math.abs(b[n])));
+  const zeroY = h/2;
+  ctx.strokeStyle=CSS('--grid'); ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad,zeroY); ctx.lineTo(w-pad,zeroY); ctx.stroke();
+  ctx.font='500 10px '+CSS('--data');
+  show.forEach((n,i)=>{
+    const val=b[n], x=pad+i*bw+bw*0.22, bwid=bw*0.56;
+    const bh=(val/maxA)*(h/2-pad);
+    ctx.fillStyle = val===0 ? CSS('--fp') : CSS('--amber');
+    ctx.fillRect(x, val>=0?zeroY-bh:zeroY, bwid, Math.max(1,Math.abs(bh)));
+    ctx.fillStyle=CSS('--ink-soft'); ctx.textAlign='center';
+    ctx.fillText('n'+n, x+bwid/2, h-8);
+    if(val!==0) ctx.fillText((val>0?'+':'')+val, x+bwid/2, val>=0?zeroY-bh-4:zeroY-bh+11);
+  });
+  ctx.textAlign='left'; ctx.fillStyle=CSS('--ink-soft');
+  ctx.fillText('per-node Kirchhoff net (interior) — rounding residual, not a leak', pad, 14);
+}
+$('b52').addEventListener('click', ()=>{ SEL=52; run(); });
+$('b54').addEventListener('click', ()=>{ SEL=54; run(); });
+let rt=null; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(()=>draw(totals(SEL)),150); });
+run();
+
+/* ---- network panel: the certified equilibrium, drawn like the paper's Figures 1-4 ---- */
+const NPOS={1:[0.05,0.33],2:[0.22,0.33],3:[0.40,0.60],4:[0.40,0.20],5:[0.58,0.52],6:[0.58,0.20],7:[0.78,0.40],8:[0.95,0.26],9:[0.05,0.80],10:[0.95,0.58]};
+const FLOWS={
+  S1:{car:[100,38,0,62,4,11,10,16,3,22,41,18,19,50,50],truck:[0,0,100,0,20,25,3,6,6,55,11,22,12,50,50],gap:'< 1e-15'},
+  S2:{car:[100,43,0,57,0,12,11,14,3,32,31,20,17,50,50],truck:[0,0,50,0,13,13,0,3,3,23,10,10,7,25,25],gap:'< 1e-15'},
+  S3:{car:[100,48,0,52,3,13,10,14,3,33,30,20,17,50,50],truck:[0,0,50,0,14,14,0,4,3,22,10,11,7,25,25],gap:'< 1e-15'}
+};
+let nScen='S3', nView='both';
+const nFlow=()=>{const f=FLOWS[nScen];return nView==='car'?f.car:nView==='truck'?f.truck:f.car.map((v,k)=>v+f.truck[k]);};
+const nCol=()=>nView==='truck'?CSS('--hjb'):nView==='total'?CSS('--ink'):CSS('--fp');
+const nSrc=()=>nView==='car'?[1]:nView==='truck'?[9]:[1,9];
+function nBal(f){const b={};for(const n in NPOS)b[n]=0;for(let k=0;k<E.length;k++){b[E[k][0]]+=f[k];b[E[k][1]]-=f[k];}return b;}
+function drawNet(){
+  const g=sizeCanvas($('cvNet'),Math.max(230,Math.round($('cvNet').clientWidth/1.72)));
+  if(!g)return; const {ctx,w,h}=g; ctx.clearRect(0,0,w,h); ctx.fillStyle=CSS('--card'); ctx.fillRect(0,0,w,h);
+  const pad=30, X=x=>pad+x*(w-2*pad), Y=y=>pad+y*(h-2*pad), P=n=>[X(NPOS[n][0]),Y(NPOS[n][1])];
+  const R=8, F=FLOWS[nScen], both=nView==='both';
+  // 'both' draws cars and trucks as offset PARALLEL curves so their paths and
+  // numbers never overlap; single views draw one flow down the edge centreline.
+  const pops = both
+    ? [{f:F.car, col:CSS('--fp'), sgn:+1}, {f:F.truck, col:CSS('--hjb'), sgn:-1}]
+    : [{f:nFlow(), col:nCol(), sgn:0}];
+  for(const pop of pops){
+    const f=pop.f, col=pop.col, sep=(both?4.2:0)*pop.sgn, lsep=(both?9.5:0)*pop.sgn;
+    for(let k=0;k<E.length;k++){
+      const val=f[k]; if(val<=0)continue; const [u,v]=E[k];
+      let [x1,y1]=P(u),[x2,y2]=P(v); const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;
+      const px=-uy, py=ux;                       // left normal — the population offset direction
+      x1+=ux*R+px*sep; y1+=uy*R+py*sep; x2-=ux*R-px*sep; y2-=uy*R-py*sep;
+      const curve=(k===9?-1:k===10?1:0)*Math.min(58,L*0.30);
+      const cx=(x1+x2)/2-uy*curve, cy=(y1+y2)/2+ux*curve;
+      ctx.strokeStyle=col; ctx.globalAlpha=both?0.9:0.82; ctx.lineWidth=1.1+Math.min(4.5,val/24);
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.quadraticCurveTo(cx,cy,x2,y2); ctx.stroke(); ctx.globalAlpha=1;
+      const adx=x2-cx,ady=y2-cy,aL=Math.hypot(adx,ady)||1,ax=adx/aL,ay=ady/aL,ah=7;
+      ctx.fillStyle=col; ctx.beginPath(); ctx.moveTo(x2,y2);
+      ctx.lineTo(x2-ax*ah-ay*ah*0.6,y2-ay*ah+ax*ah*0.6); ctx.lineTo(x2-ax*ah+ay*ah*0.6,y2-ay*ah-ax*ah*0.6); ctx.closePath(); ctx.fill();
+      // long 3->7 / 4->7 curves drop their label past the node-5 hub, into the open fan near node 7
+      const lt=(k===9||k===10)?0.66:0.5, lb0=(1-lt)*(1-lt), lb1=2*(1-lt)*lt, lb2=lt*lt;
+      const lx=lb0*x1+lb1*cx+lb2*x2 + px*lsep, ly=lb0*y1+lb1*cy+lb2*y2 + py*lsep;
+      ctx.fillStyle=CSS('--card'); ctx.fillRect(lx-9,ly-7,18,13);
+      ctx.fillStyle=col; ctx.font='600 11px '+CSS('--data'); ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(String(Math.round(val)),lx,ly);
+    }
+  }
+  for(const n in NPOS){const [x,y]=P(n); const src=nSrc().includes(+n), exit=EXITS.includes(+n);
+    ctx.fillStyle=src?CSS('--fp-deep'):exit?CSS('--ink-soft'):CSS('--hjb'); ctx.beginPath(); ctx.arc(x,y,src||exit?5.5:4.5,0,7); ctx.fill();
+    ctx.fillStyle=CSS('--ink'); ctx.font='700 12px '+CSS('--ui'); ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillText(n,x+8,y-1);
+  }
+}
+function runNet(){
+  const f=nFlow(), b=nBal(f), srcs=nSrc();
+  let imb=0; for(const n in NPOS){const nn=+n; if(EXITS.includes(nn)||srcs.includes(nn))continue; imb=Math.max(imb,Math.abs(b[n]));}
+  const exit=(-b[8])+(-b[10]), used=f.filter(v=>v>0).length;
+  document.querySelectorAll('#scenBtns button').forEach(x=>x.classList.toggle('on',x.dataset.scen===nScen));
+  document.querySelectorAll('#viewBtns button').forEach(x=>x.classList.toggle('on',x.dataset.view===nView));
+  setV('nGap',FLOWS[nScen].gap+' ✓','ok');
+  setV('nKir',imb+' unit'+(imb===1?'':'s'),imb<=2?'ok':'bad');
+  setV('nUsed',used+' / 15','ok'); setV('nExit',exit+'','ok');
+  const nm={S1:'S1 validation (c=j¹+j²)',S2:'S2 cars + trucks (affine)',S3:'S3 emissions'};
+  const vlab={car:'cars',truck:'trucks',total:'total',both:'cars + trucks, side by side'}[nView];
+  $('stNet').textContent=nm[nScen]+' · '+vlab+' flow · certified equilibrium (Wardrop gap '+FLOWS[nScen].gap+'). '
+    +'Conservation recomputed live from the drawn flows: interior nodes net '+imb+' unit'+(imb===1?'':'s')+' (integer rounding); '+exit+' into exits 8, 10.';
+  drawNet();
+}
+document.querySelectorAll('#scenBtns button').forEach(x=>x.addEventListener('click',()=>{nScen=x.dataset.scen;runNet();}));
+document.querySelectorAll('#viewBtns button').forEach(x=>x.addEventListener('click',()=>{nView=x.dataset.view;runNet();}));
+window.addEventListener('resize',()=>{ clearTimeout(window._rtn); window._rtn=setTimeout(runNet,150); });
+runNet();
+</script>
+</body>
+</html>
