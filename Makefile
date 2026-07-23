@@ -39,6 +39,8 @@ check-lab:
 	@$(NODE) $(LAB)/smoke.js
 	@$(NODE) $(LAB)/test-order-study.js
 	@$(NODE) $(LAB)/test-failure-map.js
+	@$(NODE) $(LAB)/test-byo.js
+	@$(NODE) $(LAB)/test-byo-artifact.js
 	@$(NODE) $(LAB)/test-lab-artifact.js
 	@$(NODE) $(LAB)/test-index.js
 	@$(NODE) $(LAB)/test-wardrop.js

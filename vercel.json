@@ -4,6 +4,7 @@
   "rewrites": [
     { "source": "/", "destination": "/mfg-lab/mfg-lab" },
     { "source": "/lab", "destination": "/mfg-lab/lab" },
+    { "source": "/byo", "destination": "/mfg-lab/byo" },
     { "source": "/sin-mfg", "destination": "/sin-mfg/sin-mfg" },
     { "source": "/mfg-cap", "destination": "/mfg-cap/mfg-cap" }
   ]

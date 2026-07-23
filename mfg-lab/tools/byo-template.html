@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bring your own mean-field game</title>
+<meta name="description" content="Type the cost of a mean-field game and get the certified solve: the equilibrium density, the value function, and the exploitability that says whether it is really a Nash equilibrium. Runs in the page.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFBFC; --ink:#12171C; --ink-soft:#626C78; --grid:#E4E7EB; --card:#FFFFFF;
+    --fp:#0E7C7B; --fp-deep:#0A4E4D; --hjb:#8C2F39; --amber:#A8720A;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  .mono,.eyebrow,.ro .v,.ro .k,textarea,input,.verdict .vlabel{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  .eyebrow a{color:inherit;text-decoration:none}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(23px,3.2vw,32px);letter-spacing:-.02em;line-height:1.12;margin:4px 0 6px}
+  .lede{max-width:66ch;color:var(--ink-soft);margin-bottom:22px}
+  .lede b{color:var(--ink);font-weight:600}
+  a{color:var(--fp-deep)}
+  .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:18px;align-items:start}
+  @media(max-width:940px){.cols{grid-template-columns:minmax(0,1fr)}}
+  .card{background:var(--card);border:1px solid var(--grid);border-radius:12px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .card+.card{margin-top:14px}
+  h2{font-family:var(--ui);font-weight:600;font-size:15px;margin:0 0 12px}
+  label{display:block;font-family:var(--data);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
+  label .sub{text-transform:none;letter-spacing:0;color:var(--ink-soft)}
+  input[type=text]{width:100%;font-family:var(--data);font-size:13.5px;color:var(--ink);background:#fff;border:1px solid var(--grid);border-radius:8px;padding:9px 11px}
+  .field{margin-bottom:13px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .slab{display:flex;justify-content:space-between;align-items:baseline}
+  input[type=range]{width:100%}
+  .presets{display:flex;gap:7px;flex-wrap:wrap;margin:2px 0 14px}
+  .chip{font-family:var(--data);font-size:11px;padding:6px 11px;border:1px solid var(--grid);background:#fff;color:var(--ink);border-radius:999px;cursor:pointer;transition:border-color .12s,background .12s}
+  .chip:hover{border-color:var(--ink-soft);background:#F3F5F7}
+  button.run{font-family:var(--ui);font-weight:600;font-size:14px;color:#fff;background:var(--fp-deep);border:1px solid var(--fp-deep);border-radius:8px;padding:11px 22px;cursor:pointer;transition:background .14s,box-shadow .16s}
+  button.run:hover{background:var(--fp)}
+  button.run[disabled]{opacity:.6;cursor:default}
+  button.run.needs-run{box-shadow:0 0 0 3px color-mix(in srgb,var(--fp) 22%,transparent)}
+  button.run.needs-run::after{content:'\00A0\21BB'}
+  @keyframes rp{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fp) 30%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--fp) 6%,transparent)}}
+  @media(prefers-reduced-motion:no-preference){button.run.needs-run{animation:rp 1.9s ease-in-out infinite}}
+  .status{font-family:var(--data);font-size:12px;color:var(--ink-soft);min-height:2.9em;margin-top:12px}
+
+  .verdict{display:flex;gap:11px;align-items:center;border:1px solid var(--grid);border-radius:8px;padding:12px 14px;background:#fff;margin-bottom:14px}
+  .verdict .vlabel{font-family:var(--data);font-size:11px;letter-spacing:.12em;padding:3px 9px;border-radius:5px;white-space:nowrap;color:#fff;background:var(--ink-soft)}
+  .verdict.eq .vlabel{background:var(--fp-deep)} .verdict.no .vlabel{background:var(--hjb)} .verdict.stall .vlabel{background:var(--amber)}
+  .verdict .vtext{font-size:14px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:2px 18px;margin-bottom:6px}
+  .ro{display:flex;justify-content:space-between;gap:10px;font-family:var(--data);font-size:12.5px;padding:4px 0;border-bottom:1px solid #EEF0F2}
+  .ro .k{color:var(--ink-soft)} .ro .v{color:var(--ink);position:relative;padding-left:13px}
+  .ro .v.ok::before{content:'';position:absolute;left:0;top:.42em;width:7px;height:7px;background:var(--amber);border-radius:1px}
+  canvas{display:block;width:100%;border:1px solid var(--grid);border-radius:8px;background:#fff;margin-top:12px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:10px}
+  code{font-family:var(--data);font-size:12.5px;background:#EEF0F2;padding:1px 5px;border-radius:4px}
+  footer{margin-top:32px;border-top:1px solid var(--grid);padding-top:16px;font-size:12.5px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow"><a href="/">MFG Lab</a> · bring your own game</p>
+  <h1>Type a mean-field game. Get the certified equilibrium.</h1>
+  <p class="lede">Supply the two things that define the game — the <b>coupling</b> f(m), how a player's cost
+  depends on the crowd's local density, and the <b>terminal cost</b> V(x), where the crowd is trying to go.
+  The page solves the coupled HJB / Fokker–Planck system by fictitious play and returns the equilibrium
+  density, the value function, and the <b>exploitability</b>: the ε-Nash gap that says whether the fixed
+  point it reached is really an equilibrium, or only looks like one. Runs in this page; nothing is uploaded.</p>
+
+  <div class="cols">
+    <div class="card">
+      <h2>Your game</h2>
+      <div class="field">
+        <label for="cost">coupling <span class="sub">f(m) — cost of density m &nbsp;·&nbsp; increasing = crowd-averse</span></label>
+        <input id="cost" type="text" spellcheck="false" value="0.6 * m**1.5">
+      </div>
+      <div class="field">
+        <label for="term">terminal cost <span class="sub">V(x) on [0,1] — where players want to end up</span></label>
+        <input id="term" type="text" spellcheck="false" value="4 * (x - 0.8)**2">
+      </div>
+      <div class="presets" id="presets"></div>
+      <div class="field">
+        <div class="slab"><label for="sig" style="margin:0">viscosity σ</label><span class="mono" id="vSig" style="font-size:12px">0.18</span></div>
+        <input id="sig" type="range" min="0.06" max="0.40" step="0.01" value="0.18">
+      </div>
+      <button class="run" id="run">Solve &amp; certify</button>
+      <p class="status" id="status">Ready. Edit the game or pick an example, then Solve.</p>
+    </div>
+
+    <div class="card" id="out" hidden>
+      <div class="verdict" id="verdict"><span class="vlabel" id="vlabel">—</span><span class="vtext" id="vtext"></span></div>
+      <div class="grid2" id="ros"></div>
+      <canvas id="cv"></canvas>
+      <div class="legend">
+        <span>density m(x,t): <i style="background:#EDEFF2"></i>low → <i style="background:var(--fp)"></i>high, time flows downward</span>
+        <span><i style="background:var(--hjb)"></i>value u(x,0)</span>
+      </div>
+      <p class="note" id="cnote"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p><b>What this is.</b> The solver is <code>lab/mfg-byo.js</code> — the same FD-monotone fictitious play
+    validated in the lab's Module 1, generated into this page and gated on byte-identity, so what runs here is
+    what the battery proved. The certificate is exploitability, a pre-update best-response gap: it is honest for
+    <b>any</b> cost you type. A well-posed (monotone) coupling certifies an equilibrium; a pathological one
+    reports a large ε or stalls, and the page says <b>not an equilibrium</b> rather than pretending.</p>
+    <p style="margin-top:8px">The same solver in Python is planned as <code>mfglab.mfg</code>; today it is JavaScript here and in the battery.</p>
+  </footer>
+</div>
+
+<script>
+/*__ENGINE__*/
+</script>
+<script>
+'use strict';
+(function(){
+const $=id=>document.getElementById(id);
+const K=window.__mfgbyo;
+const EXAMPLES={
+  'Crowd aversion (well-posed)':{cost:'0.6 * m**1.5',term:'4 * (x - 0.8)**2',sig:'0.18',
+    note:'Cost rises with density: players avoid the crowd. Monotone, so the equilibrium is unique and certifies.'},
+  'Congestion, sharper':{cost:'1.2 * m**2',term:'4 * (x - 0.8)**2',sig:'0.14',
+    note:'Stronger, steeper aversion. Still monotone — certifies, with the crowd more spread out.'},
+  'Two targets (double well)':{cost:'0.5 * m',term:'6 * (x-0.25)**2 * (x-0.85)**2',sig:'0.16',
+    note:'A terminal cost with two minima. The crowd splits toward both; monotone coupling still certifies.'},
+  'Herding (ill-posed)':{cost:'-1.4 * m',term:'4 * (x - 0.5)**2',sig:'0.18',
+    note:'Players are ATTRACTED to the crowd (anti-monotone). Ill-posed: expect a large ε or a stall — the page will refuse to call it an equilibrium.'}
+};
+
+let last=null;
+function compile(src,arg){ try{ const f=new Function(arg,'"use strict";return ('+src+');'); const t=f(arg==='m'?1:0.5); if(typeof t!=='number'||!isFinite(t)) throw new Error('did not return a finite number'); return {f}; }catch(e){ return {error:e.message}; } }
+function num(x){ if(x===null||x===undefined||!isFinite(x))return '—'; if(x===0)return '0'; const a=Math.abs(x); return (a<1e-4||a>=1e6)?x.toExponential(3):String(Number(x.toPrecision(6))); }
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+function draw(res){
+  const cv=$('cv'); const DPR=Math.min(2,window.devicePixelRatio||1);
+  const W=cv.clientWidth||560, Hh=240;
+  cv.setAttribute('width',Math.round(W*DPR)); cv.setAttribute('height',Math.round(Hh*DPR)); cv.style.height=Hh+'px';
+  const c=cv.getContext('2d'); c.setTransform(DPR,0,0,DPR,0,0); c.clearRect(0,0,W,Hh);
+  const NX=res.NX,NT=res.NT,m=res.m; const padL=6,padR=6,padT=6,padB=6;
+  const gw=W-padL-padR, gh=Hh-padT-padB-40;
+  // density heatmap: x horizontal, time downward
+  let mMax=1e-9; for(let j=0;j<m.length;j++) if(m[j]>mMax)mMax=m[j];
+  const img=c.createImageData(NX,NT+1);
+  for(let n=0;n<=NT;n++) for(let i=0;i<NX;i++){ const v=Math.max(0,m[n*NX+i])/mMax;
+    const t=Math.min(1,v); const p=(n*NX+i)*4;
+    img.data[p]=Math.round(237-227*t); img.data[p+1]=Math.round(239-115*t); img.data[p+2]=Math.round(242-119*t); img.data[p+3]=255; }
+  // blit scaled via an offscreen canvas
+  const off=document.createElement('canvas'); off.width=NX; off.height=NT+1; off.getContext('2d').putImageData(img,0,0);
+  c.imageSmoothingEnabled=true; c.drawImage(off,padL,padT,gw,gh);
+  c.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--grid').trim(); c.strokeRect(padL,padT,gw,gh);
+  // value u(x,0) as a line under the heatmap
+  const u=res.u; let uMin=1e9,uMax=-1e9; for(let i=0;i<NX;i++){const v=u[i]; if(v<uMin)uMin=v; if(v>uMax)uMax=v;}
+  const y0=padT+gh+8, yh=32;
+  c.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--hjb').trim(); c.lineWidth=1.6; c.beginPath();
+  for(let i=0;i<NX;i++){ const x=padL+gw*i/(NX-1); const v=(u[i]-uMin)/Math.max(uMax-uMin,1e-9); const y=y0+yh-yh*v; if(i===0)c.moveTo(x,y);else c.lineTo(x,y); }
+  c.stroke();
+  c.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--ink-soft').trim(); c.font='10px '+getComputedStyle(document.documentElement).getPropertyValue('--data');
+  c.fillText('x = 0',padL,Hh-2); c.textAlign='right'; c.fillText('x = 1',W-padR,Hh-2); c.textAlign='left';
+}
+
+function show(res){
+  $('out').hidden=false;
+  const v=$('verdict');
+  const cls=res.verdict==='EQUILIBRIUM'?'eq':(res.verdict==='STALLED'?'stall':'no');
+  v.className='verdict '+cls;
+  $('vlabel').textContent=res.verdict==='EQUILIBRIUM'?'EQUILIBRIUM':(res.verdict==='STALLED'?'STALLED':'NOT AN EQUILIBRIUM');
+  $('vtext').textContent=res.verdict==='EQUILIBRIUM'
+    ? 'A player cannot gain by deviating — exploitability below the ε-Nash threshold.'
+    : res.verdict==='STALLED'
+      ? 'The flow did not settle within the iteration cap; no equilibrium is claimed.'
+      : 'The flow settled, but a player can still gain by deviating. This is a fixed point, not a Nash equilibrium.';
+  const rows=[
+    ['exploitability ε',num(res.exploitability),res.verdict==='EQUILIBRIUM'],
+    ['residual ‖Δm‖∞',num(res.residual),false],
+    ['iterations',res.iters,false],
+    ['mass drift',num(res.massDrift),true],
+    ['min density',num(res.minDensity),true],
+    ['grid',res.NX+' × '+res.NT,false]
+  ];
+  $('ros').innerHTML=rows.map(r=>'<div class="ro"><span class="k">'+esc(r[0])+'</span><span class="v'+(r[2]?' ok':'')+'">'+esc(r[1])+'</span></div>').join('');
+  draw(res);
+  $('cnote').textContent='Density flows top (t=0) to bottom (t=T); the crowd starts as a bump near x=0.25 and moves under its own cost. The oxblood line is the value u(x,0).';
+}
+
+function run(){
+  const t0=Date.now(); $('status').textContent='Solving…'; $('run').disabled=true;
+  setTimeout(()=>{
+    try{
+      const cc=compile($('cost').value,'m'); if(cc.error){$('status').textContent='Coupling f(m) did not compile: '+cc.error;return;}
+      const vc=compile($('term').value,'x'); if(vc.error){$('status').textContent='Terminal V(x) did not compile: '+vc.error;return;}
+      const res=K.solve({cost:cc.f,terminal:vc.f,sigma:+$('sig').value,NX:100,NT:180,maxIter:400});
+      last=res; show(res);
+      $('run').classList.remove('needs-run');
+      $('status').textContent=res.verdict+' · '+(Date.now()-t0)+' ms · '+res.iters+' iterations';
+    }catch(e){ $('status').textContent='The solver stopped: '+e.message; }
+    finally{ $('run').disabled=false; }
+  },0);
+}
+
+Object.keys(EXAMPLES).forEach(k=>{ const b=document.createElement('button'); b.className='chip'; b.textContent=k;
+  b.addEventListener('click',()=>{ const e=EXAMPLES[k]; $('cost').value=e.cost; $('term').value=e.term; $('sig').value=e.sig; $('vSig').textContent=(+e.sig).toFixed(2); $('run').classList.add('needs-run'); $('status').textContent=e.note; }); $('presets').appendChild(b); });
+['cost','term','sig'].forEach(id=>$(id).addEventListener('input',()=>{ if(id==='sig')$('vSig').textContent=(+$('sig').value).toFixed(2); $('run').classList.add('needs-run'); }));
+$('run').addEventListener('click',run);
+window.addEventListener('resize',()=>{ if(last)draw(last); });
+window.__byoReady=true;
+})();
+</script>
+</body>
+</html>
