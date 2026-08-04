@@ -23,7 +23,9 @@
   research/mfg-lab/mfg-lab.html. An ungated embedder is how a kernel silently forks — if you add
   a third carrier, register it in that battery first.
 
-  Self-contained: no libraries, no build step, no network requests. The runtime below is the
+  Self-contained mathematics: no libraries, no build step, and every number on this page is
+  computed in your browser. The one network request is a cookieless page counter, declared in
+  the head and in the footer — this file states what it does. The runtime below is the
   minimum the module needs -- $, DPR, sizeCanvas, one HFIT entry -- not the laboratory's router.
 -->
 <meta charset="UTF-8">
@@ -556,6 +558,18 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .alertbar.muted{background:var(--grid);color:var(--ink)}
 
   </style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/paper.html and
+     research/wardrop-repro/paper.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body class="instrument">
 <header class="topbar">
@@ -686,7 +700,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
   <!-- ============================ PAGE: RANDOM SUPPLY ============================ -->
   <div class="foot">
-    Carlos Toledo &middot; one file &mdash; no libraries, no build step, no network requests, no analytics, no fonts fetched.<br>
+    Carlos Toledo &middot; one file &mdash; no libraries, no build step, no fonts fetched, and every number above computed in your browser. One script: a cookieless page counter, no cross-site tracking, no personal data.<br>
     The kernel between the VERBATIM markers is byte-identical to <span class="mono">research/stock-constraint/tools/water_value_tree.js</span>.<br>
     <span class="mono">noindex,nofollow</span> &middot; extracted from the dissolved laboratory 2026-07-30 &middot; 2026
   </div>
