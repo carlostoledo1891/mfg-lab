@@ -1,18 +1,18 @@
 {
   "schema": "fellows-pack-manifest/v0",
   "pack": "alien-science/fellows-pack",
-  "updated": "2026-07-31",
+  "updated": "2026-08-04",
   "cost_refuse_usd": 18000,
-  "note": "JS kernels under kernels/ and tools/volume_runner.js are pointers (single-source). Re-hash after deliberate fixture/kernel edits.",
+  "note": "JS kernels under kernels/ and tools/volume_runner.js are pointers (single-source). Re-hash after deliberate fixture/kernel edits. Re-hashed 2026-08-04: heldout fixture correction wave (heldout_* removed from fixture; goldens regenerated; Node mutant + Python twin goldens added).",
   "files": [
     {
       "path": "README.md",
-      "sha256": "cbec909de81f850f9f4d6726099309dc963a2a117c531f87e442e67dc343e149",
+      "sha256": "8686cafa433c797f232baa4fcb86209231401eb88a0600df738aa3965ccfcac6",
       "role": "docs"
     },
     {
       "path": "expected_outputs.md",
-      "sha256": "7bf70522959a71fa9b4204a2b19a9874fc3f0e05d6b3132ae7dd9345dad87efc",
+      "sha256": "ee015d7b5ef55090926ce4a88bd2c5e4e1236a0240ef9f032e88cbfcd8d73dd4",
       "role": "docs"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "path": "fixtures/heldout-ccs-es.json",
-      "sha256": "fbea90afcde7f2b84298f3e580cf63f6b2cb0fe067cb74897f09fd40dc105b05",
+      "sha256": "859b2f168a9a62ac078e3f92d8e6d8db8e7d92569c9ea1a7fc75225261f066bc",
       "role": "fixture"
     },
     {
@@ -37,7 +37,17 @@
     },
     {
       "path": "golden/dual_client_heldout.json",
-      "sha256": "703b31122bf2820898b4e5c0c9fc891309ffd167d5e005635f415916c7e89895",
+      "sha256": "72aa0977f3a23a0a37aeb9df0e627ebcd46ed60c570de73f1524b12fd73eb960",
+      "role": "golden"
+    },
+    {
+      "path": "golden/dual_client_heldout.mutant.json",
+      "sha256": "a8d5d85c2311ce6ae24642c506df89cc33dd82f8b5d4e4edb2474a9ebe877a1c",
+      "role": "golden"
+    },
+    {
+      "path": "golden/dual_client_heldout.python.json",
+      "sha256": "4584045de1b83929244e215f0ba9c8e657342930d04ef6ea61b73f104f231b34",
       "role": "golden"
     },
     {
@@ -62,7 +72,7 @@
     },
     {
       "path": "kernels/swap_consistency.py",
-      "sha256": "8a9d96147883b60b46dcc96ba6efc970b5343db9470bfbfeb2eddde5b29e06a1",
+      "sha256": "2d52cc27ccc39982520684d30605fabe4d167842ca322bdbdab75788e964fa7c",
       "role": "kernel"
     },
     {
@@ -82,7 +92,7 @@
     },
     {
       "path": "tools/dual_client.py",
-      "sha256": "3e38e02f457e02ebd92c2b5f550ddf4db4642f4f527792726b9c6111b7865bfa",
+      "sha256": "89b099cd9234deeb121caaff9e6cae75b0cea19d77e0db55d26bfd2df43be91c",
       "role": "tool"
     },
     {

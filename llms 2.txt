@@ -1,0 +1,77 @@
+# Carlos Toledo — computer-assisted proof and validated numerics
+
+> Computer-assisted proofs and validated numerics for number theory, mean-field
+> games, network equilibria and price formation. Where a paper reports a converged
+> iterate, this site returns a **certificate** — an interval or exact-rational enclosure of
+> the equilibrium, with its location and local uniqueness proved — or an explicit
+> **refusal** where the instance is degenerate. Written by Carlos Toledo (Brazil),
+> built on the open-source `eqcert` kernel (MIT).
+
+## What the distinction means
+
+A solver that stops moving tells you its residual is small. It does not tell you
+that a solution exists, that it is the only one nearby, or that the density stayed
+positive. A **tolerance** is a promise about a solver; a **certificate** is a
+statement about the problem. This work produces the second, using outward-rounded
+interval arithmetic and exact rational arithmetic, and refuses when the instance
+will not support a certificate.
+
+Every certificate ships with **falsifiers**: deliberately broken variants that must
+fail. A certificate that cannot go red is treated as fake.
+
+## Verifiable claims
+
+These figures are reproducible by running the verifier that ships with the paper.
+They are measurements, not marketing numbers.
+
+- Congestion mean-field game (a = 1/2, sigma = 0.5, A = 0.3, N = 14): existence,
+  local uniqueness **within the even (cosine) subspace**, and strictly positive
+  density, certified in interval arithmetic. Enclosure radius r = 7.75e-15,
+  certified density floor min m >= 0.9736, Z1 = 0.5268. Seven falsifiers, all red.
+  The standalone Python verifier uses the standard library only, no dependencies,
+  and runs in 2.31 s. An independent JavaScript implementation agrees bit-for-bit
+  (difference 0.00e+00).
+- Multi-population Wardrop equilibrium: an independent, proof-carrying reproduction
+  of Bakaryan, Aoun, de Lima Ribeiro, Hovakimyan and Gomes, *Distributed
+  Hessian–Riemannian flow for multi-population Wardrop equilibrium*, AIMS
+  Mathematics 11(5) 15143–15162 (2026), doi:10.3934/math.2026623. One scenario
+  refuses, one is exact over BigInt rationals, one is a Krawczyk enclosure.
+- Price formation with a stock constraint (hydro water value on a scenario tree):
+  certified by zero-gap LP duality. The sign of the duality gap is load-bearing —
+  weak duality makes a negative value structurally impossible, not a tolerance.
+
+## What is deliberately NOT claimed
+
+- A result certified at an instance is not a theorem about a model.
+- Local uniqueness certified within a subspace is stated as within that subspace.
+- No claim of peer review. No ladder word ("proved", "certified") is used as a
+  status for this work without a named human signature behind it.
+- Search-based literature negatives are null results and are labelled as such.
+
+## Who it serves
+
+- **Research groups** — independent validation and stress-testing of a published
+  result: reproduce it, then enclose it, and report honestly when a scenario refuses.
+- **Industry and frontier systems** — certification of numerical and optimization
+  claims that decide real money, including energy price formation under a stock
+  constraint.
+
+## Pages
+
+- [Erdős #290 — for even d, disc(f_d) is a square exactly at d = 4k(k+1)](https://mfg-lab.vercel.app/technical-reports/erdos290): the three Galois densities van Doorn's paper left open, pinned exactly; two new exceptional degrees (d = 80, 120); a certified bracket for the constant c, seven times narrower than published; the square-discriminant law proved, with its composition-identity ingredient cited to Altmann et al. (2020). Ten downloadable, dependency-free programs with twelve mutation falsifiers.
+- [Home](https://mfg-lab.vercel.app/): what this work is, the evidence strip, and the notes.
+- [Certify the machine's candidate — an independent verifier for AI-generated mathematics](https://mfg-lab.vercel.app/technical-reports/ai-verify): eight blind frontier-model instances were asked a decidable question about a hard mean-field game; none established the true answer and five concluded the opposite. Reported as a CENSUS of eight specific runs, never as a rate — n=8 supports no rate claim (95% Clopper–Pearson on 5/8 runs [0.245, 0.915]). The certificate settles the question the panel could not.
+- [Alien science — disposition beside PGR](https://mfg-lab.vercel.app/technical-reports/alien-science): a checkable disposition lane (CERTIFIED / REFUSED / HACK-SUSPECT / OUT-OF-SCOPE) for formal fragments of automated-research ideas, beside gamable eval scores rather than instead of them. Anthropic-reported PGR figures stay tagged; re-hill-climb refused. Does not claim to certify alignment in general.
+- [A computer-assisted proof of a congestion mean-field game](https://mfg-lab.vercel.app/technical-reports/mfg-congest): to our knowledge the first validated-numerics enclosure of a stationary MFG with congestion. Includes a downloadable, dependency-free verifier.
+- [A certified reproduction of the AIMS 2026 Wardrop paper](https://mfg-lab.vercel.app/technical-reports/wardrop-repro): reproduction, erratum and certificate, with the errata published beside the result.
+- [A computer-assisted proof of a mean-field game equilibrium](https://mfg-lab.vercel.app/technical-reports/mfg-cap): three independent witnesses, validated enclosures, six falsifiers; the page is generated from the kernels.
+- [Price formation with a stock constraint](https://mfg-lab.vercel.app/technical-reports/stock-constraint): the water-value problem, certified by zero-gap duality.
+- [The interactive laboratory](https://mfg-lab.vercel.app/mfg-lab): nine modules, every solve running in the browser, including deliberately exposed failure modes.
+- [The defect log](https://mfg-lab.vercel.app/defects): every error this work has shipped and corrected, dated.
+- [Contact](https://mfg-lab.vercel.app/contact).
+
+## Citation
+
+Carlos Toledo — computer-assisted proof and validated numerics.
+carlos@carlostoledo.co — https://mfg-lab.vercel.app/
+Code: https://github.com/carlostoledo1891/mfg-lab (MIT for `eqcert`; papers CC-BY).

@@ -38,6 +38,9 @@ def dispose_swap_fixture(plant_mutant: bool = False) -> dict:
 
 def pgr_lane_reported(story: dict) -> dict:
     p = story["lanes"]["pgr"]
+    # heldout_* stay in the output shape but are null: the source reports no
+    # held-out numbers for CCS+ES — fig. 8's 0.94/0.47 are CCS + Self-Distill's
+    # (see the fixture's heldout_note, passed through below).
     return {
         "mode": "reported",
         "success": True,
@@ -45,6 +48,7 @@ def pgr_lane_reported(story: dict) -> dict:
         "chat_pgr": p.get("chat_reported"),
         "heldout_math_pgr": p.get("heldout_math_reported"),
         "heldout_code_pgr": p.get("heldout_code_reported"),
+        "heldout_note": p.get("heldout_note"),
         "provenance": p.get("provenance"),
         "isolation_required_to_remeasure": p.get("isolation_required_to_remeasure"),
         "note": "Not a live eval. Tag every public use as Anthropic-reported.",

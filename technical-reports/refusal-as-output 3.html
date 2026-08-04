@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  REFUSAL — certified refusal as a product. DESIGN DRAFT.
+
+  DRAFTED 2026-07-30. Levels 0-1 of the ladder on this page EXIST in this tree; levels
+  2-4 DO NOT, and the page says so in its own first section rather than in a footnote.
+
+  THE LOAD-BEARING SENTENCE is quoted from the existing refusal-frontier probe and is
+  not new here: "the METHOD refuses here" is NOT "no solution exists here". Every
+  refusal is about the ADMISSIBILITY OF THE CERTIFICATE, never about the mathematics.
+  If that distinction is ever blurred on a shipping page, the page is lying politely.
+
+  NOVELTY IS DELIBERATELY NOT CLAIMED for the negative-certification section. Computer-
+  assisted proofs of saddle-node bifurcations already exist and a fold proof is
+  intrinsically parametric; the literature gate that established that is binding. The
+  contribution named here is automation and decision framing, never the mechanism.
+
+  TEMPLATE: style block copied VERBATIM from site/certificates.html, the shared seed.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Every commercial solver returns a number. This is the design for making a principled refusal an output with a reason and a cost, rather than an absence.">
+<title>Certified Refusal — Carlos Toledo</title>
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    /* ONE DESIGN SYSTEM ACROSS EVERY ENCLOSURE PAGE. These token VALUES are copied
+       from the shared seed, not remembered, so this instrument, the SIN-MFG note
+       and the other notes here resolve the same names to the same colours. Only
+       the vocabulary is shared — the layout below stays the instrument's own.
+
+       WHAT MOVED IN THE 2026-07-28 ALIGNMENT, measured before and after, because a
+       palette token IS a rendering:
+         --fp-deep  #4F6F7A -> #0B5E5D  (the shared value). NOT read by the canvas —
+              the eight tokens the canvas resolves are listed below and every one of
+              them already equalled the shared value byte for byte, so no figure
+              changed colour. --fp-deep is chrome only: brand mark, primary button,
+              the nav active bar, and the .ok certificate readout.
+         --data     the local ui-monospace stack now leads, as on the papers and the
+              SIN-MFG note. Certificate digits used to render in a network-fetched
+              face here and a local one there; they now agree. 'IBM Plex Mono' stays
+              in the stack and in the fetch as the fallback, and the fetch keeps
+              display=optional — a FOUT reflow from display=swap is the traced cause
+              of a past layout-shift failure, so do not change it back.
+         --bad --good  added. Declared, not read by the canvas: the shared vocabulary
+              must be complete, or the next author invents a colour instead.
+
+       Ground: cool instrument enamel, not paper stock. The panel is neutral so
+       the signal colours carry all the meaning. Signal colours are semantic and
+       load-bearing — the canvas code, legends and prose all bind meaning to them:
+       --fp teal = population/density/forward, --hjb oxblood = value/adjoint/second
+       population, --amber = certificates/attention. Ground changes; signal does not.
+       CANVAS-READ, all eight, via CSS() — deleting one makes canvas draw black:
+       --amber --card --fp --grid --hjb --ink --ink-soft --paper.
+       Type roles: sans + mono only, no book faces. */
+    --paper:#F8F8FA; --card:#FFFFFF; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px; --section-top:46px;
+    --card-pad:18px; --card-gap:14px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  /* Numeric readouts must never re-measure between frames. */
+  .mono,.status,.eyebrow,.ro .v,.ro .k,.chip,.tab .tno,.tab .tsub,
+  table.mono td,table.mono th{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);
+    font-family:var(--body);font-size:var(--text-body);line-height:1.65;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 88px}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);
+    letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.02em;line-height:1.12;margin:4px 0 2px;text-wrap:balance}
+  .sub{color:var(--ink-soft);font-size:14.5px;line-height:1.55;margin-bottom:16px;max-width:76ch;text-wrap:pretty}
+
+  /* ---------- narrative architecture ----------------------------------------
+     Tabs are for things that are alternatives to each other; pages are for
+     things that are steps in an argument. The experiments did not change — the
+     navigation did. One document, one kernel of each solver, one stylesheet;
+     every page is addressable as #/route so any result can be linked directly.
+     Active states change colour and an inset bar only — never a dimension. */
+  /* ── GLOBAL CHROME: a real sticky top bar. Brand · sections · one primary CTA.
+     Replaces the notebook masthead + flat tab row. ── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap;flex:none}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;
+    background:var(--fp-deep);color:var(--paper);font-size:14px;font-weight:600}
+  /* the page label beside the mark, as on the other notes here. Scoped, so it
+     overrides the page-level `.sub` (a lede paragraph class) instead of inheriting
+     its size, margin and measure. */
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px;margin:0;max-width:none}
+  .brand:hover{color:var(--fp-deep)}
+  .mainnav{display:flex;align-items:center;gap:1px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .mainnav::-webkit-scrollbar{display:none}
+  .nav{position:relative;background:transparent;border:0;white-space:nowrap;
+    font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink-soft);
+    padding:8px 11px;cursor:pointer;border-radius:7px;transition:color .14s,background .14s}
+  .nav:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .nav::before{content:'';position:absolute;left:11px;right:11px;bottom:-1px;height:2px;background:transparent;border-radius:2px;transition:background .14s}
+  .nav.active{color:var(--ink);font-weight:600}
+  .nav.active::before{background:var(--fp-deep)}
+  .nav:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
+  .nav-div{flex:none;width:1px;height:18px;background:var(--grid);margin:0 7px}
+  .cta{flex:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-weight:600;font-size:13.5px;
+    color:var(--paper);background:var(--fp-deep);border:1px solid var(--fp-deep);border-radius:var(--radius);padding:8px 15px;
+    text-decoration:none;transition:background .14s,box-shadow .16s;white-space:nowrap}
+  .cta:hover{background:var(--fp);box-shadow:0 2px 8px rgba(14,124,123,.22)}
+  @media(max-width:720px){
+    .topbar-in{gap:12px;padding:0 14px}
+    .brand span.wordmark{display:none}
+    .brand .sub{display:none}
+    .nav-div{display:none}
+    .cta{padding:8px 12px}
+  }
+
+  /* ── dropdown navigation: two menus reunite the sections and save the bar ── */
+  .navdrop{position:relative}
+  .navtrig{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;cursor:pointer;
+    font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink-soft);padding:8px 11px;border-radius:7px;transition:color .14s,background .14s}
+  .navtrig:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .navdrop.has-active .navtrig{color:var(--ink);font-weight:600}
+  .navtrig .caret{font-size:9px;color:var(--ink-soft);transition:transform .15s}
+  .navdrop:hover .navtrig .caret,.navdrop:focus-within .navtrig .caret{transform:rotate(180deg)}
+  .navmenu{position:absolute;top:calc(100% + 6px);left:0;min-width:216px;background:var(--card);
+    border:1px solid var(--grid);border-radius:var(--radius);box-shadow:0 10px 30px rgba(16,24,40,.13),0 2px 6px rgba(16,24,40,.06);
+    padding:6px;display:none;flex-direction:column;z-index:70}
+  .navdrop:hover .navmenu,.navdrop:focus-within .navmenu{display:flex}
+  .navmenu button,.navmenu a{display:block;text-align:left;background:transparent;border:0;cursor:pointer;text-decoration:none;
+    font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink);padding:8px 10px;border-radius:7px;white-space:nowrap;transition:background .12s,color .12s}
+  .navmenu button:hover,.navmenu a:hover{background:color-mix(in srgb,var(--fp) 8%,transparent);color:var(--fp-deep)}
+  .navmenu button.active{color:var(--fp-deep)}
+  .navmenu .mtag{color:var(--ink-soft);font-family:var(--data);font-size:10px;margin-left:6px}
+  .navmenu-sep{height:1px;background:var(--grid);margin:6px 4px}
+  .navlink{text-decoration:none}
+  @media(max-width:720px){.navmenu{position:static;box-shadow:none;border:0;padding:0 0 0 10px;min-width:0}}
+
+  /* ── site footer ── */
+  .sitefoot{margin-top:56px;border-top:1px solid var(--grid)}
+  .sitefoot-in{max-width:var(--nav-max);margin:0 auto;padding:38px 20px 22px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1.55fr);gap:44px}
+  @media(max-width:820px){.sitefoot-in{grid-template-columns:1fr;gap:26px}}
+  .foot-brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;letter-spacing:-.015em;color:var(--ink)}
+  .foot-brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .foot-collab{color:var(--ink-soft);font-size:13.5px;line-height:1.62;max-width:54ch;margin-top:13px}
+  .foot-collab b{color:var(--ink);font-weight:600}
+  .foot-collab a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+  .foot-collab a:hover{text-decoration:underline}
+  .foot-links{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:520px){.foot-links{grid-template-columns:1fr 1fr}}
+  .foot-col{display:flex;flex-direction:column;gap:9px}
+  .foot-h{font-family:var(--data);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .foot-col a{font-size:13.5px;color:var(--ink);text-decoration:none}
+  .foot-col a:hover{color:var(--fp-deep);text-decoration:underline}
+  /* the credential block — the same paragraphs the other notes here and the SIN-MFG
+     note carry, so the practice reads identically wherever a reader lands. It states
+     what this work does; it makes no licence claim, because a brand is not a licence
+     and this artifact's terms (MIT) are stated below, unchanged. */
+  .foot-cred{max-width:var(--read-max);margin:0 auto;padding:0 20px 4px}
+  .foot-cred-in{border-top:1px solid var(--grid);padding-top:18px;max-width:100%;
+    font-size:13px;line-height:1.62;color:var(--ink-soft)}
+  .foot-cred-in p{margin:0 0 9px} .foot-cred-in p:last-child{margin:0}
+  .foot-cred-in b{color:var(--ink);font-weight:600}
+  .foot-cred-in a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+  .foot-cred-in a:hover{text-decoration:underline}
+  .foot-base{max-width:var(--read-max);margin:0 auto;padding:16px 20px 44px;border-top:1px solid var(--grid);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-soft)}
+  .foot-base a{color:var(--ink-soft)}
+
+    .hero{max-width:76ch;margin:2px 0 28px}
+  .hero h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);
+    line-height:1.08;letter-spacing:-.028em;margin-bottom:15px}
+  .hero .lede{font-size:var(--text-lede);line-height:1.62;color:var(--ink-soft);text-wrap:pretty}
+  .hero .lede b{color:var(--ink);font-weight:600}
+  /* the authorship byline the shared chrome carries. Static, above the fold, present
+     at first paint — it reserves its own line, so it cannot shift anything. */
+  .byline{font-family:var(--data);font-size:11px;line-height:1.5;color:var(--ink-soft);margin:13px 0 0}
+  .receipts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--card-gap);margin:0 0 30px}
+    .rcp{position:relative;display:block;width:100%;text-align:left;background:var(--card);
+    border:1px solid var(--grid);border-radius:var(--radius);padding:15px 16px 14px;cursor:pointer;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);transition:border-color .14s,box-shadow .16s}
+  .rcp:hover{border-color:#D7DBE0;box-shadow:0 4px 12px rgba(16,24,40,.08),0 1px 2px rgba(16,24,40,.04)}
+  .rcp:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .rcp .rk{font-family:var(--data);font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--amber);display:block}
+  .rcp .rt{font-family:var(--ui);font-size:15px;font-weight:600;color:var(--ink);
+    display:block;margin:4px 0 6px;letter-spacing:-.01em}
+  .rcp .rv{font-family:var(--data);font-size:11.5px;color:var(--ink);line-height:1.55;display:block}
+  .rcp .rd{font-size:12.5px;color:var(--ink-soft);line-height:1.52;display:block;margin-top:7px}
+
+  .beats{margin:0 0 24px;max-width:100%}
+  .beat{display:grid;grid-template-columns:auto 1fr;gap:15px;padding:14px 0;
+    border-top:1px solid var(--grid)}
+  .beat .bn{font-family:var(--data);font-size:10.5px;letter-spacing:.14em;
+    color:var(--amber);padding-top:4px}
+  .beat h3{font-family:var(--ui);font-size:15px;font-weight:600;margin-bottom:5px;letter-spacing:-.01em}
+  .beat p{font-size:13.8px;line-height:1.62;color:var(--ink-soft);text-wrap:pretty}
+  .beat p b{color:var(--ink);font-weight:600}
+
+  .claim{max-width:80ch;margin:2px 0 14px}
+  .claim h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);
+    line-height:1.16;letter-spacing:-.022em;margin:0}
+  .claim .src{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);margin-top:9px;line-height:1.6}
+  .badges{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.07em;text-transform:uppercase;padding:1px 5px;border-radius:var(--radius-sm);border:1px solid transparent;vertical-align:middle;white-space:nowrap;line-height:1.35;font-weight:500}
+  .badge b{color:var(--ink);font-weight:500}
+  /* The highlighted variant used to be `.pv` — a private word, styled here and
+     nowhere else, i.e. a second badge vocabulary running beside the shared one.
+     It now carries the shared vocabulary's own word for what these two badges
+     already render (PROVED), so the class names the thing on screen and nothing on
+     screen changed: the amber treatment is kept verbatim, because what is shared
+     is the token vocabulary, not the styling, and re-colouring these two would
+     restyle a status. If either LABEL is ever reworded, rename this class in the
+     same edit — a class that contradicts the label it decorates is worse than no
+     class at all. */
+  .badge.proved{border-color:var(--amber);background:var(--card)}
+  .badge.proved b{color:var(--amber)}
+  .lede2{font-size:var(--text-body);line-height:1.66;color:var(--ink-soft);max-width:100%;
+    margin:0 0 14px;text-wrap:pretty}
+  .lede2 b{color:var(--ink);font-weight:600}
+  h3.sec{font-family:var(--ui);font-size:14.5px;font-weight:600;letter-spacing:-.012em;
+    margin:26px 0 11px;padding-top:15px;border-top:1px solid var(--grid)}
+  h2 .tag,.card h2 .tag,h3.sec .tag{font-family:var(--data);font-size:var(--text-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  .caveat{border-left:2px solid var(--warn);padding:3px 0 3px 15px;margin:0 0 16px;max-width:100%}
+  .caveat p{font-size:13.4px;line-height:1.62;color:var(--ink-soft);margin-bottom:8px}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat p b{color:var(--ink);font-weight:600}
+  .rcpt{font-family:var(--data);font-size:11.5px;line-height:1.75;color:var(--ink-soft);
+    background:var(--card);border:1px solid var(--grid);border-radius:6px;
+    padding:12px 15px;margin:0 0 16px;overflow-x:auto}
+  .rcpt b{color:var(--ink);font-weight:500}
+
+  .log{max-width:86ch}
+  .lg{padding:17px 0;border-top:1px solid var(--grid)}
+  .lg h3{font-family:var(--ui);font-size:14.5px;font-weight:600;margin-bottom:9px;letter-spacing:-.008em}
+  .lg dl{display:grid;grid-template-columns:auto 1fr;gap:5px 13px;font-size:13.2px;line-height:1.58}
+  .lg dt{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-soft);padding-top:4px;white-space:nowrap}
+  .lg dd{color:var(--ink-soft);text-wrap:pretty}
+  .lg dd b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){.lg dl{grid-template-columns:1fr}.lg dt{padding-top:8px}}
+  .pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;
+    padding-top:15px;border-top:1px solid var(--grid)}
+  .pg{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);background:transparent;
+    border:0;cursor:pointer;padding:5px 0;transition:color .14s;text-align:left}
+  .pg:hover{color:var(--amber)}
+  .pg:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  .tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:22px}
+  .tab{position:relative;text-align:left;background:var(--card);border:1px solid var(--grid);
+    border-radius:var(--radius);padding:9px 11px 8px;cursor:pointer;overflow:hidden;
+    display:flex;flex-direction:column;gap:1px;
+    transition:border-color .14s,background .14s,box-shadow .14s}
+  /* Active marker is an inset bar drawn INSIDE the box, so switching tabs
+     changes no dimension anywhere. */
+  .tab::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;
+    background:transparent;transition:background .14s}
+  .tab.active::before{background:var(--amber)}
+  .tab:hover{border-color:var(--ink-soft);background:var(--card)}
+  .tab .tno{font-family:var(--data);font-size:9.5px;letter-spacing:.16em;color:var(--ink-soft)}
+  .tab .tname{font-family:var(--ui);font-size:14px;font-weight:600;color:var(--ink);line-height:1.25;letter-spacing:-.005em}
+  .tab .tsub{font-family:var(--data);font-size:9.5px;letter-spacing:.04em;color:var(--ink-soft);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tab.active{border-color:var(--ink);background:var(--card);
+    box-shadow:0 1px 3px rgba(18,23,28,.07)}
+  .tab.active .tno{color:var(--amber)}
+  .tab:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  @media(max-width:900px){.tabs{grid-template-columns:repeat(4,1fr)}}
+  section{padding:var(--section-top) 0 0}
+  .shead{margin:2px 0 14px}
+  .shead h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;line-height:1.25;letter-spacing:-.015em;text-wrap:balance}
+  .shead p{font-size:13.5px;line-height:1.55;color:var(--ink-soft);max-width:100%;
+    margin-top:6px;padding-left:11px;border-left:2px solid var(--grid);text-wrap:pretty}
+  .presets{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-6px 0 16px}
+  .presets .plab{font-family:var(--data);font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--amber)}
+  .chip{font-family:var(--data);font-size:10px;letter-spacing:.04em;padding:2px 7px;border:1px solid var(--grid);background:var(--grid);color:var(--ink);border-radius:var(--radius-sm);cursor:pointer;font-weight:500;line-height:1.35}
+  .chip:hover{background:var(--ink-soft);border-color:var(--ink-soft);color:var(--paper)}
+  .chip.active,.chip.on{background:var(--fp-deep);border-color:var(--fp-deep);color:var(--paper);font-weight:500}
+  .cardtools{position:absolute;top:8px;right:8px;display:flex;gap:6px;opacity:.4;transition:opacity .12s}
+  .card:hover .cardtools,.cardtools:focus-within{opacity:1}
+  .tbtn{font-family:var(--data);font-size:10px;padding:3px 8px;border:1px solid var(--grid);background:var(--card);color:var(--ink-soft);cursor:pointer;border-radius:var(--radius-sm);transition:color .12s,border-color .12s}
+  .tbtn:hover{color:var(--ink);border-color:var(--ink-soft)}
+  .seedbox{font-family:var(--data);font-size:12px;padding:6px 8px;width:118px;
+    border:1px solid var(--grid);border-radius:2px;background:var(--card);color:var(--ink)}
+  /* method tab prose */
+  .method p{font-size:13.8px;line-height:1.66;color:var(--ink-soft);margin:0 0 15px;max-width:76ch}
+  .method p b{color:var(--ink)}
+  .method p>b:first-child{font-family:var(--ui);letter-spacing:.005em}
+  .method p b{font-weight:600}
+  .method .mono{font-family:var(--data);font-size:12.3px}
+  .mtable{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 10px}
+  .mtable th{font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--grid)}
+  .mtable td{padding:6px 10px 6px 0;border-bottom:1px solid var(--grid);vertical-align:top;line-height:1.5}
+  .mtable td.mono,.mtable td .mono{font-family:var(--data);font-size:11.5px;white-space:nowrap}
+  .mtable td:first-child{white-space:nowrap;color:var(--ink-soft);font-family:var(--data);font-size:11px}
+
+  /* Wide content scrolls inside its OWN container — never the page body.
+     (Clipping the body would hide overflow instead of fixing it, and would
+     desynchronise scrollHeight from the real page height.) Equations must not
+     break mid-formula, so the equation strip scrolls; the tables are allowed to
+     wrap below 900px instead, which reads better than a scroll on a phone. */
+  .eqs{display:flex;flex-wrap:wrap;gap:8px 28px;padding:12px 16px;
+    border-top:1px solid var(--grid);border-bottom:1px solid var(--grid);margin-bottom:18px;
+    overflow-x:auto}
+  @media(max-width:900px){
+    .mtable td:first-child,.mtable td.mono,.mtable td .mono{white-space:normal}
+  }
+  /* On a phone the button group must not be pinned right by margin-left:auto —
+     with a wide control row it lands 2px past the viewport. Measured, not
+     guessed: the per-route overflow sweep at 390px is what found it. */
+  @media(max-width:640px){
+    .btns{margin-left:0;flex-wrap:wrap}
+  }
+  .eq{font-size:15px;white-space:nowrap}
+  .eq .u{color:var(--hjb);font-weight:600}
+  .eq .m{color:var(--fp);font-weight:600}
+  .eq .dir{font-family:var(--data);font-size:10px;letter-spacing:.12em;
+    text-transform:uppercase;margin-left:10px;color:var(--ink-soft)}
+  .eq .dir.b{color:var(--hjb)} .eq .dir.f{color:var(--fp)}
+
+  .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 18px;margin-bottom:18px}
+  .ctl{display:flex;flex-direction:column;gap:3px;min-width:118px}
+  .ctl label{font-family:var(--data);font-size:10.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .ctl label b{color:var(--ink);font-weight:500}
+  .ctl input[type=range]{width:118px;accent-color:var(--ink)}
+  .ctl .seg{display:flex;gap:0}
+  .seg button{padding:7px 11px;border:1px solid var(--ink);background:transparent;color:var(--ink);
+    font-family:var(--data);font-size:11px;cursor:pointer}
+  .seg button.on{background:var(--ink);color:var(--paper)}
+  .btns{display:flex;gap:10px;margin-left:auto}
+  /* THE PRIMARY ACTION — the one button that runs the flow. Teal signal colour
+     = "the action", matching the Lab's Run button so the whole surface has one
+     primary. */
+  button.main{font-family:var(--ui);font-weight:600;font-size:13px;letter-spacing:0;
+    padding:10px 20px;border:1px solid var(--fp-deep);background:var(--fp-deep);color:var(--paper);
+    cursor:pointer;border-radius:var(--radius);transition:background .14s,box-shadow .16s}
+  button.main:hover{background:var(--fp)}
+  /* RE-RUN NEEDED — an input changed since the last solve. Light the button so
+     it is obvious which one re-runs, and append a re-run glyph to say so. */
+  button.main.needs-run{box-shadow:0 0 0 3px color-mix(in srgb,var(--fp) 22%,transparent)}
+  button.main.needs-run::after{content:'\00A0\21BB'}
+  @keyframes runpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fp) 30%,transparent)}
+    50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--fp) 6%,transparent)}}
+  @media(prefers-reduced-motion:no-preference){button.main.needs-run{animation:runpulse 1.9s ease-in-out infinite}}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--grid);
+    font-family:var(--ui);font-weight:500;font-size:13px;padding:10px 16px;cursor:pointer;border-radius:var(--radius);transition:border-color .14s,background .14s}
+  button.ghost:hover{border-color:var(--ink-soft);background:#F3F5F7}
+  /* STALE CERTIFICATE — the shown values no longer match the current inputs.
+     Dim them until a re-solve, so a certificate is never read as current when
+     it is not. Opacity only: no dimension change. */
+  .page.stale .ro .v{opacity:.4;transition:opacity .2s}
+  button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--card-gap)}
+    .card{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+    padding:16px 18px 14px;position:relative;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);width:100%;min-width:0}
+  .card h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.005em;margin-bottom:2px;padding-right:76px}
+  h2 .tag,.card h2 .tag,h3.sec .tag{font-family:var(--data);font-size:var(--text-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  .card h2 .tag.f{color:var(--fp)} .card h2 .tag.b{color:var(--hjb)}
+  .card .note{font-size:12.5px;line-height:1.5;color:var(--ink-soft);margin-bottom:8px;text-wrap:pretty}
+  /* Reserve vertical space BEFORE sizeCanvas() runs, so first paint and
+     tab switches never jump. sizeCanvas sets an explicit style.height,
+     which then overrides aspect-ratio — this is purely the pre-JS floor. */
+  /* Reserve the RIGHT vertical space before sizeCanvas() runs. A single
+     generic ratio was wrong: real h/w spans 0.17..1.0, so one 16/9 floor
+     mis-reserved by up to 394px on cvM2. Each canvas gets its own ratio,
+     taken from the HFIT map that JS uses. sizeCanvas then sets an explicit
+     style.height, which overrides aspect-ratio entirely. */
+  canvas{display:block;width:100%;height:auto;background:var(--card);border-radius:var(--radius-sm)}
+  #cvResid{aspect-ratio:3.125}
+  #cvWdGap{aspect-ratio:5.8824}
+  #cvWdNet{aspect-ratio:2.381}
+  #cvWdBar{aspect-ratio:5.0}
+  #cvWvTree{aspect-ratio:2.6316}
+  #cvM{aspect-ratio:1.5873}
+  #cvU{aspect-ratio:1.5873}
+  #cvLine{aspect-ratio:2.7778}
+  #cvLqErr{aspect-ratio:1.8182}
+  #cvLqOverlay{aspect-ratio:2.7778}
+  #cvResid2{aspect-ratio:3.5714}
+  #cvM2{aspect-ratio:1.0}
+  #cvBif{aspect-ratio:1.25}
+  #cvStF{aspect-ratio:3.3333}
+  #cvStSol{aspect-ratio:2.7778}
+  #cvPrCert{aspect-ratio:3.3333}
+  #cvPrDS{aspect-ratio:2.7778}
+  #cvPrPrice{aspect-ratio:1.6667}
+  #cvPrHeat{aspect-ratio:1.6667}
+  #cvGgFig{aspect-ratio:2.7778}
+  #cvGgCoef{aspect-ratio:1.6667}
+  #cvGgAg{aspect-ratio:1.6667}
+  canvas[style*='height']{aspect-ratio:auto}
+  .span2{grid-column:1/-1}
+
+  .resid{border-left:3px solid var(--amber)}
+  .readouts{display:flex;flex-wrap:wrap;gap:6px 22px;margin:6px 0 10px;
+    font-family:var(--data)}
+  .ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);line-height:1.35;min-height:1.35em;display:block}
+  .ro .v{font-family:var(--data);font-size:19px;font-weight:500;letter-spacing:-.01em;line-height:1.28;min-height:1.28em;display:block;font-variant-numeric:tabular-nums}
+  .ro .v.small{font-size:14px;padding-top:5px}
+  .ro .v{position:relative;padding-left:13px}
+  .ro .v::before{content:'';position:absolute;left:0;top:.44em;width:6px;height:6px;
+    background:transparent;border:1px solid var(--grid);border-radius:1px}
+  .ro .v.ok{color:var(--fp-deep)}
+  .ro .v.ok::before{background:var(--good);border-color:var(--good);
+    box-shadow:0 0 0 2px color-mix(in srgb,var(--amber) 18%,transparent)}
+  .status{font-family:var(--data);font-size:11px;letter-spacing:.03em;line-height:1.45;
+    color:var(--amber);min-height:2.9em;margin-bottom:4px;text-wrap:pretty;
+    overflow-wrap:anywhere;display:block}
+    a{color:var(--fp);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+    a:hover,a:focus-visible{color:var(--hjb)}
+  .status.done{color:var(--fp-deep)}
+  .status.warn{color:var(--hjb)}
+
+  table.err{border-collapse:collapse;font-family:var(--data);font-size:12px;margin-top:8px}
+  table.err th,table.err td{border:1px solid var(--grid);padding:5px 10px;text-align:right}
+  table.err th{font-weight:500;background:var(--paper)}
+
+  .notes{margin-top:26px;border-top:1px solid var(--grid);padding-top:14px;
+    font-size:13.5px;color:var(--ink-soft);max-width:76ch;line-height:1.66}
+  .notes p{margin:0 0 15px}
+  .notes b{color:var(--ink);font-weight:600}
+  .notes p>b:first-child{font-family:var(--ui);letter-spacing:.005em}
+  .notes p+p{margin-top:8px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;font-size:12.5px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:20px;height:0;border-top:2.5px solid var(--fp)}
+  .sw.naive{border-top:2px dashed #999}
+  .sw.val{border-top:2.5px solid var(--hjb)}
+  .sw.ref{border-top:2px dashed var(--ink)}
+  .sw.amber{border-top:2.5px solid var(--amber)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);display:inline-block}
+  .dot.hollow{background:transparent;border:1.5px solid var(--ink)}
+
+  .eqs{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  canvas{touch-action:pan-y}
+  @media(max-width:640px){
+    .wrap{padding:var(--page-top) 12px 40px}
+    /* Narrow columns wrap the longest status strings to ~4 lines; measured at
+       390px the 2.9em reservation still let a long message push the canvas 32px.
+       Reserve 4 lines here. Verified: canvas movement 0px at 390/640/900/1280/1600. */
+    .status{min-height:5.8em;font-size:10.5px}
+    h1{font-size:var(--text-h1)}
+    .sub{font-size:14px}
+    .mtable{font-size:11px}
+    .mtable td:first-child{font-size:10px}
+    .tabs{display:flex;overflow-x:auto;scroll-snap-type:x proximity;gap:8px;padding-bottom:4px;
+      -webkit-overflow-scrolling:touch}
+    .tab{flex:0 0 140px;scroll-snap-align:start}
+    .shead h2{font-size:var(--text-h2)}
+    .card h2{padding-right:8px}
+    .cardtools{position:static;opacity:1;justify-content:flex-end;margin:-2px 0 4px}
+    .eqs{gap:6px 20px;padding:10px 4px}
+    .eq{font-size:13px}
+    .eq .dir{font-size:9px;margin-left:6px}
+    .controls{gap:12px 14px}
+    .ctl{flex:1 1 130px;min-width:0}
+    .ctl input[type=range]{width:100%}
+    .ctl .seg{width:100%}
+    .seg button{flex:1;padding:8px 6px}
+    .btns{margin-left:0;width:100%}
+    .btns button{flex:1}
+    .readouts{gap:6px 14px}
+    .ro .v{font-size:16px;min-height:1.28em}
+    .ro .v.small{font-size:12.5px}
+    .card{padding:12px 12px 10px}
+    .card .note{font-size:12px}
+    table.err{font-size:10.5px}
+    table.err th,table.err td{padding:4px 6px}
+    .notes{font-size:12.5px}
+    .legend{gap:10px 14px;font-size:11.5px}
+  }
+
+  /* The Lab card: the product, ahead of the evidence for it. Hover changes
+     colour and shadow only — never a dimension (dimensional-stability rule). */
+  .labcard{display:block;text-decoration:none;color:inherit;background:var(--card);
+    border:1px solid var(--grid);border-left:3px solid var(--fp-deep);border-radius:var(--radius);
+    padding:18px 20px;margin:0 0 18px;transition:background .15s,box-shadow .15s}
+  .labcard{box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .labcard:hover{box-shadow:0 4px 12px rgba(16,24,40,.08),0 1px 2px rgba(16,24,40,.04)}
+  .labcard .lk{display:block;font-family:var(--data);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .labcard .lt{display:block;font-family:var(--ui);font-weight:600;font-size:21px;
+    letter-spacing:-.015em;margin:4px 0 6px}
+  .labcard .ld{display:block;max-width:100%;color:var(--ink-soft);font-size:14.5px}
+  .labcard .lgo{display:inline-block;margin-top:10px;font-family:var(--data);font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--fp-deep)}
+  /* Everything that is not featured is a LIST, not a card. Cards of equal weight
+     are not a hierarchy; seven of them is a wall. */
+  ul.dirlist{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--grid)}
+  ul.dirlist li{display:grid;grid-template-columns:minmax(140px,190px) 1fr;gap:16px;
+    padding:11px 2px;border-bottom:1px solid var(--grid);align-items:baseline}
+  ul.dirlist li a{font-family:var(--ui);font-weight:600;font-size:14.5px;color:var(--fp-deep);
+    cursor:pointer;text-decoration:none}
+  ul.dirlist li a:hover{text-decoration:underline}
+  ul.dirlist li span{color:var(--ink-soft);font-size:14px}
+  @media(max-width:640px){ul.dirlist li{grid-template-columns:1fr;gap:2px}}
+  /* The seed relaxes .mtable td:first-child to white-space:normal at small widths but
+     leaves th NOWRAP. On a two-column header with long labels that forces the table
+     past the card at 390px -- measured: card 392px inside a 350px content box, driven
+     by a 220px th. Same relaxation, applied to th. */
+  @media(max-width:560px){ .mtable th{white-space:normal} }
+  /* Long inline .mono runs inside PROSE (not tables) have no break opportunity in the
+     seed -- the seed only relaxes .mono inside .mtable. At 360-390px that pushes a
+     paragraph past its card. Give prose mono a break opportunity; tables already wrap. */
+  .card p .mono, .card p code, .callout .mono{overflow-wrap:anywhere}
+  .card p, .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  /* Wide tables scroll inside their own box rather than pushing the page. This is the
+     pattern the other notes here already use (.tablewrap{overflow-x:auto}); it is absent
+     from the certificates seed, so it is defined here and applied to every .mtable.
+     Chosen over more white-space tinkering because a data table that must stay legible
+     has a minimum width, and the honest response is to let IT scroll, not the page. */
+  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  /* THE ACTUAL CAUSE, after three wrong guesses. Grid items default to
+     min-width:auto, which refuses to shrink below their content's intrinsic width --
+     so a card containing a data table stayed 392px wide inside a 350px content box and
+     pushed the document to scrollWidth 404 at a 390px viewport. min-width:0 lets the
+     card shrink; the table inside it then scrolls in its own .twrap. This is the
+     canonical grid-overflow fix and it belongs here, not in more white-space rules. */
+  .grid2 > *{min-width:0}
+
+  /* SHARED SITE CHROME — five primary links (DESIGN_SYSTEM.md) */
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .sitenav,.nav{gap:14px} .sitenav a,.nav a{font-size:10.5px;letter-spacing:.05em} }
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .alertbar,.draftbar{font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;padding:11px 15px;margin:0 0 18px;line-height:1.5;border-radius:var(--radius);border:0}
+  .alertbar.draft,.draftbar,.alertbar.danger{background:var(--bad)}
+  .alertbar.warn{background:var(--warn-soft);color:var(--ink);border:1px solid var(--grid)}
+  .alertbar.info{background:var(--fp-deep);color:var(--paper)}
+  .alertbar.ok{background:var(--good);color:var(--paper)}
+  .alertbar.muted{background:var(--grid);color:var(--ink)}
+
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid;vertical-align:middle;white-space:nowrap}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.standard{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.unsigned{color:var(--hjb);background:transparent;border-color:var(--hjb);border-style:dashed}
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+
+  </style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/paper.html and
+     research/wardrop-repro/paper.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <span class="src">draft design &middot; levels 2&ndash;4 not built</span>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+    <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
+<div class="eyebrow">refusal as an output</div>
+  <div class="claim">
+    <h1>When the honest answer is &ldquo;I refuse, and here is why&rdquo;</h1>
+    <div class="src">Every commercial solver returns a number. This is the design for making a principled refusal an output with a reason and a cost, rather than an absence.</div>
+  </div>
+
+  <section class="active">
+  <header class="shead">
+    <h2>DRAFT &mdash; the ladder is real, the product is not built</h2>
+    <p>Every commercial solver returns a number. Always. A tool whose distinctive output is a
+    <b>principled refusal, with its reason and its cost</b>, does not exist commercially. This page
+    is the design for making refusal an output rather than an absence. Levels&nbsp;0&ndash;1 exist in
+    this tree today; 2&ndash;4 do not.</p>
+  </header>
+
+  <div class="grid2 method">
+    <div class="card span2">
+      <h2>The distinction everything rests on <span class="tag">already held</span></h2>
+      <p>From the existing refusal-frontier probe, and it is the sentence the whole idea turns on:</p>
+      <div class="twrap"><table class="mtable"><tbody>
+        <tr><td class="mono" style="width:50%">&ldquo;the METHOD refuses here&rdquo; is NOT &ldquo;no solution exists here&rdquo;</td>
+            <td>every refusal is a statement about the <b>admissibility of the certificate</b>, never
+            about the mathematics. Collapsing those two is how a tool starts lying politely.</td></tr>
+      </tbody></table></div>
+    </div>
+
+    <div class="card span2">
+      <h2>The ladder <span class="tag" style="color:var(--amber)">0&ndash;1 built &middot; 2&ndash;4 designed</span></h2>
+      <div class="twrap"><table class="mtable">
+        <thead><tr><th style="width:8%">level</th><th style="width:26%">what the tool says</th><th>status</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">0</td><td>silence, or a generic failure</td>
+              <td>useless to anyone. Indistinguishable from a crash.</td></tr>
+          <tr><td class="mono">1</td><td><b>named mode</b> &mdash; <span class="mono">REFUSED [derivative-sign]: interval straddles 0 (lo &minus;1.0137)</span></td>
+              <td><b>BUILT.</b> The certifier does this today, and each refusal carries a decidable named mode.</td></tr>
+          <tr><td class="mono">2</td><td><b>certified obstruction</b> &mdash; not &ldquo;I failed to find r&rdquo; but &ldquo;there is provably NO admissible r here&rdquo;</td>
+              <td>DESIGNED. This is the increment: the refusal becomes <b>a certificate in its own right</b>, proved in interval arithmetic, rather than a report about a search.</td></tr>
+          <tr><td class="mono">3</td><td><b>distance to feasibility</b> &mdash; &ldquo;refuses; the smallest change that would certify is: narrow the window 4.1&times;, or raise N to 22&rdquo;</td>
+              <td>DESIGNED. Turns a refusal into a <b>specification</b>. This is the level a buyer can act on.</td></tr>
+          <tr><td class="mono">4</td><td><b>the certified frontier</b> &mdash; the locus where the method crosses from certify to refuse</td>
+              <td>PROTOTYPED in a scratchpad, never productised. A map of where a method works is an asset nobody else holds for that method.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card span2">
+      <h2>The clever part: certify the NEGATIVE <span class="tag" style="color:var(--hjb)">underexplored</span></h2>
+      <p>Today the machinery certifies <b>existence and uniqueness</b> in a ball. The same machinery,
+      pointed the other way, certifies statements almost nobody produces rigorously:</p>
+      <div class="twrap"><table class="mtable"><tbody>
+        <tr><td style="width:32%"><b>certified non-existence</b></td>
+            <td>&ldquo;there is provably <b>no</b> solution in this region&rdquo;. An exclusion
+            certificate. For a safety envelope this is the statement that actually matters &mdash;
+            not &ldquo;we found nothing bad&rdquo; but &ldquo;nothing bad can be here&rdquo;.</td></tr>
+        <tr><td><b>certified multiplicity</b></td>
+            <td>&ldquo;there are provably <b>at least two</b> distinct solutions&rdquo;. The 2D herding
+            pitchfork in this project is exactly this phenomenon and is currently traced numerically,
+            <b>uncertified</b>. Certifying a bifurcation is a real, hard, saleable statement.</td></tr>
+        <tr><td><b>certified non-uniqueness of a decision</b></td>
+            <td>the commercial translation: &ldquo;this optimisation has multiple optima and your
+            solver returned one of them without telling you&rdquo;.</td></tr>
+      </tbody></table></div>
+      <p class="notes">Neighbour to check before any claim of novelty here: computer-assisted proofs
+      of saddle-node bifurcations already exist, and a fold proof is intrinsically parametric. The
+      literature gate that found that is binding &mdash; the contribution would be the automation and
+      the decision framing, not the mechanism.</p>
+    </div>
+
+    <div class="card span2">
+      <h2>Why a refusal is worth money <span class="tag">the commercial case</span></h2>
+      <div class="twrap"><table class="mtable"><tbody>
+        <tr><td style="width:30%"><b>it is the only honest safety signal</b></td>
+            <td>in safety-critical work the operative question is not &ldquo;what is the answer&rdquo;
+            but <b>&ldquo;when should I not trust it&rdquo;</b>. Nothing on the market answers that.</td></tr>
+        <tr><td><b>it is what qualification requires</b></td>
+            <td>standards demand a stated operating envelope with justification. Today that is
+            testing plus engineering judgement. A <b>certified</b> boundary is strictly stronger
+            evidence, and qualification cost is where the money is.</td></tr>
+        <tr><td><b>it is un-fakeable</b></td>
+            <td>a competitor can claim accuracy. A competitor cannot claim principled refusal without
+            building it, and a refusal that never fires is visibly not a refusal.</td></tr>
+        <tr><td><b>it converts narrowness into precision</b></td>
+            <td>a narrow certified scope reads as a limitation until it is stated as a boundary. Then
+            it reads as the only honest offer in the room.</td></tr>
+      </tbody></table></div>
+    </div>
+
+    <div class="card span2">
+      <h2>What must be true before any of this ships</h2>
+      <div class="twrap"><table class="mtable"><tbody>
+        <tr><td style="width:32%">a refusal that cannot fire is not a refusal</td>
+            <td>every refusal mode needs a red control proving it fires, and a green control proving
+            it does not fire everywhere. Both, or the mode is decoration.</td></tr>
+        <tr><td>level 2 is a claim, so it needs a proof</td>
+            <td>&ldquo;provably no admissible r&rdquo; is a theorem about an interval, not a summary of
+            a failed loop. It is only worth saying if it is checked.</td></tr>
+        <tr><td>the frontier is a measurement, not a picture</td>
+            <td>a boundary drawn by sampling is an illustration. A boundary with certified sides is
+            an asset. The difference must be stated on the artifact, every time.</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  </section>
+
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+</div>
+
+</body>
+</html>

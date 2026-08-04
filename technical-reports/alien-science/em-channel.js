@@ -119,7 +119,7 @@ function disposeSample(rows, eps) {
   };
   const witness = {
     kind: 'exact-residual',
-    kernel: 'research/_frontier/alien-science/em-channel.js',
+    kernel: 'em-channel.js',
     payload: {
       n: rows.length,
       eps: Q.toString(bound),

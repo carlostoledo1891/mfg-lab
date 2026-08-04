@@ -13,7 +13,8 @@
  * W2S_EVAL_URL exits nonzero. --via-stub without DISPOSITION_URL exits nonzero.
  * Full ~18k USD re-hill-climb is refused in MODE_B_RUNBOOK.md.
  *
- *   node research/_frontier/alien-science/dual-client.js --fixture heldout-ccs-es
+ *   From this directory (public tree: technical-reports/alien-science/):
+ *   node dual-client.js --fixture heldout-ccs-es
  *   W2S_EVAL_URL=http://127.0.0.1:8000 node ... --fixture heldout-ccs-es --post-pgr
  *   DISPOSITION_URL=http://127.0.0.1:8765 node ... --fixture heldout-ccs-es --via-stub
  */
@@ -83,13 +84,17 @@ function pgrLaneEmReported(story) {
  */
 function pgrLaneReported(story) {
   const p = story.lanes.pgr;
+  // heldout_* stay in the output shape but are null: the source reports no
+  // held-out numbers for CCS+ES — fig. 8's 0.94/0.47 are CCS + Self-Distill's
+  // (see the fixture's heldout_note, passed through below).
   return {
     mode: 'reported',
     success: true,
     remeasured: false,
     chat_pgr: p.chat_reported,
-    heldout_math_pgr: p.heldout_math_reported,
-    heldout_code_pgr: p.heldout_code_reported,
+    heldout_math_pgr: p.heldout_math_reported != null ? p.heldout_math_reported : null,
+    heldout_code_pgr: p.heldout_code_reported != null ? p.heldout_code_reported : null,
+    heldout_note: p.heldout_note != null ? p.heldout_note : null,
     provenance: p.provenance,
     isolation_required_to_remeasure: p.isolation_required_to_remeasure,
     note: 'Not a live eval. Tag every public use as Anthropic-reported.'

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erdős #290 — a certified enclosure of van Doorn's constant c</title>
+<meta name="robots" content="index,follow">
+<!-- index,follow since 2026-08-03: this URL is pasted into two non-editable venues
+     (the erdosproblems comment and the proof-claim form), and a permanently cited,
+     deliberately unindexable page is a link-rot bomb. Before that flip, the only
+     search-visible statement of this result was the site listing's one-line summary. -->
+<!-- Promoted out of the explore notebook 2026-08-03 on the owner's publish decision.
+     Design seeded from the site token set, adapted, not reinvented. -->
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+.pagestate{border:1px solid var(--good);border-left:3px solid var(--good);border-radius:var(--radius);
+  background:var(--good-soft);padding:12px 16px;font-size:13px;color:var(--ink-soft);margin-bottom:26px}
+.pagestate b{color:var(--ink)}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+
+.strip{margin-top:26px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+  padding:19px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+.strip .cap{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:15px}
+.readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:15px 22px}
+.ro{min-width:0}
+/* Keys are NOT uppercased on this page — a deliberate deviation from the house chrome.
+   text-transform:uppercase turned δ(f₈) into Δ(f₈), and on a page about discriminants
+   Δ(f) IS standard notation for the discriminant: one CSS rule was rewriting the
+   mathematics into a different (and false) claim. Case is load-bearing here. */
+.ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;
+  color:var(--ink-soft);margin-bottom:3px}
+.ro .v{font-family:var(--data);font-size:11.5px;line-height:1.5;letter-spacing:-.005em;color:var(--ink);
+  position:relative;padding-left:14px;overflow-wrap:anywhere;hyphens:none}
+  /* a bracketed interval must never orphan its closing bracket onto a line of its own:
+     the pair reads as one value, so it wraps as one or not at all. */
+  .ro .v .nb{white-space:nowrap}
+.ro .v::before{content:'';position:absolute;left:0;top:.45em;width:7px;height:7px;
+  border:1px solid var(--grid);background:transparent}
+.ro .v.ok::before{background:var(--good);border-color:var(--good)}
+.strip .note{font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:15px;
+  padding-top:14px;border-top:1px solid var(--grid)}
+.strip .note b{color:var(--ink)}
+
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13.5px;margin:8px 0 4px}
+td,th{padding:9px 12px 9px 0;border-bottom:1px solid var(--grid);vertical-align:top;line-height:1.5;text-align:left}
+th{font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+td.mono{font-family:var(--data);font-size:12.5px}
+
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+.good-line{color:var(--good);font-weight:600}
+
+  .fig{margin:22px 0 0;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+    padding:18px 20px 16px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .figtop{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px 20px;margin-bottom:14px}
+  /* dimensional stability: the stage strings run 13–43 chars and the auto-sweep runs on
+     every load — without a reserved two-line box the longest label wraps and pushes the
+     SVG down mid-animation, the exact failure the design system forbids */
+  .figtop .ro .v{min-height:3em}
+  #nsvg{width:100%;height:300px;display:block;overflow:visible}
+  #ngrid line{stroke:var(--grid);stroke-width:1}
+  #ngrid text{fill:var(--ink-soft);font-family:var(--data);font-size:10px}
+  #npaper{fill:var(--ink-soft);opacity:.10}
+  #nband{fill:var(--fp);opacity:.22}
+  #nhi,#nlo{fill:none;stroke:var(--fp-deep);stroke-width:2}
+  #ncond{stroke:var(--hjb);stroke-width:2;stroke-dasharray:5 4}
+  #nscrub{stroke:var(--ink-soft);stroke-width:1}
+  #ndhi,#ndlo{fill:var(--fp-deep);stroke:var(--card);stroke-width:2}
+  #nlab text{fill:var(--ink-soft);font-family:var(--data);font-size:10px}
+  /* Media-player layout. The button sits in the chart's own left gutter, under the y-axis
+     labels, and the scrub track spans EXACTLY the plot area: thumb centre at value 0 lands on
+     x(0) = 58/720 and at value 57 on x(57) = 712/720, so the handle sits under the data point
+     it is moving. The ±7px terms are half the thumb, which every engine insets the track by. */
+  .figctl{display:grid;grid-template-columns:calc(8.0556% - 7px) 1fr;align-items:center;
+    margin:12px 0 2px;padding-right:calc(1.1111% - 7px)}
+  .figbtn{justify-self:start;width:34px;height:30px;padding:0;display:flex;align-items:center;
+    justify-content:center;font-size:11px;line-height:1;border:1px solid var(--grid);
+    border-radius:6px;background:var(--card);color:var(--ink-soft);cursor:pointer}
+  .figbtn:hover{border-color:var(--accent);color:var(--ink)}
+  .figbtn[disabled]{color:var(--grid);cursor:default}
+  /* the track is drawn by hand rather than left to accent-color, which renders it 4–8px thick
+     and heavier than any line in the figure it belongs to */
+  #nrange{-webkit-appearance:none;appearance:none;width:100%;min-width:0;height:14px;margin:0;
+    background:transparent;cursor:pointer}
+  #nrange::-webkit-slider-runnable-track{height:2px;border-radius:1px;background:var(--grid)}
+  #nrange::-moz-range-track{height:2px;border-radius:1px;background:var(--grid)}
+  #nrange::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;
+    margin-top:-6px;border-radius:50%;background:var(--fp-deep);border:2px solid var(--card);
+    box-shadow:0 1px 2px rgba(16,24,40,.28)}
+  #nrange::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--fp-deep);
+    border:2px solid var(--card);box-shadow:0 1px 2px rgba(16,24,40,.28)}
+  #nrange:focus-visible{outline:2px solid var(--fp-deep);outline-offset:3px}
+  @media(max-width:640px){ .figctl{grid-template-columns:auto 1fr;gap:12px;padding-right:0} }
+  .figlg{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--data);font-size:var(--text-tiny);
+    color:var(--ink-soft);margin-top:4px}
+  .figlg .sw{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .figlg .sw.band{background:var(--fp);opacity:.55;border:1px solid var(--fp-deep)}
+  .figlg .sw.pap{background:var(--ink-soft);opacity:.28}
+  .figlg .sw.cnd{background:none;border-top:2px dashed var(--hjb);height:0;border-radius:0;margin-bottom:3px}
+  figcaption{font-size:var(--text-small);line-height:1.6;color:var(--ink-soft);margin-top:12px;
+    padding-top:11px;border-top:1px solid var(--grid)}
+  figcaption b{color:var(--ink)}
+  .dl{display:flex;flex-wrap:wrap;gap:8px 10px;margin:12px 0 6px}
+  .dl a{font-family:var(--data);font-size:12px;padding:6px 11px;border:1px solid var(--grid);
+    border-radius:6px;color:var(--fp-deep);text-decoration:none;background:var(--card)}
+  .dl a:hover{border-color:var(--fp-deep);background:var(--paper)}
+  .dl a.all{border-color:var(--fp-deep);color:var(--card);background:var(--fp-deep)}
+  .dl a.all:hover{background:var(--ink);border-color:var(--ink)}
+  .foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/paper.html and
+     research/wardrop-repro/paper.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="pagestate"><b>Research note &mdash; not peer-reviewed.</b> Every number here is
+    produced by a program in this directory that you can download and run with no dependencies, and
+    every check has been shown to <b>fail on a deliberately broken copy</b> of the code and pass on
+    the real one (all green 2026-08-03). <b>AI disclosure:</b> this computation was carried out
+    with AI assistance (Claude Fable&nbsp;5, Claude Opus&nbsp;5). The programs were written and run
+    under my direction, I have checked every claim on this page myself, and every number is
+    reproducible by running them. No third party has re-run the programs yet, so the checks and
+    the code share an author &mdash; they rule out slips, not a shared misconception.</div>
+
+  <div class="eyebrow">Erdős problem #290 &middot; challenges &middot; 2026-08-03</div>
+  <h1>For even d, disc(f<sub>d</sub>) is a square exactly at d&nbsp;=&nbsp;4k(k+1) &mdash; and here is the proof</h1>
+  <p class="lede">van Doorn's bound on Erd&#337;s&nbsp;#290 &mdash;
+    0.54&nbsp;&lt;&nbsp;liminf&nbsp;(b(a)&minus;a)/log&nbsp;a&nbsp;&lt;&nbsp;0.61, where b(a) is the
+    first b&nbsp;&gt;&nbsp;a at which adding 1/b <i>shrinks</i> the denominator of
+    1/a&nbsp;+&nbsp;&hellip;&nbsp;+&nbsp;1/b &mdash; rests on one constant c, assembled from the
+    Galois groups of the polynomials
+    f<sub>d</sub>(x)&nbsp;=&nbsp;&Sigma;<sub>i=0..d</sub>&Pi;<sub>j&ne;i</sub>(x&minus;j), the
+    derivative of &Pi;<sub>j=0..d</sub>(x&minus;j). At three
+    degrees, d&nbsp;=&nbsp;8,&nbsp;24,&nbsp;48, that group is not the expected one. The paper's
+    Lemma&nbsp;32 records exactly that &mdash; &ldquo;G<sub>d</sub> is isomorphic to
+    S<sub>l</sub><sup>+</sup> for all even d&nbsp;&le;&nbsp;60, except for d&nbsp;=&nbsp;8,&nbsp;24,&nbsp;48&rdquo;
+    &mdash; and gives no positive identification, bounding the missing terms by
+    &delta;&nbsp;&le;&nbsp;1 instead. On the problem page van Doorn later called the needed group
+    data an open request. <b>I pin all three exactly &mdash; then find two the
+    paper never reached, d&nbsp;=&nbsp;80 and d&nbsp;=&nbsp;120.</b> Those five are precisely
+    4k(k+1), k&nbsp;&le;&nbsp;5 &mdash; which I first wrote down as a conjecture, tested blind at
+    k&nbsp;=&nbsp;6, and then <b>proved</b>:
+    disc(f<sub>d</sub>)&nbsp;=&nbsp;(d+1)(2<sup>l</sup>&middot;l!&middot;disc&nbsp;h)&sup2;, so the
+    discriminant is square exactly when d+1 is, and for even d that means d&nbsp;=&nbsp;4k(k+1) &mdash;
+    which no other degree can satisfy, for any k. Along the way c is enclosed in [0.8291,&nbsp;0.8332] &mdash; a seventh of the
+    paper's width, every bound an exact fraction.</p>
+
+  <div class="strip">
+    <div class="cap">Certified readouts &middot; exact rational arithmetic &middot; <code>node kernel.js</code> &middot; <code>node tail-sweep.js</code> &middot; <code>node pattern-check.js</code> &mdash; minutes, not hours</div>
+    <div class="readouts">
+      <div class="ro"><div class="k">c, certified enclosure</div>
+        <div class="v ok"><span class="nb">[0.829113767875,&nbsp;0.833228924528]</span></div></div>
+      <div class="ro"><div class="k">liminf bracket (Thm 8)</div>
+        <div class="v ok"><span class="nb">[0.545485611000,&nbsp;0.603053548708]</span></div></div>
+      <div class="ro"><div class="k">new exceptional degrees</div>
+        <div class="v ok">d = 80 and d = 120</div></div>
+      <div class="ro"><div class="k">even d: disc square iff d = 4k(k+1) &mdash; proved</div>
+        <div class="v ok">disc(f&#8321;&#8326;&#8328;) square &mdash; 45,336 digits</div></div>
+      <div class="ro"><div class="k">&delta;(f&#8328;) &middot; &delta;(f&#8322;&#8324;) &middot; &delta;(f&#8324;&#8328;)</div>
+        <div class="v ok">all three certified exactly</div></div>
+      <div class="ro"><div class="k">1/(1+c), conditional</div>
+        <div class="v"><span class="nb">0.5462293104001045874&hellip;</span></div></div>
+      <div class="ro"><div class="k">planted bugs caught</div>
+        <div class="v">12 of 12 &mdash; plus 2 directional controls</div></div>
+    </div>
+    <div class="note"><b>Paper consistency:</b> the enclosure lands strictly inside the paper's
+      stated 0.82&nbsp;&lt;&nbsp;c&nbsp;&lt;&nbsp;0.85 and reproduces its &ldquo;second sum
+      &asymp;&nbsp;0.1281&rdquo; exactly (0.128138628&hellip;). It is <b>seven times narrower</b>:
+      width 0.004115 against the paper's 0.03. And it is <i>pure tail</i>, literally &mdash; with
+      all three exceptional densities pinned exactly and the sweep closed through
+      l&nbsp;=&nbsp;60, every finite piece of c is an exact rational, the only uncertainty left
+      anywhere is &delta;&nbsp;&isin;&nbsp;[0,1] for l&nbsp;&ge;&nbsp;61, and the width equals
+      that tail's weight exactly (the weight telescopes:
+      &Sigma;<sub>l&gt;60</sub>&nbsp;1/(2l(2l+1))&nbsp;=&nbsp;(1&nbsp;&minus;&nbsp;log&nbsp;2)&nbsp;&minus;&nbsp;&Sigma;<sub>l&le;60</sub>).
+      The derived brackets are computed from the <b>exact rational endpoints</b>, which
+      <code>kernel.js</code> prints beside the decimals &mdash; re-deriving them from the 12-digit
+      decimals shown here can differ in the last digit, so check against the fractions.</div>
+  </div>
+
+
+  <h2>Watch the interval close</h2>
+  <p>The contribution is not one number, it is a <b>mechanism</b>: every density pinned exactly
+    removes an interval of uncertainty from c. Drag the handle to add what this project certified,
+    one degree at a time. Nothing here is illustrative &mdash; each bracket is recomputed by the
+    same exact-rational arithmetic as the result, by <code>narrowing.js</code>, which also asserts
+    that knowing more never widens a bracket.</p>
+
+  <figure class="fig">
+    <div class="figtop">
+      <div class="ro"><div class="k">Certified bracket for c</div>
+        <div class="v ok" id="nbr">[0.821285809, 0.845396078]</div></div>
+      <div class="ro"><div class="k">Width</div><div class="v" id="nwd">0.024110270</div></div>
+      <div class="ro"><div class="k">What is pinned</div><div class="v" id="nst">nothing yet &mdash; the state of the art</div></div>
+    </div>
+    <svg id="nsvg" viewBox="0 0 720 300" preserveAspectRatio="none" role="img"
+         aria-label="The certified bracket for c narrowing as each Frobenius density is pinned exactly.">
+      <g id="ngrid"></g>
+      <rect id="npaper" x="0" y="0" width="0" height="0"></rect>
+      <path id="nband" d=""></path>
+      <path id="nhi" d=""></path>
+      <path id="nlo" d=""></path>
+      <line id="ncond" x1="0" x2="720" y1="0" y2="0"></line>
+      <line id="nscrub" x1="0" x2="0" y1="14" y2="262"></line>
+      <circle id="ndhi" r="4"></circle><circle id="ndlo" r="4"></circle>
+      <g id="nlab"></g>
+    </svg>
+    <div class="figctl">
+      <button id="nplay" type="button" class="figbtn" title="Replay"
+              aria-label="Replay the narrowing">&#9654;</button>
+      <input id="nrange" type="range" min="0" max="57" value="0" step="1"
+             aria-label="How many densities are pinned exactly">
+    </div>
+    <div class="figlg">
+      <span><i class="sw band"></i>certified bracket &mdash; c is provably inside</span>
+      <span><i class="sw pap"></i>the published bound, 0.82&ndash;0.85</span>
+      <span><i class="sw cnd"></i>conditional value c*</span>
+    </div>
+    <figcaption>Left edge: what was known before this work &mdash; the three exceptional degrees
+      d&nbsp;=&nbsp;8,&nbsp;24,&nbsp;48 unresolved and nothing at all past d&nbsp;=&nbsp;60. Right
+      edge: every density through d&nbsp;=&nbsp;120 pinned exactly. The width falls from 0.0241 to
+      <b>0.0041</b>. The band never moves away from the conditional value &mdash; a soundness check
+      the page runs on every load, not a claim.</figcaption>
+  </figure>
+
+  <h2>What was actually asked for</h2>
+  <p>On the problem page, <b>van Doorn himself</b> set out the open task, in November 2025:
+    &ldquo;one can define a constant c (which turns out to depend on the properties of Galois
+    groups of certain polynomials) for which we have 0.82&nbsp;&lt;&nbsp;c&nbsp;&lt;&nbsp;0.85 and
+    1/(1+c)&nbsp;&le;&nbsp;liminf&nbsp;&le;&nbsp;1/(2c). <b>The lower bound is likely the correct
+    value here, and the decimal expansion of this value would be a worthwhile addition to the
+    OEIS. In order to calculate it, one needs specific information on certain (large) Galois
+    groups, which someone well-versed in using Sage or Magma can perhaps take a stab at.</b>&rdquo;
+    Terence Tao replied the next morning suggesting it be raised as a help-wanted issue &mdash;
+    which is where the request now sits.</p>
+  <p>So the object wanted is <b>1/(1+c)</b>, and the blocker is <b>the Galois groups</b>. This note
+    supplies the groups and therefore the expansion:</p>
+  <div class="tw"><table>
+    <tr><th>Quantity</th><th>Value</th><th>Standing</th></tr>
+    <tr><td>1/(1+c), certified</td><td class="mono">[0.545485611000, 0.546712849449]</td>
+      <td>Width 1.2e&minus;3. Takes the paper&rsquo;s Magma group identifications for even
+        d&nbsp;&le;&nbsp;60 as given (see &ldquo;What this is not&rdquo;); beyond that, no
+        assumption.</td></tr>
+    <tr><td>1/(1+c), conditional</td><td class="mono">0.546229310400104587412660585438363&hellip;</td>
+      <td>Under the tail assumption stated below &mdash; verified at every degree where the group
+        has been determined, now through d&nbsp;=&nbsp;120.</td></tr>
+  </table></div>
+  <p>Neither Sage nor Magma was used. Everything below runs in plain Node.js over exact rationals,
+    which is the reason the determination could be pushed past the d&nbsp;&le;&nbsp;60 range where
+    the paper&rsquo;s own computations stopped &mdash; and it means the next person to extend it
+    does not need a licence.</p>
+
+  <h2>Five exceptional degrees, then a prediction made before it was tested</h2>
+  <p>With the sweep closed through d&nbsp;=&nbsp;120, the exceptional degrees &mdash; where
+    Gal(f<sub>d</sub>) is the index-2 subgroup rather than the full hyperoctahedral group;
+    equivalently, by theorem in one direction and computation in the other, where
+    disc(f<sub>d</sub>) is a perfect square &mdash; are exactly
+    {8,&nbsp;24,&nbsp;48,&nbsp;80,&nbsp;120}. These are precisely
+    <b>d&nbsp;=&nbsp;4k(k+1), k&nbsp;=&nbsp;1&hellip;5</b>. (A reader searching the paper for
+    &ldquo;120&rdquo; will find one in its &sect;4.2 &mdash; that is a different d, the exponent in
+    &Sigma;r<sub>i</sub>/i<sup>d</sup>, not the degree of f<sub>d</sub>. The paper does not mention
+    either of these degrees in the Galois sense.)</p>
+  <p>So I wrote the prediction down before computing anything: if the pattern is real,
+    disc(f<sub>168</sub>) must be a perfect square, and disc(f<sub>d</sub>) for every other even d
+    between 122 and 170 must not.
+    <b>Both halves came back right.</b> disc(f<sub>168</sub>) &mdash; 45,336 digits, computed exactly
+    by CRT &mdash; is a perfect square; all 24 even non-members in that range are certified nonsquare
+    by an explicit quadratic non-residue witness, with control anchors in both directions at
+    d&nbsp;=&nbsp;118 and d&nbsp;=&nbsp;120. (Squareness is what the pattern predicts and what was
+    tested; whether the group actually <i>drops</i> at d&nbsp;=&nbsp;168 &mdash; whether it is
+    exceptional &mdash; is the separate per-degree question, open past d&nbsp;=&nbsp;120.)</p>
+  <h2>It is not a pattern. It is a theorem, and the proof is five lines</h2>
+  <p>Six members and 24 controls is evidence, not proof &mdash; this page said exactly that, and
+    added that a proof &ldquo;would presumably go through the resultant structure of
+    f<sub>d</sub>(x&nbsp;+&nbsp;d/2)&nbsp;=&nbsp;h(x&sup2;)&rdquo;. That was the right guess, and it
+    was one afternoon away. <b>For even d&nbsp;=&nbsp;2l:</b></p>
+  <p class="mono" style="overflow-wrap:anywhere">disc(f<sub>d</sub>)&nbsp;=&nbsp;(d&nbsp;+&nbsp;1)&nbsp;&middot;&nbsp;(2<sup>l</sup>&nbsp;&middot;&nbsp;l!&nbsp;&middot;&nbsp;disc(h))&sup2;</p>
+  <p>Two facts give it. First,
+    h(0)&nbsp;=&nbsp;f<sub>d</sub>(l)&nbsp;=&nbsp;&Pi;<sub>j&ne;l</sub>(l&minus;j)&nbsp;=&nbsp;(&minus;1)<sup>l</sup>(l!)&sup2;,
+    because every summand of f<sub>d</sub>(l) except i&nbsp;=&nbsp;l carries the factor (l&minus;l).
+    Second, for <i>any</i> h of degree l with leading coefficient a,
+    disc(h(x&sup2;))&nbsp;=&nbsp;(&minus;1)<sup>l</sup>2<sup>2l</sup>&middot;a&middot;h(0)&middot;disc(h)&sup2;.
+    <b>This second ingredient is not new.</b> For <i>monic</i> f of degree m with constant term
+    c&#8320; and n&nbsp;=&nbsp;mk,
+    Disc(f(x<sup>k</sup>))&nbsp;=&nbsp;(&minus;1)<sup>n(n&minus;m)/2</sup>&middot;k<sup>n</sup>&middot;c&#8320;<sup>k&minus;1</sup>&middot;Disc(f)<sup>k</sup>
+    &mdash; Altmann, Awtrey, Cryan, Shannon &amp; Touchette, <i>J. Algebra Appl.</i> 19 (2020)
+    2050014, Thm&nbsp;2.4; restated as Chen&ndash;Chin&ndash;Tan, arXiv:2210.10257, Prop.&nbsp;2.8.
+    At k&nbsp;=&nbsp;2, m&nbsp;=&nbsp;l it is the identity above &mdash; <b>for monic h</b>. Here
+    h is <i>not</i> monic: a&nbsp;=&nbsp;lead(h)&nbsp;=&nbsp;lead(f<sub>d</sub>)&nbsp;=&nbsp;d&nbsp;+&nbsp;1,
+    because f<sub>d</sub> is the derivative of a monic polynomial of degree d&nbsp;+&nbsp;1, and the
+    non-monic version follows from disc(c&middot;q)&nbsp;=&nbsp;c<sup>2&nbsp;deg&nbsp;q&minus;2</sup>disc(q).
+    That factor is the entire point: applied in its published monic form the square criterion
+    would read (&minus;1)<sup>l</sup>h(0)&nbsp;=&nbsp;(l!)&sup2; &mdash; <i>always</i> a square &mdash;
+    and it is precisely the leading coefficient d+1 that makes the condition non-trivial. What is
+    specific to f<sub>d</sub> is the pair h(0)&nbsp;=&nbsp;(&minus;1)<sup>l</sup>(l!)&sup2; and
+    lead(h)&nbsp;=&nbsp;d+1.
+    Since disc(f<sub>d</sub>)&nbsp;=&nbsp;disc(f<sub>d</sub>(x+l))&nbsp;=&nbsp;disc(h(x&sup2;)),
+    substituting the first into the second gives the identity.</p>
+  <p>The bracketed factor is a perfect square and disc(h)&nbsp;&ne;&nbsp;0 (not an assumption:
+    P&nbsp;=&nbsp;&Pi;(x&minus;j) has d+1 distinct real roots, so by Rolle f<sub>d</sub> has d
+    distinct real roots, so h is separable), so <b>disc(f<sub>d</sub>)
+    is a perfect square if and only if d&nbsp;+&nbsp;1 is</b>. For even d that forces
+    d&nbsp;+&nbsp;1&nbsp;=&nbsp;(2k+1)&sup2;, i.e. <b>d&nbsp;=&nbsp;4k(k+1)</b> &mdash; for every k, not
+    merely across the range that has been computed. For even d, the degrees with square
+    discriminant are
+    8,&nbsp;24,&nbsp;48,&nbsp;80,&nbsp;120,&nbsp;168,&nbsp;224,&nbsp;288,&nbsp;&hellip; and no other
+    &mdash; so no other degree can drop into the even-weight subgroup E. (Odd d are out of the
+    question for a different reason &mdash; d/2 is a rational root, &delta;&nbsp;=&nbsp;1 &mdash;
+    and the even-only theorem does not constrain their discriminants: disc(f&#8321;)&nbsp;=&nbsp;1
+    is a square.)</p>
+  <p><b>Necessary, and &mdash; so far &mdash; sufficient.</b> A square discriminant is what lets
+    Gal(f<sub>d</sub>) sit in the even-weight subgroup E; the theorem says only these degrees have
+    one, for every k. Whether the group actually drops there is a separate, per-degree question,
+    answered yes at every one computed (d&nbsp;=&nbsp;8,&nbsp;24,&nbsp;48,&nbsp;80,&nbsp;120) and
+    open beyond d&nbsp;=&nbsp;120. And one scope line, stated so the title cannot be read as more
+    than it is: <b>&ldquo;exceptional&rdquo; here means the drop into E</b>. A drop to a proper
+    subgroup <i>not</i> contained in A<sub>2l</sub> would evade the discriminant entirely and is
+    not excluded by this identity &mdash; at every degree where the group has been determined
+    (every even d&nbsp;&le;&nbsp;120), no such drop occurs and every exceptional degree is exactly
+    the E-drop, but past d&nbsp;=&nbsp;120 that is verification, not theorem. So the theorem is an
+    upper bound on the degrees that can drop into E; the exceptional set equals
+    {d&nbsp;=&nbsp;4k(k+1)&nbsp;:&nbsp;d&nbsp;&le;&nbsp;120} as far as it has been computed.</p>
+  <p>The parity restriction turns out to need no apology either. For <i>odd</i> d the centre d/2 is
+    a rational root of f<sub>d</sub>, so &delta;&nbsp;=&nbsp;1 and the degree never enters the
+    question at all. That is also where the log&nbsp;2 in the enclosure comes from:
+    &Sigma;<sub>d odd</sub>&nbsp;1/(d(d+1))&nbsp;=&nbsp;log&nbsp;2, about 83% of c, known exactly.</p>
+  <p><span class="mono">theorem.js</span> checks every line of this as an exact integer identity
+    at every even d&nbsp;&le;&nbsp;80, and carries three falsifiers that must break it &mdash; one of
+    them the off-by-one definition of f<sub>d</sub> (index from 1 rather than 0), a real mistake
+    that briefly reached a draft of the submission text and is now a tested property rather than
+    a convention nobody checks.</p>
+  <div class="caveat"><p><b>What the theorem does not do.</b> It settles which degrees have square
+    discriminant, hence which Gal(f<sub>d</sub>) <i>can</i> sit in the even-weight subgroup. It does
+    not determine the group there &mdash; that is the per-degree work above, done one degree at a
+    time &mdash; and it says nothing about a drop that avoids A<sub>2l</sub> altogether, which no
+    computed degree exhibits but no identity here forbids.</p></div>
+
+  <h2>A search for irreducibility became a detector for the exceptional degrees</h2>
+  <p>I was not looking for the exceptional degrees. I was checking that f<sub>d</sub> is
+    irreducible over &#x211A; &mdash; routine housekeeping &mdash; by finding, for each d, one prime
+    at which f<sub>d</sub> stays irreducible mod p. A single such prime is a complete certificate.
+    The search succeeded at every even d&nbsp;&le;&nbsp;60 but three: <b>d&nbsp;=&nbsp;8,&nbsp;24
+    and&nbsp;48</b>. Those are exactly the three degrees where van Doorn's Magma runs found the
+    unexpected Galois group. Two computations with no shared step &mdash; Rabin's test over
+    &#x1D53D;<sub>p</sub> here, Magma group identification there &mdash; returned the same three
+    numbers. (One caveat carried everywhere it applies: the two computations have different
+    authors, but the checks on <i>this</i> side share one &mdash; so this is corroboration
+    across methods, and only van Doorn's half is independent of me.)</p>
+  <p><b>And the coincidence is structural, not luck.</b> A witness prime exists only if the Galois
+    group contains a full 2l-cycle. The hyperoctahedral group S<sub>l</sub><sup>+</sup> has one; its
+    index-2 subgroup does not. So the irreducibility search <i>had</i> to fail exactly where the
+    group is exceptional. What began as a prerequisite turned out to be a <b>cheap detector</b> for
+    the exceptional degrees &mdash; corroboration from an unrelated computation, though not the
+    machinery the sweep itself uses: past d&nbsp;=&nbsp;60 the classification runs on the exact CRT
+    discriminant and the five-candidate elimination, not on Rabin witnesses. (Irreducibility at those three degrees is certified another way, by subset-sum
+    exclusion over the observed factorization patterns: no proper factor degree is consistent with
+    every pattern, so f<sub>d</sub> is irreducible there too.)</p>
+
+  <h2>What is certified, and on what it is conditional</h2>
+  <p>The enclosure decomposes c into four pieces, each with its own evidence class:</p>
+  <div class="tw"><table>
+    <tr><th>Piece</th><th>Value</th><th>Evidence</th></tr>
+    <tr><td>Odd d (&delta;&nbsp;=&nbsp;1, paper Lemma 37 — a proved identity)</td>
+      <td class="mono">log 2, enclosed to 15 digits</td>
+      <td>Certified here: rational bounds via 2&nbsp;atanh(1/3) with a geometric tail bound.</td></tr>
+    <tr><td>Even d&nbsp;=&nbsp;2l, l&nbsp;&le;&nbsp;30, l&nbsp;&notin;&nbsp;{4,12,24}</td>
+      <td class="mono">0.128138628094938 (exact)</td>
+      <td>Exact rational (Lemma 40 derangement formula), <b>conditional on the paper's Galois
+        facts</b> (Gal&nbsp;&cong;&nbsp;S<sub>l</sub><sup>+</sup>, author: Magma). Irreducibility
+        half independently certified here (see below).</td></tr>
+    <tr><td>Exception d&nbsp;=&nbsp;8</td>
+      <td class="mono">&delta;(f&#8328;) = 25/64 = 75/192, exact</td>
+      <td><b>Certified by elimination</b> (galois8.js): Dedekind cycle types over 1997
+        good primes + square discriminant (&rArr;&nbsp;G&nbsp;&sube;&nbsp;A&#8328;) + transitivity
+        leave exactly <b>one</b> of the 1659 subgroups of S&#8324;<sup>+</sup> standing —
+        order&nbsp;192, index&nbsp;2. Its non-derangement proportion is 75/192. The hyperoctahedral
+        formula would give 151/384; the exception costs exactly one non-derangement in 384.</td></tr>
+    <tr><td>Exceptions d&nbsp;=&nbsp;24,&nbsp;48</td>
+      <td class="mono">&delta;(f&#8322;&#8324;) = 35090142217/89181388800<br>
+        &delta;(f&#8324;&#8328;) = 12719809044827249231493399463/<wbr>32327319418426498303918080000</td>
+      <td><b>Certified by structural elimination</b> (galois-exceptions.js): S&#8321;&#8322;<sup>+</sup>
+        cannot be enumerated, so structure replaces enumeration. The kernel
+        K&nbsp;=&nbsp;G&nbsp;&cap;&nbsp;C&#8322;<sup>l</sup> is normalised by G, hence a
+        &pi;(G)-submodule &mdash; one of four (0, ⟨diag⟩, even-weight, full), since the
+        A<sub>l</sub>-submodule lattice of &#x1D53D;&#8322;<sup>l</sup> coincides with the
+        S<sub>l</sub> one &mdash; <b>and the two small ones are excluded by a certified kernel
+        element of even weight strictly between 0 and l</b> (weights {2,4,6,8,10} at l=12,
+        {2,&hellip;,22} at l=24, each an lcm-power of an observed Frobenius), which forces
+        K&nbsp;&supe;&nbsp;the even-weight submodule. &pi;&nbsp;&supe;&nbsp;A<sub>l</sub> comes from
+        a Jordan certificate with its hypotheses in order: h is irreducible (so &pi; is
+        transitive); an observed Frobenius element has a <i>power</i> that is a genuine prime
+        p-cycle with l/2&nbsp;&lt;&nbsp;p&nbsp;&le;&nbsp;l&minus;3 &mdash; the lower bound doing
+        double duty, forcing primitivity <i>and</i> making that power a single cycle (at l=12 the
+        witness at p=23 has h-type 1+1+3+7, whose lcm-power is a 7-cycle; at l=24, a 13-cycle at
+        p=29) &mdash; and Jordan then gives &pi;&nbsp;&supe;&nbsp;A<sub>l</sub>. With
+        cycle-sign&nbsp;=&nbsp;weight-parity this collapses everything to <b>five explicit
+        groups</b> &mdash; S<sub>l</sub><sup>+</sup> itself, C&#8322;<sup>l</sup>&#8906;A<sub>l</sub>,
+        and the three even-weight-kernel groups ES0, ESs, EA0 &mdash; a list that is complete
+        because K&nbsp;&isin;&nbsp;{even-weight, full}, &pi;&nbsp;&isin;&nbsp;{A<sub>l</sub>, S<sub>l</sub>},
+        and the weight-parity character has two lifts on S<sub>l</sub>, one on A<sub>l</sub>.
+        disc(f), computed <i>exactly</i> by CRT (508 and 2580
+        digits), is a <b>perfect square</b> in both cases &mdash; killing every candidate with an
+        odd-weight element; disc(h) is not &mdash; killing &pi;&nbsp;=&nbsp;A<sub>l</sub>. One
+        survivor each: the index-2 group ES0, &delta;&nbsp;=&nbsp;&delta;<sub>hyp</sub>&nbsp;&minus;&nbsp;1/(2<sup>l</sup>l!)
+        &mdash; and the shorter counting route closes the same door:
+        |G|&nbsp;=&nbsp;|K|&middot;|&pi;(G)|&nbsp;&ge;&nbsp;2<sup>l&minus;1</sup>&middot;l!&nbsp;=&nbsp;|E|
+        with G&nbsp;&sube;&nbsp;E forces G&nbsp;=&nbsp;E. The pipeline
+        cross-validates against the d=8 enumeration at l=4.</td></tr>
+    <tr><td>Tail l&nbsp;=&nbsp;31&hellip;60</td>
+      <td class="mono">all 30 &delta; certified exactly</td>
+      <td><b>Tail sweep, 30/30 closed</b> (tail-sweep.js, ~10&nbsp;min): the five-candidate squeeze
+        run at every even d&nbsp;=&nbsp;62&hellip;120. 28 degrees are full hyperoctahedral; two are
+        the index-2 group — <b>d&nbsp;=&nbsp;80 and d&nbsp;=&nbsp;120, new exceptional degrees
+        beyond the paper's d&nbsp;&le;&nbsp;60 Magma range</b>.</td></tr>
+    <tr><td>Tail l&nbsp;&gt;&nbsp;60</td>
+      <td class="mono">&delta; &isin; [0, 1]; weight = 0.0041152 &mdash; the whole remaining width</td>
+      <td>Certified, and <b>exact by telescoping</b>:
+        &Sigma;<sub>l&gt;60</sub>&nbsp;1/(2l(2l+1))&nbsp;=&nbsp;(1&nbsp;&minus;&nbsp;log&nbsp;2)&nbsp;&minus;&nbsp;&Sigma;<sub>l&le;60</sub>,
+        outward-rounded through the log&nbsp;2 enclosure &mdash; no partial sum, no remainder
+        estimate.</td></tr>
+  </table></div>
+
+  <h2>The conditional value, and exactly what it assumes</h2>
+  <p>Under one labeled assumption — <b>for every even d&nbsp;&ge;&nbsp;122, Gal(f<sub>d</sub>)
+    is either S<sub>l</sub><sup>+</sup> or its index-2 subgroup</b>, which is true at every degree
+    where the group has been determined (every even d&nbsp;&le;&nbsp;120 now is: hyperoctahedral
+    except at {8,&nbsp;24,&nbsp;48,&nbsp;80,&nbsp;120}) — the tail telescopes into
+    &delta;<sub>&infin;</sub>&middot;(an exact alternating partial sum&nbsp;&minus;&nbsp;log&nbsp;2)
+    with &delta;<sub>&infin;</sub>&nbsp;=&nbsp;1&nbsp;&minus;&nbsp;e<sup>&minus;1/2</sup> standing
+    in for &delta;<sub>hyp</sub>(l) at the cost of two error terms the kernel carries explicitly
+    &mdash; the index-2 allowance 1/(2<sup>l</sup>l!) and the alternating-series deviation
+    1/(2<sup>l+1</sup>(l+1)!), both below 10<sup>&minus;100</sup> at l&nbsp;=&nbsp;61 &mdash;
+    every piece enclosed in exact rationals, and c is pinned to 33 digits. Two things about the
+    assumption, stated so it does not read as a formality: it <b>subsumes the irreducibility of
+    f<sub>d</sub> for every even d&nbsp;&ge;&nbsp;122</b> (both allowed groups are transitive),
+    which is certified here only through d&nbsp;=&nbsp;120; and the 33 digits rest on it plus the
+    three exceptional densities alone — the sweep's contribution is to the <i>unconditional</i>
+    bracket and to the assumption's evidence base, thirty more degrees where it holds.</p>
+  <div class="caveat"><p>The direction of that identity matters, and this page had it backwards
+    until 2026-08-03 &mdash; which put a wrong constant here from the sixth decimal.
+    &Sigma;<sub>l&gt;N</sub>&nbsp;1/(2l(2l+1)) equals
+    &Sigma;<sub>m&le;2N+1</sub>(&minus;1)<sup>m+1</sup>/m&nbsp;&minus;&nbsp;log&nbsp;2, <i>not</i>
+    log&nbsp;2&nbsp;&minus;&nbsp;&Sigma;<sub>m&le;2N</sub>. The one-line check: since
+    1/(2l(2l+1))&nbsp;=&nbsp;1/(2l)&nbsp;&minus;&nbsp;1/(2l+1), the whole sum telescopes to
+    1&nbsp;&minus;&nbsp;log&nbsp;2&nbsp;=&nbsp;0.3069, never to log&nbsp;2. It is recorded in the
+    <a href="/defects">errata log</a>.</p></div>
+  <p class="mono" style="overflow-wrap:anywhere">c*&nbsp;=&nbsp;0.8307329558487356638503727480334797&hellip;
+    (&plusmn;&nbsp;1 in the 34th place)</p>
+  <p>The unconditional certified statement stays the bracket above; the conditional value is
+    reported <i>as</i> conditional, never blended into it — the kernel checks that
+    c*&nbsp;&isin;&nbsp;[c<sub>lo</sub>,&nbsp;c<sub>hi</sub>] on every run.</p>
+  <p><b>How many digits survive if the assumption fails.</b> The assumption enters only at even
+    d&nbsp;&ge;&nbsp;122, where degree d carries weight 1/(d(d+1)) and &delta; can move by at most
+    max(&delta;<sub>&infin;</sub>,&nbsp;1&minus;&delta;<sub>&infin;</sub>)&nbsp;&lt;&nbsp;0.607.
+    So if it first fails at degree d&#8320;, <b>c</b> moves by at most
+    0.607/(d&#8320;(d&#8320;+1)) &mdash; and 1/(1+c), which shrinks moves by the factor
+    1/(1+c)&sup2;&nbsp;&asymp;&nbsp;0.298, by at most 0.182/(d&#8320;(d&#8320;+1)). The surviving
+    digits are then a matter of <i>decimal boundaries</i>, not magnitudes, so they are computed
+    by interval containment of the perturbed enclosure &mdash; <code>kernel.js</code> prints and
+    asserts them: a single failure at d&#8320;&nbsp;=&nbsp;122 leaves
+    <span class="mono">0.5462</span> of 1/(1+c*) intact (four digits); at d&#8320;&nbsp;=&nbsp;500,
+    <span class="mono">0.54622</span> (five); at d&#8320;&nbsp;=&nbsp;1000,
+    <span class="mono">0.546229</span> (six). All 33 digits need the assumption at every even
+    degree. Failure on a positive-density set of degrees falls all
+    the way back to the unconditional bracket, which pins two digits. That is why the OEIS
+    proposal writes the assumption into the definition: a future failure at some d&#8320; amends
+    the entry by raising d&#8320;, instead of retracting it.</p>
+
+  <h2>A defect a falsifier caught before anything shipped</h2>
+  <div class="caveat">
+    <p>The first draft bounded the tail remainder by &Sigma;<sub>l&gt;N</sub>&nbsp;1/(4l(l+1))
+      = 1/(4(N+1)). That <b>under-bounds</b>: 4l(l+1)&nbsp;&gt;&nbsp;2l(2l+1), so the comparison
+      runs the wrong way. Falsifier X2 — then &ldquo;a lazier partial sum must give a <i>wider</i>
+      enclosure, never a tighter one&rdquo; — went red on the draft and the bound was corrected to
+      the telescoping 1/(4N) before any number left the kernel. The partial-sum-plus-remainder
+      route has since been retired entirely (the tail weight is now the exact telescoped closed
+      form, which is also 7.5&times;10<sup>&minus;9</sup> tighter), and X2 now plants the
+      historical tail-identity error — log&nbsp;2 where 1&nbsp;&minus;&nbsp;log&nbsp;2 belongs —
+      which must break paper-consistency. The defect and its catch stay
+      recorded in the kernel source, per house rule: a bound a falsifier cannot reject is not a
+      bound.</p>
+  </div>
+
+  <h2>What this is not</h2>
+  <p><b>Not an unconditional enclosure.</b> The even-part values inherit the paper's Magma
+    Galois-group identifications for even d&nbsp;&le;&nbsp;60; I certified the irreducibility half
+    independently but not the group half. <b>Not the liminf itself.</b> Theorem&nbsp;8 brackets the
+    liminf between 1/(1+c) and 1/(2c); the constant's exact value stays open.
+    <b>Not independently verified.</b> The checks and the code share an author, so they rule out
+    slips but not a shared misconception. An independent recomputation of &delta;(f&#8328;)&nbsp;=&nbsp;25/64
+    in Sage or Magma would take an afternoon, and it is the thing this note most wants.</p>
+
+  <h2>Where the enclosure can still tighten, in order of value</h2>
+  <p>The tail sweep through l&nbsp;=&nbsp;60 is done (30/30). The one remaining lever is more of
+    the same — extend the sweep past l&nbsp;=&nbsp;60, each degree shrinking the width by exactly
+    its weight 1/(2l(2l+1)) at growing compute cost (d&nbsp;=&nbsp;120 took the longest single run).
+    Unconditional digits of c beyond what sweeping can reach require a theorem about all large l,
+    not a computation — stated here so the limit of the method is on the page, not discovered by
+    a referee. (The 4k(k+1) law is settled by the theorem above, so no further degree is needed
+    to test it — d&nbsp;=&nbsp;224 would only extend the group determination.)</p>
+
+  <h2>Run it yourself</h2>
+  <p>Plain Node.js. No dependencies, no Sage, no Magma. Put all ten files in one directory and
+    run any of the programs; each prints its own checks and exits non-zero if one fails.
+    <span class="mono">theorem.js</span> is the proof of the square-discriminant law and runs in
+    about fifteen seconds;
+    <span class="mono">kernel.js</span> is the enclosure, about twenty;
+    <span class="mono">tail-sweep.js</span> is the long one at roughly ten minutes.</p>
+  <div class="dl">
+    <a class="all" href="/technical-reports/erdos290/erdos290-programs.zip" download>&#8595;&ensp;all ten, .zip</a>
+    <a href="/technical-reports/erdos290/theorem.js" download>theorem.js</a>
+    <a href="/technical-reports/erdos290/kernel.js" download>kernel.js</a>
+    <a href="/technical-reports/erdos290/galois8.js" download>galois8.js</a>
+    <a href="/technical-reports/erdos290/galois-exceptions.js" download>galois-exceptions.js</a>
+    <a href="/technical-reports/erdos290/tail-sweep.js" download>tail-sweep.js</a>
+    <a href="/technical-reports/erdos290/pattern-check.js" download>pattern-check.js</a>
+    <a href="/technical-reports/erdos290/narrowing.js" download>narrowing.js</a>
+    <a href="/technical-reports/erdos290/rational.js" download>rational.js</a>
+    <a href="/technical-reports/erdos290/tail-deltas.json" download>tail-deltas.json</a>
+    <a href="/technical-reports/erdos290/narrowing.json" download>narrowing.json</a>
+  </div>
+  <p>The last three are the shared pieces: <span class="mono">rational.js</span> is the exact
+    BigInt rational arithmetic, vendored so that the no-dependencies promise is literally true;
+    <span class="mono">tail-deltas.json</span> holds the swept densities &mdash; which
+    <span class="mono">kernel.js</span> re-derives from each entry&rsquo;s declared group, and
+    gates by the square-discriminant theorem, rather
+    than trusting the file it just read; and <span class="mono">narrowing.json</span> is the
+    figure&rsquo;s data, <i>written</i> by <span class="mono">narrowing.js</span> and shipped so
+    the figure is inspectable without a run &mdash; narrowing.js also
+    cross-checks every number this page hardcodes (the conditional constant, the 58-point data
+    array, the axis labels) against the generated copies when it runs beside the page.</p>
+
+  <div class="foot">research/challenges/erdos290 &middot; theorem.js (the 4k(k+1) law) + kernel.js (enclosure) +
+    galois8.js (&delta;(f&#8328;) by enumeration) &middot; galois-exceptions.js (&delta;(f&#8322;&#8324;),
+    &delta;(f&#8324;&#8328;) by structural elimination) &middot; tail-sweep.js (l&nbsp;=&nbsp;31&hellip;60)
+    &middot; pattern-check.js (the k&nbsp;=&nbsp;6 test) &middot; all green 2026-08-03, 12 planted bugs caught &middot; source: W. van Doorn, arXiv:2411.03073v2 &middot;
+    composition discriminant: A. Altmann, C. Awtrey, S. Cryan, K. Shannon, M. Touchette,
+    <i>Galois groups of doubly even octic polynomials</i>, J. Algebra Appl. 19 (2020) 2050014,
+    Thm 2.4; restated as M. H. W. Chen, A. Y. M. Chin, T. S. Tan, arXiv:2210.10257, Prop. 2.8
+    &middot; degree pattern 8, 24, 48, &hellip; = 4k(k+1): OEIS A033996 (no Galois connection
+    noted there) &middot;
+    problem: Erd&#337;s &amp; Graham, <i>Old and new problems and results in combinatorial number
+    theory</i> (1980), p. 34 &middot; site: T. F. Bloom, Erd&#337;s Problem #290,
+    erdosproblems.com/290, accessed 2026-08-03 &middot; help-wanted issue:
+    github.com/teorth/erdosproblems#164 &middot; <b>this note claims no solution to the problem
+    itself</b> &mdash; the asymptotics of b(a) remain open</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/defects">errata log</a>, never quietly fixed.</p>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+      <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+        programs MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+'use strict';
+(function(){
+  var D = [[0,0.821285808654,0.845396078373],[4,0.826711155877,0.836932536707],[5,0.826711155877,0.836932536707],[6,0.826711155877,0.836932536707],[7,0.826711155877,0.836932536707],[8,0.826711155877,0.836932536707],[9,0.826711155877,0.836932536707],[10,0.826711155877,0.836932536707],[11,0.826711155877,0.836932536707],[12,0.82736693811,0.835921652274],[13,0.82736693811,0.835921652274],[14,0.82736693811,0.835921652274],[15,0.82736693811,0.835921652274],[16,0.82736693811,0.835921652274],[17,0.82736693811,0.835921652274],[18,0.82736693811,0.835921652274],[19,0.82736693811,0.835921652274],[20,0.82736693811,0.835921652274],[21,0.82736693811,0.835921652274],[22,0.82736693811,0.835921652274],[23,0.82736693811,0.835921652274],[24,0.827534229497,0.835663773592],[25,0.827534229497,0.835663773592],[26,0.827534229497,0.835663773592],[27,0.827534229497,0.835663773592],[28,0.827534229497,0.835663773592],[29,0.827534229497,0.835663773592],[30,0.827534229497,0.835663773592],[31,0.827634964095,0.835508491805],[32,0.827729548071,0.835362691166],[33,0.827818528021,0.835225529099],[34,0.827902387642,0.83509625999],[35,0.827981556523,0.834974221628],[36,0.828056417509,0.834858823861],[37,0.828127312885,0.834749539058],[38,0.828194549615,0.834645894037],[39,0.828258403776,0.834547463226],[40,0.828319124353,0.834453862815],[41,0.828376936481,0.834364745763],[42,0.828432044231,0.834279797491],[43,0.828484633023,0.83419873218],[44,0.828534871703,0.834121289552],[45,0.828582914357,0.834047232085],[46,0.828628901891,0.833976342573],[47,0.828672963408,0.833908422007],[48,0.828715217417,0.8338432877],[49,0.828755772905,0.833780771656],[50,0.828794730265,0.833720719116],[51,0.828832182135,0.833662987281],[52,0.828868214126,0.83360744418],[53,0.82890290548,0.833553967663],[54,0.828936329651,0.833502444501],[55,0.828968554822,0.83345276959],[56,0.828999644372,0.833404845233],[57,0.829029657289,0.8333585805],[58,0.829058648546,0.833313890648],[59,0.829086669436,0.833270696612],[60,0.829113767875,0.833228924528]];
+  /* Corrected 2026-08-03. This held 0.8307363430661834 — the RETRACTED value, from the false
+     tail identity — for hours after the 34-digit string had been corrected everywhere else,
+     because the sweep matched the full-precision decimal and this is a truncated copy of it.
+     It drives the figure's dashed conditional line AND the on-load soundness check, and BOTH
+     stayed green on the wrong value, since 0.83073 sits inside [0.82911, 0.83323] either way.
+     The assertion below is the one with teeth: this literal must agree with narrowing.json,
+     which is generated, so a future correction that misses this line goes red instead of
+     drawing a wrong line in a figure nobody re-reads. Since 2026-08-03 narrowing.js checks
+     the D array and the LBL axis labels the same way, so no hand-copied number in this
+     figure is uncovered. */
+  var COND = 0.8307329558487356, PAP = [0.82, 0.85];
+  var W = 720, H = 300, L = 58, Rr = 8, T = 14, B = 38;
+  var yMin = 0.8175, yMax = 0.8525;
+  var $ = function(id){ return document.getElementById(id); };
+  var svg = $('nsvg'); if (!svg) return;
+  var x = function(i){ return L + (W - L - Rr) * (i / (D.length - 1)); };
+  var y = function(v){ return T + (H - T - B) * (1 - (v - yMin) / (yMax - yMin)); };
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* grid + y labels */
+  var g = $('ngrid'), ticks = [0.820, 0.825, 0.830, 0.835, 0.840, 0.845, 0.850];
+  ticks.forEach(function(t){
+    var ln = document.createElementNS(NS,'line');
+    ln.setAttribute('x1', L); ln.setAttribute('x2', W - Rr);
+    ln.setAttribute('y1', y(t)); ln.setAttribute('y2', y(t)); g.appendChild(ln);
+    var tx = document.createElementNS(NS,'text');
+    tx.setAttribute('x', 0); tx.setAttribute('y', y(t) + 3.5);
+    tx.textContent = t.toFixed(3); g.appendChild(tx);
+  });
+  /* x labels: degree d = 2K. Indices are DATA positions and are cross-checked by
+     narrowing.js: each 'd=N' entry must sit at the index whose row IS degree N. Three of
+     the five pointed at the wrong degree (off by 2, 2 and 14) until 2026-08-03 — the STAGE
+     map below keys on K and was right, so two annotations on one figure disagreed. */
+  var LBL = [[0,'before'],[9,'d=24'],[21,'d=48'],[45,'d=96'],[57,'d=120']];
+  var lab = $('nlab');
+  LBL.forEach(function(p){
+    var tx = document.createElementNS(NS,'text');
+    tx.setAttribute('x', x(p[0])); tx.setAttribute('y', H - 18);
+    tx.setAttribute('text-anchor', p[0] === 0 ? 'start' : (p[0] === 57 ? 'end' : 'middle'));
+    tx.textContent = p[1]; lab.appendChild(tx);
+  });
+  var xt = document.createElementNS(NS,'text');
+  xt.setAttribute('x', (L + W) / 2); xt.setAttribute('y', H - 3);
+  xt.setAttribute('text-anchor','middle');
+  xt.textContent = 'densities pinned exactly, through degree d';
+  lab.appendChild(xt);
+
+  $('npaper').setAttribute('x', L);
+  $('npaper').setAttribute('y', y(PAP[1]));
+  $('npaper').setAttribute('width', W - Rr - L);
+  $('npaper').setAttribute('height', y(PAP[0]) - y(PAP[1]));
+  $('ncond').setAttribute('x1', L); $('ncond').setAttribute('x2', W - Rr);
+  $('ncond').setAttribute('y1', y(COND)); $('ncond').setAttribute('y2', y(COND));
+
+  var hi = '', lo = '';
+  D.forEach(function(p,i){
+    hi += (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(p[2]).toFixed(1);
+    lo += (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(p[1]).toFixed(1);
+  });
+  $('nhi').setAttribute('d', hi); $('nlo').setAttribute('d', lo);
+  var back = D.map(function(p,i){ return 'L' + x(i).toFixed(1) + ' ' + y(p[1]).toFixed(1); })
+              .reverse().join('');
+  $('nband').setAttribute('d', hi + back + 'Z');
+
+  var STAGE = { 0:'nothing yet — the state of the art', 4:'δ(f₈) = 25/64', 12:'δ(f₂₄), exactly',
+                24:'δ(f₄₈), exactly', 31:'the tail sweep begins', 40:'d = 80 — a NEW exceptional degree',
+                60:'d = 120 — the second new exceptional degree' };
+  /* the stage is a FUNCTION of the index (largest STAGE key ≤ K), not a running
+     accumulator — the accumulator desynchronised on any non-sequential jump: clicking the
+     track at 8% showed the d=120 label beside the d=8 bracket, two visual channels making
+     contradictory claims. Only the auto-sweep, which visits every index in order, hid it. */
+  var SKEYS = Object.keys(STAGE).map(Number).sort(function(a,b){ return a - b; });
+  function stageFor(K){ var s = STAGE[SKEYS[0]];
+    for (var j = 0; j < SKEYS.length; j++) if (SKEYS[j] <= K) s = STAGE[SKEYS[j]];
+    return s; }
+  function fmt(v){ return v.toFixed(9); }
+  function draw(i){
+    var p = D[i];
+    $('nbr').textContent = '[' + fmt(p[1]) + ', ' + fmt(p[2]) + ']';
+    $('nwd').textContent = fmt(p[2] - p[1]);
+    $('nst').innerHTML = stageFor(p[0]);
+    var xi = x(i);
+    $('nscrub').setAttribute('x1', xi); $('nscrub').setAttribute('x2', xi);
+    $('ndhi').setAttribute('cx', xi); $('ndhi').setAttribute('cy', y(p[2]));
+    $('ndlo').setAttribute('cx', xi); $('ndlo').setAttribute('cy', y(p[1]));
+    /* soundness, checked on every frame rather than asserted in prose */
+    var ok = p[1] <= COND && COND <= p[2];
+    $('nbr').className = ok ? 'v ok' : 'v';
+  }
+  var range = $('nrange'), play = $('nplay'), timer = null;
+  range.addEventListener('input', function(){ stop(); draw(+range.value); });
+  draw(0);
+
+  function stop(){ if (timer) { clearTimeout(timer); timer = null; }
+    if (play) { play.disabled = false; play.textContent = '\u25B6'; play.title = 'Replay'; } }
+
+  /* The sweep is deliberately unhurried, and it SLOWS as it goes: the last few degrees are
+     where the band stops moving and the reader is meant to notice that, so the step time
+     ramps from 90 ms to 260 ms rather than running flat. */
+  function sweep(){
+    stop();
+    var i = 0;
+    range.value = 0; draw(0);
+    if (play) { play.disabled = true; play.textContent = '\u23F8'; play.title = 'Running'; }
+    function step(){
+      i += 1;
+      if (i > 57) { stop(); return; }
+      range.value = i; draw(i);
+      timer = setTimeout(step, 90 + 170 * (i / 57));
+    }
+    timer = setTimeout(step, 260);
+  }
+  if (play) play.addEventListener('click', sweep);
+  /* one pass on load so the mechanism is visible without touching anything — but never
+     against a reader who has asked for less motion; they get the finished state instead. */
+  if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) sweep();
+  else { range.value = 57; draw(57); }
+})();
+</script>
+</body>
+</html>

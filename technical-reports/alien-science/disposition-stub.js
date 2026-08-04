@@ -9,7 +9,8 @@
  * HERE on fixture endpoints — the client cannot forge CERTIFIED on a mutant
  * by rewriting ground_truth_role.
  *
- *   node research/_frontier/alien-science/disposition-stub.js --port 8765
+ *   node disposition-stub.js --port 8765   (from this directory; public tree:
+ *   technical-reports/alien-science/)
  *   curl -s http://127.0.0.1:8765/health
  *   curl -s -X POST http://127.0.0.1:8765/api/dispose-fixture \
  *     -H 'content-type: application/json' \

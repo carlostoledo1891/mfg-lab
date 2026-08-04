@@ -7,7 +7,16 @@
 **Novelty:** academic novelty **zero** as mathematics; systems contribution is the dual lane.
 
 Interactive report (public tease): `https://mfg-lab.vercel.app/technical-reports/alien-science`
-Re-run (disposition half, minutes, no GPU): `make check-alien-science`
+Re-run (disposition half, minutes, no GPU): `make check-alien-science` — **monorepo
+checkout only; the target does not exist in the public clone.** From the public pack
+use the §9 commands (`node dual-client.js --fixture heldout-ccs-es`).
+
+*Corrected 2026-08-04 (attribution + dates; wording fixed in place below, this note is
+the record): held-out math 0.94 / code 0.47 are **CCS + Self-Distill's** (fig. 8 red
+series) — the source reports **no held-out numbers for CCS + Evolution Strategy
+Refinement** (chat 0.93), and 0.97 is Self-Distill's chat PGR (their SOTA), not an
+aggregate. The blog page prints "April 2026" only; 2026-04-14 is the first Wayback
+capture, not printed at source.*
 
 ---
 
@@ -46,9 +55,11 @@ artifacts.
 | `scope` | Disposition declined (`OUT-OF-SCOPE`) — success when not formalisable |
 | `other` | Residual combinations |
 
-PGR figures quoted in this note (0.97 / 0.23 chat; held-out math 0.94 / code 0.47;
-EM Posterior 0.78) stay tagged **Anthropic-reported (2026-04-14)** until remeasured under
-Mode B/C. We never invent a remote PGR.
+PGR figures quoted in this note (chat 0.97 = CCS + Self-Distill, their SOTA / 0.23
+human baseline / 0.93 = CCS + Evolution Strategy Refinement; held-out math 0.94 /
+code 0.47 = CCS + Self-Distill's transfer; EM Posterior 0.78) stay tagged
+**Anthropic-reported (April 2026)** until remeasured under Mode B/C. We never invent
+a remote PGR.
 
 ---
 
@@ -64,7 +75,8 @@ the record is never `CERTIFIED`. Load-bearing gate: exam pack + planted mutants.
 **Prop. 2 (swap-consistency projector).** For binary preference probabilities under an
 exact A/B swap, the pre-update residual \(r = |p_{\mathrm{orig}} - (1 - p_{\mathrm{swap}})|\)
 is certified exactly (BigInt rationals). Consistent sample → `CERTIFIED` at \(r=0\);
-planted mutant → `REFUSED`. Algebraic fragment from their CCS+ES SOTA pseudocode — not a
+planted mutant → `REFUSED`. Algebraic fragment from their CCS + Evolution Strategy
+Refinement pseudocode (chat 0.93; the SOTA chat idea is CCS + Self-Distill) — not a
 PGR claim.
 
 **Prop. 3 (EM-channel Bayes).** For a binary channel with prior \(\pi\) and
@@ -104,8 +116,10 @@ The constructive twin alone is insufficient for Fellows attention. The filled
 `REFUSED`**. Same idea family as their case study; disposition teeth on the Bayes step,
 not a re-run of their finetune loop.
 
-Held-out CCS+ES math PGR 0.94 (reported) × swap-consistency `CERTIFIED` remains the
-constructive twin (`agree_with_teeth`). Summary metric on the interactive report counts
+CCS+ES chat PGR 0.93 (reported) × swap-consistency `CERTIFIED` remains the
+constructive twin (`agree_with_teeth`) — corrected 2026-08-04: an earlier version put
+"held-out math 0.94" here; that figure is CCS + Self-Distill's, and no held-out
+numbers are reported for CCS+ES. Summary metric on the interactive report counts
 disagree / agree_with_teeth / hack / scope.
 
 Why this pair is load-bearing: a sandbox that only ever shows high PGR × `CERTIFIED`
@@ -151,7 +165,8 @@ occupancy remains **PARTIAL** (disclose-and-continue).
 ### 7.1 Anthropic AAR / weak-to-strong sandbox (2026)
 
 Primary sources: research page *Automated Alignment Researchers*; Alignment Science Blog
-case studies (date from research page: **2026-04-14**); public repo
+case studies (the page prints **April 2026** only; 2026-04-14 is the first Wayback
+capture — corrected 2026-08-04); public repo
 `safety-research/automated-w2s-research` (**no LICENSE file** as of 2026-07-31 — do not
 assume MIT). They operationalize PGR, document Mode A illegitimacy, surface reward-hack
 classes (including seed and label-exfil shapes), and propose **legibility training** for
@@ -310,7 +325,7 @@ predictions — never invented here.
 
 | Identifier | Role in this note |
 |---|---|
-| Anthropic research page — Automated Alignment Researchers | PGR digits, cost band, alien science, open invite |
+| Anthropic research page — Automated Alignment Researchers | PGR digits, cost band, alien science, stated future-work direction (a recommendation, not an invitation — corrected 2026-08-04) |
 | Alignment Science Blog — automated W2S researcher | Case studies, legibility future work, reward hacks |
 | `safety-research/automated-w2s-research` | Mode A/B/C; eval API shape; **no LICENSE assumed** |
 | arXiv:2603.08761v2 (Agarwal) | Alignment-certification trilemma — different claim |

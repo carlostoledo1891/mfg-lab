@@ -78,7 +78,7 @@ def dispose_sample(
         },
         "witness": {
             "kind": "exact-residual",
-            "kernel": "research/_frontier/alien-science/fellows-pack/kernels/swap_consistency.py",
+            "kernel": "fellows-pack/kernels/swap_consistency.py",
             "payload": {
                 "n": len(pairs),
                 "eps": r_str(bound),

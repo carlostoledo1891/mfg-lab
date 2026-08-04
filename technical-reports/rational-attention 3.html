@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  PATH 13 — opened 2026-07-31 AFTER its requisite 0 passed, not before.
+
+  Softmax attention needs exp, which eqcert lacks. Apply the PATH 12 rule: substitute a rational kernel
+  instead of approximating the exponential. The question that decides the path is whether the CLUSTERING
+  PHENOMENON survives the swap — a harder swap than PATH 12's, because linear attention is a different
+  attention while Huggett is still a canonical model.
+
+  Decided so far: requisite 0; exact residual zero on closed-form clusters; 1-cluster spectrum {0,-1}
+  independent of β; bistability at β=5/3; reduced 2-cluster angle law (one-sided semi-stable, no
+  linear crossing). Newton-from-8k β* demoted; (2.5,2.7) "linear loss" demoted (80k cutoff).
+  Tight omega-limit β* for seed +0 is NOT claimed.
+
+  TEMPLATE: unpublished-draft paper chrome from research/_engine/paper.html (THE SEED) and the
+  report-spine extensions used by research/lawcert-compression/paper.html — topbar, draftbar,
+  banner, cards, h3.sec, table.mono, caveats. NOT EXPORTED, NOT ROUTED, kind `private`.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rational-attention (UNPUBLISHED DRAFT)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="author" content="Carlos Toledo">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  .mono,.status,.eyebrow,.ro .v,.ro .k,table.mono td,table.mono th{
+    font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:var(--text-body);line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;}
+  body{padding-top:var(--nav-h)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 88px}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);
+    letter-spacing:-.025em;line-height:1.14;margin:8px 0 12px;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:80ch;margin-bottom:8px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.014em;margin:0 0 12px;text-wrap:balance}
+  h2 .tag,.card h2 .tag,h3.sec .tag{font-family:var(--data);font-size:var(--text-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  h3.sec{font-family:var(--ui);font-size:14.5px;font-weight:600;letter-spacing:-.012em;
+    margin:44px 0 16px;padding-top:22px;border-top:1px solid var(--grid)}
+  .card{position:relative;background:var(--card);border:1px solid var(--grid);
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+    border-radius:var(--radius);padding:18px;margin:0 0 18px;width:100%;min-width:0}
+  .note{font-size:var(--text-small);line-height:1.65;color:var(--ink-soft);margin-top:12px;max-width:86ch}
+  .note:first-child{margin-top:0}
+  .note b{color:var(--ink);font-weight:600}
+  .caveat{border-left:2px solid var(--warn);padding:3px 0 3px 15px;margin:0 0 16px;max-width:86ch}
+  .caveat p{font-size:13.4px;line-height:1.62;color:var(--ink-soft);margin-bottom:9px}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat p b{color:var(--ink);font-weight:600}
+  .caveat.red{border-left-color:var(--bad)}
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid;vertical-align:middle;
+    white-space:nowrap}
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.standard{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.notrun{color:var(--ink-soft);background:transparent;border-color:var(--ink-soft);border-style:dashed}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+  .alertbar,.draftbar{font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;padding:11px 15px;margin:0 0 18px;line-height:1.5;border-radius:var(--radius);border:0}
+  .alertbar.draft,.draftbar,.alertbar.danger{background:var(--bad)}
+  .alertbar.warn{background:var(--warn-soft);color:var(--ink);border:1px solid var(--grid)}
+  .alertbar.info{background:var(--fp-deep);color:var(--paper)}
+  .alertbar.ok{background:var(--good);color:var(--paper)}
+  .alertbar.muted{background:var(--grid);color:var(--ink)}
+
+  .banner{display:flex;gap:13px;align-items:flex-start;background:var(--warn-soft);
+    border:1px solid var(--grid);border-radius:var(--radius);padding:14px 16px;margin:4px 0 22px}
+  .banner .bico{font-size:19px;line-height:1.2;flex:none}
+  .banner .btxt{font-size:13px;line-height:1.65;color:var(--ink)}
+  .banner .btxt b{font-weight:600}
+  .banner .btxt code{font-family:var(--data);font-size:12px;color:var(--hjb)}
+  table.mono{border-collapse:collapse;width:100%;font-family:var(--data);font-size:11.5px;margin:6px 0 2px}
+  table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--grid);
+    padding:7px 10px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  table.mono td{padding:7px 10px;border-bottom:1px solid var(--grid);color:var(--ink);vertical-align:top}
+  table.mono td.ph{color:var(--amber)}
+  .ledger td:first-child{color:var(--ink);font-family:var(--body);font-size:13px}
+  .src{font-family:var(--data);font-size:10.5px;color:var(--ink-soft)}
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  .tablewrap table.mono{min-width:min(560px,100%)}
+  code,.mono,.note code{overflow-wrap:anywhere;word-break:break-word;
+    font-family:var(--data);font-size:12.5px}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .foot{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);line-height:1.8;
+    margin-top:34px;padding-top:15px;border-top:1px solid var(--grid)}
+  ul.tight{margin:8px 0 0 18px}
+  ul.tight li{font-size:13.4px;line-height:1.62;color:var(--ink-soft);margin-bottom:8px}
+  ul.tight li b{color:var(--ink);font-weight:600}
+  a{color:var(--fp-deep)}
+  .foot a{color:var(--accent-deep)}
+
+  /* SHARED SITE CHROME — five primary links (DESIGN_SYSTEM.md) */
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .sitenav,.nav{gap:14px} .sitenav a,.nav a{font-size:10.5px;letter-spacing:.05em} }
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+
+  </style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/paper.html and
+     research/wardrop-repro/paper.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="alertbar draft" role="status">UNPUBLISHED DRAFT &mdash; frontier sandbox, not reviewed, not for distribution</div>
+
+  <div class="eyebrow">rational-attention &middot; the substitution rule, second domain</div>
+
+  <h1>A certified bifurcation bracket for rational attention</h1>
+
+  <p class="lede">Transformers are an interacting particle system, and their tokens cluster.
+  <b>Softmax needs <code>exp</code>, which this tree does not have</b> &mdash; so replace the kernel
+  with a rational one and check, first, whether the phenomenon comes with it. The PATH&nbsp;12 rule:
+  when the arithmetic cannot represent your model, <b>change the model</b>, do not approximate the function.</p>
+
+  <div class="banner">
+    <span class="bico">&#9888;</span>
+    <span class="btxt"><b>Read the status before the numbers.</b> Nothing on this page is claimed,
+    certified, enclosed or proved in the ledger sense, and <b>no literature gate has run</b>.
+    What is gated: requisite&nbsp;0, exact residual zero, the 1-cluster spectrum, bistability
+    at <code>&beta;=5/3</code>, and the reduced 2-cluster angle law (exact rationals). What is
+    <span class="badge open">open</span>: a tight certified omega-limit <code>&beta;*</code>
+    for the pinned init. <b>A prospectus that reads like a result is the defect</b> &mdash; four
+    under-iteration defects have already been caught on this path.</span>
+  </div>
+
+  <h3 class="sec">Requisite 0 <span class="badge measured">measured &middot; survived</span></h3>
+  <div class="card">
+    <p class="note" style="margin-top:0">Softmax attention needs <code>exp</code>. The PATH&nbsp;12 move
+    is to <b>substitute a rational kernel rather than approximate the exponential</b>. The deciding
+    question: <b>does the clustering phenomenon survive the swap?</b> If not, the certificate would
+    describe a system nobody cares about.</p>
+    <p class="note"><b>It survives, and it survives structurally.</b> Measured on 12 tokens on S&sup2;,
+    fixed seed (<code>attention-substitution.py</code>):</p>
+    <div class="tablewrap">
+      <table class="mono">
+        <thead><tr><th>kernel</th><th>low sharpness</th><th>mid</th><th>high</th></tr></thead>
+        <tbody>
+          <tr><td>softmax &mdash; blocked</td><td>1 cluster</td><td>1 cluster</td><td><b>3 clusters</b></td></tr>
+          <tr><td>polynomial <code>(1+&lang;x<sub>i</sub>,x<sub>j</sub>&rang;)<sup>p</sup></code></td><td>1 cluster</td><td>1 cluster</td><td><b>2 clusters</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Both undergo a cluster-count change as the interaction sharpens. Green control:
+    if softmax ever fails to cluster the script exits&nbsp;2.</p>
+    <p class="src">python3 research/_frontier/attention-substitution.py</p>
+  </div>
+
+  <h3 class="sec">The certifiable parametrisation</h3>
+  <div class="card">
+    <p class="note" style="margin-top:0">An integer exponent is a poor bifurcation parameter.
+    The form that stays rational in the state and smooth in the knob:</p>
+    <p class="note"><b><code>w<sub>ij</sub> &prop; (1 + &beta;&lang;x<sub>i</sub>, x<sub>j</sub>&rang;)<sup>p</sup></code></b>
+    with integer <code>p</code> and continuous <code>&beta;</code> &mdash;
+    only <code>+ &minus; &times; &divide;</code> and integer <code>pow</code>.</p>
+  </div>
+  <div class="card">
+    <h2>What is decidable today <span class="tag">revised after the enclosure pass</span></h2>
+    <p class="note" style="margin-top:0"><b>The projected residual is exactly zero on closed-form
+    coincident-cluster configurations</b>, decided by exact rational arithmetic.
+    Antipodal 2-clusters and <code>&lang;u,v&rang; = &minus;1/&beta;</code> 2-clusters
+    (when <code>&beta; &ge; 1</code>) are equilibria for every such <code>&beta;</code>.
+    <b>Existence of multi-cluster equilibria is not what any float <code>&beta;*</code> measured.</b></p>
+  </div>
+  <div class="caveat">
+    <p><b>What would falsify the enclosure.</b> A nonzero exact residual on the closed-form
+    configurations (T1&ndash;T3). A zero residual on a deliberately wrong angle (T4 must stay red).
+    Krawczyk closing on a non-isolated coincident root (T5 must refuse).</p>
+  </div>
+
+  <h3 class="sec">Corrections <span class="badge open">under-iteration, thrice</span></h3>
+  <div class="caveat red">
+    <p><b>Locator transient.</b> <code>attention-transition.py</code> reported
+    <code>&beta;* &isin; [1.601593, 1.601624]</code> from 4000-step terminals.
+    That bracket collapses under Newton / 20k steps. Gated in
+    <code>attention-equilibrium.py</code> T5. Same species as PATH&nbsp;12's first Huggett test.</p>
+  </div>
+  <div class="caveat red">
+    <p><b>Newton-from-8k is not an omega-limit.</b>
+    <code>attention-equilibrium.py</code> locked <code>&beta;* &isin; [1.615215, 1.615220]</code>
+    by short flow + Newton. Near criticality that is metastability.
+    Gated as T8 in <code>attention-basin.py</code>: 100k-step flow from seed&nbsp;+0 at the old
+    <code>&beta;<sub>hi</sub></code> reaches the <b>1-cluster</b>.</p>
+  </div>
+  <div class="caveat red">
+    <p><b>(2.5, 2.7) was an 80k-step cutoff, not a linear crossing.</b>
+    The old basin T6/T7 reported the exact 2-cluster &ldquo;loses local stability in (2.5, 2.7)&rdquo;
+    because &beta;=2.5 still showed 2 clusters at 80k steps and &beta;=2.7 showed 1. Extending the
+    budget: the same seed/eps collapses at ~84.5k for &beta;=2.5 (gated T9). Exact rationals
+    (<code>attention-stability.js</code>) decide the reduced perfect-cluster law has a
+    <b>double zero</b> at <code>c*=&minus;1/&beta;</code> and <code>ċ&gt;0</code> off equilibrium
+    for every tested &beta; &mdash; one-sided semi-stable, no linear sign change in &beta;.</p>
+  </div>
+
+  <h3 class="sec">Exact residual zero <span class="badge measured">5/5</span></h3>
+  <div class="card">
+    <p class="note" style="margin-top:0"><code>attention-enclosure.js</code> &mdash; exact rational
+    arithmetic (<code>eqcert/src/rational.js</code>) decides the residual is <b>all zero</b> on:</p>
+    <div class="tablewrap">
+      <table class="mono">
+        <thead><tr><th>configuration</th><th>&beta;</th><th>residual</th></tr></thead>
+        <tbody>
+          <tr><td>2-cluster, <code>&lang;u,v&rang;=&minus;3/5</code>, Pythagorean <code>v=(&minus;3/5,4/5,0)</code></td>
+              <td><code>5/3</code></td><td><b>exactly 0</b></td></tr>
+          <tr><td>antipodal 2-cluster</td><td><code>1/2</code> (below any float bracket)</td>
+              <td><b>exactly 0</b></td></tr>
+          <tr><td>1-cluster</td><td><code>5/3</code></td><td><b>exactly 0</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><b>Claim revision, gated by the antipodal <code>&beta;=1/2</code> case:</b>
+    multi-cluster equilibria exist far below any float bracket. Krawczyk on an ungaged coincident
+    root <b>refuses</b> (geometric non-isolation).</p>
+    <p class="src">node research/_frontier/attention-enclosure.js</p>
+  </div>
+
+  <h3 class="sec">1-cluster spectrum <span class="badge measured">6/6</span></h3>
+  <div class="card">
+    <p class="note" style="margin-top:0"><code>attention-spectrum.py</code>. At any 1-cluster
+    equilibrium, every sphere-tangent perturbation satisfies</p>
+    <p class="note"><b><code>(Jv)<sub>i</sub> = mean(v) &minus; v<sub>i</sub></code></b>
+    &mdash; spectrum <b><code>{0 (gauge), &minus;1 (relative)}</code></b>,
+    <b>independent of <code>&beta;</code></b>. At consensus the weights are uniform and their
+    first variation vanishes.</p>
+    <p class="note"><b>Therefore no float <code>&beta;*</code> on this path is a linear bifurcation
+    of the 1-cluster.</b> The 1-cluster stays linearly attracting for all <code>&beta;</code>.</p>
+    <p class="src">python3 research/_frontier/attention-spectrum.py</p>
+  </div>
+
+  <h3 class="sec">Bistability <span class="badge measured">11/11</span></h3>
+  <div class="card">
+    <p class="note" style="margin-top:0"><code>attention-basin.py</code>. At rational
+    <code>&beta; = 5/3</code>, both closed-form equilibria are <b>locally stable</b> under the
+    normalized flow (50k steps after a 10<sup>&minus;3</sup> perturbation):</p>
+    <div class="tablewrap">
+      <table class="mono">
+        <thead><tr><th>start</th><th>after perturbation + flow</th></tr></thead>
+        <tbody>
+          <tr><td>1-cluster</td><td>1 cluster</td></tr>
+          <tr><td>exact 2-cluster <code>&lang;u,v&rang; = &minus;3/5</code></td><td>2 clusters</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">From seed&nbsp;+0, 100k-step flow selects 1 cluster at <code>&beta; = 3/2</code>
+    and 2 clusters at <code>&beta; = 2</code>. Perfect-cluster kicks: above <code>c*</code> merges,
+    below returns &mdash; at both <code>&beta;=2.5</code> and <code>2.7</code>.
+    <b>A tight certified omega-limit <code>&beta;*</code> for seed&nbsp;+0 is not claimed</b>
+    (critical slowing).</p>
+    <p class="src">python3 research/_frontier/attention-basin.py</p>
+  </div>
+
+  <h3 class="sec">Reduced 2-cluster angle <span class="badge measured">14/14</span></h3>
+  <div class="card">
+    <p class="note" style="margin-top:0"><code>attention-stability.js</code> &mdash; exact
+    rationals decide the perfect-cluster reduced law (equal sizes, <code>p=2</code>):</p>
+    <p class="note"><b><code>ċ = 2(1+&beta;c)&sup2;(1&minus;c&sup2;) / [(1+&beta;)&sup2; + (1+&beta;c)&sup2;]</code></b></p>
+    <p class="note">Double zero at <code>c*=&minus;1/&beta;</code> (so <code>f=f&prime;=0</code>);
+    <code>ċ&gt;0</code> off equilibrium on every tested rational point &mdash;
+    <b>one-sided semi-stable for every &beta;, not a linear crossing in (2.5, 2.7)</b>.
+    Cross-weights are flat to first order at <code>p=2</code>, so the tangent Jacobian
+    block-decouples into two 1-cluster copies with spectrum <code>{0,&minus;1}</code>.</p>
+    <p class="src">node research/_frontier/attention-stability.js</p>
+  </div>
+
+  <h3 class="sec">Proof-status ledger</h3>
+  <div class="tablewrap">
+    <table class="mono ledger">
+      <thead><tr><th>claim</th><th>status</th><th>what backs it</th></tr></thead>
+      <tbody>
+        <tr><td>rational kernel still clusters</td>
+            <td><span class="badge measured">measured</span></td>
+            <td>attention-substitution.py, exit 0</td></tr>
+        <tr><td>exact residual zero on closed forms</td>
+            <td><span class="badge measured">measured</span></td>
+            <td>attention-enclosure.js, T1&ndash;T3 exact rationals</td></tr>
+        <tr><td>1-cluster spectrum {0, &minus;1}, &beta;-free</td>
+            <td><span class="badge measured">measured</span></td>
+            <td>attention-spectrum.py, analytical J = mean &minus; Id</td></tr>
+        <tr><td>bistability at &beta;=5/3</td>
+            <td><span class="badge measured">measured</span></td>
+            <td>attention-basin.py T1&ndash;T3</td></tr>
+        <tr><td>reduced 2c angle: one-sided semi-stable</td>
+            <td><span class="badge measured">measured</span></td>
+            <td>attention-stability.js T1&ndash;T7 exact rationals</td></tr>
+        <tr><td>tight omega-limit &beta;* for seed +0</td>
+            <td><span class="badge open">open</span></td>
+            <td>not claimed; Newton bracket demoted (T8)</td></tr>
+        <tr><td>(2.5, 2.7) linear stability loss</td>
+            <td><span class="badge never">demoted</span></td>
+            <td>80k cutoff; T9 + double-zero law</td></tr>
+        <tr><td>Transformer / softmax threshold</td>
+            <td><span class="badge never">never</span></td>
+            <td>rational system only; must not be reported as softmax</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sec">What this does for the other paths</h3>
+  <div class="card">
+    <p class="note" style="margin-top:0"><b>Second independent instance of the PATH&nbsp;12 rule.</b>
+    PATH&nbsp;11 died approximating; PATH&nbsp;12 worked by substituting in economics; this
+    substitutes in machine learning. <b>Two confirmations and one refutation is what turns a
+    trick into a method.</b></p>
+    <p class="note">It takes <code>attention-bifurcation</code> (CONFIRMED in
+    <code>SCORING.json</code>) out from behind <code>interval-transcendentals</code>.
+    PATH&nbsp;07's consumer count drops again.</p>
+  </div>
+
+  <h3 class="sec">Honest risks</h3>
+  <div class="caveat">
+    <p><b>Harder swap than PATH&nbsp;12.</b> Huggett is still a canonical model.
+    Linear / polynomial attention is a <b>different</b> attention; Geshkovski et al. is about
+    softmax. The certified number would be a fact about the rational system and must never be
+    reported as a fact about Transformers.</p>
+  </div>
+  <div class="caveat">
+    <p><b>Evidence is still thin, and under-iteration already bit thrice.</b>
+    Bistability is gated at one rational <code>&beta;</code>; seed&nbsp;+0 selection at two
+    safe distances. Never trust a cluster count that has not been long-integrated or
+    Newton-polished to a small algebraic residual.</p>
+  </div>
+  <div class="caveat">
+    <p><b>Occupancy, ungated.</b> Geshkovski, Letrouit, Polyanskiy and Rigollet are named
+    from memory; Lessard&ndash;Pugliese likewise. <b>N is near zero and the artifact is the
+    claim</b> &mdash; no literature gate has run.</p>
+  </div>
+
+  <h3 class="sec">Scored</h3>
+  <div class="card">
+    <p class="note" style="margin-top:0"><b>N: near ZERO.</b> Interacting-particle views of
+    attention are published; certified bifurcation brackets are standard machinery.
+    <b>A: HIGH and unverified</b> &mdash; a re-runnable, zero-dependency artifact for an
+    attention system does not appear to exist (same A-axis claim as
+    <code>attention-bifurcation</code> in <code>SCORING.json</code>).</p>
+    <p class="note"><b>Citation state:</b> Geshkovski et al. and Lessard&ndash;Pugliese are
+    named <b>from memory and unverified at source</b>. The measurements above were produced
+    on 2026-07-31 by the scripts named, and are reproducible with a fixed seed.</p>
+  </div>
+
+  <div class="foot">rational-attention &middot; frontier sandbox &middot; not routed, not exported, not published<br>
+    opened 2026-07-31 after requisite 0 passed
+    &middot; <span class="mono">python3 research/_frontier/attention-substitution.py</span>
+    &middot; <span class="mono">node research/_frontier/attention-enclosure.js</span>
+    &middot; <span class="mono">python3 research/_frontier/attention-spectrum.py</span>
+    &middot; <span class="mono">python3 research/_frontier/attention-basin.py</span><br>
+    Carlos Toledo &middot; 2026
+  </div>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+</div>
+
+</body>
+</html>

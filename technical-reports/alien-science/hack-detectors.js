@@ -35,7 +35,7 @@ function clearResult(hackClass) {
     claim: baseClaim(hackClass, 'no ' + hackClass + ' shape under stated thresholds'),
     witness: {
       kind: 'hack-detector',
-      kernel: 'research/_frontier/alien-science/hack-detectors.js',
+      kernel: 'hack-detectors.js',
       payload: { detector: hackClass, version: DETECTOR_VERSION, hit: false }
     },
     notes: 'clean control — detector declines; other disposition lanes may still run'
@@ -53,7 +53,7 @@ function suspectResult(hackClass, reason, payload) {
     claim: baseClaim(hackClass, reason),
     witness: {
       kind: 'hack-detector',
-      kernel: 'research/_frontier/alien-science/hack-detectors.js',
+      kernel: 'hack-detectors.js',
       payload: Object.assign({ detector: hackClass, version: DETECTOR_VERSION, hit: true }, payload)
     },
     notes: 'pattern match only — invite human inspection of methods'
@@ -130,7 +130,7 @@ function disposeHackShapes(rec) {
     },
     witness: {
       kind: 'hack-detector',
-      kernel: 'research/_frontier/alien-science/hack-detectors.js',
+      kernel: 'hack-detectors.js',
       payload: { version: DETECTOR_VERSION, hit: false, detectors_run: ['seed-cherry-pick', 'label-exfil-shape'] }
     },
     notes: 'both detectors clear'

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Certified β-monotonicity on a frozen attention row.
+  Public-facing technical note (house design system).
+  Sister method pages: /technical-reports/rational-attention,
+  /technical-reports/interval-transcendentals, /technical-reports/huggett-rational.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A certificate for attention concentration under temperature</title>
+<meta name="robots" content="noindex,follow">
+<meta name="author" content="Carlos Toledo">
+<meta name="description" content="Classical softmax concentration under inverse temperature, enclosed and decided on a frozen GPT-tiny attention row — with planted falsifiers.">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  .mono,.status,.eyebrow,.ro .v,.ro .k,table.mono td,table.mono th{
+    font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:var(--text-body);line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;}
+  body{padding-top:var(--nav-h)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 88px}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);
+    letter-spacing:-.025em;line-height:1.14;margin:8px 0 12px;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:80ch;margin-bottom:8px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.014em;margin:0 0 12px;text-wrap:balance}
+  h2 .tag,.card h2 .tag,h3.sec .tag{font-family:var(--data);font-size:var(--text-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  h3.sec{font-family:var(--ui);font-size:14.5px;font-weight:600;letter-spacing:-.012em;
+    margin:44px 0 16px;padding-top:22px;border-top:1px solid var(--grid)}
+  .card{position:relative;background:var(--card);border:1px solid var(--grid);
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+    border-radius:var(--radius);padding:18px;margin:0 0 18px;width:100%;min-width:0}
+  .note{font-size:var(--text-small);line-height:1.65;color:var(--ink-soft);margin-top:12px;max-width:86ch}
+  .note:first-child{margin-top:0}
+  .note b{color:var(--ink);font-weight:600}
+  .caveat{border-left:2px solid var(--warn);padding:3px 0 3px 15px;margin:0 0 16px;max-width:86ch}
+  .caveat p{font-size:13.4px;line-height:1.62;color:var(--ink-soft);margin-bottom:9px}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat p b{color:var(--ink);font-weight:600}
+  .caveat.red{border-left-color:var(--bad)}
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid;vertical-align:middle;
+    white-space:nowrap}
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.good{color:var(--paper);background:var(--good);border-color:var(--good)}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+  .badge.notrun{color:var(--ink-soft);background:transparent;border-color:var(--ink-soft);border-style:dashed}
+  .alertbar{font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;padding:11px 15px;margin:0 0 18px;line-height:1.5;border-radius:var(--radius);border:0}
+  .alertbar.draft{background:var(--bad)}
+  .dlbar{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;
+    flex-wrap:wrap;width:100%;max-width:100%;box-sizing:border-box;
+    margin:17px 0 2px;padding:9px 12px 9px 15px;border:1px solid var(--good);border-radius:var(--radius);
+    background:color-mix(in srgb,var(--good) 6%,var(--card))}
+  .dlbar.plain{border-color:transparent;background:transparent;padding:0;margin:12px 0 0}
+  .dlbar-txt{font-size:12.5px;color:var(--ink-soft);flex:1 1 220px;min-width:0;line-height:1.45}
+  .dlbar-note{display:block;font-size:11.5px;margin-top:3px;color:var(--ink-soft)}
+  .dlbar .dlproof{flex:0 0 auto;margin-left:auto;font-family:var(--ui);font-weight:600;font-size:12.5px;
+    color:var(--paper);background:var(--good);border:0;border-radius:6px;padding:7px 14px;cursor:pointer;white-space:nowrap}
+  .banner.ok{background:color-mix(in srgb,var(--good) 8%,var(--card));border-color:var(--good)}
+  .banner{display:flex;gap:13px;align-items:flex-start;background:var(--warn-soft);
+    border:1px solid var(--grid);border-radius:var(--radius);padding:14px 16px;margin:4px 0 22px}
+  .banner .bico{font-size:19px;line-height:1.2;flex:none}
+  .banner .btxt{font-size:13px;line-height:1.65;color:var(--ink)}
+  .banner .btxt b{font-weight:600}
+  .banner .btxt code{font-family:var(--data);font-size:12px;color:var(--hjb)}
+  table.mono{border-collapse:collapse;width:100%;font-family:var(--data);font-size:11.5px;margin:6px 0 2px}
+  table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--grid);
+    padding:7px 10px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  table.mono td{padding:7px 10px;border-bottom:1px solid var(--grid);color:var(--ink);vertical-align:top}
+  .ledger td:first-child{color:var(--ink);font-family:var(--body);font-size:13px}
+  .src{font-family:var(--data);font-size:10.5px;color:var(--ink-soft)}
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  code,.note code{overflow-wrap:anywhere;word-break:break-word;font-family:var(--data);font-size:12.5px}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;margin:28px 0 0;padding:14px 0 0;
+    border-top:1px solid var(--grid);font-family:var(--data);font-size:11px}
+  .sitemap a{color:var(--ink-soft);text-decoration:none}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .foot{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);line-height:1.8;
+    margin-top:18px;padding-top:15px;border-top:1px solid var(--grid)}
+  ul.tight{margin:8px 0 0 18px}
+  ul.tight li{font-size:13.4px;line-height:1.62;color:var(--ink-soft);margin-bottom:8px}
+  ul.tight li b{color:var(--ink);font-weight:600}
+  a{color:var(--fp-deep)}
+  .foot a{color:var(--accent-deep)}
+  .crumb{display:none;font-family:var(--data);font-size:11px;color:var(--ink-soft);gap:6px;align-items:center}
+  .crumb a{color:var(--ink-soft);text-decoration:none}
+  .crumb a:hover{color:var(--fp-deep)}
+  .crumb .s{opacity:.45}
+  .crumb .here{color:var(--ink)}
+  @media(min-width:900px){.crumb{display:inline-flex;margin-left:8px}}
+  .sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover{color:var(--fp-deep)}
+  @media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px} }
+  .vision{border:1px dashed var(--grid);border-radius:var(--radius);padding:16px 18px;margin:0 0 18px;
+    background:color-mix(in srgb,var(--fp) 4%,var(--card))}
+  .vision h2{font-size:15px;margin-bottom:8px}
+  .contrib{border:1px solid var(--fp);border-radius:var(--radius);padding:16px 18px;margin:0 0 18px;
+    background:color-mix(in srgb,var(--fp) 6%,var(--card))}
+  .contrib h2{font-size:15px;margin-bottom:8px}
+  .lab-ctrl{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin:4px 0 12px}
+  .lab-ctrl label{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em;
+    text-transform:uppercase;display:flex;align-items:center;gap:10px;min-width:0}
+  .lab-ctrl input[type=range]{width:min(280px,56vw);accent-color:var(--fp-deep)}
+  .lab-ctrl .bv{font-family:var(--data);font-variant-numeric:tabular-nums;color:var(--ink);min-width:3.2em}
+  .ro{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 14px}
+  @media(max-width:700px){.ro{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .ro .cell{border:1px solid var(--grid);border-radius:var(--radius-sm);padding:8px 10px;min-height:3.4em}
+  .ro .k{font-family:var(--data);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .ro .v{font-family:var(--data);font-size:13px;color:var(--ink);margin-top:2px}
+  .ro .v.ok{color:var(--good)}
+  .ro .v.warn{color:var(--amber)}
+  .plots{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 8px}
+  @media(max-width:700px){.plots{grid-template-columns:1fr}}
+  .plots figure{margin:0;min-width:0}
+  .plots figcaption{font-family:var(--data);font-size:10.5px;color:var(--ink-soft);margin:0 0 6px;
+    letter-spacing:.06em;text-transform:uppercase}
+  canvas.plot{display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--paper);
+    border:1px solid var(--grid);border-radius:var(--radius-sm)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+  .chip{font-family:var(--data);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    padding:5px 10px;border:1px solid var(--grid);border-radius:var(--radius-sm);background:var(--card);
+    color:var(--ink-soft);cursor:pointer}
+  .chip:hover,.chip:focus{color:var(--fp-deep);border-color:var(--fp);outline:none}
+  .chip[aria-pressed=true]{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .status{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);min-height:2.9em;margin-top:10px;
+    line-height:1.45}
+  .plain{border:1px solid var(--grid);border-radius:var(--radius);padding:16px 18px;margin:0 0 18px;
+    background:var(--card)}
+  .plain h2{font-size:15px;margin:0 0 8px}
+  .plain .note{margin-top:8px}
+  .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 4px}
+  @media(max-width:700px){.three{grid-template-columns:1fr}}
+  .three .cell{border:1px solid var(--grid);border-radius:var(--radius-sm);padding:12px 12px 10px;
+    background:color-mix(in srgb,var(--paper) 65%,var(--card))}
+  .three .k{font-family:var(--data);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .three .v{font-size:13.2px;line-height:1.45;color:var(--ink)}
+  .three .v b{font-weight:600}
+
+  h1 .soft{color:var(--ink-soft)}
+  h1 .accent{color:var(--accent)}
+</style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/paper.html and
+     research/wardrop-repro/paper.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/technical-reports">technical-reports</a><span class="s">/</span><span class="here">attention-geometry</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">attention geometry &middot; certificate on a frozen transformer row</div>
+  <h1>Softmax sharpens with temperature.<br>We ship the <span class="accent">certificate</span>.</h1>
+  <p class="lede">That softmax entropy and participation ratio decrease with inverse
+  temperature is classical. <b>We contribute the certificate, not the phenomenon</b>
+  &mdash; decide a rational-kernel substitute in exact arithmetic, enclose the softmax
+  story with sound interval <code>exp</code>/<code>log</code>, keep consecutive boxes
+  separated, and keep planted mutants red &mdash; on one frozen attention row.</p>
+
+  <div class="dlbar">
+    <span class="dlbar-txt">Don&rsquo;t take our word for it &mdash; re-run the rational PR decision on your machine.
+    <span class="dlbar-note">MIT&#8209;licensed · Python 3 stdlib only · no install</span>
+    </span>
+    <button class="dlproof" type="button">&#8681;&ensp;Download the verifier</button>
+  </div>
+
+
+  <div class="banner ok">
+    <span class="bico">&#10003;</span>
+    <span class="btxt"><b>What you can trust here.</b>
+    Softmax H and PR are <span class="badge enclosed">enclosed</span> on a committed
+    &beta;-grid (and continuous-&beta; sign via published identities).
+    Rational-kernel PR is <span class="badge enclosed">decided</span> by exact rationals.
+    Flat and quadratic mutants go red. A training loss is never a certificate.</span>
+  </div>
+
+  <h3 class="sec">Try it <span class="tag">scrub &beta; · break the claim</span></h3>
+  <div class="card">
+    <p class="note" style="margin-top:0">One causal attention row from a tiny GPT
+    (layer&nbsp;0, head&nbsp;0, seed&nbsp;0), frozen once. Teal is the rational kernel
+    <code>w∝(1+&beta;·s)<sup>2</sup></code> &mdash; the decidable substitute.
+    Slate is softmax. Mutant chips must destroy the decrease; if they do not, the
+    instrument is theatre.</p>
+    <div class="lab-ctrl">
+      <label>&beta;
+        <input id="beta" type="range" min="0" max="8" step="1" value="4" aria-valuetext="β index">
+        <span class="bv" id="betaVal">4</span>
+      </label>
+    </div>
+    <div class="chips" role="group" aria-label="Object mutants">
+      <button type="button" class="chip" id="chipTrue" aria-pressed="true">true scores</button>
+      <button type="button" class="chip" id="chipFlat" aria-pressed="false">mutant: flat</button>
+      <button type="button" class="chip" id="chipQuad" aria-pressed="false">mutant: (&beta;&minus;3)&sup2;·s</button>
+    </div>
+    <div class="ro" aria-live="polite">
+      <div class="cell"><div class="k">PR softmax</div><div class="v" id="prSoft">—</div></div>
+      <div class="cell"><div class="k">PR rational</div><div class="v ok" id="prRat">—</div></div>
+      <div class="cell"><div class="k">H softmax</div><div class="v" id="hSoft">—</div></div>
+      <div class="cell"><div class="k">max weight</div><div class="v" id="maxW">—</div></div>
+    </div>
+    <div class="plots">
+      <figure>
+        <figcaption>Weights at &beta; — softmax (slate) vs rational (teal)</figcaption>
+        <canvas class="plot" id="cvW" width="640" height="360" aria-label="Weight bars"></canvas>
+      </figure>
+      <figure>
+        <figcaption>PR vs &beta; — both kernels (marker = slider)</figcaption>
+        <canvas class="plot" id="cvPR" width="640" height="360" aria-label="PR curves"></canvas>
+      </figure>
+    </div>
+    <p class="status" id="labStatus">Loading instrument…</p>
+    <p class="src">Live float view for intuition. Download the verifier for the exact rational decision; softmax enclosure ships with the page certificates (Node + eqcert).</p>
+  </div>
+
+  <h3 class="sec">What is certified</h3>
+  <div class="contrib">
+    <h2>The claim</h2>
+    <p class="note" style="margin-top:0">Softmax entropy and participation ratio decrease with
+    inverse temperature is classical &mdash; majorization ordering attributed by Mattei &amp;
+    Loureiro (<a href="https://arxiv.org/abs/2602.14862">arXiv:2602.14862</a>) to Marshall &amp;
+    Olkin, with <code>dH/d&beta;=&minus;&beta;&thinsp;Var<sub>p</sub>(s)</code> their Prop.&nbsp;2
+    (also Dabah &amp; Tirer, ICML&nbsp;2025). <b>We contribute the certificate, not the
+    phenomenon:</b> on frozen GPT-tiny scores we
+    <span class="badge enclosed">decide</span> PR↓ for
+    <code>w∝(1+&beta;·s)<sup>p</sup></code> in exact rationals, and
+    <span class="badge enclosed">enclose</span> softmax H/PR on the committed grid
+    (and continuous-&beta; sign via those identities) with sound interval
+    <code>exp</code>/<code>log</code>, consecutive boxes
+    <code>hi(&beta;<sub>i+1</sub>)&lt;lo(&beta;<sub>i</sub>)</code>, and planted mutants
+    that go red.</p>
+  </div>
+
+  <div class="plain">
+    <h2>Object <span class="tag">one frozen row</span></h2>
+    <p class="note" style="margin-top:0">Scores <code>s</code> are the last-query causal
+    attention logits from a tiny GPT at seed&nbsp;0 (31 positions). Grid
+    &beta; ∈ {0.25, 0.5, 1, 1.5, 2, 3, 4, 6, 8}. Nothing here is trained; the fixture is
+    committed and sha256-pinned in each certificate.</p>
+    <div class="three" aria-label="Claim status">
+      <div class="cell">
+        <div class="k">Ours</div>
+        <div class="v">Exact PR↓ <span class="badge enclosed">decided</span> (rational) ·
+          softmax H/PR <span class="badge enclosed">enclosed</span> · red mutants ·
+          sha256-pinned certs.</div>
+      </div>
+      <div class="cell">
+        <div class="k">Classical (not ours)</div>
+        <div class="v">Softmax H↓ / PR↓ in &beta;; identity
+          <code>dH/d&beta;=&minus;&beta;&thinsp;Var<sub>p</sub>(s)</code>. Cite and enclose
+          &mdash; do not re-derive.</div>
+      </div>
+      <div class="cell">
+        <div class="k">Out of scope</div>
+        <div class="v">Training dynamics, token clustering, efficient attention architectures.
+          Those are crowded fields; this note does not re-enter them.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sec">Two certificates, one fixture</h3>
+  <div class="card">
+    <p class="note" style="margin-top:0"><b>A &mdash; Softmax (enclosed).</b>
+    <i>Bounds that contain the truth, not a float that looks tidy.</i>
+    Shannon entropy and participation ratio of <code>softmax(&beta;·s)</code> decrease on the
+    grid after sound interval enclosure; consecutive boxes separate. Continuous-&beta; sign on
+    <code>(0,&infin;)</code> for this non-flat fixture follows the published identities
+    <code>dH/d&beta;=&minus;&beta; Var<sub>p</sub>(s)</code> (Mattei &amp; Loureiro Prop.&nbsp;2)
+    and <code>d(&Sigma;p&sup2;)/d&beta;=2 Cov<sub>p</sub>(p,s)</code>. Certs:
+    <code>CERT-ml-beta-softmax.json</code>, <code>CERT-ml-beta-continuous.json</code>.</p>
+    <p class="note"><b>B &mdash; Rational kernel (decided).</b>
+    <i>When intervals hesitate, rationals finish the argument.</i>
+    On the substitute
+    <code>w<sub>i</sub> ∝ (1+&beta;·s<sub>i</sub>)<sup>2</sup></code>
+    (same spirit as
+    <a href="/technical-reports/rational-attention">rational attention</a>),
+    participation ratio is strictly decreasing &mdash; decided by exact BigInt comparison.
+    Sibling <code>p=1</code> and dual <code>&Sigma;w&sup2;</code>↑ also decide. Cert:
+    <code>CERT-ml-beta-pr.json</code>.</p>
+    <p class="note"><b>Falsifiers (must stay red).</b>
+    <i>A claim that cannot fail is not a claim.</i>
+    Flatten <code>s</code>; replace <code>&beta;·s</code> by <code>(&beta;&minus;3)&sup2;·s</code>;
+    control that the true curve is not increasing.</p>
+  </div>
+
+  <h3 class="sec">Related work</h3>
+  <div class="card">
+    <p class="note" style="margin-top:0">The <b>mechanism</b> &mdash; softmax concentration under
+    temperature &mdash; is occupied. The wedge this note claims is the
+    <b>machine-checkable decision with falsifiers</b> on a committed fixture.</p>
+    <div class="tablewrap">
+      <table class="mono ledger">
+        <thead><tr><th>source</th><th>relation</th><th>here</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Mattei &amp; Loureiro, <a href="https://arxiv.org/abs/2602.14862">arXiv:2602.14862</a></td>
+            <td>Prop.&nbsp;2: <code>dH/d&beta;=&minus;&beta; Var</code>; Thm&nbsp;3.1 majorization</td>
+            <td class="src">Cite; enclose; do not derive</td>
+          </tr>
+          <tr>
+            <td>Dabah &amp; Tirer, ICML 2025 (<a href="https://arxiv.org/abs/2402.05806">arXiv:2402.05806</a>)</td>
+            <td>Temperature / majorization for softmax</td>
+            <td class="src">Cite as mechanism</td>
+          </tr>
+          <tr>
+            <td>ATMA (<a href="https://arxiv.org/abs/2606.25156">arXiv:2606.25156</a>)</td>
+            <td>PR as a count channel in architectures</td>
+            <td class="src">Same statistic, different job</td>
+          </tr>
+          <tr>
+            <td>Geshkovski et al., NeurIPS 2023</td>
+            <td>Token particles cluster under attention</td>
+            <td class="src">Sibling object; not this claim</td>
+          </tr>
+          <tr>
+            <td>Poly-attention / sinks literature</td>
+            <td>Efficiency, KV practice, training entropy</td>
+            <td class="src">Crowded; out of scope</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3 class="sec">Method</h3>
+  <div class="card">
+    <p class="note" style="margin-top:0">When the arithmetic cannot represent the model
+    honestly, <b>change the model</b> until the claim is decidable &mdash; keep the phenomenon,
+    keep the falsifiers. Rational PR↓ is owned by a short Chebyshev-association identity on this fixture (exact rationals). That rule is the load-bearing transfer from
+    <a href="/technical-reports/huggett-rational">het-agent macro with only + − × ÷</a>
+    and
+    <a href="/technical-reports/rational-attention">rational attention</a>.
+    Softmax enclosure uses the shared interval
+    <code>exp</code>/<code>log</code> in
+    <a href="/technical-reports/interval-transcendentals">interval transcendentals</a>
+    (<code>eqcert</code>.</p>
+    <ul class="tight" style="margin-top:8px">
+      <li><b>Decide</b> &mdash; exact rationals when IEEE floats only approximate.</li>
+      <li><b>Enclose</b> &mdash; sound intervals when the model needs transcendentals.</li>
+      <li><b>Falsify</b> &mdash; planted mutants that must refuse, or the claim is vacuous.</li>
+    </ul>
+  </div>
+
+  <div class="caveat">
+    <p><b>Scope.</b> Continuous-&beta; H/PR holds for this frozen non-flat score vector
+    (Var + Cov identities). Not a claim about trained dynamics, token clustering, or
+    attention efficiency. The three JSON certificates pin the fixture and verifier by
+    sha256; re-run them to reproduce.</p>
+  </div>
+
+  <div class="dlbar plain">
+    <span class="dlbar-txt">Re-run the rational PR certificate locally.</span>
+    <button class="dlproof" type="button">&#8681;&ensp;Download the verifier</button>
+  </div>
+
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot">
+    Carlos Toledo · attention geometry ·
+    <a href="/technical-reports">technical reports</a> ·
+    certificates ship beside this page
+    (<code>CERT-ml-beta-{pr,softmax,continuous}.json</code>)
+  </div>
+
+</div>
+<script>
+'use strict';
+/* Instrument: float recompute of the frozen-score comparison.
+   Exact rational decision is NOT claimed here — see beta_bracket_rational.js. */
+(function () {
+  const FIX = {
+    scores: [-0.006244686667944583,0.009383485655587137,0.026350683891400856,0.0016395706897503288,-0.0008126143380353603,0.016999061088513567,-0.02003186905922297,-0.0002932978869002959,-0.016945337622253722,-0.002777432087147219,0.0015457793244680216,-0.014423454774380801,0.01035641755755256,0.01721700215071087,-0.0036735485529039574,0.015610013203252112,-0.0031262436382945864,-0.007819210065303166,-0.0022981812158066306,0.0029081189629996656,0.03477829679899534,-0.0003601236294067441,-0.0038449052218670655,0.016937875196637635,0.0072255203987375985,0.013836544810765423,0.016754166136397457,0.010088141717905803,-0.006244804451160461,0.005167151014256437,-0.020716426069377368],
+    betas: [0.25, 0.5, 1, 1.5, 2, 3, 4, 6, 8],
+    P: 2
+  };
+
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const C = {
+    fp: () => css('--fp') || '#6F93A1',
+    fpDeep: () => css('--fp-deep') || '#4F6F7A',
+    amber: () => css('--amber') || '#475569',
+    ink: () => css('--ink') || '#0F172A',
+    soft: () => css('--ink-soft') || '#64748B',
+    grid: () => css('--grid') || '#E2E8F0',
+    paper: () => css('--paper') || '#F8F8FA',
+    bad: () => css('--bad') || '#B42318'
+  };
+
+  function softmax(logits) {
+    let m = -Infinity;
+    for (let i = 0; i < logits.length; i++) if (logits[i] > m) m = logits[i];
+    const e = new Array(logits.length);
+    let z = 0;
+    for (let i = 0; i < logits.length; i++) { e[i] = Math.exp(logits[i] - m); z += e[i]; }
+    for (let i = 0; i < e.length; i++) e[i] /= z;
+    return e;
+  }
+  function rationalW(logits, p) {
+    const u = new Array(logits.length);
+    let z = 0;
+    for (let i = 0; i < logits.length; i++) {
+      const base = 1 + logits[i];
+      u[i] = base > 0 ? Math.pow(base, p) : 0;
+      z += u[i];
+    }
+    if (!(z > 0)) return u.map(() => 1 / u.length);
+    for (let i = 0; i < u.length; i++) u[i] /= z;
+    return u;
+  }
+  function entropy(p) {
+    let h = 0;
+    for (let i = 0; i < p.length; i++) if (p[i] > 0) h -= p[i] * Math.log(p[i]);
+    return h;
+  }
+  function pr(p) {
+    let s2 = 0;
+    for (let i = 0; i < p.length; i++) s2 += p[i] * p[i];
+    return 1 / s2;
+  }
+  function maxOf(p) {
+    let m = p[0];
+    for (let i = 1; i < p.length; i++) if (p[i] > m) m = p[i];
+    return m;
+  }
+
+  let mode = 'true'; /* true | flat | quad */
+  const betaEl = document.getElementById('beta');
+  const betaVal = document.getElementById('betaVal');
+  const cvW = document.getElementById('cvW');
+  const cvPR = document.getElementById('cvPR');
+  const ctxW = cvW.getContext('2d');
+  const ctxPR = cvPR.getContext('2d');
+
+  function logitsAt(beta) {
+    /* match battery scaleFns: true → β·s ; flat → 0 ; quad → (β−3)²·s */
+    if (mode === 'flat') return FIX.scores.map(() => 0);
+    if (mode === 'quad') {
+      const k = (beta - 3) * (beta - 3);
+      return FIX.scores.map(s => k * s);
+    }
+    return FIX.scores.map(s => beta * s);
+  }
+
+  function sizeCanvas(cv, ctx) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = cv.getBoundingClientRect();
+    const w = Math.max(1, Math.round(rect.width));
+    const h = Math.max(1, Math.round(rect.height));
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) {
+      cv.width = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { w, h };
+  }
+
+  function drawWeights(beta) {
+    const { w, h } = sizeCanvas(cvW, ctxW);
+    const logits = logitsAt(beta);
+    const ps = softmax(logits);
+    const prr = rationalW(logits, FIX.P);
+    ctxW.clearRect(0, 0, w, h);
+    ctxW.fillStyle = C.paper();
+    ctxW.fillRect(0, 0, w, h);
+    const pad = { l: 28, r: 10, t: 12, b: 22 };
+    const n = ps.length;
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const gap = 1;
+    const pairW = plotW / n;
+    const barW = Math.max(1, (pairW - gap) / 2);
+    let ymax = 0;
+    for (let i = 0; i < n; i++) ymax = Math.max(ymax, ps[i], prr[i]);
+    ymax *= 1.08;
+    ctxW.strokeStyle = C.grid();
+    ctxW.beginPath();
+    ctxW.moveTo(pad.l, pad.t);
+    ctxW.lineTo(pad.l, pad.t + plotH);
+    ctxW.lineTo(pad.l + plotW, pad.t + plotH);
+    ctxW.stroke();
+    for (let i = 0; i < n; i++) {
+      const x0 = pad.l + i * pairW;
+      const hs = (ps[i] / ymax) * plotH;
+      const hr = (prr[i] / ymax) * plotH;
+      ctxW.fillStyle = C.soft();
+      ctxW.globalAlpha = 0.9;
+      ctxW.fillRect(x0, pad.t + plotH - hs, barW, hs);
+      ctxW.fillStyle = C.fp();
+      ctxW.fillRect(x0 + barW + gap * 0.3, pad.t + plotH - hr, barW, hr);
+      ctxW.globalAlpha = 1;
+    }
+    ctxW.fillStyle = C.soft();
+    ctxW.font = '10px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctxW.fillText('slate=softmax  teal=rational p=2', pad.l, h - 6);
+  }
+
+  function curvePR() {
+    const soft = [], rat = [];
+    for (let i = 0; i < FIX.betas.length; i++) {
+      const b = FIX.betas[i];
+      const logits = logitsAt(b);
+      soft.push(pr(softmax(logits)));
+      rat.push(pr(rationalW(logits, FIX.P)));
+    }
+    return { soft, rat };
+  }
+
+  function drawPR(betaIdx) {
+    const { w, h } = sizeCanvas(cvPR, ctxPR);
+    const { soft, rat } = curvePR();
+    ctxPR.clearRect(0, 0, w, h);
+    ctxPR.fillStyle = C.paper();
+    ctxPR.fillRect(0, 0, w, h);
+    const pad = { l: 42, r: 12, t: 14, b: 28 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    let ymin = Infinity, ymax = -Infinity;
+    for (let i = 0; i < soft.length; i++) {
+      ymin = Math.min(ymin, soft[i], rat[i]);
+      ymax = Math.max(ymax, soft[i], rat[i]);
+    }
+    if (ymax - ymin < 1e-9) { ymin -= 0.5; ymax += 0.5; }
+    const padY = (ymax - ymin) * 0.08;
+    ymin -= padY; ymax += padY;
+    const xAt = (i) => pad.l + (i / (FIX.betas.length - 1)) * plotW;
+    const yAt = (v) => pad.t + (1 - (v - ymin) / (ymax - ymin)) * plotH;
+
+    ctxPR.strokeStyle = C.grid();
+    ctxPR.beginPath();
+    ctxPR.moveTo(pad.l, pad.t);
+    ctxPR.lineTo(pad.l, pad.t + plotH);
+    ctxPR.lineTo(pad.l + plotW, pad.t + plotH);
+    ctxPR.stroke();
+
+    function strokeSeries(arr, color) {
+      ctxPR.strokeStyle = color;
+      ctxPR.lineWidth = 1.75;
+      ctxPR.beginPath();
+      for (let i = 0; i < arr.length; i++) {
+        const x = xAt(i), y = yAt(arr[i]);
+        if (i === 0) ctxPR.moveTo(x, y); else ctxPR.lineTo(x, y);
+      }
+      ctxPR.stroke();
+      ctxPR.fillStyle = color;
+      for (let i = 0; i < arr.length; i++) {
+        ctxPR.beginPath();
+        ctxPR.arc(xAt(i), yAt(arr[i]), 2.4, 0, Math.PI * 2);
+        ctxPR.fill();
+      }
+    }
+    strokeSeries(soft, C.soft());
+    strokeSeries(rat, C.fpDeep());
+
+    /* slider marker */
+    const xm = xAt(betaIdx);
+    ctxPR.strokeStyle = C.ink();
+    ctxPR.globalAlpha = 0.35;
+    ctxPR.beginPath();
+    ctxPR.moveTo(xm, pad.t);
+    ctxPR.lineTo(xm, pad.t + plotH);
+    ctxPR.stroke();
+    ctxPR.globalAlpha = 1;
+
+    ctxPR.fillStyle = C.soft();
+    ctxPR.font = '10px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctxPR.fillText('β', pad.l + plotW - 10, h - 8);
+    ctxPR.fillText(ymin.toFixed(2), 4, pad.t + plotH);
+    ctxPR.fillText(ymax.toFixed(2), 4, pad.t + 8);
+
+    /* decrease receipt */
+    let decS = true, decR = true;
+    for (let i = 0; i < soft.length - 1; i++) {
+      if (!(soft[i + 1] < soft[i])) decS = false;
+      if (!(rat[i + 1] < rat[i])) decR = false;
+    }
+    return { soft, rat, decS, decR };
+  }
+
+  function setChip(id, on) {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+
+  function redraw() {
+    const idx = +betaEl.value | 0;
+    const beta = FIX.betas[idx];
+    betaVal.textContent = String(beta);
+    const logits = logitsAt(beta);
+    const ps = softmax(logits);
+    const prr = rationalW(logits, FIX.P);
+    document.getElementById('prSoft').textContent = pr(ps).toFixed(4);
+    document.getElementById('prRat').textContent = pr(prr).toFixed(4);
+    document.getElementById('hSoft').textContent = entropy(ps).toFixed(6);
+    document.getElementById('maxW').textContent =
+      's ' + maxOf(ps).toFixed(4) + ' · r ' + maxOf(prr).toFixed(4);
+    drawWeights(beta); /* beta used only for label path; logitsAt owns scaling */
+    const { decS, decR } = drawPR(idx);
+    const st = document.getElementById('labStatus');
+    if (mode === 'true') {
+      st.textContent = 'true scores — PR↓ softmax ' + (decS ? 'yes' : 'NO') +
+        ' (enclosed) · PR↓ rational ' + (decR ? 'yes' : 'NO') +
+        ' (decided; float view here)';
+      st.style.color = (decS && decR) ? C.soft() : C.bad();
+    } else if (mode === 'flat') {
+      st.textContent = 'mutant flat — decrease must FAIL (PR ≈ dim=' + FIX.scores.length + ') · ' +
+        'soft↓=' + decS + ' rat↓=' + decR;
+      st.style.color = (!decS && !decR) ? C.soft() : C.bad();
+    } else {
+      st.textContent = 'mutant (β−3)²·s — decrease must FAIL · soft↓=' + decS + ' rat↓=' + decR;
+      st.style.color = (!decS && !decR) ? C.soft() : C.bad();
+    }
+  }
+
+  betaEl.addEventListener('input', redraw);
+  document.getElementById('chipTrue').addEventListener('click', () => {
+    mode = 'true'; setChip('chipTrue', true); setChip('chipFlat', false); setChip('chipQuad', false); redraw();
+  });
+  document.getElementById('chipFlat').addEventListener('click', () => {
+    mode = 'flat'; setChip('chipTrue', false); setChip('chipFlat', true); setChip('chipQuad', false); redraw();
+  });
+  document.getElementById('chipQuad').addEventListener('click', () => {
+    mode = 'quad'; setChip('chipTrue', false); setChip('chipFlat', false); setChip('chipQuad', true); redraw();
+  });
+  window.addEventListener('resize', redraw);
+  redraw();
+})();
+</script>
+
+<script>
+window.__VERIFY_ML_BETA_B64 = "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwojIC0qLSBjb2Rpbmc6IHV0Zi04IC0qLQoiIiJ2ZXJpZnlfbWxfYmV0YS5weSDigJQgc2VsZi1jb250YWluZWQgdmVyaWZpZXIgZm9yIHRoZSBhdHRlbnRpb24tZ2VvbWV0cnkgbm90ZS4KCkRlY2lkZXMsIHdpdGggUHl0aG9uIGZyYWN0aW9ucyBvbmx5IChzdGRsaWIpLCB0aGF0IG9uIHRoZSBmcm96ZW4gR1BULXRpbnkKYXR0ZW50aW9uIHNjb3JlcyBlbWJlZGRlZCBiZWxvdzoKCiAgwrcgUFIodykgZm9yIHdfaSDiiJ0gKDErzrLCt3NfaSlecCAgaXMgc3RyaWN0bHkgZGVjcmVhc2luZyBvbiB0aGUgzrItZ3JpZCAocD0yLCBwPTEpCiAgwrcgZHVhbCDOo3fCsiBpcyBzdHJpY3RseSBpbmNyZWFzaW5nIChwPTIpCiAgwrcgZmxhdCBzY29yZXMgZ2l2ZSBQUiA9IGRpbSBleGFjdGx5CiAgwrcgcGxhbnRlZCBtdXRhbnRzIChmbGF0OyAozrLiiJIzKcKywrdzKSBmYWlsIHN0cmljdCBkZWNyZWFzZQogIMK3IGZpeHR1cmUgc2hhMjU2IG1hdGNoZXMgdGhlIHRocmVlIHB1Ymxpc2hlZCBjZXJ0aWZpY2F0ZXMnIHBpbgoKU29mdG1heCBIL1BSIHNvdW5kIGVuY2xvc3VyZSB1c2VzIGludGVydmFsIGV4cC9sb2cgaW4gZXFjZXJ0IChOb2RlKS4gVGhpcyBmaWxlCmRlY2lkZXMgdGhlIHJhdGlvbmFsLWtlcm5lbCBjZXJ0aWZpY2F0ZSDigJQgdGhlIGRpc3RpbmN0aXZlIGhhbGYg4oCUIGFuZCBjaGVja3MgdGhlCnBpbnMuIEEgc2tlcHRpY2FsIHJlYWRlciBuZWVkcyBvbmx5OgoKICAgIHB5dGhvbjMgdmVyaWZ5X21sX2JldGEucHkKClNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBNSVQKQ29weXJpZ2h0IChjKSAyMDI2IENhcmxvcyBUb2xlZG8KIiIiCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBoYXNobGliCmltcG9ydCBqc29uCmltcG9ydCBzeXMKZnJvbSBmcmFjdGlvbnMgaW1wb3J0IEZyYWN0aW9uCmZyb20gdHlwaW5nIGltcG9ydCBDYWxsYWJsZSwgTGlzdCwgU2VxdWVuY2UKCiMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiMgQ0VSVElGSUNBVEUgREFUQSAoY29tbWl0dGVkIGZpeHR1cmUg4oCUIHNoYTI1NiBwaW5uZWQgaW4gQ0VSVC1tbC1iZXRhLSouanNvbikKIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KClNFRUQgPSAwClBfUFJJTUFSWSA9IDIKQkVUQV9HUklEID0gW0ZyYWN0aW9uKCIxLzQiKSwgRnJhY3Rpb24oIjEvMiIpLCBGcmFjdGlvbigxKSwgRnJhY3Rpb24oIjMvMiIpLAogICAgICAgICAgICAgRnJhY3Rpb24oMiksIEZyYWN0aW9uKDMpLCBGcmFjdGlvbig0KSwgRnJhY3Rpb24oNiksIEZyYWN0aW9uKDgpXQojIElFRUUgYmluYXJ5NjQgc2NvcmVzLCB3cml0dGVuIGFzIGV4YWN0IEZyYWN0aW9uKG51bWVyYXRvcikvMioqayB2aWEgZnJvbSBmbG9hdCBiaXRzLgojIFN0b3JlZCBhcyB0aGUgc2FtZSBkZWNpbWFsIGxpdGVyYWxzIGFzIGZpeHR1cmVzL2Zyb3plbl9hdHRuX3Njb3Jlcy5qc29uOyBGcmFjdGlvbgojIGZyb20gZmxvYXQgaXMgbG9zc2xlc3MgZm9yIGZpbml0ZSBmbG9hdHMuClNDT1JFU19GNjQgPSBbCiAgICAtMC4wMDYyNDQ2ODY2Njc5NDQ1ODMsIDAuMDA5MzgzNDg1NjU1NTg3MTM3LCAwLjAyNjM1MDY4Mzg5MTQwMDg1NiwKICAgIDAuMDAxNjM5NTcwNjg5NzUwMzI4OCwgLTAuMDAwODEyNjE0MzM4MDM1MzYwMywgMC4wMTY5OTkwNjEwODg1MTM1NjcsCiAgICAtMC4wMjAwMzE4NjkwNTkyMjI5NywgLTAuMDAwMjkzMjk3ODg2OTAwMjk1OSwgLTAuMDE2OTQ1MzM3NjIyMjUzNzIyLAogICAgLTAuMDAyNzc3NDMyMDg3MTQ3MjE5LCAwLjAwMTU0NTc3OTMyNDQ2ODAyMTYsIC0wLjAxNDQyMzQ1NDc3NDM4MDgwMSwKICAgIDAuMDEwMzU2NDE3NTU3NTUyNTYsIDAuMDE3MjE3MDAyMTUwNzEwODcsIC0wLjAwMzY3MzU0ODU1MjkwMzk1NzQsCiAgICAwLjAxNTYxMDAxMzIwMzI1MjExMiwgLTAuMDAzMTI2MjQzNjM4Mjk0NTg2NCwgLTAuMDA3ODE5MjEwMDY1MzAzMTY2LAogICAgLTAuMDAyMjk4MTgxMjE1ODA2NjMwNiwgMC4wMDI5MDgxMTg5NjI5OTk2NjU2LCAwLjAzNDc3ODI5Njc5ODk5NTM0LAogICAgLTAuMDAwMzYwMTIzNjI5NDA2NzQ0MSwgLTAuMDAzODQ0OTA1MjIxODY3MDY1NSwgMC4wMTY5Mzc4NzUxOTY2Mzc2MzUsCiAgICAwLjAwNzIyNTUyMDM5ODczNzU5ODUsIDAuMDEzODM2NTQ0ODEwNzY1NDIzLCAwLjAxNjc1NDE2NjEzNjM5NzQ1NywKICAgIDAuMDEwMDg4MTQxNzE3OTA1ODAzLCAtMC4wMDYyNDQ4MDQ0NTExNjA0NjEsIDAuMDA1MTY3MTUxMDE0MjU2NDM3LAogICAgLTAuMDIwNzE2NDI2MDY5Mzc3MzY4LApdCkZJWFRVUkVfU0hBMjU2ID0gIjRmMTU3NDNlYTMzZTc5NzJmYjkxZWQ0ZGY0MTJjNmNkNzFjNWQ4YWViNTc2MzlkMjcxN2UyMjg3NmM4YTljYTMiCgpwYXNzZWQgPSAwCmZhaWxlZCA9IDAKCgpkZWYgY2hlY2sobmFtZTogc3RyLCBjb25kOiBib29sLCBkZXRhaWw6IHN0ciA9ICIiKSAtPiBOb25lOgogICAgZ2xvYmFsIHBhc3NlZCwgZmFpbGVkCiAgICBpZiBjb25kOgogICAgICAgIHBhc3NlZCArPSAxCiAgICAgICAgcHJpbnQoZiIgIG9rICB7bmFtZX0iICsgKGYiICAge2RldGFpbH0iIGlmIGRldGFpbCBlbHNlICIiKSkKICAgIGVsc2U6CiAgICAgICAgZmFpbGVkICs9IDEKICAgICAgICBwcmludChmIiAgRkFJTCB7bmFtZX0iICsgKGYiICAge2RldGFpbH0iIGlmIGRldGFpbCBlbHNlICIiKSkKCgpkZWYgZjY0X3RvX3EoeDogZmxvYXQpIC0+IEZyYWN0aW9uOgogICAgIiIiTG9zc2xlc3M6IGV2ZXJ5IGZpbml0ZSBmbG9hdCBpcyBhbiBleGFjdCBkeWFkaWMgcmF0aW9uYWwuIiIiCiAgICByZXR1cm4gRnJhY3Rpb24oeCkKCgpkZWYgbW9tZW50cyhzY29yZXM6IFNlcXVlbmNlW0ZyYWN0aW9uXSwgYmV0YTogRnJhY3Rpb24sIHA6IGludCk6CiAgICB1cyA9IFtdCiAgICBmb3IgcyBpbiBzY29yZXM6CiAgICAgICAgYmFzZSA9IDEgKyBiZXRhICogcwogICAgICAgIGlmIGJhc2UgPD0gMDoKICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigia2VybmVsIGJhc2Ugbm9uLXBvc2l0aXZlIikKICAgICAgICB1cy5hcHBlbmQoYmFzZSAqKiBwKQogICAgWiA9IHN1bSh1cywgRnJhY3Rpb24oMCkpCiAgICBTMnUgPSBzdW0oKHUgKiB1IGZvciB1IGluIHVzKSwgRnJhY3Rpb24oMCkpCiAgICBTMiA9IFMydSAvIChaICogWikKICAgIFBSID0gMSAvIFMyCiAgICByZXR1cm4gUFIsIFMyCgoKZGVmIGN1cnZlKHNjb3JlczogU2VxdWVuY2VbRnJhY3Rpb25dLCBiZXRhczogU2VxdWVuY2VbRnJhY3Rpb25dLCBwOiBpbnQsCiAgICAgICAgICBzY2FsZTogQ2FsbGFibGVbW0ZyYWN0aW9uLCBGcmFjdGlvbl0sIEZyYWN0aW9uXSk6CiAgICBvdXQgPSBbXQogICAgZm9yIGIgaW4gYmV0YXM6CiAgICAgICAgbG9naXRzID0gW3NjYWxlKGIsIHMpIGZvciBzIGluIHNjb3Jlc10KICAgICAgICAjIG1vbWVudHMgZXhwZWN0cyBzY29yZXM7IHBhc3MgbG9naXRzIGFzICJzIiB3aXRoIGJldGE9MSDihpIgYmFzZT0xK2xvZ2l0CiAgICAgICAgdXMgPSBbXQogICAgICAgIGZvciBsb2dpdCBpbiBsb2dpdHM6CiAgICAgICAgICAgIGJhc2UgPSAxICsgbG9naXQKICAgICAgICAgICAgaWYgYmFzZSA8PSAwOgogICAgICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigia2VybmVsIGJhc2Ugbm9uLXBvc2l0aXZlIikKICAgICAgICAgICAgdXMuYXBwZW5kKGJhc2UgKiogcCkKICAgICAgICBaID0gc3VtKHVzLCBGcmFjdGlvbigwKSkKICAgICAgICBTMnUgPSBzdW0oKHUgKiB1IGZvciB1IGluIHVzKSwgRnJhY3Rpb24oMCkpCiAgICAgICAgUzIgPSBTMnUgLyAoWiAqIFopCiAgICAgICAgb3V0LmFwcGVuZCgoMSAvIFMyLCBTMikpCiAgICByZXR1cm4gb3V0CgoKZGVmIHN0cmljdGx5X2RlY3JlYXNpbmcodmFsczogU2VxdWVuY2VbRnJhY3Rpb25dKSAtPiBib29sOgogICAgcmV0dXJuIGFsbCh2YWxzW2kgKyAxXSA8IHZhbHNbaV0gZm9yIGkgaW4gcmFuZ2UobGVuKHZhbHMpIC0gMSkpCgoKZGVmIHN0cmljdGx5X2luY3JlYXNpbmcodmFsczogU2VxdWVuY2VbRnJhY3Rpb25dKSAtPiBib29sOgogICAgcmV0dXJuIGFsbCh2YWxzW2kgKyAxXSA+IHZhbHNbaV0gZm9yIGkgaW4gcmFuZ2UobGVuKHZhbHMpIC0gMSkpCgoKZGVmIGZpeHR1cmVfc2hhKCkgLT4gc3RyOgogICAgcGF5bG9hZCA9IHsKICAgICAgICAic2VlZCI6IFNFRUQsCiAgICAgICAgImJldGFfZ3JpZCI6IFtmbG9hdChiKSBmb3IgYiBpbiBCRVRBX0dSSURdLAogICAgICAgICJzY29yZXMiOiBTQ09SRVNfRjY0LAogICAgfQogICAgIyBNYXRjaCB0aGUgb24tZGlzayBKU09OIGZvcm1hdHRpbmcgdXNlZCB0byBjb21wdXRlIHRoZSBwaW46IHJlLWxvYWQgc3R5bGUuCiAgICAjIFRoZSBwaW4gaXMgb3ZlciBmaXh0dXJlcy9mcm96ZW5fYXR0bl9zY29yZXMuanNvbiBieXRlcywgbm90IGEgcmUtZHVtcC4KICAgICMgRW1iZWQgdGhvc2UgZXhhY3QgYnl0ZXMgYmVsb3cgYXMgRklYVFVSRV9KU09OLgogICAgcmV0dXJuIGhhc2hsaWIuc2hhMjU2KEZJWFRVUkVfSlNPTi5lbmNvZGUoInV0Zi04IikpLmhleGRpZ2VzdCgpCgoKIyBFeGFjdCBmaWxlIGJ5dGVzIG9mIGZpeHR1cmVzL2Zyb3plbl9hdHRuX3Njb3Jlcy5qc29uIChwaW4gc291cmNlKS4KRklYVFVSRV9KU09OID0gciIiInsKICAic2VlZCI6IDAsCiAgImJldGFfZ3JpZCI6IFsKICAgIDAuMjUsCiAgICAwLjUsCiAgICAxLjAsCiAgICAxLjUsCiAgICAyLjAsCiAgICAzLjAsCiAgICA0LjAsCiAgICA2LjAsCiAgICA4LjAKICBdLAogICJzY29yZXMiOiBbCiAgICAtMC4wMDYyNDQ2ODY2Njc5NDQ1ODMsCiAgICAwLjAwOTM4MzQ4NTY1NTU4NzEzNywKICAgIDAuMDI2MzUwNjgzODkxNDAwODU2LAogICAgMC4wMDE2Mzk1NzA2ODk3NTAzMjg4LAogICAgLTAuMDAwODEyNjE0MzM4MDM1MzYwMywKICAgIDAuMDE2OTk5MDYxMDg4NTEzNTY3LAogICAgLTAuMDIwMDMxODY5MDU5MjIyOTcsCiAgICAtMC4wMDAyOTMyOTc4ODY5MDAyOTU5LAogICAgLTAuMDE2OTQ1MzM3NjIyMjUzNzIyLAogICAgLTAuMDAyNzc3NDMyMDg3MTQ3MjE5LAogICAgMC4wMDE1NDU3NzkzMjQ0NjgwMjE2LAogICAgLTAuMDE0NDIzNDU0Nzc0MzgwODAxLAogICAgMC4wMTAzNTY0MTc1NTc1NTI1NiwKICAgIDAuMDE3MjE3MDAyMTUwNzEwODcsCiAgICAtMC4wMDM2NzM1NDg1NTI5MDM5NTc0LAogICAgMC4wMTU2MTAwMTMyMDMyNTIxMTIsCiAgICAtMC4wMDMxMjYyNDM2MzgyOTQ1ODY0LAogICAgLTAuMDA3ODE5MjEwMDY1MzAzMTY2LAogICAgLTAuMDAyMjk4MTgxMjE1ODA2NjMwNiwKICAgIDAuMDAyOTA4MTE4OTYyOTk5NjY1NiwKICAgIDAuMDM0Nzc4Mjk2Nzk4OTk1MzQsCiAgICAtMC4wMDAzNjAxMjM2Mjk0MDY3NDQxLAogICAgLTAuMDAzODQ0OTA1MjIxODY3MDY1NSwKICAgIDAuMDE2OTM3ODc1MTk2NjM3NjM1LAogICAgMC4wMDcyMjU1MjAzOTg3Mzc1OTg1LAogICAgMC4wMTM4MzY1NDQ4MTA3NjU0MjMsCiAgICAwLjAxNjc1NDE2NjEzNjM5NzQ1NywKICAgIDAuMDEwMDg4MTQxNzE3OTA1ODAzLAogICAgLTAuMDA2MjQ0ODA0NDUxMTYwNDYxLAogICAgMC4wMDUxNjcxNTEwMTQyNTY0MzcsCiAgICAtMC4wMjA3MTY0MjYwNjkzNzczNjgKICBdLAogICJyb3dzIjogWwogICAgewogICAgICAiYmV0YSI6IDAuMjUsCiAgICAgICJlbnRyb3B5IjogMy40MzM5ODIwNjczNTA1OTYsCiAgICAgICJwYXJ0aWNpcGF0aW9uX3JhdGlvIjogMzAuOTk5NjgxNDIwNzM4MjMsCiAgICAgICJtYXhfcHJvYiI6IDAuMDMyNTE0MDk3MjYzNDA4NzgKICAgIH0sCiAgICB7CiAgICAgICJiZXRhIjogMC41LAogICAgICAiZW50cm9weSI6IDMuNDMzOTY2NjQ1ODEzMTE1NywKICAgICAgInBhcnRpY2lwYXRpb25fcmF0aW8iOiAzMC45OTg3MjQ3NjEzNjEyMDMsCiAgICAgICJtYXhfcHJvYiI6IDAuMDMyNzcxODI1MzU1MTU2ODEKICAgIH0sCiAgICB7CiAgICAgICJiZXRhIjogMS4wLAogICAgICAiZW50cm9weSI6IDMuNDMzOTA0ODg4OTA4MTM5LAogICAgICAicGFydGljaXBhdGlvbl9yYXRpbyI6IDMwLjk5NDg5MTg1Nzc1NzkyLAogICAgICAibWF4X3Byb2IiOiAwLjAzMzI5MjM5OTA1MzU5NDc3NQogICAgfSwKICAgIHsKICAgICAgImJldGEiOiAxLjUsCiAgICAgICJlbnRyb3B5IjogMy40MzM4MDE4MTI5ODc3NDksCiAgICAgICJwYXJ0aWNpcGF0aW9uX3JhdGlvIjogMzAuOTg4NDkxMDY3NDcxMzIsCiAgICAgICJtYXhfcHJvYiI6IDAuMDMzODE5ODQ4NjE0MTA1NDgKICAgIH0sCiAgICB7CiAgICAgICJiZXRhIjogMi4wLAogICAgICAiZW50cm9weSI6IDMuNDMzNjU3Mjk4MDE2MDI5NCwKICAgICAgInBhcnRpY2lwYXRpb25fcmF0aW8iOiAzMC45Nzk1MTI5MjUwODgwNTYsCiAgICAgICJtYXhfcHJvYiI6IDAuMDM0MzU0MjM3MDk0NzcxMDYKICAgIH0sCiAgICB7CiAgICAgICJiZXRhIjogMy4wLAogICAgICAiZW50cm9weSI6IDMuNDMzMjQzNDc0NjAxNTU2MywKICAgICAgInBhcnRpY2lwYXRpb25fcmF0aW8iOiAzMC45NTM3OTA1NzcwNzM2ODYsCiAgICAgICJtYXhfcHJvYiI6IDAuMDM1NDQ0MDgzMjU3MDAxMgogICAgfSwKICAgIHsKICAgICAgImJldGEiOiA0LjAsCiAgICAgICJlbnRyb3B5IjogMy40MzI2NjI0NzM5MTMxMTc3LAogICAgICAicGFydGljaXBhdGlvbl9yYXRpbyI6IDMwLjkxNzY2NDY3NjQ2MjE5LAogICAgICAibWF4X3Byb2IiOiAwLjAzNjU2MjQ0MjY3MjcxMDM5NQogICAgfSwKICAgIHsKICAgICAgImJldGEiOiA2LjAsCiAgICAgICJlbnRyb3B5IjogMy40MzA5OTUyMjcyNzE2NDUsCiAgICAgICJwYXJ0aWNpcGF0aW9uX3JhdGlvIjogMzAuODE0MDI2MzQ2NDUwOTM3LAogICAgICAibWF4X3Byb2IiOiAwLjAzODg4NjcyMjA2MTU5MTM2CiAgICB9LAogICAgewogICAgICAiYmV0YSI6IDguMCwKICAgICAgImVudHJvcHkiOiAzLjQyODY0ODI3MDY2MzgzMjYsCiAgICAgICJwYXJ0aWNpcGF0aW9uX3JhdGlvIjogMzAuNjY4MzgwNDg4MDcxNTUyLAogICAgICAibWF4X3Byb2IiOiAwLjA0MTMzMTExMTc3Mzg4NzE5NAogICAgfQogIF0KfQoiIiIKCgpkZWYgbWFpbigpIC0+IGludDoKICAgIHByaW50KCI9PSB2ZXJpZnlfbWxfYmV0YTogcmF0aW9uYWwgYXR0ZW50aW9uIFBSIG9uIGZyb3plbiBHUFQtdGlueSBzY29yZXMgPT0iKQogICAgc2NvcmVzID0gW2Y2NF90b19xKHgpIGZvciB4IGluIFNDT1JFU19GNjRdCiAgICBkaW0gPSBsZW4oc2NvcmVzKQogICAgY2hlY2soImZpeHR1cmUtc2hhMjU2IiwgZml4dHVyZV9zaGEoKSA9PSBGSVhUVVJFX1NIQTI1NiwgZml4dHVyZV9zaGEoKVs6MTZdICsgIuKApiIpCgogICAgZGVmIHRydWVfc2NhbGUoYjogRnJhY3Rpb24sIHM6IEZyYWN0aW9uKSAtPiBGcmFjdGlvbjoKICAgICAgICByZXR1cm4gYiAqIHMKCiAgICBkZWYgZmxhdF9zY2FsZShiOiBGcmFjdGlvbiwgczogRnJhY3Rpb24pIC0+IEZyYWN0aW9uOgogICAgICAgIHJldHVybiBGcmFjdGlvbigwKQoKICAgIGRlZiBxdWFkX3NjYWxlKGI6IEZyYWN0aW9uLCBzOiBGcmFjdGlvbikgLT4gRnJhY3Rpb246CiAgICAgICAgcmV0dXJuIChiIC0gMykgKiAoYiAtIDMpICogcwoKICAgICMgcD0yIHByaW1hcnkKICAgIGN1ciA9IGN1cnZlKHNjb3JlcywgQkVUQV9HUklELCBQX1BSSU1BUlksIHRydWVfc2NhbGUpCiAgICBQUnMgPSBbY1swXSBmb3IgYyBpbiBjdXJdCiAgICBTMnMgPSBbY1sxXSBmb3IgYyBpbiBjdXJdCiAgICBjaGVjaygiUFItc3RyaWN0bHktZGVjcmVhc2luZy1wMiIsIHN0cmljdGx5X2RlY3JlYXNpbmcoUFJzKSwKICAgICAgICAgIGYiUFIwPXtmbG9hdChQUnNbMF0pOi42Zn0gUFJuPXtmbG9hdChQUnNbLTFdKTouNmZ9IikKICAgIGNoZWNrKCJTMi1zdHJpY3RseS1pbmNyZWFzaW5nLXAyIiwgc3RyaWN0bHlfaW5jcmVhc2luZyhTMnMpKQogICAgY2hlY2soImNvbnRyb2wtUFItbm90LWluY3JlYXNpbmciLCBub3Qgc3RyaWN0bHlfaW5jcmVhc2luZyhQUnMpKQoKICAgICMgcD0xIHNpYmxpbmcKICAgIGN1cjEgPSBjdXJ2ZShzY29yZXMsIEJFVEFfR1JJRCwgMSwgdHJ1ZV9zY2FsZSkKICAgIGNoZWNrKCJQUi1zdHJpY3RseS1kZWNyZWFzaW5nLXAxIiwgc3RyaWN0bHlfZGVjcmVhc2luZyhbY1swXSBmb3IgYyBpbiBjdXIxXSkpCgogICAgIyBmbGF0IG11dGFudAogICAgZmxhdF9zY29yZXMgPSBbRnJhY3Rpb24oMCldICogZGltCiAgICBmbGF0X2N1ciA9IGN1cnZlKGZsYXRfc2NvcmVzLCBCRVRBX0dSSUQsIFBfUFJJTUFSWSwgdHJ1ZV9zY2FsZSkKICAgIGZsYXRfUFJzID0gW2NbMF0gZm9yIGMgaW4gZmxhdF9jdXJdCiAgICBjaGVjaygibXV0YW50LWZsYXQtbm90LWRlY3JlYXNpbmciLCBub3Qgc3RyaWN0bHlfZGVjcmVhc2luZyhmbGF0X1BScykpCiAgICBjaGVjaygibXV0YW50LWZsYXQtUFItZXF1YWxzLWRpbSIsIGFsbChwciA9PSBkaW0gZm9yIHByIGluIGZsYXRfUFJzKSwgZiJQUj17ZmxhdF9QUnNbMF19IikKCiAgICAjIHF1YWRyYXRpYyBtdXRhbnQKICAgIHF1YWQgPSBjdXJ2ZShzY29yZXMsIEJFVEFfR1JJRCwgUF9QUklNQVJZLCBxdWFkX3NjYWxlKQogICAgY2hlY2soIm11dGFudC1xdWFkcmF0aWMtbm90LWRlY3JlYXNpbmciLAogICAgICAgICAgbm90IHN0cmljdGx5X2RlY3JlYXNpbmcoW2NbMF0gZm9yIGMgaW4gcXVhZF0pKQoKICAgICMgYmFzZXMgcG9zaXRpdmUgb24gdHJ1ZSBjdXJ2ZQogICAgb2tfYmFzZSA9IFRydWUKICAgIGZvciBiIGluIEJFVEFfR1JJRDoKICAgICAgICBmb3IgcyBpbiBzY29yZXM6CiAgICAgICAgICAgIGlmIDEgKyBiICogcyA8PSAwOgogICAgICAgICAgICAgICAgb2tfYmFzZSA9IEZhbHNlCiAgICBjaGVjaygia2VybmVsLWJhc2VzLXBvc2l0aXZlIiwgb2tfYmFzZSkKCiAgICBwcmludChmIj09IHZlcmlmeV9tbF9iZXRhOiB7cGFzc2VkfSBwYXNzZWQsIHtmYWlsZWR9IGZhaWxlZCA9PSIpCiAgICBpZiBmYWlsZWQ6CiAgICAgICAgcHJpbnQoIlJFRlVTRUQiKQogICAgICAgIHJldHVybiAxCiAgICBwcmludCgiQVRURU5USU9OIEdFT01FVFJZIChyYXRpb25hbCBQUik6IFZFUklGSUVEIikKICAgIHByaW50KCJub3RlOiBzb2Z0bWF4IEgvUFIgZW5jbG9zdXJlIGlzIHRoZSBzaWJsaW5nIE5vZGUvZXFjZXJ0IGNlcnRpZmljYXRlIikKICAgIHJldHVybiAwCgoKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIHN5cy5leGl0KG1haW4oKSkK";
+document.querySelectorAll('.dlproof').forEach(function(b){
+  b.addEventListener('click', function(){
+    try{
+      var bin = atob(window.__VERIFY_ML_BETA_B64 || '');
+      var u = new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) u[i] = bin.charCodeAt(i);
+      var url = URL.createObjectURL(new Blob([u], {type:'text/x-python'}));
+      var a = document.createElement('a'); a.href = url; a.download = 'verify_ml_beta.py';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }catch(e){ alert('Download failed: '+e); }
+  });
+});
+</script>
+
+</body>
+</html>

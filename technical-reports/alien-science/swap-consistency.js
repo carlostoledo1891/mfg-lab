@@ -3,8 +3,10 @@
 /*
  * swap-consistency.js — PATH 09 Phase-1 micro-kernel.
  *
- * Formal fragment from Anthropic AAR CCS+ES SOTA pseudocode (Alignment Science
- * Blog 2026-04-14): for binary preference probabilities under an exact A/B swap,
+ * Formal fragment from Anthropic AAR "CCS + Evolution Strategy Refinement"
+ * pseudocode (chat PGR 0.93; their SOTA is CCS + Self-Distill — Alignment
+ * Science Blog, April 2026): for binary preference probabilities under an
+ * exact A/B swap,
  *
  *   p_sc = (p_orig + (1 - p_swap)) / 2
  *
@@ -100,7 +102,7 @@ function disposeSample(pairs, eps) {
       },
       witness: {
         kind: 'exact-residual',
-        kernel: 'research/_frontier/alien-science/swap-consistency.js',
+        kernel: 'swap-consistency.js',
         payload: {
           n: pairs.length,
           eps: Q.toString(bound),
@@ -124,7 +126,7 @@ function disposeSample(pairs, eps) {
     },
     witness: {
       kind: 'exact-residual',
-      kernel: 'research/_frontier/alien-science/swap-consistency.js',
+      kernel: 'swap-consistency.js',
       payload: {
         n: pairs.length,
         eps: Q.toString(bound),
