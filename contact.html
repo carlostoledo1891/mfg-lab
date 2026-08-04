@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  CONTACT — the single contact point. Revamped 2026-07-30 onto the shared site chrome.
+
+  THE ONE IDEA. This is the only page permitted to carry a live `mailto:`. Every other shipped
+  page links to /contact instead of copying the address, so changing the address is ONE edit
+  rather than a dozen, and nothing can drift. The rule is mechanical, not remembered.
+
+  RULES this file obeys:
+   - Self-contained. No external CSS/JS/fonts/images, no network request of any kind.
+   - No form. There is no backend, and a form that silently discards a message is a
+     plausible-looking success — the house's oldest prohibition, applied to a contact page.
+   - No "request a pilot" CTA. There is no pilot.
+   - No status/rung/ledger facts. Those belong to the papers, where a gate pins them; a second
+     uncheckable copy here is exactly the drift this page exists to end.
+   - The page does NOT state its own crawl policy in visible prose. It used to print
+     "noindex,nofollow" in the footer and carry a "one address · noindex" pill in the topbar —
+     two extra copies of a fact the meta tag already holds, both of which went stale the moment
+     the meta changed on 2026-07-30. One fact, one place.
+   - SHORT, and measured short rather than remembered short.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Carlos Toledo</title>
+<meta name="description" content="One address. Carlos Toledo works alone. Email to challenge a certificate, to collaborate, or to ask what a certified equilibrium would be worth to you. No form, no queue, no sales process.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://mfg-lab.vercel.app/contact">
+<meta property="og:site_name" content="Carlos Toledo">
+<meta property="og:url" content="https://mfg-lab.vercel.app/contact">
+<meta property="og:title" content="Contact — Carlos Toledo">
+<meta property="og:description" content="One address, one person. Email to challenge a certificate, to collaborate, or to ask what this work is worth to you.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://mfg-lab.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mfg-lab.vercel.app/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ContactPage","url":"https://mfg-lab.vercel.app/contact","name":"Contact — Carlos Toledo","isPartOf":{"@type":"WebSite","url":"https://mfg-lab.vercel.app/","name":"Carlos Toledo"},"mainEntity":{"@type":"Person","name":"Carlos Toledo","email":"carlos@carlostoledo.co","url":"https://carlostoledo.co","jobTitle":"Founder","knowsAbout":["computer-assisted proof","validated numerics","mean-field games","price formation"]}}
+</script>
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px; --section-top:46px;
+    --card-pad:18px; --card-gap:14px; --radius:10px; --radius-sm:3px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.addr,.mono{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+
+  /* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in,.topbar .wrap{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+    font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{font-family:var(--data);font-size:12px;color:var(--ink-soft);font-weight:500;margin:0;max-width:none;letter-spacing:0}
+  /* MONOSPACED, matching the papers' breadcrumb. The descriptor names a LOCATION -- a page
+     or a path segment -- and locations on this site are set in --data everywhere else: the
+     crumb, the readouts, the status lines. Setting it in the body sans made the one piece of
+     chrome that says WHERE YOU ARE the only piece not using the data face. Owner's call,
+     2026-07-30. */
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .sitenav,.nav{gap:14px} .sitenav a,.nav a{font-size:10.5px;letter-spacing:.05em} }
+  /* NARROW SCREENS: the bar SCROLLS, it does not truncate and it does not drop links.
+     Measured during the 2026-07-30 rename: with the label spelled "Technical Reports" the four
+     links plus the brand pushed the document to 460px at 390px wide -- caught by the reports
+     battery, which is exactly what it was built for. The label was then shortened to "Reports"
+     (the path and the page title carry the full term), so the bar fits again and this rule is now
+     DEFENSIVE rather than load-bearing: it keeps the next longer label from overflowing instead of
+     silently dropping a link. Hiding links would make the nav lie about
+     the site's shape on the device most readers use; scrolling keeps all four reachable and keeps
+     the overflow inside the bar instead of dragging <body>. min-width:0 is required: a flex item
+     will not shrink below its content without it, so overflow-x would never engage. */
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  @media(max-width:430px){ .brand .sub{display:none} }
+  /* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+
+  .hero{padding:0}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.028em;
+    line-height:1.06;margin:12px 0 0;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:64ch;margin-top:16px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+
+  .addrcard{margin-top:34px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+    padding:24px 26px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .addrcard .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:12px}
+  .addr{font-family:var(--data);font-size:clamp(19px,2.7vw,27px);letter-spacing:-.01em;
+    color:var(--fp-deep);text-decoration:none;border-bottom:2px solid color-mix(in srgb,var(--fp-deep) 25%,transparent);
+    padding-bottom:2px;word-break:break-all}
+  .addr:hover{border-bottom-color:var(--fp-deep)}
+  .addrcard p{font-size:14px;line-height:1.64;color:var(--ink-soft);margin-top:16px;max-width:100%}
+  .addrcard p b{color:var(--ink);font-weight:600}
+
+  section{padding:var(--section-top) 0 0}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.018em;margin-bottom:8px;text-wrap:balance}
+  .sub{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:74ch;margin-bottom:20px}
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--card-gap)}
+  .col{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:20px 21px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .col h3{font-family:var(--ui);font-size:15.5px;font-weight:600;margin-bottom:9px;
+    display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .col p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .col p b{color:var(--ink);font-weight:600}
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.07em;
+    text-transform:uppercase;padding:1px 5px;border-radius:var(--radius-sm);border:1px solid transparent;white-space:nowrap;line-height:1.35;font-weight:500}
+  .badge.best{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.open{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.fine{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+
+  .caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;max-width:100%;margin-top:32px}
+  .caveat p{font-size:14px;line-height:1.66;color:var(--ink-soft)}
+  .caveat p b{color:var(--ink);font-weight:600}
+
+    .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+footer{margin-top:60px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:24px 20px 32px}
+  .foot{font-family:var(--data);font-size:11.5px;line-height:1.7;color:var(--ink-soft)}
+
+  
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Carlos Toledo &middot; Carlos Toledo</div>
+    <h1>One address.</h1>
+    <p class="lede">This is the only address. No form &mdash; there is no
+      backend behind one &mdash; and nothing to request a quote for. <b>Every other page links here
+      instead of carrying its own copy</b>, so it can only ever be wrong in one place.</p>
+
+    <div class="addrcard">
+      <div class="k">Email &mdash; the only channel</div>
+      <a class="addr" href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+      <p>Plain email; attachments are fine. Writing about a specific page? <b>Paste its URL.</b> Each
+        report ships the verifier that produced its numbers, so you can run it before you write &mdash;
+        and if it disagrees with the page, that is the most useful message you could send.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>What makes a message worth sending</h2>
+    <p class="sub">Three kinds of message get a real answer. Being specific is what makes a reply
+      possible; a one-line introduction usually cannot be answered with anything but another one.</p>
+    <div class="cols">
+      <div class="col">
+        <h3>Breaking a certificate <span class="badge best">most useful</span></h3>
+        <p>Name the artifact and the one step you doubt, then send the input you expect it to fail on.
+          <b>A reproducible counterexample beats agreement here</b>, and a refutation is published like
+          any other result &mdash; with your name on it if you want it there.</p>
+      </div>
+      <div class="col">
+        <h3>Collaborating <span class="badge open">open</span></h3>
+        <p>Say which result, and what you would do with it. The top rung of the ladder used here is
+          reserved for work <i>a named human reviewer</i> has tried to break &mdash; <b>the one thing
+          one person cannot supply</b>.</p>
+      </div>
+      <div class="col">
+        <h3>Putting it to work <span class="badge fine">welcome</span></h3>
+        <p>Say what you compute today, and what would go wrong if the answer were quietly off by a
+          little. That is far more answerable than "what do you do", and <b>the reply points at a page
+          you can re-run</b> rather than at a brochure.</p>
+      </div>
+    </div>
+
+    <div class="caveat">
+      <p><b>Not a support channel.</b> Nothing here is a product, so there is no queue, no SLA, no
+        on-call and no ticket to escalate. Replies come from one person between other work: often slow,
+        never guaranteed. Treat what you send as ordinary correspondence unless you say otherwise.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      Carlos Toledo &middot; Carlos Toledo &middot; Brazil, 2026<br>
+      one file &mdash; no libraries, no build step, no network requests, no analytics, no fonts fetched
+    </div>
+  </div>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+
+</footer>
+
+</body>
+</html>

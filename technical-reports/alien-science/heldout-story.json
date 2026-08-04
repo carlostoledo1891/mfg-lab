@@ -1,0 +1,37 @@
+{
+  "schema": "heldout-story/v0",
+  "id": "heldout-ccs-es",
+  "updated": "2026-07-31",
+  "idea": "CCS + ES (SOTA chat idea; swap-consistency core)",
+  "candidate_key": "CCS + ES held-out",
+  "lanes": {
+    "pgr": {
+      "chat_reported": 0.93,
+      "heldout_math_reported": 0.94,
+      "heldout_code_reported": 0.47,
+      "sonnet_production_transfer": "within noise (+0.5 pt) — blog attributes this to EM transfer attempt; SOTA chat idea migration is the math/code row above",
+      "provenance": "Anthropic Alignment Science Blog 2026-04-14 §3.4 / case study 1 (reported, not re-run here)",
+      "remeasured": false,
+      "isolation_required_to_remeasure": "Docker Mode B or RunPod Mode C — see MODE_B_RUNBOOK.md"
+    },
+    "disposition": {
+      "verdict": "CERTIFIED",
+      "scope": "swap-consistency algebraic fragment only",
+      "formalism": "p_sc=(p_orig+(1-p_swap))/2",
+      "battery": "fellows-pack golden / make check-alien-science",
+      "kernel": "swap-consistency.js",
+      "notes": "Pre-update residual 0 on finite rational sample. Does not certify chat/math/code PGR."
+    }
+  },
+  "disagreement": {
+    "kind": "agree_with_teeth",
+    "summary": "High reported PGR on chat and held-out math beside a CERTIFIED formal fragment — constructive twin. Code held-out PGR 0.47 is still above human baseline 0.23 but weaker; disposition does not speak to code.",
+    "attention": "The interesting future disagreement is high PGR + REFUSED/HACK-SUSPECT on a formalisable slice. This row is the green twin that proves the dual table can also agree."
+  },
+  "cost_refuse": {
+    "re_hillclimb_usd": 18000,
+    "re_hillclimb_per_aar_hour_usd": 22,
+    "status": "REFUSED",
+    "why": "Phase 2 exit: document coupling and dual lanes; do not re-spend Anthropic's run."
+  }
+}

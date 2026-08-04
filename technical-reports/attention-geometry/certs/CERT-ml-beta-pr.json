@@ -1,0 +1,46 @@
+{
+  "id": "CERT-ml-beta-pr",
+  "schema": "cert/v1-local",
+  "verdict": "DECIDED",
+  "what": "On fixtures/frozen_attn_scores.json, for kernel w_i ∝ (1+β·s_i)^p with integer p=2 (and p=1 sibling), participation ratio PR=(Σw)²/Σw² is strictly decreasing on the committed β-grid; dual Σw² strictly increasing (p=2). Decided by eqcert exact rationals (Q.fromDouble lossless on IEEE scores).",
+  "scope": "frozen GPTTiny layer-0/head-0 last-query scores at seed=0; β-grid from fixture; NOT a claim about softmax entropy or trained dynamics",
+  "claims": [
+    "PR-strictly-decreasing-exact-p2",
+    "S2-strictly-increasing-exact-p2",
+    "PR-strictly-decreasing-exact-p1",
+    "kernel-bases-positive",
+    "mutant-flat-PR-equals-dim-exact"
+  ],
+  "falsifiers_red": 3,
+  "falsifier_list": "flat s → PR=dim constant (not decreasing); (β−3)²·s → not monotone; control not-increasing",
+  "evidence": {
+    "dim": 31,
+    "p_primary": 2,
+    "beta_grid": [
+      0.25,
+      0.5,
+      1,
+      1.5,
+      2,
+      3,
+      4,
+      6,
+      8
+    ],
+    "PR0_float": 30.998727743482277,
+    "PRn_float": 29.798199870592192,
+    "gap_PR_float": 1.2005278728900886,
+    "min_base_float": 0.834268591444981
+  },
+  "reproduce": "node research/_ml/toy/beta_bracket_rational.js",
+  "fixture": {
+    "path": "research/_ml/fixtures/frozen_attn_scores.json",
+    "sha256": "4f15743ea33e7972fb91ed4df412c6cd71c5d8aeb57639d2717e22876c8a9ca3"
+  },
+  "verifier": {
+    "path": "research/_ml/toy/beta_bracket_rational.js",
+    "sha256": "96da1878598783f044ac9655ec3c4d7037c24d01d9e81e55210d74922ccc0026"
+  },
+  "frozen_at": "2026-08-01",
+  "note": "Local fixture cert (not ledger-minted). Do not call this enclosed softmax. T4 contribution: exact-rational decision + red mutants on a frozen fixture. Not a claim that the rational-kernel mechanism is novel (folklore-risk; Chebyshev/association)."
+}

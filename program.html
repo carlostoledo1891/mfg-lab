@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  PROGRAM — what has been certified, and what is being certified next. Revamped 2026-07-30 onto
+  the shared site chrome, and rebalanced on the owner's instruction: the page was ALL forward
+  agenda (a nine-candidate triage board) and showed nothing already delivered. A programme page
+  that lists only intentions reads as a plan, not a track record.
+
+  NO LEDGER IDENTIFIERS APPEAR HERE. The rule this tree uses is that an identifier is admissible
+  in public only when a reader can follow it, and no public projection resolves one today. So the
+  board below states COUNTS and MEASURED FACTS, which a reader can check by opening the paper
+  beside them, and never a record id.
+
+  NO LADDER WORD IS SPENT ON OUR OWN WORK WITHOUT ITS QUALIFIER. "Certified" appears for the
+  MECHANISM (an enclosure that closes, a duality gap that is zero) and, where it names a status,
+  it names the scope with it. The top rung requires a named human reviewer and is empty; that is
+  stated on the page rather than hidden.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Program — Carlos Toledo</title>
+<meta name="description" content="What has been certified and what it is certifying next: a congestion mean-field game enclosed at r=7.75e-15, a certified reproduction of a published Wardrop paper, water value by zero-gap duality — and a conjecture refuted and published as a result.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<link rel="canonical" href="https://mfg-lab.vercel.app/program">
+<meta property="og:site_name" content="Carlos Toledo">
+<meta property="og:url" content="https://mfg-lab.vercel.app/program">
+<meta property="og:title" content="Program — Carlos Toledo">
+<meta property="og:description" content="What has been certified, what survived attack, what was refuted, and what is next.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://mfg-lab.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mfg-lab.vercel.app/og.png">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px; --section-top:46px;
+    --card-pad:18px; --card-gap:14px; --radius:10px; --radius-sm:3px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.n,.k,.meta{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+  code{font-family:var(--data);font-size:.92em;
+    background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+  /* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in,.topbar .wrap{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+    font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{font-family:var(--data);font-size:12px;color:var(--ink-soft);font-weight:500;margin:0;max-width:none;letter-spacing:0}
+  /* MONOSPACED, matching the papers' breadcrumb. The descriptor names a LOCATION -- a page
+     or a path segment -- and locations on this site are set in --data everywhere else: the
+     crumb, the readouts, the status lines. Setting it in the body sans made the one piece of
+     chrome that says WHERE YOU ARE the only piece not using the data face. Owner's call,
+     2026-07-30. */
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .sitenav,.nav{gap:14px} .sitenav a,.nav a{font-size:10.5px;letter-spacing:.05em} }
+  /* NARROW SCREENS: the bar SCROLLS, it does not truncate and it does not drop links.
+     Measured during the 2026-07-30 rename: with the label spelled "Technical Reports" the four
+     links plus the brand pushed the document to 460px at 390px wide -- caught by the reports
+     battery, which is exactly what it was built for. The label was then shortened to "Reports"
+     (the path and the page title carry the full term), so the bar fits again and this rule is now
+     DEFENSIVE rather than load-bearing: it keeps the next longer label from overflowing instead of
+     silently dropping a link. Hiding links would make the nav lie about
+     the site's shape on the device most readers use; scrolling keeps all four reachable and keeps
+     the overflow inside the bar instead of dragging <body>. min-width:0 is required: a flex item
+     will not shrink below its content without it, so overflow-x would never engage. */
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  @media(max-width:430px){ .brand .sub{display:none} }
+  /* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+
+  .hero{padding:0}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.028em;
+    line-height:1.07;margin:12px 0 0;max-width:22ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:68ch;margin-top:16px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+
+  /* the scoreboard */
+  .board{margin-top:36px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+    padding:20px 22px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .board .cap{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:16px}
+  /* Six claims on one roll at desktop; collapse before labels wrap into a ragged row. */
+  .nums{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px 12px}
+  .nums > *{min-width:0}
+  @media(max-width:820px){.nums{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 20px}}
+  @media(max-width:480px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .n .v{font-family:var(--data);font-size:26px;line-height:1.2;color:var(--ink)}
+  .n .l{font-family:var(--data);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);margin-top:5px}
+  .board .note{font-size:var(--text-small);line-height:1.65;color:var(--ink-soft);margin-top:16px;
+    padding-top:14px;border-top:1px solid var(--grid);max-width:100%}
+  .board .note b{color:var(--ink);font-weight:600}
+
+  section{padding:var(--section-top) 0 0}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.018em;margin-bottom:9px;text-wrap:balance}
+  .sub{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:76ch;margin-bottom:22px}
+  .sub b{color:var(--ink);font-weight:600}
+
+  .rows{display:grid;gap:14px}
+  .row{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:19px 21px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+  .row .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .row h3{font-family:var(--ui);font-size:var(--text-h3);font-weight:600;letter-spacing:-.012em}
+  .row h3 a{color:var(--ink);text-decoration:none}
+  .row h3 a:hover{color:var(--fp-deep)}
+  .row p{font-size:var(--text-body);line-height:1.64;color:var(--ink-soft);max-width:92ch}
+  .row p b{color:var(--ink);font-weight:600}
+  .meta{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);margin-top:11px;
+    display:flex;flex-wrap:wrap;gap:5px 18px}
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.07em;
+    text-transform:uppercase;padding:1px 5px;border-radius:var(--radius-sm);border:1px solid transparent;white-space:nowrap;line-height:1.35;font-weight:500}
+  .badge.done{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.attacked{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.refuted{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.next{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.open{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.draft{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--card-gap);margin-top:28px}
+    .feat a{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--grid);
+    border-radius:var(--radius);padding:18px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .feat a:hover{border-color:color-mix(in srgb,var(--ink-soft) 40%,var(--grid))}
+  .feat .k{font-family:var(--data);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  .feat .t{font-family:var(--ui);font-size:var(--text-h3);font-weight:600;letter-spacing:-.014em;margin:8px 0 6px;color:var(--ink)}
+  .feat .d{font-size:13.5px;line-height:1.55;color:var(--ink-soft)}
+  .feat .d b{color:var(--ink);font-weight:600}
+  .dirlist{list-style:none;margin:0;padding:0;display:grid;gap:0}
+  .dirlist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:baseline;
+    padding:10px 0;border-top:1px solid var(--grid);font-size:var(--text-body)}
+  .dirlist li:first-child{border-top:0}
+  .dirlist a{color:var(--ink);text-decoration:none;font-weight:600}
+  .dirlist a:hover{color:var(--fp-deep)}
+  .dirlist .s{font-family:var(--data);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+
+  .caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;max-width:100%;margin-top:26px}
+  .caveat p{font-size:14px;line-height:1.66;color:var(--ink-soft);margin-bottom:10px}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat p b{color:var(--ink);font-weight:600}
+
+  .jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
+  .jump a{font-family:var(--data);font-size:10px;letter-spacing:.04em;text-decoration:none;font-weight:500;
+    border:1px solid var(--grid);border-radius:var(--radius-sm);padding:2px 7px;color:var(--ink);background:var(--grid)}
+  .jump a:hover{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:8px 0 14px}
+  table.mono{border-collapse:collapse;width:100%;font-family:var(--data);font-size:11.5px;margin:0;
+    min-width:min(560px,100%)}
+  table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--grid);
+    padding:7px 10px 7px 0;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  table.mono td{padding:7px 12px 7px 0;border-bottom:1px solid var(--grid);color:var(--ink);
+    vertical-align:top;line-height:1.5}
+  table.mono td.v{font-family:var(--data);font-size:11px;white-space:nowrap}
+  table.mono td b{color:var(--ink);font-weight:600}
+
+  footer{margin-top:62px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:24px 20px 32px}
+  .cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+    .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">The programme &middot; delivered and next</div>
+    <h1>What has been certified, and what is next.</h1>
+    <p class="lede">A research programme is only as good as the things it has already closed. This page
+      is the board: <b>what is done and checkable today</b>, what survived deliberate attempts to break
+      it, what was <b>refuted and published anyway</b>, what the literature pass killed before prose,
+      and what is being worked on now.</p>
+    <nav class="jump" aria-label="On this page">
+      <a href="#featured">Featured</a>
+      <a href="#delivered">Delivered</a>
+      <a href="#sandbox">Sandbox</a>
+      <a href="#next">Next</a>
+      <a href="#directions">Directions</a>
+      <a href="#literature">Literature triage</a>
+    </nav>
+
+    <div class="feat" id="featured">
+      <a href="/mfg-lab">
+        <div class="k">Instrument &middot; live</div>
+        <div class="t">The Laboratory</div>
+        <div class="d">Five live modules &mdash; continuum MFG, Wardrop, price formation, water value, random supply &mdash;
+          each with certificates you can break. <b>The product is the instrument.</b></div>
+      </a>
+      <a href="/technical-reports/mfg-congest">
+        <div class="k">Flagship paper &middot; enclosed</div>
+        <div class="t">Congestion MFG, enclosed</div>
+        <div class="d">First validated-numerics enclosure of a stationary MFG with congestion.
+          Verifier ships with the page &mdash; ~2&nbsp;s, standard library only.</div>
+      </a>
+    </div>
+
+    <div class="board">
+      <div class="cap">The board &mdash; claims tracked to date</div>
+      <div class="nums">
+        <div class="n"><div class="v">6</div><div class="l">cleared reports</div></div>
+        <div class="n"><div class="v">18</div><div class="l">sandbox faces live</div></div>
+        <div class="n"><div class="v">1</div><div class="l">at the certified rung</div></div>
+        <div class="n"><div class="v">2</div><div class="l">survived attack</div></div>
+        <div class="n"><div class="v">1</div><div class="l">refuted, published</div></div>
+        <div class="n"><div class="v">0</div><div class="l">at the top rung</div></div>
+      </div>
+      <p class="note">The last two numbers are the ones that matter. <b>A refuted claim is a result and
+        is published like any other</b> &mdash; a programme with no refutations has either been lucky or
+        has not been looking. And the top rung is <b>empty by construction</b>: it requires a named human
+        reviewer who has tried to break the work, which is the one thing one person cannot supply.</p>
+    </div>
+  </div>
+
+  <!-- ═══ DELIVERED ═══════════════════════════════════════════════════════ -->
+  <section id="delivered">
+    <h2>Delivered</h2>
+    <p class="sub">Each of these is open, and each ships the verifier that produced its numbers. The
+      figures below are measurements, not claims about measurements &mdash; you can reproduce every one.</p>
+    <div class="rows">
+
+      <div class="row">
+        <div class="top">
+          <h3><a href="/technical-reports/mfg-congest">A congestion mean-field game, enclosed</a></h3>
+          <span class="badge done">closed</span>
+        </div>
+        <p>To our knowledge the <b>first validated-numerics enclosure of a stationary mean-field game
+          with congestion</b>. Existence, local uniqueness within the even (cosine) subspace, and
+          strictly positive density, all in outward-rounded interval arithmetic. The verifier is one
+          file, standard library only, and finishes in about two seconds.</p>
+        <div class="meta"><span>r = 7.75e-15</span><span>min m &ge; 0.9736</span>
+          <span>7 / 7 falsifiers red</span><span>2.31 s verifier</span><span>python vs js 0.00e+00</span></div>
+      </div>
+
+      <div class="row">
+        <div class="top">
+          <h3><a href="/technical-reports/wardrop-repro">A published paper, reproduced and enclosed</a></h3>
+          <span class="badge done">closed</span>
+        </div>
+        <p>An independent, proof-carrying reproduction of a 2026 AIMS Mathematics paper on
+          multi-population Wardrop equilibrium. Three scenarios, three honest outcomes: one
+          <b>refuses</b>, one is solved <b>exactly over rationals</b>, one is enclosed by a Krawczyk
+          argument. Errata found in our own work are published on the page beside the result.</p>
+        <div class="meta"><span>exact rational + interval</span><span>errata published</span>
+          <span>disagreements stated as stopping accuracy, not as "their table is wrong"</span></div>
+      </div>
+
+      <div class="row">
+        <div class="top">
+          <h3><a href="/technical-reports/stock-constraint">Water value, certified by duality</a></h3>
+          <span class="badge done">closed</span>
+        </div>
+        <p>Price formation under a stock constraint &mdash; the calculation behind hydro dispatch and
+          storage bidding &mdash; certified by <b>zero-gap linear-programming duality</b> on a scenario
+          tree. The sign of the gap is load-bearing: weak duality makes a negative value structurally
+          impossible, so a negative gap would be a defect in the formulation, not a tolerance.</p>
+        <div class="meta"><span>zero-gap LP duality</span><span>signed gap, not magnitude</span></div>
+      </div>
+
+      <div class="row">
+        <div class="top">
+          <h3>A conjecture refuted, by counterexample</h3>
+          <span class="badge refuted">refuted &mdash; and published</span>
+        </div>
+        <p>A proposed law held on <b>508 clean samples</b> and was then <b>killed by an explicit
+          counterexample</b>. It is recorded as refuted rather than quietly dropped, because a
+          programme that only records its survivors is indistinguishable from one that never tested
+          anything. The refutation is the result.</p>
+        <div class="meta"><span>508 samples clean</span><span>killed by counterexample</span><span>status recorded, not removed</span></div>
+      </div>
+
+      <div class="row">
+        <div class="top">
+          <h3>The certification kernel, open-sourced</h3>
+          <span class="badge done">MIT</span>
+        </div>
+        <p><code>eqcert</code>: one interval-arithmetic library, one exact-rational library, and the
+          contraction operators that turn a numerical candidate into a proof &mdash; radii-polynomial
+          and Krawczyk. <b>A Certificate cannot exist without a falsifier</b>, enforced in the type
+          rather than remembered: a PROVED verdict carrying no evidence throws.</p>
+        <div class="meta"><span>MIT</span><span>one interval library, one rational library</span>
+          <span>falsifier required by construction</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ SANDBOX (list — dense, not a second card wall) ═══════════════════ -->
+  <section id="sandbox">
+    <h2>Sandbox drafts</h2>
+    <p class="sub">Honest faces at the stage they are. Each carries a draft banner and page-state
+      badges. This list is the short route into the live draft pages; Program is the index.</p>
+    <ul class="dirlist">
+      <li><a href="/technical-reports/emergent-geometry">Emergent geometry</a><span class="s">draft · gated</span></li>
+      <li><a href="/technical-reports/geometry-approaches">Geometry approaches</a><span class="s">draft</span></li>
+      <li><a href="/technical-reports/equilibrium-geometry">Equilibrium geometry</a><span class="s">thesis draft</span></li>
+      <li><a href="/technical-reports/cap-for-mfg">CAP for MFG</a><span class="s">programme</span></li>
+      <li><a href="/technical-reports/certified-multiplicity">Certified multiplicity</a><span class="s">open</span></li>
+      <li><a href="/technical-reports/certified-price-formation">Certified price formation</a><span class="s">clocked</span></li>
+      <li><a href="/technical-reports/price-saturation">Price saturation</a><span class="s">refuted claim</span></li>
+      <li><a href="/technical-reports/alien-science">Alien science</a><span class="s">public tease</span></li>
+      <li><a href="/technical-reports/ai-verify">AI-verify</a><span class="s">cleared · census</span></li>
+      <li><a href="/technical-reports">All reports &amp; drafts</a><span class="s">hub</span></li>
+    </ul>
+  </section>
+
+  <!-- ═══ NEXT ════════════════════════════════════════════════════════════ -->
+  <section id="next">
+    <h2>Next</h2>
+    <p class="sub">Candidates are triaged before they are started, and <b>most do not survive triage</b>.
+      Of nine proposed, four were cut: two were already certified here, one had been refuted by
+      counterexample, and one turned out to be standard monotonicity theory wearing a new name. The
+      triage is itself an output &mdash; the pattern it exposed is that <b>every survivor has a
+      parameter in it</b>, and is certifiable by bracketing rather than by solving.</p>
+    <div class="rows">
+
+      <div class="row">
+        <div class="top">
+          <h3>A certified phase diagram</h3>
+          <span class="badge next">flagship</span>
+        </div>
+        <p>Not one equilibrium but a <b>map of where behaviour changes</b> across a parameter box:
+          where the density concentrates, where uniqueness is lost, where the proof must refuse. Two
+          earlier candidates contradicted each other until the honest object turned out to be a
+          <b>sign condition on the coupling</b> rather than a threshold in a parameter &mdash; which is
+          why the combined question survives and neither half does alone.</p>
+        <div class="meta"><span>certifiable by bracketing</span><span>refusal boundary reported, not tuned away</span></div>
+      </div>
+
+      <div class="row">
+        <div class="top">
+          <h3>The price extremum</h3>
+          <span class="badge next">reachable</span>
+        </div>
+        <p>Bracketing the extremum of a price under a stock constraint, rather than solving for it.
+          The same shape as the water-value result already closed, extended from a point to a range
+          &mdash; the direct commercial continuation of the energy work.</p>
+        <div class="meta"><span>bracketing, not solving</span><span>continues the stock-constraint note</span></div>
+      </div>
+
+      <div class="row">
+        <div class="top">
+          <h3>A cross-language witness</h3>
+          <span class="badge open">in progress</span>
+        </div>
+        <p>Certificates are stronger when two independent implementations agree. The congestion result
+          already has this &mdash; a Python verifier and a JavaScript one agreeing to the last bit. The
+          work is extending that property to the rest of the board, so <b>no certificate rests on a
+          single implementation</b> of the arithmetic.</p>
+        <div class="meta"><span>done for the congestion result</span><span>being extended</span></div>
+      </div>
+
+    </div>
+
+    <div class="caveat">
+      <p><b>What would change these rows.</b> A counterexample to any claim on this page is the most
+        valuable thing anyone could send, and it would be published like any other result &mdash; with
+        the sender's name on it if they want it there.
+        <a href="/contact">Send one &rarr;</a></p>
+      <p><b>And what will not change.</b> The top rung stays empty until a named human reviewer has
+        tried to break the work and said so. No amount of computation moves it, by design.</p>
+    </div>
+  </section>
+
+  <section id="directions">
+    <h2>Directions under consideration</h2>
+    <p class="sub">Five fields were scoped and <b>an occupancy check killed or demoted four of them
+      within the hour</b> &mdash; the stated hope, and the only reason the exercise was worth running.
+      It asked one question: not whether these fields are new (none are), but whether <b>certified</b>
+      results already exist in them. Certified robustness for ReLU networks turned out to be published
+      under the name <i>min-max representation</i> &mdash; the same object as the tropical form, in a
+      paper a search for &ldquo;tropical&rdquo; never surfaces. The geometric-algebra one died on its
+      own premise: an interval rotor is a <b>set</b>, and a set cannot satisfy
+      R&nbsp;R&dagger;&nbsp;=&nbsp;1 exactly, so the word carrying the proposal cannot survive contact
+      with interval arithmetic. <b>Both are dropped.</b></p>
+    <p class="sub">What replaced them was not a sixth field. <b>All five bet on ground being empty,
+      which is the fragile kind of bet</b> &mdash; one search settles it. The direction below bets on
+      ground already held.</p>
+    <div class="rows">
+
+      <div class="row">
+        <div class="top">
+          <h3>Equilibrium is a geometry &mdash; and refusal is how you measure it</h3>
+          <span class="badge next">the thesis</span>
+        </div>
+        <p>A point-certificate answers <b>&ldquo;a solution exists within radius r, and is unique
+          there&rdquo;</b> &mdash; already a geometric hedge. When enough agents interact the answer
+          stops being a point: a coupling that is monotone <i>but not strictly</i> gives a
+          positive-dimensional face, and a non-monotone one gives components far apart. <b>Three
+          results in this programme already exhibit exactly that, at three different rungs</b> &mdash;
+          two solutions <b>proved</b> distinct in disjoint balls; a Wardrop split <b>demonstrated</b>
+          to move by ~5.9 while its totals hold to 6.8e-14; and a refusal wall <b>measured</b> in
+          parameter space.</p>
+        <p style="margin-top:8px"><b>The load-bearing idea:</b> the Wardrop case does not merely fail
+          to certify &mdash; <b>it fails in a named direction</b>, one lying in the null space of the
+          Jacobian, which at a solution is <i>tangent to the solution set</i>. So the refusal is not an
+          absence of information; it is the instrument reporting where the set extends. If that holds,
+          the contribution is not a better certificate but <b>reading an existing certificate's
+          failures as data</b>.</p>
+        <div class="meta"><span>a pattern over work already gated</span><span>no literature search can kill it &mdash; it claims no empty ground</span></div>
+      </div>
+
+      <div class="row">
+        <div class="top">
+          <h3>Transport under a hard constraint &mdash; the continuum step</h3>
+          <span class="badge done">already delivered, discretely</span>
+        </div>
+        <p>The one survivor of the five, and the tiering is strict. A computable a posteriori bound is
+          <b>folklore</b> &mdash; weak duality gives it in a line. Rigorous enclosure of the
+          <b>discrete</b> value is <b>occupied</b>, with a 2004 date. What remains is a validated
+          enclosure of a <b>continuous</b> object <b>carrying the discretization error</b> &mdash; and
+          that clause is load-bearing: strip it and the claim collapses into folklore plus prior art.
+          This programme already certifies the discrete case by zero-gap duality; the open step is the
+          enclosure and the continuum.</p>
+        <div class="meta"><span>feasibility NOT tested</span><span>materially larger than a 1-D problem</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ LITERATURE TRIAGE (merged from Laboratory Research notes) ═══════ -->
+  <section id="literature">
+    <h2>Literature triage</h2>
+    <p class="sub">Each direction below went through a formal literature pass <b>before</b> any prose
+      was written. The kills are listed with the kills &mdash; the base rate is the most useful number
+      on this page. Every idea that was a <b>new model or a new economic insight</b> was pre-empted.
+      The only slots that came back empty were <b>verification</b> slots.</p>
+
+    <div class="twrap">
+      <table class="mono">
+        <thead><tr><th>idea</th><th>verdict</th><th>who was there first</th></tr></thead>
+        <tbody>
+          <tr><td>pathwise invariant in the common-noise model</td><td class="v">PRE-EMPTED</td><td>the source paper&rsquo;s own &sect;3.1</td></tr>
+          <tr><td>structure of a routing duality gap</td><td class="v">PRE-EMPTED</td><td>Cominetti&ndash;Dose&ndash;Scarsini, Math. Prog. 2021</td></tr>
+          <tr><td>certifying monotonicity by sums of squares</td><td class="v">PRE-EMPTED</td><td>Leon&ndash;Sakos&ndash;Sim&ndash;Varvitsiotis, NeurIPS 2025 &mdash; <b>one month earlier</b></td></tr>
+          <tr><td>conservation laws / first integrals in MFG</td><td class="v">PRE-EMPTED</td><td>Kozlov; Gomes arXiv:1704.07209</td></tr>
+          <tr><td>exact welfare-gap identity for a groundwater commons</td><td class="v">PRE-EMPTED &times;3</td><td>Gisser&ndash;S&aacute;nchez 1980; Carmona&ndash;Graves&ndash;Tan 2018; Cardaliaguet&ndash;Rainer, SICON 2019</td></tr>
+          <tr><td>exploitability as a certificate</td><td class="v">SETTLED</td><td>MF-OMO &mdash; Guo, Hu &amp; Zhang, SICON 62(1) 2024</td></tr>
+          <tr><td>exact / SOS / modular certificates</td><td class="v">SETTLED</td><td>Peyrl&ndash;Parrilo; Dumas&ndash;Kaltofen; Otti</td></tr>
+          <tr><td>interval-certified network equilibrium, as a <i>method</i></td><td class="v">PARTIAL</td><td>Kubica&ndash;Wo&#378;niak; Alefeld; Klimm&ndash;Warode &mdash; instance survived, method did not</td></tr>
+          <tr><td>an algebra of test-battery completeness</td><td class="v">PRE-EMPTED</td><td>analog-circuit testability theory, 1989</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub" style="margin-top:8px">This Laboratory is the continuum complement to finite-state
+      work (MFGLib / MF-OMO): HJB/Fokker&ndash;Planck on a grid, a network VI, and interval enclosures
+      &mdash; certificates earned instance by instance.</p>
+
+    <h2 style="margin-top:28px">Open slots that survived triage</h2>
+    <div class="rows">
+      <div class="row">
+        <div class="top">
+          <h3>O1 &middot; Computer-assisted proof of an MFG equilibrium</h3>
+          <span class="badge next">open</span>
+        </div>
+        <p>No validated-numerics result for MFG / HJB / FBSDEs / differential-game Nash yet. Conjecture:
+          <b>monotonicity supplies what coercivity supplies elsewhere</b>. Wardrop is the finite-dimensional rehearsal.</p>
+      </div>
+      <div class="row">
+        <div class="top">
+          <h3>O9 &middot; Finite-N certificates &mdash; evaluate the hidden constants</h3>
+          <span class="badge next">open</span>
+        </div>
+        <p>&ldquo;The mean-field solution is an &epsilon;(N)-Nash of the N-player game&rdquo; is stated with a
+          generic constant. Publishing the first evaluated constant &mdash; even if pessimistic &mdash; is still the paper.</p>
+      </div>
+      <div class="row">
+        <div class="top">
+          <h3>O8 &middot; Manufactured solutions as polynomial identity testing</h3>
+          <span class="badge next">open</span>
+        </div>
+        <p>Testing a solver against random polynomial manufactured solutions <b>is</b> PIT &mdash; Schwartz&ndash;Zippel
+          detection bounds for code correctness. No connection between the two literatures appears to exist.</p>
+      </div>
+    </div>
+    <div class="caveat">
+      <p><b>The ask.</b> All three need monotonicity theory on one side and verification engineering on the
+        other. Nearest O1 target: a mean-field price-formation model with theorems already proved.
+        Batteries, failure log, and literature kills are available &mdash;
+        <a href="/contact">get in touch</a> &middot; <a href="/defects#lab-log">failure log</a> &middot;
+        <a href="/mfg-lab">Laboratory</a>.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> builds computer-assisted proofs for mean-field games and network equilibria.
+        Certificates over tolerances; a falsifier behind every claim; a green run is evidence precisely
+        because a broken one is built to go red. <a href="/contact">Get in touch</a>.</p>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+      <p class="byline">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

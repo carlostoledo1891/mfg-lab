@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  PATH 7 — THE SHARED BLOCKER, opened 2026-07-31.
+
+  Not a research direction. A CAPABILITY. It is here because three named directions and one commercial
+  track all stop at the same missing piece, and that fact is invisible when each is written up separately.
+
+  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every file in _frontier/: it may state what it
+  INTENDS to certify and may never state that anything IS certified. No literature gate has run.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interval transcendentals — the one missing piece four things wait on</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  .eyebrow,.badge,.k{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+  .hero{padding:0}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:26ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:100%;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  .box.good{border-left:3px solid var(--good)}
+  code{font-family:var(--data);font-size:13px;background:color-mix(in srgb,var(--grid) 45%,transparent);
+    padding:1px 5px;border-radius:var(--radius-sm)}
+  table{border-collapse:collapse;margin-top:13px;font-size:13.6px;width:100%;max-width:100%}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--data);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft)}
+  td{color:var(--ink-soft)} td b{color:var(--ink);font-weight:600}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+  .alertbar,.draftbar{font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;padding:11px 15px;margin:0 0 18px;line-height:1.5;border-radius:var(--radius);border:0}
+  .alertbar.draft,.draftbar,.alertbar.danger{background:var(--bad)}
+  .alertbar.warn{background:var(--warn-soft);color:var(--ink);border:1px solid var(--grid)}
+  .alertbar.info{background:var(--fp-deep);color:var(--paper)}
+  .alertbar.ok{background:var(--good);color:var(--paper)}
+  .alertbar.muted{background:var(--grid);color:var(--ink)}
+
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid;vertical-align:middle;white-space:nowrap}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.standard{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.unsigned{color:var(--hjb);background:transparent;border-color:var(--hjb);border-style:dashed}
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+    <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
+<div class="hero">
+    <div class="eyebrow">Frontier capability &middot; The shared blocker</div>
+    <h1>Interval transcendentals</h1>
+    <p class="lede"><code>eqcert/src/interval.js:94</code> throws on non-integer exponents, and the library has <b>no
+transcendental functions at all</b>. Four separate things in this tree stop there. <b>Written down because
+the convergence is invisible when each is written up on its own.</b></p>
+
+    <div class="callout">
+      <div class="k">Status — read this before anything below</div>
+      <p><b>Advance 2026-08-01:</b> sound interval <code>exp</code>, <code>log</code>,
+        <code>sin</code>, <code>cos</code>, <code>tanh</code> ship in
+        <code>eqcert/src/transcendental.js</code> (battery
+        <code>eqcert/tests/test-transcendental.js</code>, in <code>make check-eqcert</code>).
+        Consumers: softmax H/PR + continuous-&beta; on
+        <a href="/technical-reports/attention-geometry">attention geometry</a>
+        (exported); <code>tanh</code>/<code>sin</code>/<code>cos</code> unblocked
+        for edge-of-chaos / aerospace / Path&nbsp;5 arithmetic (instances still to build).
+        <b>Still open:</b> fractional powers, erf, full aerospace report.</p>
+    </div>
+  </div>
+  <div class="callout" style="border-color:var(--hjb);background:color-mix(in srgb,var(--hjb) 6%,transparent)">
+      <div class="k" style="color:var(--hjb)">Four things, one wall</div>
+      <p><b>Aerospace</b> &mdash; blocked, and the standing instruction is <i>do not send a report until the
+        Rust kernel exists</i>, because an uncertified report under a certification brand is the one
+        liability that cannot be repaired. <b>Path 5, certified price formation</b> &mdash; the same wall
+        sits on the critical route to a December deadline. <b>Path 6, the edge of chaos</b> &mdash; needs
+        <code>exp</code> for Gaussian quadrature and <code>tanh</code>/<code>erf</code> for the activation.
+        <b>Any MFG instance with a non-polynomial Hamiltonian or an exponential coupling</b> &mdash; which is
+        most of them outside this tree's current corpus.</p>
+    </div>
+
+  <section>
+    <h2>Why this is a frontier page and not a ticket</h2>
+    <p class="body">Because the honest accounting changes the priority. Each of the four reads as
+      <i>&ldquo;blocked on engineering&rdquo;</i> in isolation, which sounds like a reason to work on
+      something else. <b>Together they say the opposite: one bounded piece of arithmetic unlocks a
+      commercial track with a clock, a research bet that has been waiting for an instance, and an entire
+      class of MFG problems currently out of reach.</b></p>
+    <p class="body" style="margin-top:11px">It is also the only item in the set whose scope is genuinely
+      <i>known</i>. Rigorous interval <code>exp</code>, <code>log</code>, <code>sin</code>/<code>cos</code>,
+      <code>tanh</code> and fractional powers with correct outward rounding are <b>solved problems with
+      published algorithms</b> &mdash; MPFI, Arb, CAPD and Boost.Interval all ship them. This is
+      implementation against a known specification, not research.</p>
+  </section>
+
+  <section>
+    <h2>What must be true of it, and this is where the care goes</h2>
+    <div class="box claim"><p><b>Outward rounding must be provable, not asserted.</b> The five that do not
+      bend include <i>outward-rounded arithmetic where a bound is claimed</i> and <i>every check can go
+      red</i>. A transcendental that is merely accurate is worse than none: it makes every downstream
+      certificate <b>look</b> sound while resting on an unproved bound &mdash; the exact species as the
+      <code>radiiPolynomial</code> self-map/contraction gap, one layer lower and under everything.</p></div>
+    <div class="box"><div class="k">the falsifier</div><p>Directed-rounding test vectors where the true
+      value is known to lie outside a naively-rounded interval, plus mutation: an implementation with the
+      rounding mode flipped must turn a passing certificate red. <b>If a wrong rounding mode does not break
+      a downstream certificate, the certificate was not using the bound.</b></p></div>
+  </section>
+
+  <section>
+    <h2>The honest risk</h2>
+    <div class="box risk"><p><b>Scope creep into a general-purpose interval library.</b> The temptation is to
+      build what Arb built. The defence is that this tree needs a <i>named, closed</i> list of functions,
+      each with test vectors and a mutation proof, and nothing else &mdash; and that the list should be
+      derived from the four consumers above rather than from completeness. <b>A library nobody's certificate
+      depends on is a tax charged in attention</b>, which is the standard this tree already applies to
+      gates.</p></div>
+  </section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Frontier path &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record &middot; opened 2026-07-31
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

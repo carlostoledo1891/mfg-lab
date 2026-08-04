@@ -1,0 +1,59 @@
+{
+  "id": "CERT-ml-beta-softmax",
+  "schema": "cert/v1-local",
+  "verdict": "ENCLOSED",
+  "what": "On fixtures/frozen_attn_scores.json, Shannon entropy H and participation ratio PR of softmax(β·s) are strictly decreasing on the committed β-grid after sound interval enclosure via eqcert transcendental exp/log (consecutive boxes: hi(β_{i+1}) < lo(β_i)).",
+  "scope": "frozen GPTTiny layer-0/head-0 last-query scores at seed=0; finite β-grid from fixture; NOT continuous-β (see CERT-ml-beta-continuous); NOT trained dynamics; NOT IEEE 1-ulp envelope",
+  "claims": [
+    "H-interval-separated",
+    "PR-interval-separated",
+    "enclosures-contain-IEEE",
+    "control-H-not-outward-increasing",
+    "mutant-flat-not-separated",
+    "mutant-quadratic-not-separated"
+  ],
+  "falsifiers_red": 3,
+  "falsifier_list": "flat s → not outward-separated; (β−3)²·s → not outward-separated; control not-increasing",
+  "evidence": {
+    "dim": 31,
+    "beta_grid": [
+      0.25,
+      0.5,
+      1,
+      1.5,
+      2,
+      3,
+      4,
+      6,
+      8
+    ],
+    "H0": [
+      3.4339820673505472,
+      3.433982067350644
+    ],
+    "Hn": [
+      3.4286482706637718,
+      3.428648270663893
+    ],
+    "PR0": [
+      30.999681420737627,
+      30.999681420738852
+    ],
+    "PRn": [
+      30.668380488070806,
+      30.668380488072287
+    ],
+    "max_H_width": 1.212363542890671e-13
+  },
+  "reproduce": "node research/_ml/toy/beta_bracket_softmax_enclose.js",
+  "fixture": {
+    "path": "research/_ml/fixtures/frozen_attn_scores.json",
+    "sha256": "4f15743ea33e7972fb91ed4df412c6cd71c5d8aeb57639d2717e22876c8a9ca3"
+  },
+  "verifier": {
+    "path": "research/_ml/toy/beta_bracket_softmax_enclose.js",
+    "sha256": "9c6b7372b9c44e62cbd994fa4f4c71a564a3967dc9b6e576755c1d09708d972c"
+  },
+  "frozen_at": "2026-08-01",
+  "note": "Local fixture cert (not ledger-minted). Continuous-β is a sibling cert. Softmax H/PR↓ in β is classical (Mattei & Loureiro arXiv:2602.14862; Dabah & Tirer ICML 2025). This cert encloses the grid fact on the fixture; it does not claim to derive the phenomenon."
+}
