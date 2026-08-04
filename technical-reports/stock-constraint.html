@@ -95,7 +95,22 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
      battery at 390/640/900/1280/1600). */
   .status{font-family:var(--data);font-size:10.5px;color:var(--ink-soft);
     padding:8px 2px;min-height:5.2em;text-wrap:pretty}
-  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--card-gap);margin:0 0 14px}
+  /* EXACTLY two columns, not `auto-fit`. The old rule was
+       repeat(auto-fit, minmax(260px,1fr))
+     which reads as "as many 260px columns as fit, then collapse the empty ones".
+     The collapse never happened HERE: `.span2` (Fig 1 and the Certificates card)
+     spans 1/-1, so every track is occupied and none is ever empty. On a wide
+     viewport the container therefore opened 3 tracks and Fig 2 + Fig 3 filled
+     two of them, leaving a dead column and two half-width figures. Two named
+     columns cannot drift that way. `minmax(0,1fr)` rather than `1fr` because a
+     canvas gives the track a min-content floor and would push the row wider than
+     the container — the 390px overflow gate catches exactly that. */
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--card-gap);margin:0 0 14px}
+  /* One column below 600px. The old rule dropped to one at 260*2+14 = 534px of
+     container, i.e. 574px of viewport once .wrap's 20px padding is counted, so
+     600px keeps the measured behaviour at every width the layout battery tests
+     (390 · 640 · 900 · 1280 · 1600): 390 stays single, 640 stays double. */
+  @media(max-width:600px){.grid2{grid-template-columns:minmax(0,1fr)}}
   .grid2 > *{min-width:0}
   .card{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
     padding:var(--card-pad);position:relative;width:100%;min-width:0;
@@ -280,7 +295,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   <div class="eyebrow">SIN-MFG · a living note · v0.3 · everything below is solved live in this page — no libraries, no precomputed data</div>
   <h1>Price formation with a stock constraint:<br>a mean-field model of a hydro-dominated power system</h1>
   <div class="sub">Storage agents and log-utility consumers meet a Hotelling-type hydro resource under an administrative price band. Three clearing regimes emerge; the water value pins the price; every <i>numerical</i> claim on this page carries a machine-checked certificate, and the structural results are labeled by proof status.</div>
-  <div class="byline">Carlos Toledo · Carlos Toledo · carlos@carlostoledo.co · working note in the tradition of Gomes–Saúde (2021), Gomes–Gutierrez–Ribeiro (2021), Bakaryan–Aoun–de Lima Ribeiro–Hovakimyan–Gomes (2025) · Brazil, 2026</div>
+  <div class="byline">Carlos Toledo · carlos@carlostoledo.co · working note in the tradition of Gomes–Saúde (2021), Gomes–Gutierrez–Ribeiro (2021), Bakaryan–Aoun–de Lima Ribeiro–Hovakimyan–Gomes (2025) · Brazil, 2026</div>
 
   <div class="abstract">
     <b>Abstract.</b> I couple a mean field of small storage/consumption agents — quasi-linear preferences with
@@ -1355,14 +1370,14 @@ requestAnimationFrame(loop);
   <div class="foot-cred">
     <div class="foot-cred-in">
       <p><b>Carlos Toledo</b> builds computer-assisted proofs for mean-field games and network equilibria.
-      Where a paper reports a converged iterate, Carlos Toledo returns a certificate &mdash; an exact-rational or interval
+      Where a paper reports a converged iterate, Enclosure returns a certificate &mdash; an exact-rational or interval
       <i>enclosure</i> of the equilibrium, with its location and local uniqueness proved, or an explicit refusal where the
       instance is degenerate. Certificates over tolerances; a falsifier behind every claim; a green run is evidence precisely
       because a broken one is built to go red.</p>
       <p>For a research group this is a way to <b>validate and stress-test</b> a published result
       &mdash; independently, and in good faith. The same machinery certifies numerical and optimization claims &mdash; the kind
       a <b>frontier system</b> must be able to depend on rather than merely hope for.</p>
-      <p><b>Carlos&nbsp;Toledo</b> &middot; Carlos Toledo &middot; <a href="/contact">contact</a>
+      <p><b>Carlos&nbsp;Toledo</b> &middot; <a href="/contact">contact</a>
       &middot; on the open-source <a href="https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert" target="_blank" rel="noopener"><span style="font-family:var(--data)">eqcert</span></a> certification kernel (MIT) &middot; 2026</p>
     </div>
   </div>

@@ -171,6 +171,74 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     Check C1b: they return the <b>same verdict on every day</b> &mdash; 122 of 122 agree, JS finding 32
     violations and Python finding 32. The thesis does not fail because one implementation is wrong; both
     implementations agree that it fails.</div>
+    <div class="note"><b>Two denominators, and they are the same measurement.</b> The battery's diagnostic
+    block splits the population by whether the price still moves: at 4 GW, <b>64 of the 122 days are
+    price-saturated</b> (<span class="mono">whiplash &lt; 1e-6</span>) and carry <b>0</b> violations &mdash;
+    on those days the two fleets coincide, so the inequality holds as a <i>tie</i>, not a win. All 32
+    violations land in the <b>58 unsaturated days</b>. So <b>32 of 122</b> and <b>32 of 58</b> are the same
+    32 days counted against different denominators: 32/122 is the population rate, 32/58 the rate over the
+    days on which the claim is non-trivial. Both are measured; neither may be quoted without its
+    denominator. Violations by month: 2025-01 14/31 &middot; 2025-05 11/31 &middot; 2025-06 7/30 &middot;
+    2025-09 0/30. <b>This is measurement, not a finding &mdash; no mechanism is asserted here.</b></div>
+  </div>
+
+  <div class="card">
+    <h2>The threat this page will not talk its way out of <span class="tag">floor calibration &mdash; ungated</span></h2>
+    <p class="note" style="margin-top:0"><b>The largest risk to every number above is one fitted scalar, and
+    it is worse than a sensitivity.</b> Recovered curtailment is
+    <span class="mono">&Sigma;_t max(day.floor &minus; net_t, 0)</span> differenced between runs, and
+    <span class="mono">day.floor</span> is fitted per day by bisection so that derived curtailment matches
+    observed COFF. The same fitted value appears in every term of the difference. So changing the calibration
+    does not perturb a measurement &mdash; <b>it redefines the functional that &ldquo;32&rdquo; is a count
+    of.</b></p>
+    <div class="note"><b>And the fitted value is not physically interpretable.</b> For 2025-09-28 it is
+    <span class="mono">&minus;4.246075291661663</span>. A quantity documented as &ldquo;inflexible gen, GW&rdquo;
+    taking a negative value is a fitting residual wearing a physical name, so this page never describes it as
+    inflexible generation. <b>Three different objects on this front are called &ldquo;floor&rdquo;</b> &mdash;
+    <span class="mono">FP.pmin</span>, the model price-band bottom; <span class="mono">day.floor</span>, the
+    fitted net-load threshold; and Brazil's regulated PLD floor, which <b>appears nowhere</b>: this front never
+    reads PLD.</div>
+    <div class="note"><b>The experiment that would settle it has not been run, and is specified.</b> Rebuild the
+    population under a second defensible calibration &mdash; floor at the observed minimum net load, or fitted
+    per month rather than per day, or COFF matched on CNF+ENE only &mdash; and report the violation count under
+    both. <b>If 32/122 does not survive that, nothing on this front survives, including the refutation.</b>
+    Until it is run, every sentence here is conditional on one declared calibration, and this one says so.</div>
+  </div>
+
+  <div class="card">
+    <h2>Who was here first <span class="tag">literature gate &middot; PARTIAL &middot; 2026-08-01</span></h2>
+    <p class="note" style="margin-top:0"><b>The mechanism this unit is named after is not ours and is not new
+    &mdash; it is occupied and it is folklore.</b> A price pinned at its band floor carries no
+    when-to-charge information: if <span class="mono">p_t &equiv; p&#772;</span> over a window, arbitrage value
+    collapses to <span class="mono">p&#772; &times;</span> net throughput, which is independent of timing. That
+    is two lines, and a reader who has met a degenerate LP reaches it immediately. A result a referee derives
+    in under a page without citing anyone is unpublishable as an observation regardless of who published it
+    first.</p>
+    <table class="mono">
+      <thead><tr><th>occupier</th><th>what it covers</th><th>identifier</th></tr></thead>
+      <tbody>
+        <tr><td>Brown, Neumann &amp; Riepin, <i>Price formation without fuel costs</i></td>
+            <td>the zero-price / saturated regime is the <i>object of study</i> of an active literature; zero-price hours fall 90% &rarr; ~30% under demand elasticity</td>
+            <td>arXiv:2407.21409 &middot; <i>Energy Economics</i> &middot; 10.1016/j.eneco.2025.108483</td></tr>
+        <tr><td>Anunrojwong, Balseiro, Besbes &amp; Xu, <i>Battery Operations in Electricity Markets</i></td>
+            <td>strategic batteries distort dispatch against <i>centralized</i> operation; Price of Anarchy in [9/8, 4/3] for one battery</td>
+            <td>arXiv:2406.18685</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>The separation that matters.</b> Anunrojwong et al. compare decentralized against the
+    <i>centralized optimum</i>, so their PoA is &ge; 1 by construction &mdash; the centralized side cannot lose.
+    The comparison here is between <i>two heuristics</i>: the equilibrium fixed point against a myopic best
+    response to the posted no-fleet price. <b>The greedy fleet is not the centralized optimum of anything</b>,
+    so no PoA bound determines the sign of this comparison, and <b>this is not a price-of-anarchy result</b>
+    and must not be cited as one.</div>
+    <div class="note"><b>The only negative shipped, and it ships attributed.</b> We are not aware of a published
+    comparison of two storage-fleet <i>behaviours to each other</i> on recovered curtailment over a real
+    curtailment population, carried with a per-instance numerical certificate. <b>Its entire evidence base is a
+    documented search</b> &mdash; 6 queries, 3 source-level fetches, one agent, one pass, 2026-08-01, confidence
+    7/10 &mdash; <b>not a proof</b>. Its falsifier is one paper someone else has read and we have not. Named
+    holes, so the counterexample has somewhere obvious to come from: <b>no Portuguese-language database was
+    searched</b> &mdash; no SciELO, no SBSE/CBA proceedings, no ANEEL P&amp;D reports, no EPE/ONS technical
+    notes; and no backward-citation walk from either source above.</div>
   </div>
 
   <div class="card">
@@ -227,15 +295,26 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   122 ONS days, subsystem NE, months 01, 05, 06 and 09. It is not the whole year, not other subsystems, and not
   other markets. What is established is that the thesis as stated fails on this population &mdash; which is
   enough to stop it being published, and not enough to be a result about batteries in general.</p>
+  <p class="note"><b>It does not assert why.</b> The metric-mismatch reading &mdash; that neither fleet
+  optimises recovered curtailment, so the ordering between them is unconstrained &mdash; is plausible in the
+  literature's own terms and is <b>uninvestigated</b>. An explanation attached to a correct measurement is
+  itself a claim and needs its own falsifier. The one that would settle it is written down: re-score both
+  fleets on the objective each actually optimises and show whether the ordering flips. Until that runs, this
+  page reports the count and not the cause.</p>
   <p class="note"><b>Sandbox face.</b> This page ships as an honest draft with a page-state banner;
   it is not a cleared report. The unit exists as the record that the claim did not survive contact
   with the data.</p>
 
   <div class="foot">
-    price-saturation &middot; private, <span class="mono">exportable:false</span> &middot; harvest green, thesis
-    RED by design &mdash; published nowhere, quotable nowhere.<br>
-    Report written 2026-07-29. Every figure was printed by <span class="mono">make check-price-saturation</span>
-    or <span class="mono">make price-saturation-thesis</span> in that session, with the check id named beside it.
+    price-saturation &middot; harvest green, thesis <b>RED by design</b> &mdash; the red is the correct state
+    and may not be closed by changing the data the gate reads.<br>
+    <b>Quotable with its conditions attached, and not otherwise:</b> the metric (recovered curtailed energy),
+    the calibration (the per-day fitted net-load threshold), and the population (122 ONS days, subsystem NE,
+    months 01/05/06/09 of 2025). Drop one and the number stops meaning what it measured.
+    <b>No ledger claim governs this unit and no rung is claimed.</b><br>
+    Report written 2026-07-29; literature gate 2026-08-01 (PARTIAL); figures re-measured against the
+    population 2026-08-04. Every figure was printed by <span class="mono">make check-price-saturation</span>
+    or <span class="mono">make price-saturation-thesis</span>, with the check id named beside it.
     Figures that could not be sourced were left out rather than reconstructed.<br>
     No libraries, no build step, no network.
   </div>
