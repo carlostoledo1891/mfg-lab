@@ -1,11 +1,24 @@
-# Carlos Toledo — computer-assisted proof and validated numerics
+# Carlos Toledo — verification for machine-generated mathematics
 
-> Computer-assisted proofs and validated numerics for number theory, mean-field
-> games, network equilibria and price formation. Where a paper reports a converged
-> iterate, this site returns a **certificate** — an interval or exact-rational enclosure of
-> the equilibrium, with its location and local uniqueness proved — or an explicit
-> **refusal** where the instance is degenerate. Written by Carlos Toledo (Brazil),
-> built on the open-source `eqcert` kernel (MIT).
+> I check numerical and mathematical claims without trusting how they were produced — a
+> language model's, a published paper's, or my own. The answer is either a **certificate**
+> (an interval or exact-rational enclosure that provably contains the true value, with
+> existence and local uniqueness proved) or an explicit **refusal** where the check does not
+> close. Refusal is a first-class output, not a failure.
+>
+> Two things are unusual and both are checkable rather than asserted. **Every check ships with
+> a falsifier that has been shown to go red** on a deliberately broken copy of the program —
+> a gate that cannot fail is not a gate. And **errors are published**: a dated public log
+> records defects found in this site's own shipped work, including one where this site's own
+> instrument, aimed at this site's own certified proof chain, found five stages the chain's
+> verdict could not see, and the fix landed the same day with its control.
+>
+> The applied ground is number theory, mean-field games, network equilibria and price
+> formation; the method is interval arithmetic, exact rational arithmetic, radii-polynomial
+> and Krawczyk certificates, built on the open-source `eqcert` kernel (MIT). Written by
+> Carlos Toledo (Brazil). Nothing here is peer-reviewed, and no result here has yet been
+> reproduced by anyone else — which is precisely why each page ships the program that would
+> refute it.
 
 ## What the distinction means
 
