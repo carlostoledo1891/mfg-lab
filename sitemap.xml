@@ -206,9 +206,16 @@
   <!-- ADDED 2026-08-05. These nine routes were LIVE and self-declared robots index,follow while
        being absent from this file — so the pages asked to be indexed and the sitemap did not say
        they existed. Found by cross-checking PAGES.json exported:true routes against this file's
-       own <loc> set; no gate performs that check, which is why it went unnoticed. The two other
-       absent routes, /technical-reports/attention-geometry and /sin-mfg/water-value, are
-       CORRECTLY absent: both carry noindex. -->
+       own <loc> set; no gate performed that check, which is why it went unnoticed. THE GATE NOW
+       EXISTS: tools/check-discoverable.js, run inside `make check-refs`, with a two-direction
+       self-test (`--self-test`). The two other absent routes,
+       /technical-reports/attention-geometry and /sin-mfg/water-value, are CORRECTLY absent: both
+       carry noindex.
+       WHAT THE NEW GATE THEN FOUND, reported here because this file is half of it: 21 routes in
+       this sitemap belong to pages whose OWN robots tag says noindex — including ai-verify,
+       alien-science, mfg-congest, wardrop-repro and /defects. Those entries are inert (the page
+       tag wins) and the resolution is an owner publication decision, so the gate prints them and
+       does not block. -->
   <url>
     <loc>https://mfg-lab.vercel.app/technical-reports/faithfulness-ceiling</loc>
     <lastmod>2026-08-05</lastmod>
