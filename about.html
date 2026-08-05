@@ -117,11 +117,16 @@ td.what{width:34%}
 
 .caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
 .caveat p{font-size:14px;color:var(--ink-soft)}
+/* the engagement record — added 2026-08-05; hairline rows, no bullets, house type scale */
+section ul{list-style:none;margin:4px 0 12px;padding:0;border-top:1px solid var(--grid)}
+section ul li{padding:11px 0;border-bottom:1px solid var(--grid);font-size:13.5px;
+  line-height:1.6;color:var(--ink-soft);max-width:80ch}
+section ul li b{color:var(--ink);font-weight:600}
 .foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
   font-family:var(--data);font-size:11px;color:var(--ink-soft)}
 </style>
 <!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
-     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     data. Declared here rather than injected at build time BECAUSE the export gate
      asserts "every copy is byte-identical to its source" — an export that differs from
      what is committed is exactly the drift that gate exists to catch, so the tag lives in
      the source or it does not exist.
@@ -243,11 +248,46 @@ td.what{width:34%}
   </section>
 
   <section>
+    <h2>Where the work has gone, and what has come back</h2>
+    <p>Everything on this site is self-published and self-checked, so the honest question is what
+      happens when it leaves. The complete record, with the status words meant exactly:</p>
+    <ul>
+      <li><b>Filed, 5 August 2026 &mdash; no reply yet.</b> An independent confirmation of the
+        computational appendix of a claimed proof of Erd&#337;s&nbsp;#1038, filed as
+        <a href="https://github.com/Pengbinghui/pipeline-math/issues/5">an issue on the claiming
+        authors&rsquo; own repository</a>: all 30 printed decimals of the extremal constant
+        verified by a different route (Krawczyk rather than bisection), with a note that the
+        30th digit is a rounding rather than an expansion.</li>
+      <li><b>Posted, 4 August 2026 &mdash; no reply yet.</b> An evaluation note on
+        Anthropic&rsquo;s public automated-alignment sandbox, posted as
+        <a href="https://github.com/safety-research/automated-w2s-research/issues/2">an issue on
+        the repository whose authors invited stress-testing</a>.</li>
+      <li><b>Submitted, awaiting moderation.</b> A note on Erd&#337;s&nbsp;#290 to
+        erdosproblems.com.</li>
+      <li><b>The code is public</b> at
+        <a href="https://github.com/carlostoledo1891/mfg-lab">github.com/carlostoledo1891/mfg-lab</a>
+        &mdash; this site and the programs it ships, including the
+        <a href="https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert"><code>eqcert</code></a>
+        interval and certificate library the reports are built on.</li>
+    </ul>
+    <p><b>Filed is not accepted; posted is not replied.</b> No result on this site has yet been
+      reproduced by anyone else, and none has been peer-reviewed. That is the plain state of it,
+      and it is why the pages ship their own falsifiers rather than asking for trust.</p>
+  </section>
+
+  <section>
     <h2>What this page does not contain</h2>
     <p>No employment history, no degrees, no years-of-experience figure, no self-rated skills. Each
       of those is a claim a reader would have to take on trust, and putting them beside claims that
       can be re-run devalues the second kind. If a process needs a conventional CV, ask and you will
       get one.</p>
+    <p><b>How these pages are made, since it bears on how fast they appear.</b> The mathematics,
+      the design of every check and the decision about what may be claimed are mine. The writing
+      and much of the implementation are done with AI assistance, under the discipline this site
+      describes: a gate counts only once it has been shown to go red on a broken copy, a
+      preregistration is committed before the instrument that tests it exists, and a hostile read
+      precedes publication. The output rate is a consequence of that arrangement, and saying so
+      seems better than letting a reader wonder.</p>
     <div class="caveat">
       <p>These notes are self-published and <b>not peer-reviewed</b>. The code and the checks on it
         share one author, so they rule out slips but not a shared misconception; an independent

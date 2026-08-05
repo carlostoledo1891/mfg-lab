@@ -95,6 +95,19 @@ p b{color:var(--ink)}
   line-height:1.3;color:var(--ink);text-decoration:none;display:block;margin-bottom:5px}
 .notes .t:hover{color:var(--fp-deep)}
 .notes p{font-size:13.5px;line-height:1.6;color:var(--ink-soft);margin:0;max-width:76ch}
+/* external-engagement strip — the work as it leaves the site. Status words are load-bearing:
+   filed is not accepted, posted is not replied. Added 2026-08-05. */
+.engage{margin:26px 0 0;padding:15px 17px;background:var(--card);border:1px solid var(--grid);
+  border-radius:var(--radius)}
+.engage .cap{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:10px}
+.engage ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.engage li{font-size:13px;line-height:1.55;color:var(--ink-soft)}
+.engage .st{font-family:var(--data);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink);background:var(--grid);border-radius:var(--radius-sm);padding:1px 6px;
+  margin-right:7px;white-space:nowrap}
+.engage .foot{font-size:12.5px;color:var(--ink-soft);margin-top:11px;padding-top:10px;
+  border-top:1px solid var(--grid)}
 .more{font-size:13px;line-height:1.6;color:var(--ink-soft);margin:20px 0 0;max-width:76ch}
 
 /* ── Method rows — numbered obligations, not link cards. No hover states at all,
@@ -129,7 +142,7 @@ p b{color:var(--ink)}
 .notes.index .t{font-size:13.5px;margin-bottom:0}
 </style>
 <!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
-     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     data. Declared here rather than injected at build time BECAUSE the export gate
      asserts "every copy is byte-identical to its source" — an export that differs from
      what is committed is exactly the drift that gate exists to catch, so the tag lives in
      the source or it does not exist.
@@ -165,6 +178,26 @@ p b{color:var(--ink)}
     or a plain statement that the check did not close. Every page below ships the program that
     produced its numbers, and every check has been shown to fail on a deliberately broken copy
     of that program.</p>
+
+  <div class="engage">
+    <div class="cap">Where this work has gone, and what has come back</div>
+    <ul>
+      <li><span class="st">filed 5 Aug 2026</span>An independent confirmation of the computational
+        appendix of a claimed proof of Erd&#337;s&nbsp;#1038, filed as
+        <a href="https://github.com/Pengbinghui/pipeline-math/issues/5">an issue on the claiming
+        authors&rsquo; own repository</a> &mdash; all 30 printed decimals verified by a different
+        route, with one trailing-digit note. <b>No reply yet.</b></li>
+      <li><span class="st">posted 4 Aug 2026</span>An evaluation note on Anthropic&rsquo;s public
+        automated-alignment sandbox, posted as
+        <a href="https://github.com/safety-research/automated-w2s-research/issues/2">an issue on
+        the repository whose authors invited stress-testing</a>. <b>No reply yet.</b></li>
+      <li><span class="st">in moderation</span>A note on Erd&#337;s&nbsp;#290, submitted to
+        erdosproblems.com and awaiting moderation.</li>
+    </ul>
+    <div class="foot">Stated exactly: <b>filed is not accepted, and posted is not replied.</b>
+      Nothing on this site has been peer-reviewed, and no result here has yet been reproduced by
+      anyone else &mdash; which is why every page ships the program that would refute it.</div>
+  </div>
 
   <h2>Start here</h2>
   <ul class="notes">
