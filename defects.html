@@ -42,17 +42,35 @@
   every proper prefix" (truncated prefixes exit 0 and emit no verdict — nothing
   is rejected); and the harness's cert pin being a transcribed constant that
   could not go red (now read from the record at run time). All fixed below.
+
+  REVISED 2026-08-05, naming unified (item A4 of the 2026-08-05 external review of this site). A reader met three
+  different words for this page: the nav said "Errata", the route says /defects, and
+  the eyebrow said "the failure record". THE CHOICE WAS MADE BY COUNTING, not by taste.
+  "Errata" is the visible name in 146 places already — 136 nav and sitemap links across
+  30+ files, plus 10 uses in body prose — while "Defects" survived only in this page's
+  own <title>, its og:title, its filename and its URL slug. So the destination was
+  changed to agree with everything that points at it, not the other way round.
+
+  TWO THINGS DELIBERATELY NOT CHANGED, and the reasons are constraints, not preferences.
+  (1) THE ROUTE STAYS /defects. Every one of those 136 links is an href="/defects", and
+  they live in files including research/mfg-congest/paper.html, whose bytes are bound by
+  a ratified sha256 in its IP clearance record — editing them expires an owner-ratified hash
+  (C33) to change a URL slug. An application draft also cites the live
+  /defects URL in six places. A slug is the least-read of the three names; the two a
+  reader actually sees now agree.
+  (2) THE H1 STAYS "When the verifier agreed with me." It is the page's headline, not
+  its name — the eyebrow above it carries the name. Those are different jobs.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Defects — Carlos Toledo</title>
+<title>Errata — Carlos Toledo</title>
 <meta name="description" content="A dated public record of errors caught in this site's own shipped work: a gate that checked presence instead of position, a contraction argument that certified uniqueness it had not established, a false tail identity that put a wrong constant on a live page, source figures re-attributed on a live page, and five certificate-chain stages whose corruption the checker's verdict could not see — none reported by a reader first.">
 <meta name="author" content="Carlos Toledo">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://mfg-lab.vercel.app/defects">
 <meta property="og:site_name" content="Carlos Toledo">
 <meta property="og:url" content="https://mfg-lab.vercel.app/defects">
-<meta property="og:title" content="Defects — when the verifier agreed with me">
+<meta property="og:title" content="Errata — when the verifier agreed with me">
 <meta property="og:description" content="A broken verifier does not crash — it agrees with you. Five dated cases in the measuring apparatus, each fixed with a control that now goes red — the fifth the same day it was reported.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://mfg-lab.vercel.app/og.png">
@@ -237,7 +255,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
 <div class="wrap">
   <div class="hero">
-    <div class="eyebrow">the failure record</div>
+    <div class="eyebrow">Errata</div>
     <h1>When the verifier agreed with me.</h1>
     <p class="lede">This is the <b>dated record of errors found in this site&rsquo;s own shipped
       work</b> &mdash; most after publication, none reported by a reader first. It exists because a

@@ -21,7 +21,32 @@
      verdict CERTIFIED, ‑‑plant-mutant ends verdict REFUSED), and a quiet band for the errata
      record (numbers from site/defects.html's own lede). All ten report links kept; the seven-item
      list compressed to an index (kicker + title, no blurbs). Tokens, chrome, type scale,
-     analytics: untouched. All twelve linked routes curl-200 on the live host 2026-08-05. -->
+     analytics: untouched. All twelve linked routes curl-200 on the live host 2026-08-05.
+
+     REVISED 2026-08-05 (item A5 of the 2026-08-05 external review of this site): "Start here" became
+     "Start here — for a reviewer with ten minutes", and its entries carry an explicit three-beat
+     block: THE CLAIM somebody else made, WHAT I DID to it, WHAT HAPPENED. Three of five hostile
+     lenses said this site's density punishes a short-attention reader; the fix is to give the
+     shape of a result before its prose.
+
+     TWO THINGS TO NOTE, because both are judgement calls and neither should be silently
+     inherited. (1) THE ORDER CHANGED. alien-science led this section and now closes it, because
+     it is a PROPOSAL with a runnable pack rather than a verified result — leading a ten-minute
+     reviewer with an unresolved proposal is the exact failure the panel named. It is now labelled
+     as a proposal in its own kicker and its own first clause, which is a demotion in placement
+     and a promotion in honesty. (2) THE PANEL ASKED FOR TWO REPORTS AND THIS KEEPS THREE. Cutting
+     one would have removed the entry that matches the engagement strip directly above it; the
+     three-beat treatment is applied to the two VERIFICATIONS only, since claim/did/happened is
+     the wrong shape for a proposal and forcing it would have manufactured a "what happened" that
+     has not happened.
+
+     NO NEW CLAIM IS MADE HERE. Every beat is a re-ordering of text already on this page or on the
+     linked page, and each of the two verification entries now states its own scope limit in the
+     WHAT HAPPENED beat — Maxwell's one pinned instance with the asymptotic statement unaudited,
+     and the sixth result's unaudited analytic core. §5 of the review is explicit that the frame
+     may be fixed and the claims may not; a beat that dropped a scope caveat to read cleaner would
+     be the failure that section names. -->
+
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -95,6 +120,24 @@ p b{color:var(--ink)}
   line-height:1.3;color:var(--ink);text-decoration:none;display:block;margin-bottom:5px}
 .notes .t:hover{color:var(--fp-deep)}
 .notes p{font-size:13.5px;line-height:1.6;color:var(--ink-soft);margin:0;max-width:76ch}
+/* three-beat reviewer rows — CLAIM / WHAT I DID / WHAT HAPPENED, always that order.
+   Added 2026-08-05 per the 2026-08-05 external review of this site, item A5: a reviewer with ten
+   minutes needs the SHAPE of a result before its prose, and three of five lenses said the
+   density of this site punishes exactly that reader. The beats carry no number and no verdict
+   that is not already on the linked page — this is a re-ordering of what is said, never an
+   upgrade of it. dt is a fixed-width label column so the three rows align down the page and
+   the eye can read one beat across several entries. */
+.beats{display:grid;grid-template-columns:max-content 1fr;gap:4px 13px;margin:0 0 8px;
+  font-size:13px;line-height:1.55}
+.beats dt{font-family:var(--data);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);padding-top:3px;white-space:nowrap}
+.beats dd{margin:0;color:var(--ink)}
+.beats dd b{font-weight:600}
+@media(max-width:560px){
+  .beats{grid-template-columns:1fr;gap:2px}
+  .beats dt{padding-top:7px}
+}
+.h2note{color:var(--ink-soft);font-size:var(--text-small);margin:0 0 10px;max-width:74ch;text-wrap:pretty}
 /* external-engagement strip — the work as it leaves the site. Status words are load-bearing:
    filed is not accepted, posted is not replied. Added 2026-08-05. */
 .engage{margin:26px 0 0;padding:15px 17px;background:var(--card);border:1px solid var(--grid);
@@ -199,36 +242,61 @@ p b{color:var(--ink)}
       anyone else &mdash; which is why every page ships the program that would refute it.</div>
   </div>
 
-  <h2>Start here</h2>
+  <h2>Start here &mdash; for a reviewer with ten minutes</h2>
+  <p class="h2note">Two results and one proposal, each in three lines: <b>the claim</b> somebody
+    else made, <b>what I did</b> to it, and <b>what happened</b>. Nothing below is stronger than
+    the page it links to &mdash; where a check did not close, these lines say so.</p>
   <ul class="notes">
-    <li>
-      <div class="k">Evaluation &middot; automated researchers</div>
-      <a class="t" href="/technical-reports/alien-science">An eval for automated researchers that
-        answers in dispositions, not scores: CERTIFIED, REFUSED, HACK&#8209;SUSPECT, or
-        OUT&#8209;OF&#8209;SCOPE</a>
-      <p>A second lane beside the reward metric, for the cases where a scalar can be gamed. Runs
-        in about a minute with Node and nothing else: one command scores a held-out fixture, a
-        second plants a mutant to prove the lane can say no.</p>
-    </li>
-    <li>
-      <div class="k">Independent verification &middot; six results</div>
-      <a class="t" href="/technical-reports/verification-lane">Six AI-claimed math results,
-        independently re-verified</a>
-      <p>Each check rebuilt from scratch &mdash; separate arithmetic, no shared code, a planted
-        bug proving every verifier can fail. Five are CONFIRMED on the layer checked; one is
-        PARTIAL, and the page says which fragment was not audited. The whole lane re-runs in
-        under five seconds.</p>
-    </li>
     <li>
       <div class="k">Computer-assisted proof &middot; Maxwell 1873</div>
       <a class="t" href="/technical-reports/verify-maxwell">The AI-found counterexample to
         Maxwell&rsquo;s 1873 conjecture, certified: 24 equilibria where the conjecture allows
         at most 16</a>
-      <p>The published refutation &mdash; its idea credited to an OpenAI model &mdash; rested on
-        floating-point computer algebra, with no code artifact. Here the paper&rsquo;s own
-        Figure&nbsp;1 configuration is pinned in exact rationals at &epsilon;&nbsp;=&nbsp;1/6 and
-        all 24 critical points are enclosed and counted. Run the verifier and its mutation
-        controls yourself.</p>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>Maxwell said in 1873 that five point charges admit at most 16 equilibrium points. A
+          2026 paper refutes him with a configuration having 24 &mdash; the idea credited to an
+          OpenAI model. Its evidence was floating&#8209;point computer algebra, published with
+          <b>no code artifact and no concrete &epsilon;</b>.</dd>
+        <dt>What I did</dt>
+        <dd>Pinned the paper&rsquo;s own Figure&nbsp;1 configuration at &epsilon;&nbsp;=&nbsp;1/6
+          and enclosed every critical point in outward&#8209;rounded interval arithmetic, so each
+          one is proved to exist rather than found by search.</dd>
+        <dt>What happened</dt>
+        <dd>24 pairwise&#8209;disjoint boxes, each certifying existence, local uniqueness and
+          nondegeneracy of one critical point &mdash; and 24&nbsp;&gt;&nbsp;16 in exact integers.
+          <b>Scope, stated:</b> one pinned instance. The paper&rsquo;s asymptotic statement is
+          not audited.</dd>
+      </dl>
+      <p>Run the verifier and its mutation controls yourself.</p>
+    </li>
+    <li>
+      <div class="k">Independent verification &middot; six results</div>
+      <a class="t" href="/technical-reports/verification-lane">Six AI-claimed math results,
+        independently re-verified</a>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>Six mathematical results produced or assisted by AI systems. On every one, <b>the only
+          check on record was the original author&rsquo;s own</b>.</dd>
+        <dt>What I did</dt>
+        <dd>Re-derived each from scratch in separate arithmetic sharing no code with the original,
+          then planted a bug in every verifier to prove it was capable of going red.</dd>
+        <dt>What happened</dt>
+        <dd>Five CONFIRMED on the layer checked. One PARTIAL &mdash; its machine-checkable
+          fragment holds, its analytic core is prose and <b>was not audited</b>, and the page says
+          so rather than letting the confirmation stand in for it. The lane re-runs in under five
+          seconds.</dd>
+      </dl>
+    </li>
+    <li>
+      <div class="k">Proposal &middot; evaluation for automated researchers</div>
+      <a class="t" href="/technical-reports/alien-science">An eval for automated researchers that
+        answers in dispositions, not scores: CERTIFIED, REFUSED, HACK&#8209;SUSPECT, or
+        OUT&#8209;OF&#8209;SCOPE</a>
+      <p><b>A proposal with a runnable pack, not a verified result</b> &mdash; listed third for
+        that reason. A second lane beside the reward metric, for the cases where a scalar can be
+        gamed. Runs in about a minute with Node and nothing else: one command scores a held-out
+        fixture, a second plants a mutant to prove the lane can say no.</p>
     </li>
   </ul>
 
