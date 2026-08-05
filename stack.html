@@ -20,6 +20,16 @@
 
   gate: null - gate_null_reason in PAGES.json: "prose documentation of the toolchain; every
   code block is copied verbatim from a gated source file named beside it".
+
+  CORRECTED 2026-08-05, beside the sentence rather than over it. THE QUOTED REASON ABOVE IS
+  LEFT AS WRITTEN AND IT WAS NOT TRUE OF EVERY BLOCK. A publication review checked the quote instead
+  of trusting it and found that the mutate.js block is NOT verbatim: its line 31 carries a private
+  record path and a private record identifier, and the page renders
+  `<the falsifier's pinned patch>` in their place. THE REDACTION IS CORRECT AND STAYS — those
+  are exactly the tokens that must not ship. What was false was the word "verbatim", on the one
+  page whose entire thesis is that you should not have to take its word for anything.
+  The rendered lede and the paragraph above the block now mark the redaction and say what it
+  stands in for. Same defect class as C3 and G5: the prose overstated what the artifact did.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -168,9 +178,10 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     <h1>The stack: classical mathematics, <span class="accent">unusual plumbing</span></h1>
     <p class="lede">Every result on this site is checked by the same small toolchain. This page explains
       how it works, for a developer or researcher who wants to see the machinery rather than take the
-      word &ldquo;certificate&rdquo; on trust. <b>Every code block below is copied verbatim from the repository,
-      with its source file named in the bar above it.</b> Every number traces to a verdict file or a
-      battery output named beside it.</p>
+      word &ldquo;certificate&rdquo; on trust. <b>Every code block below is copied from the repository with
+      its source file named in the bar above it, and is verbatim except where a redaction is marked
+      inline in &lt;angle brackets&gt;.</b> Exactly one block carries such a mark, and it stands in for a
+      private file path. Every number traces to a verdict file or a battery output named beside it.</p>
   </div>
 
   <section id="frame">
@@ -396,8 +407,12 @@ const feq = (a, b) =&gt; a[0] === b[0] &amp;&amp; a[1] === b[1];
     <div class="prose">
       <p>A green check is evidence only if the same check demonstrably goes red on a broken tree.
       One tool is permitted to write that record, and its header comment is the best statement of the
-      discipline in the repository &mdash; quoted verbatim, including the seven steps it executes inside a
-      throwaway git worktree so the live tree is never touched:</p>
+      discipline in the repository &mdash; quoted in full, including the seven steps it executes inside a
+      throwaway git worktree so the live tree is never touched. <b>One line is redacted:</b> the patch
+      argument names a private path, and it is replaced by
+      <span class="mono">&lt;the falsifier&rsquo;s pinned patch&gt;</span>. Nothing else is altered, and the
+      redaction is marked rather than silent because a page arguing for checkability cannot ask you to
+      take its quoting on trust:</p>
     </div>
     <div class="codeblock">
       <div class="cbar"><span class="src">ledger/tools/mutate.js &middot; lines 18&ndash;36</span>
