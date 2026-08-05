@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Five silent stages: perturbation metrics of step-importance, run against our own certificate chain</title>
+<meta name="robots" content="index,follow">
+<meta name="description" content="A preregistered perturbation run — truncation and single-stage corruption, reconstructed from the chain-of-thought faithfulness literature — aimed at this site's own certified congestion-cap chain. The preregistration's headline prediction was falsified: five of fourteen stages were silent to the verdict tuple. Hardened the same day; the errata log holds the case.">
+<meta name="author" content="Carlos Toledo">
+<link rel="canonical" href="https://mfg-lab.vercel.app/technical-reports/faithfulness-ceiling">
+<meta property="og:site_name" content="Carlos Toledo">
+<meta property="og:url" content="https://mfg-lab.vercel.app/technical-reports/faithfulness-ceiling">
+<meta property="og:title" content="Five silent stages: perturbation metrics aimed at our own certificate chain">
+<meta property="og:description" content="The preregistered prediction was 14/14 flips. The run measured 9/14 — five stages of a certified chain invisible to its own verdict, found by our own instrument, hardened the same day.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://mfg-lab.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mfg-lab.vercel.app/og.png">
+<script defer src="/_vercel/insights/script.js"></script>
+<!-- Built 2026-08-05; P7 hostile read applied same day (12 defects, 11 risks — all in the
+     telling, none in the measurement; fixed in this file and recorded in the errata log).
+     Every number on this page traces to golden-run-2026-08-05.json / run-2026-08-05.log, to
+     the certificate record the run pins, or to a body-level read recorded in src/PROTOCOL.md.
+     FINDINGS_LIT.md §7 (forbidden sentences) binds this page in full. -->
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+.pagestate{border:1px solid var(--warn);border-left:3px solid var(--warn);border-radius:var(--radius);
+  background:var(--warn-soft);padding:12px 16px;font-size:13px;color:var(--ink-soft);margin-bottom:26px}
+.pagestate b{color:var(--ink)}
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+.strip{margin-top:26px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+  padding:19px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+.strip .cap{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:15px}
+.readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:15px 22px}
+.ro{min-width:0}
+.ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:3px}
+.ro .v{font-family:var(--data);font-size:11.5px;line-height:1.5;letter-spacing:-.005em;color:var(--ink);
+  position:relative;padding-left:14px;overflow-wrap:anywhere;hyphens:none}
+.ro .v::before{content:'';position:absolute;left:0;top:.45em;width:7px;height:7px;
+  border:1px solid var(--grid);background:transparent}
+.ro .v.ok::before{background:var(--good);border-color:var(--good)}
+.ro .v.bad::before{background:var(--bad);border-color:var(--bad)}
+.strip .note{font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:15px;
+  padding-top:14px;border-top:1px solid var(--grid)}
+.strip .note b{color:var(--ink)}
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+.tablewrap{width:100%;max-width:100%;overflow-x:auto;margin:10px 0 4px}
+table.mono{border-collapse:collapse;width:100%;max-width:100%;font-family:var(--data);font-size:11.5px;margin:0}
+table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--grid);
+  padding:8px 10px;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+table.mono td{padding:8px 10px;border-bottom:1px solid var(--grid);color:var(--ink);line-height:1.5;vertical-align:top}
+table.mono td.prose{font-family:var(--body);font-size:12.5px;color:var(--ink-soft)}
+table.mono td.prose b{color:var(--ink)}
+td .silent{color:var(--hjb);font-weight:600;white-space:nowrap}
+td .moved{color:var(--good);white-space:nowrap}
+pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(--card);border:1px solid var(--grid);
+  border-radius:var(--radius);padding:13px 15px;overflow:auto;width:100%;max-width:100%;margin:14px 0 8px;color:var(--ink)}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="pagestate"><b>Research note &mdash; not peer-reviewed.</b> A preregistered measurement
+    whose headline is a defect report about this shop&rsquo;s own certified artifact. Nothing on this
+    page is proved or verified by the run it reports; where <code>VERIFIED</code> or
+    <code>PROVED</code> appears below, it is a checker&rsquo;s output string or a certificate
+    record&rsquo;s verdict field, quoted as data. The blind spots reported here are recorded in
+    the <a href="/defects">errata log</a> &mdash; found by this shop&rsquo;s own instrument, and
+    hardened the same day they were measured (addendum below).</div>
+
+  <div class="eyebrow">faithfulness-ceiling &middot; preregistered perturbation run &middot; 2026-08-05</div>
+  <h1>We aimed two reconstructed perturbation families at our own certificate chain. Five of its fourteen stages are silent.</h1>
+  <p class="lede">The early-answering and adding-mistakes perturbations of Lanham et&nbsp;al.
+    (arXiv:2307.13702) and Radhakrishnan et&nbsp;al. (arXiv:2307.11768) were <b>reconstructed from the
+    papers&rsquo; text</b> &mdash; the supplementary repository ships prompts only, so there is no public
+    protocol artifact to run &mdash; and applied to the certificate chain behind this shop&rsquo;s
+    certified congestion-cap claim. One renaming is load-bearing and comes first: per
+    Gur-Arieh, Marasovi&#263; &amp; Geva (arXiv:2605.25052), this metric family measures <b>causal
+    step-importance, not the faithfulness of anyone&rsquo;s reasoning</b> &mdash; and our response
+    variable is observable: the checker&rsquo;s verdict tuple (exit code, verdict line, printed bound).
+    Every prediction was committed to a dated preregistration <b>before the harness existed</b>.
+    Truncation landed at its pre-computed ceiling exactly &mdash; <b>a control, not a finding</b>.
+    The corruption sweep is the result, and it <b>falsified the preregistration&rsquo;s headline
+    prediction</b>: the registered prediction was that all fourteen single-stage mutations flip the
+    tuple (14/14); the run measured <b>9/14</b>. The two exception sites the preregistration named
+    were both right; a third silent stage fell at a mechanism it had named without registering a
+    site; two were genuinely unpredicted. As measured 2026-08-05, against the verifier the
+    certificate then pinned, this chain <b>had five stages whose corruption its own verdict could
+    not see</b> &mdash; hardened the same day (addendum below).</p>
+
+  <div class="strip">
+    <div class="cap">Measured &middot; <code>node test-faithfulness.js</code> &middot; exit 0 &middot; 185.4&nbsp;s &middot; 7/7 harness controls &middot; golden-run-2026-08-05.json</div>
+    <div class="readouts">
+      <div class="ro"><div class="k">Truncation (certificate arm)</div><div class="v ok">AOC 675/7 = 96.43 pp &mdash; the pre-computed ceiling, exactly (control)</div></div>
+      <div class="ro"><div class="k">Corruption (certificate arm)</div><div class="v ok">9/14 tuple flips &mdash; every flip with its clean control green</div></div>
+      <div class="ro"><div class="k">Silent stages</div><div class="v bad">7 &middot; 8 &middot; 9 &middot; 10 &middot; 12 &mdash; Z1, Z2, radii cap, branch wall, witnesses</div></div>
+      <div class="ro"><div class="k">Prereg scorecard</div><div class="v ok">(a) held &middot; (b) headline FALSIFIED 9/14, named sites 2/2 &middot; (c) held &middot; (d) FIRED</div></div>
+      <div class="ro"><div class="k">Baseline (same instance)</div><div class="v ok">AOC 43.75 vs own ceiling 93.75 pp &middot; corruption 2/8 = 25%</div></div>
+      <div class="ro"><div class="k">Pins</div><div class="v ok">verifier sha256 67822a77&hellip; = the certificate record&rsquo;s pin at the time of the run</div></div>
+    </div>
+    <div class="note"><b>What these numbers are, stated before any of them travels:</b> causal
+      step-importance of certificate-chain stages under prefix truncation and single-stage semantic
+      mutation, with a deterministic checker&rsquo;s verdict tuple as the response variable. Per
+      arXiv:2605.25052 they are <b>not</b> a validated measure of model-CoT faithfulness, and no
+      number on this page shares a scale with Table&nbsp;1 of arXiv:2307.11768 &mdash; in either
+      direction.</div>
+  </div>
+
+  <div class="pagestate" style="margin-top:26px"><b>Addendum, 2026-08-05 &mdash; the five stages were
+    hardened the same day, and this page reports the pre-hardening run.</b> The verifier was
+    changed in two ways, neither touching mathematics and both strengthening: the pointwise
+    witnesses joined the acceptance conjunction (each &lt;&nbsp;1e&minus;8 &mdash; six orders above
+    the clean measurements, six below the smallest injected corruption), and the verdict line now
+    carries a sha256 digest of the full certified state, so a conservative corruption that honestly
+    still closes stays <code>VERIFIED</code> but is visible in the tuple. The certificate record
+    was re-frozen against the hardened verifier (sha256 67822a77&hellip;&nbsp;&rarr;&nbsp;5fd01be3&hellip;)
+    with every bound reproduced digit-for-digit and the cross-language gate green first. The re-run
+    golden (<code>golden-run-2026-08-05-p2.json</code>) measures <b>14/14 tuple flips, zero silent
+    stages</b>, all seven harness controls green. One instrument defect found by the hostile read
+    is also fixed and disclosed: the harness had compared the verifier&rsquo;s sha256 against a
+    <i>transcribed constant</i> &mdash; a pin-match that could not go red on a re-freeze &mdash; and
+    it now reads the certificate record itself at run time. The numbers on the rest of this page
+    are the run of record, against the pre-hardening verifier, and are kept as measured; the
+    <a href="/defects">errata log</a> carries the case.</div>
+
+  <h2>What was tested, and why the frame is narrow</h2>
+  <p><b>Two perturbation families, rebuilt from the papers&rsquo; own text.</b> <i>Early answering</i>:
+    cut the chain after each stage, demand the verdict, score the area between the same-answer curve
+    and <i>y</i>&nbsp;=&nbsp;100 by trapezoidal sum. <i>Adding mistakes</i>: corrupt one stage, let
+    everything downstream recompute from the corrupted data, ask whether the final answer moved.
+    Both originate in arXiv:2307.13702 and are applied in arXiv:2307.11768. The supplementary
+    repository (<code>anthropics/DecompositionFaithfulnessPaper</code>, archived read-only) ships
+    <b>prompts only</b> &mdash; no truncation code, no trapezoid, no corruption generator, no equality
+    predicate, licence unverified, nothing vendored &mdash; so what ran here is <b>our reconstruction</b>,
+    with five decisions pinned in <code>src/PROTOCOL.md</code> and labelled ours, and the deviations
+    named: the mistake operator is a deterministic minimal semantic mutation, not a sampled
+    &ldquo;plausible mistake&rdquo;; stage selection is exhaustive over all fourteen, not three random
+    draws; the same-answer predicate is exact tuple identity. No language model appears anywhere in
+    the loop.</p>
+  <p><b>The renaming is not a hedge; it is the finding of a paper we cite.</b> arXiv:2605.25052
+    &mdash; read at body level, its PDF sha-pinned in the internal protocol record, discharging the
+    literature gate&rsquo;s earlier do-not-cite listing &mdash; constructs tasks with ground-truth
+    faithfulness labels and scores this exact metric family at chance as a measure of model-CoT
+    faithfulness (Adding Mistakes 0.51&nbsp;&plusmn;&nbsp;0.02 step-level / 0.51&nbsp;&plusmn;&nbsp;0.04
+    CoT-level AUROC; Early Answering 0.51&nbsp;&plusmn;&nbsp;0.01 / 0.45&nbsp;&plusmn;&nbsp;0.03),
+    diagnosing that the metrics <i>conflate importance with faithfulness</i>. On their home ground that is an invalidation. Here it is a renaming: what the
+    metrics do track &mdash; whether each step causally matters to the conclusion &mdash; is exactly
+    the property a certificate chain is supposed to maximise, and our response variable is a
+    deterministic checker&rsquo;s output rather than an unobservable internal computation, so the
+    ground-truth problem does not arise. No conclusion on this page travels back to their setting.</p>
+  <p><b>The object.</b> This shop&rsquo;s certified congestion-cap claim, status certified (derived
+    2026-07-27), with the on-record escalation that the CAP certifies local uniqueness within the
+    even/cosine subspace. Its certificate chain (r&nbsp;=&nbsp;4.33e&minus;13,
+    Z1&nbsp;=&nbsp;0.9271, Z2&nbsp;=&nbsp;63.44, Y0&nbsp;=&nbsp;3.01e&minus;14,
+    min&nbsp;m&nbsp;=&nbsp;0.5889178) is executed end-to-end by the standalone Python verifier
+    <code>verify_congest.py</code> &mdash; the same file the
+    <a href="/technical-reports/ai-verify">AI-verify report</a> embeds and offers as a download.
+    The harness drives that verifier as a subprocess &mdash; never a re-expression, which would
+    measure the re-expression &mdash; and reads its source at run time, refusing to start unless
+    its sha256 matches the certificate record&rsquo;s pin. At the recorded run that pin was a
+    constant transcribed from the record &mdash; a comparison the hostile read correctly named as
+    one that could not go red on a re-freeze; the harness now reads the record itself (addendum).
+    The fourteen stages are the verifier&rsquo;s own structure, read off it in the preregistration,
+    not chosen per-run.</p>
+
+  <h2>The preregistration is the method</h2>
+  <p>The preregistration (<code>PREREG.md</code>, internal and dated &mdash; this page quotes it;
+    the file itself does not travel with the page) was committed <b>before the harness existed</b>
+    &mdash; that ordering, verifiable in the private tree&rsquo;s history, is the document&rsquo;s
+    entire value. It fixed, in advance: the 14-stage decomposition; the truncation semantics (a gate whose
+    stage did not run counts as not-passed; a run that emits no verdict line is a different answer);
+    the equality predicate (exact tuple identity, no judge of any kind); the mutation operator family
+    with its two-directional kill-control discipline; the area ceiling
+    100&nbsp;&minus;&nbsp;50/14&nbsp;=&nbsp;675/7 pp, pre-computed so that hitting it could not be
+    presented as a discovery; the two most plausible silent sites, each with its mechanism; and the
+    null branches &mdash; including &ldquo;the baseline saturates too and the instrument measures
+    nothing,&rdquo; registered as a reportable outcome, not a failure to be papered over.</p>
+  <p>One more piece of the record: this unit&rsquo;s own prospectus page predates its literature gate
+    and predicted saturation as the headline. The gate ruled that headline <b>folklore</b> &mdash;
+    reachable by a referee in under a page from the definition of a checker, by three independent
+    routes &mdash; and the prospectus stays as written, as the record of what was believed before.
+    That ruling is why row (a) below is a control and could never have been a finding.</p>
+  <div class="tablewrap">
+  <table class="mono">
+    <thead><tr><th>#</th><th>Committed 2026-08-05, before any code</th><th>Measured (run of 2026-08-05, exit 0)</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>a</td>
+        <td class="prose"><b>Truncation is a control, not a finding.</b> Every proper prefix of the
+          14-stage chain yields a non-<code>VERIFIED</code> tuple; AOC lands at the ceiling
+          100&nbsp;&minus;&nbsp;50/14&nbsp;=&nbsp;675/7&nbsp;pp exactly (Tier&nbsp;A folklore ruling:
+          a definitional consequence of what a checker is).</td>
+        <td>14/14 prefixes differ from clean; s&nbsp;=&nbsp;[0&times;14,&nbsp;100];
+          AOC&nbsp;=&nbsp;675/7&nbsp;=&nbsp;96.4286&nbsp;pp &mdash; the ceiling, exactly. Every
+          truncated prefix also <b>exits 0</b>: an auditor watching exit codes alone is blind to
+          truncation as well.</td>
+        <td><span class="moved">HELD &mdash; control</span></td>
+      </tr>
+      <tr>
+        <td>b</td>
+        <td class="prose"><b>P-2, the headline: every one of the 14 single-stage mutations flips
+          the verdict tuple &mdash; corruption change rate 14/14&nbsp;=&nbsp;100%.</b> Hedged with
+          the two most plausible exception sites, named with mechanisms: stage&nbsp;12 (pointwise
+          witnesses &mdash; computed and printed but absent from the verdict conjunction) and
+          stage&nbsp;9 (the radii acceptance cap rCap&nbsp;=&nbsp;1e&minus;2 against a certified
+          r&nbsp;=&nbsp;4.33e&minus;13 &mdash; ten orders of slack); plus one sentence naming
+          stages 10&ndash;11&rsquo;s adaptive grid refinement as the same absorbing species,
+          without registering either as a site.</td>
+        <td>Corruption change rate <b>9/14</b>. M12 flip&nbsp;=&nbsp;false; M9
+          flip&nbsp;=&nbsp;false</td>
+        <td><span class="silent">FALSIFIED &mdash; 9/14</span>; <span class="moved">named sites
+          RIGHT, 2/2</span></td>
+      </tr>
+      <tr>
+        <td>c</td>
+        <td class="prose"><b>The baseline must discriminate</b> &mdash; the uncertified float pipeline
+          for the same instance absorbs at least one corruption and its truncation curve is not
+          maximal. If it saturates anyway, the instrument measures nothing and that null is the
+          result.</td>
+        <td>Corruption 2/8&nbsp;=&nbsp;25%; five corrupted-then-regenerated stages re-converged to the
+          same terminal line; AOC 175/4&nbsp;=&nbsp;43.75&nbsp;pp vs own ceiling
+          375/4&nbsp;=&nbsp;93.75&nbsp;pp</td>
+        <td><span class="moved">HELD</span></td>
+      </tr>
+      <tr>
+        <td>d</td>
+        <td class="prose"><b>The defect branch:</b> any silent stage beyond the two named sites is a
+          defect report about our own chain &mdash; registered in advance as the one genuinely new
+          positive output this run could produce.</td>
+        <td>Stages 7 (Z1) and 8 (Z2) are silent &mdash; unpredicted. Stage 10 (branch wall) is
+          silent at the grid-absorption mechanism P-2 named for stages 10&ndash;11 without
+          registering a site</td>
+        <td><span class="silent">FIRED</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>The result: five of fourteen stages are silent</h2>
+  <p>One deterministic minimal semantic mutation per stage, exhaustive over all fourteen, each run
+    paired with a clean control that had to reproduce the reference tuple (it did, 14/14). The
+    reference tuple is exit&nbsp;0 &middot; <code>CONGEST CAP: VERIFIED</code> &middot; bound
+    0.588918.</p>
+  <div class="tablewrap">
+  <table class="mono">
+    <thead><tr><th>Stage</th><th>Mutation applied</th><th>Tuple after mutation</th><th>Moved?</th></tr></thead>
+    <tbody>
+      <tr><td>1 embedded data</td><td>CAND_A[0] += 1e&minus;2</td><td>exit 1 &middot; REFUSED (did not close; &Phi; port mismatch; a falsifier failed to refuse)</td><td><span class="moved">moved</span></td></tr>
+      <tr><td>2 interval layer</td><td>mul loses its outward widening</td><td>exit 1 &middot; REFUSED (a falsifier failed to refuse)</td><td><span class="moved">moved</span></td></tr>
+      <tr><td>3 sequence layer</td><td>odd-parity negation dropped</td><td>exit 1 &middot; REFUSED (Z1 &ge; 1 &mdash; no contraction; &Phi; port mismatch)</td><td><span class="moved">moved</span></td></tr>
+      <tr><td>4 port gate</td><td>gate deviation += 1e&minus;2</td><td>exit 1 &middot; REFUSED (&Phi; port mismatch)</td><td><span class="moved">moved</span></td></tr>
+      <tr><td>5 reciprocal gate</td><td>Newton constant 0.5 &rarr; 0.51</td><td>exit 1 &middot; REFUSED (reciprocal-w mismatch)</td><td><span class="moved">moved</span></td></tr>
+      <tr><td>6 residual and Y0</td><td>Y0 += 1e&minus;2</td><td>exit 1 &middot; REFUSED (did not close)</td><td><span class="moved">moved</span></td></tr>
+      <tr><td>7 Z1</td><td>Z1 += 1e&minus;2 after the analytic tail</td><td>exit 0 &middot; VERIFIED &middot; 0.588918 &mdash; unchanged</td><td><span class="silent">SILENT</span></td></tr>
+      <tr><td>8 Z2</td><td>Z2 += 1e&minus;2 after assembly</td><td>exit 0 &middot; VERIFIED &middot; 0.588918 &mdash; unchanged</td><td><span class="silent">SILENT</span></td></tr>
+      <tr><td>9 radii closure</td><td>rCap 1e&minus;2 &rarr; 2e&minus;2</td><td>exit 0 &middot; VERIFIED &middot; 0.588918 &mdash; unchanged</td><td><span class="silent">SILENT</span> (named)</td></tr>
+      <tr><td>10 branch wall</td><td>initial grid 4096 &rarr; 16</td><td>exit 0 &middot; VERIFIED &middot; 0.588918 &mdash; unchanged</td><td><span class="silent">SILENT</span></td></tr>
+      <tr><td>11 density wall</td><td>initial grid 4096 &rarr; 16</td><td>exit 0 &middot; VERIFIED &middot; <b>bound 0.501589</b></td><td><span class="moved">moved</span></td></tr>
+      <tr><td>12 witnesses</td><td>fpFluxConstDev += 1e&minus;2</td><td>exit 0 &middot; VERIFIED &middot; 0.588918 &mdash; unchanged</td><td><span class="silent">SILENT</span> (named)</td></tr>
+      <tr><td>13 falsifier battery</td><td>X2&rsquo;s perturbation 1e&minus;2 &rarr; 1e&minus;16</td><td>exit 1 &middot; REFUSED (a falsifier failed to refuse)</td><td><span class="moved">moved</span></td></tr>
+      <tr><td>14 verdict emission</td><td>verdict conjunction negated</td><td>exit 1 &middot; REFUSED</td><td><span class="moved">moved</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><b>The five, by mechanism.</b> Stage 12 is the predicted dead weight: the pointwise witnesses
+    are computed and printed but the acceptance predicate never reads them
+    (<code>verified = cert_ok and phi_ok and w_ok and fals_ok</code> &mdash; the witness flag is
+    absent), and the one falsifier that touches that stage reads only a field the mutation left
+    alone. The witness stage is <b>diagnostic, not load-bearing</b>, for the verdict &mdash; that is
+    now a measured fact, stated rather than averaged away. Stage 9 is the predicted parameter slack:
+    doubling the acceptance cap changes nothing when the certified radius sits ten orders of
+    magnitude below it. Stages 7 and 8 are the same two species, <b>unpredicted</b>: an inflated
+    Z1 (0.9271&nbsp;+&nbsp;1e&minus;2 by the mutation rule) still sits below 1 and the radii
+    polynomial still closes on a Y0 of 3.01e&minus;14; an extra 1e&minus;2 on a Z2 of 63.44 is
+    invisible at the scale the closure cares about. Stage 10 is the absorption mechanism the
+    preregistration <b>named without registering as a site</b>: a branch-wall grid corrupted from
+    4096 down to 16 is <b>repaired by the wall&rsquo;s own adaptive refinement loop</b> &mdash; the
+    chain&rsquo;s downstream machinery absorbing an upstream corruption, which is precisely the
+    degree of freedom the corruption metric exists to detect, found running inside our own
+    certificate.</p>
+  <p><b>The contrast that locates the boundary.</b> Stage 11 took the identical grid corruption and
+    <i>moved</i> &mdash; because the density wall feeds the tuple&rsquo;s third element, and the
+    coarser grid printed a different bound (0.501589). The preregistration&rsquo;s same-species
+    sentence allowed absorption at stage 11 too, and there it was wrong &mdash; scored here, not
+    smoothed. The split among the fourteen is not &ldquo;some stages are robust&rdquo;; it is
+    exactly the stages whose output the verdict tuple never reads, or whose perturbation lands
+    inside certified headroom. Worth noting: the exact-tuple predicate is doing real work here
+    &mdash; a predicate on the verdict line alone would have called stage 11 silent too, and
+    reported six blind stages instead of five.</p>
+  <p><b>Both directions, honestly.</b> None of the five is an unsound acceptance: each mutation
+    pushes a bound in the conservative direction or is repaired to a correct value downstream, and
+    no mutation produced <code>VERIFIED</code> beside a printed bound that is not a valid lower
+    bound. Two limits of that sentence, stated rather than blurred: under the exact-tuple predicate
+    the registered unsound branch is <b>unfalsifiable for the printed bound</b> (the printed bound
+    is the tuple&rsquo;s third element, so it cannot move while the tuple holds), and the mutated
+    Z1/Z2 values &mdash; certified bounds that did move while the tuple held &mdash; are not
+    recorded by this harness. What the five measure is <b>observability</b>: at the recorded run,
+    the verdict tuple was not a sufficient statistic for the chain&rsquo;s integrity, and an auditor
+    watching only the checker&rsquo;s verdict would have missed corruption of five of the fourteen
+    stages &mdash; measured dead weight at one, measured parameter slack at four &mdash; in a chain
+    whose whole advertisement is that corruption anywhere flips it.</p>
+
+  <h2>The baseline that makes it a measurement</h2>
+  <p>The comparison arm is the uncertified float pipeline for the same instance &mdash; the
+    damped-Newton candidate kernel, four sweeps to a clean residual of 4.68e&minus;16 &mdash;
+    decomposed into its own eight stages. Under truncation its answer is already carried at prefix 4
+    of 8: AOC 175/4&nbsp;=&nbsp;43.75&nbsp;pp against its own ceiling of
+    375/4&nbsp;=&nbsp;93.75&nbsp;pp, a curve nowhere near maximal. Under corruption it flipped at 2
+    of 8 stages (25%). Five corruptions &mdash; the seed and the four Newton sweeps &mdash; were
+    <b>absorbed by re-convergence</b> (three to four regenerated sweeps each, terminal line
+    unchanged), and one more, the reciprocal-w step, left the terminal line unchanged with no
+    regeneration at all: <b>the baseline has one silent stage of its own</b>, reported for the same
+    reason the certificate arm&rsquo;s five are. The teeth control shows the operator is not
+    toothless &mdash; the same corruption with regeneration withheld changes the terminal line
+    (0.5892603&nbsp;&rarr;&nbsp;0.5992603). So the absorption is attributable to regeneration, not
+    to a weak operator, and the pre-registered null &mdash; baseline saturates, instrument measures
+    nothing &mdash; did not fire. Each arm is read against its own ceiling, never
+    against the other&rsquo;s: the certificate arm sits at 675/7 of 675/7; the baseline sits 50
+    points below its own.</p>
+
+  <h2>The against-case, given its best form</h2>
+  <p><i>&ldquo;The saturation is by construction &mdash; a checker rejects any broken input by
+    definition. What did running add?&rdquo;</i> Three things, each of them measured rather than
+    argued. <b>First</b>, it tested step-decomposability &mdash; a real property of our chain, not of
+    checkers in general: fourteen stages, each separately truncatable at a verbatim seam of the
+    verifier&rsquo;s executed path and separately corruptible with its clean control green, with the
+    splicer refusing loudly on any anchor that fails to match exactly once. <b>Second</b>, it
+    produced the measured comparison point: 675/7-at-ceiling against 43.75, 9/14 against 2/8 &mdash;
+    numbers with a discriminating baseline, where the by-construction argument supplies only the
+    definition restated. <b>Third</b>, it found the five silent stages &mdash; which
+    saturation-by-construction says <b>should not exist</b>. The strongest form of the objection
+    comes from arXiv:2605.25052 itself: <i>you ran, on an artifact, a metric family shown to be near
+    chance at its stated purpose.</i> The answer is on that paper&rsquo;s own terms: the metrics fail
+    as faithfulness measures because their ground truth is unobservable; here the response variable
+    is a deterministic checker&rsquo;s tuple, and the property the metrics do track &mdash; causal
+    step-importance &mdash; is the property a certificate chain advertises and, at five of fourteen
+    stages of the recorded run, measurably lacked.</p>
+
+  <h2>What was NOT measured, stated so it cannot be assumed</h2>
+  <div class="caveat">
+    <p><b>Nothing about any model&rsquo;s reasoning.</b> No model was perturbed, prompted or judged;
+      no conclusion here bears on whether any chain-of-thought is faithful, and this run neither
+      confirms nor challenges the model-CoT results of the papers it reconstructs.</p>
+    <p><b>No shared scale with their Table&nbsp;1.</b> Their truncation-sensitivity figures
+      (10.8&ndash;20.5) and corruption-sensitivity figures (9.6&ndash;33.6, across their three
+      methods) are their object &mdash; a model&rsquo;s reasoning over 1200 QA questions &mdash; on a
+      different scale. They are named here only as context, and no number on this page may be read
+      against them, in either direction.</p>
+    <p><b>Not their protocol, unmodified.</b> No public artifact defines that protocol end-to-end;
+      what ran is our reconstruction with named deviations, pinned in <code>src/PROTOCOL.md</code>
+      before the preregistration and unchanged since.</p>
+    <p><b>Not a first.</b> Three located works attach a faithfulness metric to formal artifacts:
+      cycle-consistency over verification certificates (arXiv:2606.24414), input-perturbation
+      robustness of Lean&nbsp;4 autoformalization (arXiv:2606.14867), and formalization gaming
+      (arXiv:2604.19459). What our documented search (8 queries, one index, abstract-level) did not
+      locate is this pair of perturbations run on a certificate object &mdash; an attributed
+      negative about a search, not a proof about a field.</p>
+    <p><b>The slice boundary is cited, not claimed.</b> &ldquo;Formal verification guarantees proof
+      validity but not formalization faithfulness&rdquo; &mdash; Kim, Poiroux &amp; Bosselut,
+      arXiv:2604.19459, in print months before this unit opened. The seam is real for our object
+      too: the claim record&rsquo;s own status history records that the claim sentence asserts more
+      than the CAP certifies (local uniqueness holds within the even/cosine subspace), which is the
+      same species of gap at a smaller scale.</p>
+    <p><b>Words.</b> Nothing on this page is proved or verified <i>by this run</i>. The run measured;
+      the string <code>CONGEST CAP: VERIFIED</code> and the certificate record&rsquo;s
+      <code>PROVED</code> verdict field are the object under study, quoted as data.</p>
+  </div>
+
+  <h2>Every number, and how to re-run it</h2>
+  <pre class="mono">node research/_frontier/faithfulness-ceiling/test-faithfulness.js
+# ~3 min (recorded 185.4 s) &middot; needs python3 on PATH for the verifier arm
+# exit 0 = the 7 harness controls passed; measurements never set the exit code</pre>
+  <p>The certificate arm drives <code>verify_congest.py</code> as a <b>python3 subprocess</b>
+    (recorded run: Python 3.9.6, Node v24.14.1) &mdash; that dependency is real and stated, and it is
+    the design: the preregistration pins the stage list to that file&rsquo;s own structure, so any JS
+    re-expression would measure the re-expression. All truncations and mutations are applied to
+    copies in a throwaway temp directory; the live tree is never written. The harness first shows
+    its own instruments can fail: two planted breaks that the splicer and patcher must refuse, a
+    planted chain break the operator must flip, a byte-identical clean re-run, a comparator
+    self-test, a chain-equivalence check on the baseline prefix machinery, and the no-regeneration
+    teeth control. Two honest limits, stated in full: the harness, the preregistration and the
+    goldens are <b>internal to the private tree</b> &mdash; the command above is that tree&rsquo;s
+    path, and this page quotes those records rather than shipping them; and the baseline kernel is
+    a <b>private file</b> &mdash; it runs there and nothing from it ships &mdash; so the baseline
+    arm reproduces only in the private tree. The one program that is published is the certificate
+    arm&rsquo;s object itself: the standalone verifier, embedded and downloadable on the
+    <a href="/technical-reports/ai-verify">AI-verify report</a>. Every figure on this page is read
+    from the run-of-record golden and log or from the certificate record the run pinned; the
+    harness is deterministic by design, and the committed golden is the run of record.</p>
+
+  <div class="foot">research/_frontier/faithfulness-ceiling &middot; <code>node
+    test-faithfulness.js</code> &mdash; 14-stage certificate arm (python3 subprocess, sha-pinned) +
+    8-stage baseline arm, 7/7 harness controls, exit 0, 185.4&nbsp;s &middot; PREREG.md committed
+    2026-08-05 before the harness &middot; sources reconstructed at body level: arXiv:2307.11768,
+    arXiv:2307.13702; renaming per arXiv:2605.25052; neighbours arXiv:2606.24414, arXiv:2606.14867,
+    arXiv:2604.19459 &middot; verifier sha256 at the recorded run 67822a77&hellip; (refrozen same
+    day to 5fd01be3&hellip; after the hardening &mdash; addendum) &middot; baseline kernel sha256
+    2a5f33f3&hellip; &middot; run recorded 2026-08-05</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. On this page, the program that is
+        published is the certificate arm&rsquo;s verifier &mdash; embedded and downloadable on the
+        <a href="/technical-reports/ai-verify">AI-verify report</a>, with its checks shown to fail
+        on deliberately broken copies; the measurement harness and the baseline kernel are private,
+        their numbers quoted from the recorded run and stated as such above.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author, including the five blind stages this page reports &mdash; are
+        recorded with their date and their correction in the <a href="/defects">errata log</a>,
+        never quietly fixed.</p>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+      <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+        programs MIT</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
