@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>We re-checked six AI-claimed results in our own arithmetic. Five hold; one holds on every machine-checkable fragment.</title>
+<title>Erdős #1038: all 30 claimed decimals check out — and the last one is a rounding, not an expansion</title>
 <meta name="robots" content="index,follow">
-<!-- Promoted out of the explore notebook 2026-08-03 on the owner publish decision. -->
+<!-- Built 2026-08-04; exported:false in PAGES.json — owner publish decision pending. -->
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -120,87 +120,106 @@ p b{color:var(--ink)}
 
 <div class="wrap">
 
-  <div class="pagestate"><b>Research note &mdash; not peer-reviewed.</b> Each verifier below has been
-    shown to <b>fail on a deliberately broken copy</b> of itself and pass on the real one. No contact
-    with any claim&rsquo;s author or with the claim database has been made &mdash; that, like every
-    send, is an owner action.</div>
+  <div class="pagestate"><b>Research note — not peer-reviewed.</b> Lane-B verification unit:
+    the computational fragment of an AI-assisted solution to Erd&#337;s Problem #1038, re-verified in
+    our own arithmetic with checks proven able to fail. No contact with the manuscript&rsquo;s
+    authors or the database maintainer has been made &mdash; that, like every send, is an owner
+    action.</div>
 
-  <div class="eyebrow">Independent verification &middot; challenges &middot; 2026-08-03 &middot; extended 2026-08-04</div>
-  <h1>We re-checked six AI-claimed results in our own arithmetic. Five hold; the sixth holds on
-    every fragment a machine can check.</h1>
-  <p class="lede">Roughly 400 AI-assisted mathematical results sit in a public claim database. On
-    every numeric one we examined, the verification label is the author&rsquo;s own &mdash; the
-    author&rsquo;s manuscript, the author&rsquo;s script, the author&rsquo;s run. We picked six,
-    from the weakest prior evidence to the strongest, and rebuilt each check from scratch: our own
-    arithmetic, no shared code, a planted bug in every verifier to prove the check can fail.
-    <b>Five are CONFIRMED on the layer we checked; one is PARTIAL &mdash; its machine-checkable
-    fragment confirmed in full, its analytic core not audited.</b> Total runtime: under five
-    seconds.</p>
+  <div class="eyebrow">Lane B &middot; AI-claimed results &middot; challenges &middot; 2026-08-04</div>
+  <h1>Erd&#337;s #1038: every printed decimal of the extremal constant is right &mdash; and the famous 30th digit is a rounding, not an expansion</h1>
+  <p class="lede">The Darvas&ndash;Peng&ndash;Tao manuscript solving Erd&#337;s Problem #1038
+    (Erd&#337;s&ndash;Herzog&ndash;Piranian 1958) prints the extremal value
+    D&nbsp;=&nbsp;1.834430475762661711090753635125&hellip; to 30 decimals, defined implicitly by a
+    3-dimensional nonlinear system, and ships its own Arb and SymPy certificates. We rebuilt the
+    computational fragment as an <b>independent reimplementation</b> &mdash; one shared definition of
+    the system over two of our own interval backends, automatic differentiation for the Jacobian,
+    Krawczyk for existence and uniqueness &mdash; and it holds: <b>26 checks, 4/4 mutation controls
+    rejected, under 0.1&nbsp;s</b>, with certified enclosures to 40+ decimals. Along the way the
+    machinery surfaced two things worth publishing: the headline value&rsquo;s <b>last digit is a
+    half-up rounding presented with an expansion&rsquo;s trailing &ldquo;&hellip;&rdquo;</b>, and one
+    of the paper&rsquo;s face inequalities is <b>uncertifiable by naive interval evaluation at the
+    printed radii</b> &mdash; it needs (and gets) a first-order mean-value form.</p>
 
-  <div class="tw"><table>
-    <tr><th>Claim</th><th>Verdict</th><th>What existed before</th><th>What we ran</th><th>Time</th></tr>
-    <tr><td><a href="/technical-reports/verify-poisson">Rank-two Poisson counterexample</a></td>
-      <td class="mono">CONFIRMED (computational claims)</td>
-      <td>author-checked manuscript + author-run scripts</td>
-      <td>our own exact rationals in &#x211A;[x,q,p,z]</td><td class="mono">0.4 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-mathieu">Mathieu&ndash;Zhao classification identities</a></td>
-      <td class="mono">CONFIRMED (identities only)</td>
-      <td>author-checked manuscript + author-run SymPy</td>
-      <td>our own BigInt Laurent polynomials, incl. &#x211A;[i]</td><td class="mono">0.04 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-korenblum">Korenblum constant c&#8322;&nbsp;&ge;&nbsp;0.4263</a></td>
-      <td class="mono">CONFIRMED (numerical side)</td>
-      <td><b>a published, rigorous Arb certificate</b></td>
-      <td>our own outward-rounded intervals, no Arb</td><td class="mono">4.2 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-ranteng">Ran&ndash;Teng Conjecture 20 spectral region</a></td>
-      <td class="mono"><b>PARTIAL</b> — fragment CONFIRMED, analytic core not audited</td>
-      <td>human-checked proof, <b>no code, no certificate</b></td>
-      <td>exact polynomial identities + certified eigenvalue enclosures (272 matrices)</td><td class="mono">41 ms</td></tr>
-    <tr><td><a href="/technical-reports/verify-lemniscate">Erd&#337;s #1038 extremal constant D (30 decimals)</a></td>
-      <td class="mono">CONFIRMED (computational fragment)</td>
-      <td>author-checked manuscript + author-run Arb/SymPy certificates</td>
-      <td>our own two-backend intervals + AD + Krawczyk, 45-digit enclosure</td><td class="mono">&lt; 0.1 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-maxwell">Maxwell 1873 refutation: 24 critical points, 5 charges</a></td>
-      <td class="mono">CONFIRMED at &epsilon; = 1/6 (one pinned instance)</td>
-      <td>author-run Mathematica/Maple float checks, no artifact</td>
-      <td>24 disjoint Krawczyk boxes + interval Hessian nondegeneracy</td><td class="mono">0.1 s</td></tr>
-  </table></div>
-
-  <h2>What a confirmation is worth</h2>
-  <p>We went looking for errors in AI-claimed mathematics and found no mathematical error. On the
-    layers we checked, five claims are confirmed outright and the sixth &mdash; Ran&ndash;Teng
-    &mdash; is confirmed on every fragment a machine can check, with its analytic core left
-    explicitly unaudited: a PARTIAL we state as PARTIAL rather than smooth away. The sharpest thing
-    the lane surfaced is fine print, not refutation: the Erd&#337;s #1038 manuscript&rsquo;s
-    headline constant carries a <b>rounded 30th decimal presented with an expansion&rsquo;s
-    trailing ellipsis</b>, and one of its face inequalities is uncertifiable by naive interval
-    evaluation at the printed radii &mdash; both caught only because an independent implementation
-    produced its own certified expansion. What we found beyond that is that <b>nobody had
-    looked</b> &mdash; including at the ones that already ship rigorous certificates, where our
-    margins matched theirs from implementations that share no code with them.</p>
-  <p>That is the more useful result. A refutation would have been a fact about one paper; a
-    confirmation from an independent implementation is a fact about the <i>infrastructure</i> — it
-    says the checking layer can be reconstructed by a stranger, cheaply, and that doing so is
-    currently nobody&rsquo;s job. It is also the discipline this shop holds itself to elsewhere: a
-    verification lane that only publishes its refutations is a lane you cannot trust.</p>
-
-  <h2>What none of the six establishes</h2>
-  <div class="caveat">
-    <p>Each page states, in the same place and the same words, exactly what it did <b>not</b> check
-      &mdash; and on all six, the theorem sitting above the checked layer is still nobody&rsquo;s
-      job. We confirm computational layers: bracket relations and a Jacobian, a family of moment
-      identities, a finite system of inequalities, the algebra and certified enclosures of a
-      spectral-region proof, the implicit definition and digits of an extremal constant, one pinned
-      instance of a counterexample configuration. We do not audit the Poisson conjecture&rsquo;s
-      disproof logic, the Mathieu&ndash;Zhao classification theorem, Korenblum&rsquo;s duality
-      argument, Ran&ndash;Teng&rsquo;s analytic necessity argument, the Erd&#337;s #1038 extremality
-      proof, or Maxwell-refutation Theorem 1&rsquo;s asymptotic statement. And in every case our
-      implementation and the author&rsquo;s share the manuscript&rsquo;s formulation: an error
-      identical in both would pass.</p>
+  <div class="strip">
+    <div class="cap">Verdict &middot; <code>node verify.js</code> &middot; exit 0 &middot; 26 checks &middot; 4/4 mutations rejected &middot; &lt; 0.1 s</div>
+    <div class="readouts">
+      <div class="ro"><div class="k">Verdict</div><div class="v ok">CONFIRMED (computational fragment)</div></div>
+      <div class="ro"><div class="k">Certified enclosure</div><div class="v ok"><span class="nb">D = 1.8344304757626617110907536351247861430208 ± 1.7e-45</span></div></div>
+      <div class="ro"><div class="k">Existence + uniqueness</div><div class="v ok">Krawczyk contraction, maxRad ≈ 3.8e-14; B* inside the uniqueness box</div></div>
+      <div class="ro"><div class="k">Refinement</div><div class="v ok">10&#8315;&#8308;&#8312; fixed-point layer, widths &lt; 3.2e-45 per coordinate</div></div>
+      <div class="ro"><div class="k">Digit checks</div><div class="v ok">every printed constant matches; headline D matches as a ROUNDING</div></div>
+      <div class="ro"><div class="k">Mutation controls</div><div class="v ok">4 / 4 rejected</div></div>
+    </div>
+    <div class="note"><b>Independence, stated precisely:</b> the authors&rsquo; certificate scripts
+      were read for scope and <i>never executed</i>; no value from their code or output enters our
+      computation. The only authored numbers used are the claimed decimals being checked and the box
+      centres of eq.&nbsp;(A.9), which are part of the claim itself. Our existence proof even takes a
+      different route &mdash; the interval Krawczyk operator instead of the manuscript&rsquo;s scalar
+      intermediate-value argument &mdash; and lands on the same zero: this is an independent
+      reimplementation, not a first verification.</div>
   </div>
 
-  <div class="foot">research/challenges &middot; six verifiers, each <code>node verify.js</code>,
-    no dependencies &middot; claim source: aimath.robertj1.com &middot; first three green
-    2026-08-03 &middot; ranteng / lemniscate / maxwell green 2026-08-04</div>
+  <h2>The two findings</h2>
+  <p><b>1. The 30th decimal.</b> The manuscript&rsquo;s p.24 constants &mdash; q*, u*, v*, p*,
+    &alpha;, r*, z*, and D to 18&ndash;19 decimals &mdash; all match our certified enclosures as
+    exact <i>truncations</i> of the expansion. The headline D on p.2, printed to 30 decimals ending
+    &ldquo;&hellip;635125&hellip;&rdquo;, does not: the true expansion continues
+    &hellip;635124<b>7</b>861&hellip;, so the 30th decimal of the expansion is 4, not 5. The printed
+    value is a correct half-up <i>rounding</i>, accurate to under 5&times;10&#8315;&sup3;&sup1; &mdash;
+    but the trailing ellipsis conventionally promises an expansion prefix, and read that way its last
+    digit is off by one. Not an error in the mathematics; a presentation defect the digit machinery
+    caught, and the reason mutation M1 (tamper that digit to &hellip;126) is rejected in both
+    directions.</p>
+  <p><b>2. Inequality (A.13) resists naive intervals.</b> The face inequality sits about
+    5&times;10&#8315;&sup3;&#8304; from zero, while naive interval evaluation over the printed box
+    inflates the width to about 1.2&times;10&#8315;&sup2;&#8313; &mdash; the quotient p(q) alone
+    evaluates ~14&times; wider than its true derivative &mdash; so the sign is naively indeterminate
+    at the printed radii. Our proof of (A.12)&ndash;(A.14) uses the rigorous first-order mean-value
+    form F(m)&nbsp;+&nbsp;J(box)&middot;(box&minus;m) with the AD Jacobian. (No claim is made about
+    the authors&rsquo; own Arb run, which we did not execute.)</p>
+
+  <h2>What was verified</h2>
+  <p>The manuscript defines D implicitly: (q*,u*,v*) is the zero of a 3-dimensional system built
+    from &Lambda;(y)&nbsp;=&nbsp;log((1+y)/(1&minus;y)) inside the box
+    B*&nbsp;=&nbsp;(q&#8320;,u&#8320;,v&#8320;)&nbsp;&plusmn;&nbsp;10&#8315;&sup3;&#8304;; then
+    D&nbsp;=&nbsp;r*&nbsp;&minus;&nbsp;z*. One shared implementation of the system, written over an
+    abstract arithmetic backend with forward-mode AD jets, runs over two backends: eqcert&rsquo;s
+    outward-rounded double intervals, and a fixed-point BigInt interval layer with
+    10&#8315;&#8308;&#8312; quantum and directed rounding (log by atanh series with an explicit tail
+    bound). The AD partials agree with the manuscript&rsquo;s displayed closed forms &mdash; two
+    independent routes to the same derivatives. Krawczyk proves existence and local uniqueness
+    (contraction on the first round), B* sits inside the uniqueness box &mdash; so the
+    manuscript&rsquo;s triple and ours are the <i>same</i> zero, confirming its Lemma&nbsp;A.1 &mdash;
+    and iterating K in the high-precision layer refines the enclosure below 3.2&times;10&#8315;&#8308;&#8309;
+    per coordinate, enough to check every printed digit with 15 decimals to spare.</p>
+
+  <h2>What was NOT audited, stated so it cannot be assumed</h2>
+  <div class="caveat">
+    <p><b>That D is the infimum</b> &mdash; the entire proof of the paper&rsquo;s Theorem 1.1: the
+      normal form, the forcing lemma, the dual measure construction, the endpoint certificate, and
+      the sharpness construction. We verified the <i>definition</i> of D and its claimed digits, not
+      its extremality. Also unchecked: the manuscript&rsquo;s other Arb and SymPy certificates (read
+      for scope only, never executed or re-derived), the authors&rsquo; own &kappa; sign-change proof
+      of Lemma A.1 (our Krawczyk route replaces it; the lemma itself is confirmed), the historical
+      bound-improvement chronology, and the AI-use chronology. And as always: our implementation and
+      the authors&rsquo; share the manuscript&rsquo;s formulation &mdash; an error identical in the
+      TeX and in both implementations would pass.</p>
+  </div>
+
+  <h2>Why a solved problem was worth re-checking</h2>
+  <p>This claim already carries author-side Arb certificates &mdash; the strongest evidence class in
+    the database. What an independent reimplementation adds is exactly what it added here: enclosures
+    a stranger can regenerate in a tenth of a second, one presentation defect at the headline digit
+    that only a certified expansion could adjudicate, and a documented case where the printed
+    verification radii are too coarse for the naive method a reader would first try. Confirmation
+    plus sharpened fine print is what the lane is for.</p>
+
+  <div class="foot">research/challenges/laneb-lemniscate &middot; <code>node verify.js</code> — own
+    implementation, eqcert intervals + fixed-point BigInt layer + AD + Krawczyk, 26 checks, 4/4
+    mutation controls rejected, &lt; 0.1 s &middot; VERDICT.md — full record, sources pinned by sha256
+    (manuscript PDF at commit 0804de2, author certificates retained read-only under src/) &middot;
+    claim source: aimath.robertj1.com entry erdos-1038 &middot; battery green 2026-08-04</div>
 </div>
 
 <footer>

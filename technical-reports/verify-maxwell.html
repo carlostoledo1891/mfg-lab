@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>We re-checked six AI-claimed results in our own arithmetic. Five hold; one holds on every machine-checkable fragment.</title>
+<title>Maxwell's 1873 conjecture fails at ε = 1/6: 24 critical points, certified</title>
 <meta name="robots" content="index,follow">
-<!-- Promoted out of the explore notebook 2026-08-03 on the owner publish decision. -->
+<!-- Built 2026-08-04; exported:false in PAGES.json — owner publish decision pending. -->
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -120,87 +120,105 @@ p b{color:var(--ink)}
 
 <div class="wrap">
 
-  <div class="pagestate"><b>Research note &mdash; not peer-reviewed.</b> Each verifier below has been
-    shown to <b>fail on a deliberately broken copy</b> of itself and pass on the real one. No contact
-    with any claim&rsquo;s author or with the claim database has been made &mdash; that, like every
-    send, is an owner action.</div>
+  <div class="pagestate"><b>Research note — not peer-reviewed.</b> Lane-B verification unit:
+    an AI-assisted refutation of an 1873 conjecture, re-verified at one pinned instance in our own
+    arithmetic with checks proven able to fail. No contact with the paper&rsquo;s authors or the
+    database maintainer has been made &mdash; that, like every send, is an owner action.</div>
 
-  <div class="eyebrow">Independent verification &middot; challenges &middot; 2026-08-03 &middot; extended 2026-08-04</div>
-  <h1>We re-checked six AI-claimed results in our own arithmetic. Five hold; the sixth holds on
-    every fragment a machine can check.</h1>
-  <p class="lede">Roughly 400 AI-assisted mathematical results sit in a public claim database. On
-    every numeric one we examined, the verification label is the author&rsquo;s own &mdash; the
-    author&rsquo;s manuscript, the author&rsquo;s script, the author&rsquo;s run. We picked six,
-    from the weakest prior evidence to the strongest, and rebuilt each check from scratch: our own
-    arithmetic, no shared code, a planted bug in every verifier to prove the check can fail.
-    <b>Five are CONFIRMED on the layer we checked; one is PARTIAL &mdash; its machine-checkable
-    fragment confirmed in full, its analytic core not audited.</b> Total runtime: under five
-    seconds.</p>
+  <div class="eyebrow">Lane B claim 6 &middot; AI-claimed results &middot; challenges &middot; 2026-08-04</div>
+  <h1>Maxwell said five charges allow at most 16 equilibria. At &epsilon;&nbsp;=&nbsp;1/6, the counterexample&rsquo;s 24 are now certified.</h1>
+  <p class="lede">Arathoon, Ball, and Kvalheim (arXiv:2607.27197, idea credited to an OpenAI model,
+    argument written and verified by the authors) refute Maxwell&rsquo;s 1873 point-charge
+    conjecture: five positive charges whose potential has at least 24 nondegenerate critical points,
+    exceeding the proposed bound (n&minus;1)&sup2;&nbsp;=&nbsp;16. The paper&rsquo;s evidence is
+    floating-point computer algebra &mdash; Mathematica and Maple checks, no code artifact, no
+    certificate, no concrete &epsilon;. We pinned the configuration the paper&rsquo;s own Figure 1
+    depicts, &epsilon;&nbsp;=&nbsp;1/6 with q<sub>&epsilon;</sub>&nbsp;=&nbsp;859/248832 exactly, and
+    certified it: <b>24 pairwise-disjoint Krawczyk boxes, each proving existence, local uniqueness,
+    and Hessian nondegeneracy of a critical point. 20 checks, 3/3 mutation controls rejected,
+    0.1&nbsp;s.</b> Since 24&nbsp;&gt;&nbsp;16 in exact integers, the bound fails at this explicit
+    configuration.</p>
 
-  <div class="tw"><table>
-    <tr><th>Claim</th><th>Verdict</th><th>What existed before</th><th>What we ran</th><th>Time</th></tr>
-    <tr><td><a href="/technical-reports/verify-poisson">Rank-two Poisson counterexample</a></td>
-      <td class="mono">CONFIRMED (computational claims)</td>
-      <td>author-checked manuscript + author-run scripts</td>
-      <td>our own exact rationals in &#x211A;[x,q,p,z]</td><td class="mono">0.4 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-mathieu">Mathieu&ndash;Zhao classification identities</a></td>
-      <td class="mono">CONFIRMED (identities only)</td>
-      <td>author-checked manuscript + author-run SymPy</td>
-      <td>our own BigInt Laurent polynomials, incl. &#x211A;[i]</td><td class="mono">0.04 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-korenblum">Korenblum constant c&#8322;&nbsp;&ge;&nbsp;0.4263</a></td>
-      <td class="mono">CONFIRMED (numerical side)</td>
-      <td><b>a published, rigorous Arb certificate</b></td>
-      <td>our own outward-rounded intervals, no Arb</td><td class="mono">4.2 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-ranteng">Ran&ndash;Teng Conjecture 20 spectral region</a></td>
-      <td class="mono"><b>PARTIAL</b> — fragment CONFIRMED, analytic core not audited</td>
-      <td>human-checked proof, <b>no code, no certificate</b></td>
-      <td>exact polynomial identities + certified eigenvalue enclosures (272 matrices)</td><td class="mono">41 ms</td></tr>
-    <tr><td><a href="/technical-reports/verify-lemniscate">Erd&#337;s #1038 extremal constant D (30 decimals)</a></td>
-      <td class="mono">CONFIRMED (computational fragment)</td>
-      <td>author-checked manuscript + author-run Arb/SymPy certificates</td>
-      <td>our own two-backend intervals + AD + Krawczyk, 45-digit enclosure</td><td class="mono">&lt; 0.1 s</td></tr>
-    <tr><td><a href="/technical-reports/verify-maxwell">Maxwell 1873 refutation: 24 critical points, 5 charges</a></td>
-      <td class="mono">CONFIRMED at &epsilon; = 1/6 (one pinned instance)</td>
-      <td>author-run Mathematica/Maple float checks, no artifact</td>
-      <td>24 disjoint Krawczyk boxes + interval Hessian nondegeneracy</td><td class="mono">0.1 s</td></tr>
-  </table></div>
-
-  <h2>What a confirmation is worth</h2>
-  <p>We went looking for errors in AI-claimed mathematics and found no mathematical error. On the
-    layers we checked, five claims are confirmed outright and the sixth &mdash; Ran&ndash;Teng
-    &mdash; is confirmed on every fragment a machine can check, with its analytic core left
-    explicitly unaudited: a PARTIAL we state as PARTIAL rather than smooth away. The sharpest thing
-    the lane surfaced is fine print, not refutation: the Erd&#337;s #1038 manuscript&rsquo;s
-    headline constant carries a <b>rounded 30th decimal presented with an expansion&rsquo;s
-    trailing ellipsis</b>, and one of its face inequalities is uncertifiable by naive interval
-    evaluation at the printed radii &mdash; both caught only because an independent implementation
-    produced its own certified expansion. What we found beyond that is that <b>nobody had
-    looked</b> &mdash; including at the ones that already ship rigorous certificates, where our
-    margins matched theirs from implementations that share no code with them.</p>
-  <p>That is the more useful result. A refutation would have been a fact about one paper; a
-    confirmation from an independent implementation is a fact about the <i>infrastructure</i> — it
-    says the checking layer can be reconstructed by a stranger, cheaply, and that doing so is
-    currently nobody&rsquo;s job. It is also the discipline this shop holds itself to elsewhere: a
-    verification lane that only publishes its refutations is a lane you cannot trust.</p>
-
-  <h2>What none of the six establishes</h2>
-  <div class="caveat">
-    <p>Each page states, in the same place and the same words, exactly what it did <b>not</b> check
-      &mdash; and on all six, the theorem sitting above the checked layer is still nobody&rsquo;s
-      job. We confirm computational layers: bracket relations and a Jacobian, a family of moment
-      identities, a finite system of inequalities, the algebra and certified enclosures of a
-      spectral-region proof, the implicit definition and digits of an extremal constant, one pinned
-      instance of a counterexample configuration. We do not audit the Poisson conjecture&rsquo;s
-      disproof logic, the Mathieu&ndash;Zhao classification theorem, Korenblum&rsquo;s duality
-      argument, Ran&ndash;Teng&rsquo;s analytic necessity argument, the Erd&#337;s #1038 extremality
-      proof, or Maxwell-refutation Theorem 1&rsquo;s asymptotic statement. And in every case our
-      implementation and the author&rsquo;s share the manuscript&rsquo;s formulation: an error
-      identical in both would pass.</p>
+  <div class="strip">
+    <div class="cap">Verdict &middot; <code>node verify.js</code> &middot; exit 0 &middot; 20 checks &middot; 3/3 mutations rejected &middot; 0.1 s</div>
+    <div class="readouts">
+      <div class="ro"><div class="k">Verdict</div><div class="v ok">CONFIRMED at &epsilon; = 1/6 (one pinned instance)</div></div>
+      <div class="ro"><div class="k">Certified points</div><div class="v ok">24 disjoint Krawczyk boxes, all 276 pairs disjoint</div></div>
+      <div class="ro"><div class="k">Nondegeneracy</div><div class="v ok">interval Hessian det excludes 0 on every box</div></div>
+      <div class="ro"><div class="k">Claim gate</div><div class="v ok">24 &gt; (5&minus;1)&sup2; = 16, exact integers</div></div>
+      <div class="ro"><div class="k">Margins</div><div class="v ok">box radii 1.5e-13&hellip;5.5e-12 vs min gap 1.37e-3</div></div>
+      <div class="ro"><div class="k">Mutation controls</div><div class="v ok">3 / 3 rejected</div></div>
+    </div>
+    <div class="note"><b>On a bounded search recorded in the VERDICT</b> (three web queries,
+      2026-08-04: no certificate, no Lean, no Arb, no validated-numerics artifact found anywhere for
+      this result), this is to our knowledge the <b>first certified enclosure of this
+      configuration</b>. It is not a first verification &mdash; the authors&rsquo; CAS float checks
+      are a verification &mdash; and it is an independent reimplementation pinned to the paper&rsquo;s
+      displayed formulas alone: the paper ships no code to share.</div>
   </div>
 
-  <div class="foot">research/challenges &middot; six verifiers, each <code>node verify.js</code>,
-    no dependencies &middot; claim source: aimath.robertj1.com &middot; first three green
-    2026-08-03 &middot; ranteng / lemniscate / maxwell green 2026-08-04</div>
+  <h2>What was checked</h2>
+  <p>The configuration is the paper&rsquo;s own: unit charges at the vertices of an equilateral
+    triangle in the plane, charges q<sub>&epsilon;</sub>&nbsp;=&nbsp;(3/4)&epsilon;&sup3;&nbsp;&minus;&nbsp;(5/32)&epsilon;&#8309;
+    at (0,&nbsp;0,&nbsp;&plusmn;&epsilon;). The exact layer establishes
+    q<sub>&epsilon;</sub>&nbsp;=&nbsp;859/248832 from the paper&rsquo;s eq.&nbsp;(1) at
+    &epsilon;&nbsp;=&nbsp;1/6, positivity of all five charges, and the claim gate
+    24&nbsp;&gt;&nbsp;16 &mdash; all in eqcert rationals, with &epsilon;, q<sub>&epsilon;</sub>, and
+    &radic;3 entering interval arithmetic only through enclosures proved to contain the exact
+    values. Float Newton from the paper&rsquo;s Lemma 2 seed points, closed under the
+    configuration&rsquo;s exact D&#8323;&times;Z&#8322; symmetry, supplies exactly 24 candidates in
+    orbit shells of sizes [1,3,2,6,6,3,3] &mdash; and candidates carry <i>no evidentiary weight</i>.
+    Every asserted fact rests on the certificates: per point, a Krawczyk box (existence + local
+    uniqueness) and an interval Hessian determinant excluding 0 over the whole box; 0 lies in every
+    trace interval, the harmonicity witness; all 276 box pairs disjoint, so the 24 are genuinely
+    distinct points.</p>
+  <p>The structure matches the paper too: Morse indices certified per box via Sylvester leading-minor
+    sign intervals give per-shell indices [1,2,2,1,2,1,2] and totals
+    {index&nbsp;1:&nbsp;10, index&nbsp;2:&nbsp;14} &mdash; the paper&rsquo;s
+    m&#8321;&nbsp;=&nbsp;10, m&#8322;&nbsp;=&nbsp;14 of Remark 2 &mdash; with no index 0 or 3
+    anywhere, as harmonicity demands. And &epsilon;&nbsp;=&nbsp;1/6 is not arbitrary: it is the
+    value of the paper&rsquo;s Figure 1, chosen inside the window where the 24 points are both
+    present and well-conditioned (min |det&nbsp;Hess|&nbsp;1.3e&minus;6 at the origin, matching the
+    (125/2048)&epsilon;&#8310; prediction to 3 digits), so the certificate speaks directly to the
+    figure the paper offers as evidence.</p>
+
+  <h2>The mutation that proves the teeth</h2>
+  <p><b>M3</b> is the sharpest: drop the &epsilon;&#8309; term of eq.&nbsp;(1) and the Hessian at the
+    origin becomes the exact zero matrix &mdash; that term is precisely what makes the origin
+    nondegenerate &mdash; and 0 of 24 boxes certify. <b>M1</b>, flipping the &epsilon;&#8309; sign,
+    reorganizes the bifurcated family and only 1 of 24 certifies. <b>M2</b> proves the <i>counting</i>
+    has teeth, not just the enclosures: duplicate one candidate and all 24 boxes still certify
+    individually, but the disjointness logic rejects the set &mdash; 24 boxes are not 24 points
+    unless they are pairwise disjoint.</p>
+
+  <h2>What was NOT audited, stated so it cannot be assumed</h2>
+  <div class="caveat">
+    <p><b>Theorem 1 as stated</b> &mdash; the existence of &epsilon;&#8320; and the claim for
+      <i>all</i> 0&nbsp;&lt;&nbsp;&epsilon;&nbsp;&lt;&nbsp;&epsilon;&#8320;; we certify
+      &epsilon;&nbsp;=&nbsp;1/6 only, and the theorem&rsquo;s second sentence (a perturbation making
+      the potential Morse) not at all. <b>Lemmas 1 and 2 as theorems</b> &mdash; Lemma 2&rsquo;s
+      point list only seeded Newton; our certified indices matching its signatures is a consistency
+      observation, not an audit of its proof. <b>Exhaustiveness</b> &mdash; that 24 is <i>all</i>
+      the critical points at &epsilon;&nbsp;=&nbsp;1/6; the claim needs only &ldquo;at least&rdquo;,
+      which is what disjoint boxes can certify. Also unchecked: Remark 2&rsquo;s Morse-theoretic
+      accounting beyond the m&#8321;/m&#8322; consistency check, Proposition 1&rsquo;s iterated
+      construction, and the literature framing that Maxwell &sect;113 asserts the bound.</p>
+  </div>
+
+  <h2>Why one pinned instance is the right certificate</h2>
+  <p>The paper proves an asymptotic statement with an unspecified threshold; its numerical evidence
+    is one figure at one &epsilon;. A validated-numerics certificate is the complement: it cannot
+    reach &ldquo;for all sufficiently small &epsilon;&rdquo;, but at the instance it pins it upgrades
+    float evidence to proof &mdash; existence, distinctness, and nondegeneracy of all 24 points, with
+    nine orders of magnitude between box size and box spacing. Maxwell&rsquo;s bound needs only one
+    configuration to fail, and that configuration is now certified.</p>
+
+  <div class="foot">research/challenges/laneb-maxwell &middot; <code>node verify.js</code> — own
+    implementation on the eqcert stack (intervals, transcendentals, rationals, Krawczyk), 20 checks,
+    3/3 mutation controls rejected, 0.1 s &middot; VERDICT.md — full record incl. the bounded
+    existing-certificate search &middot; source: arXiv:2607.27197v1, pinned sha256 760f78bd&hellip;
+    &middot; claim source: aimath.robertj1.com entry maxwell-point-charge-conjecture &middot;
+    battery green 2026-08-04</div>
 </div>
 
 <footer>
