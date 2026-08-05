@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carlos Toledo — computer-assisted proof and validated numerics</title>
-<meta name="description" content="Research notes on computer-assisted proof and validated numerics. Each note ships the program that produced its numbers.">
+<title>Carlos Toledo — verification for machine-generated mathematics</title>
+<meta name="description" content="Verification for machine-generated mathematics: AI-claimed results re-checked in independent arithmetic, evals that answer in dispositions rather than scores, and computer-assisted proofs. Each page ships the program that produced its numbers.">
 <meta name="author" content="Carlos Toledo">
 <meta name="robots" content="index,follow">
-<!-- Rewritten 2026-08-03 as a front door and nothing else: who this is, what the work is, and the
-     notes worth reading first. Design tokens, shared chrome and the theme script are taken verbatim
-     from the seed at research/challenges/erdos290/paper.html, not re-invented, so the bar and the
-     footer cannot drift page to page. -->
+<!-- Rewritten 2026-08-03 as a front door; REWORKED 2026-08-04 per research/PLAN_LAB.md PHASE 4:
+     one page in the reader's vocabulary — verification for machine-generated mathematics — three
+     featured works and seven more, every route curl-verified live before it was linked. Design
+     tokens, shared chrome and type scale are unchanged; the footer stack was aligned to the seed
+     at research/_engine/paper.html (sitefoot / foot-cred / foot-cred-in / sitemap / foot-base),
+     which it had drifted from (sitemap nested inside .cred, .byline instead of .foot-base). -->
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -48,15 +50,20 @@ a{color:var(--fp-deep)}
   .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .sitenav::-webkit-scrollbar{display:none}
 }
-footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
-footer .wrap{padding:24px 20px 32px}
-.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
-.cred b{color:var(--ink);font-weight:600}
+/* —— SHARED FOOTER (overfooter tailored; base constant) — verbatim from the seed —— */
+.sitefoot,footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+.foot-cred,.cred{max-width:var(--read-max);width:100%;margin:0 auto;padding:26px 20px 4px}
+.foot-cred-in,.cred{font-size:13px;line-height:1.64;color:var(--ink-soft)}
+.foot-cred-in p,.cred p{margin:0 0 9px} .foot-cred-in p:last-child,.cred p:last-child{margin:0}
+.foot-cred-in b,.cred b{color:var(--ink);font-weight:600}
+.foot-cred-in a,.cred a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+.foot-cred-in a:hover,.cred a:hover{text-decoration:underline}
 .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
   font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
 .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
 .sitemap a:hover{color:var(--fp-deep)}
-.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+.foot-base,.byline{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+  font-size:11px;line-height:1.5;color:var(--ink-soft)}
 /* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
 .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
 
@@ -110,49 +117,113 @@ p b{color:var(--ink)}
 <div class="wrap">
 
   <div class="eyebrow">Research notes &middot; Brazil</div>
-  <h1>Computer-assisted proof and validated numerics</h1>
-  <p class="lede">I am Carlos Toledo. I work on numerical claims that have to be checkable without
-    trusting how they were produced &mdash; my own, a published paper&rsquo;s, or one a language
-    model generated &mdash; and the answer is either a certified interval that provably contains the
-    true value, or a plain statement that the method did not close. Each note below ships the
-    program that produced its numbers.</p>
+  <h1>Verification for machine-generated mathematics</h1>
+  <p class="lede">I am Carlos Toledo. I check numerical and mathematical claims without trusting
+    how they were produced &mdash; a language model&rsquo;s, a published paper&rsquo;s, or my own
+    &mdash; and the answer is either a certified enclosure that provably contains the true value,
+    or a plain statement that the check did not close. Every page below ships the program that
+    produced its numbers, and every check has been shown to fail on a deliberately broken copy
+    of that program.</p>
 
-  <h2>Notes</h2>
+  <h2>Start here</h2>
+  <ul class="notes">
+    <li>
+      <div class="k">Evaluation &middot; automated researchers</div>
+      <a class="t" href="/technical-reports/alien-science">An eval for automated researchers that
+        answers in dispositions, not scores: CERTIFIED, REFUSED, HACK&#8209;SUSPECT, or
+        OUT&#8209;OF&#8209;SCOPE</a>
+      <p>A second lane beside the reward metric, for the cases where a scalar can be gamed. Runs
+        in about a minute with Node and nothing else: one command scores a held-out fixture, a
+        second plants a mutant to prove the lane can say no.</p>
+    </li>
+    <li>
+      <div class="k">Independent verification &middot; six results</div>
+      <a class="t" href="/technical-reports/verification-lane">Six AI-claimed math results,
+        independently re-verified</a>
+      <p>Each check rebuilt from scratch &mdash; separate arithmetic, no shared code, a planted
+        bug proving every verifier can fail. Five are CONFIRMED on the layer checked; one is
+        PARTIAL, and the page says which fragment was not audited. The whole lane re-runs in
+        under five seconds.</p>
+    </li>
+    <li>
+      <div class="k">Computer-assisted proof &middot; Maxwell 1873</div>
+      <a class="t" href="/technical-reports/verify-maxwell">The AI-found counterexample to
+        Maxwell&rsquo;s 1873 conjecture, certified: 24 equilibria where the conjecture allows
+        at most 16</a>
+      <p>The published refutation &mdash; its idea credited to an OpenAI model &mdash; rested on
+        floating-point computer algebra, with no code artifact. Here the paper&rsquo;s own
+        Figure&nbsp;1 configuration is pinned in exact rationals at &epsilon;&nbsp;=&nbsp;1/6 and
+        all 24 critical points are enclosed and counted. Run the verifier and its mutation
+        controls yourself.</p>
+    </li>
+  </ul>
+
+  <h2>More</h2>
   <ul class="notes">
     <li>
       <div class="k">Number theory &middot; Erd&#337;s #290</div>
-      <a class="t" href="/technical-reports/erdos290">For even d, disc(f<sub>d</sub>) is a square
-        exactly at d&nbsp;=&nbsp;4k(k+1) &mdash; proved &mdash; and the five known exceptional
-        degrees are exactly those with d&nbsp;&le;&nbsp;120</a>
-      <p>A certified bracket for the constant c in van Doorn&rsquo;s bound, seven times narrower than
-        the published 0.82&nbsp;&lt;&nbsp;c&nbsp;&lt;&nbsp;0.85, and a short proof that
-        disc(f<sub>d</sub>) is a perfect square exactly at d&nbsp;=&nbsp;4k(k+1) &mdash; the only
-        degrees where the Galois group can drop into the even-weight subgroup. Two of the five,
-        d&nbsp;=&nbsp;80 and d&nbsp;=&nbsp;120, lie beyond the range the paper computed.</p>
+      <a class="t" href="/technical-reports/erdos290">A certified bracket for van Doorn&rsquo;s
+        constant, seven times narrower than the published 0.82&nbsp;&lt;&nbsp;c&nbsp;&lt;&nbsp;0.85</a>
+      <p>With a short proof that disc(f<sub>d</sub>) is a perfect square exactly at
+        d&nbsp;=&nbsp;4k(k+1). Read the proof; re-run the enclosure.</p>
     </li>
     <li>
-      <div class="k">Independent verification</div>
-      <a class="t" href="/technical-reports/verification-lane">Three AI-claimed results, re-checked
-        in arithmetic written from scratch</a>
-      <p>All three hold on their computational layer. The finding is what was there before: on each
-        one, the only check on record was the author&rsquo;s own.</p>
+      <div class="k">Independent verification &middot; Erd&#337;s #1038</div>
+      <a class="t" href="/technical-reports/verify-lemniscate">All 30 printed decimals of the
+        Erd&#337;s #1038 constant hold &mdash; and the 30th is a rounding, not an expansion</a>
+      <p>An independent enclosure of the Darvas&ndash;Peng&ndash;Tao extremal value, rebuilt over
+        two interval backends with a Krawczyk existence-and-uniqueness argument. Re-run it in
+        seconds.</p>
+    </li>
+    <li>
+      <div class="k">Independent verification &middot; Bergman spaces</div>
+      <a class="t" href="/technical-reports/verify-korenblum">Korenblum&rsquo;s constant: the
+        improved lower bound survives a second arithmetic that shares no code with the first</a>
+      <p>The AI-assisted claim&rsquo;s numerical-inequality side, re-derived in outward-rounded
+        intervals plus exact rationals: 17 of 17 checks hold, 4 of 4 mutation controls rejected.
+        Run it yourself.</p>
+    </li>
+    <li>
+      <div class="k">Pipeline &middot; AI-generated claims</div>
+      <a class="t" href="/technical-reports/ai-verify">A model&rsquo;s numerical claim goes in;
+        VERIFIED with an enclosure or REFUSED comes out</a>
+      <p>A live pipeline with no LLM in the verification loop, shown on eight blind
+        frontier-model answers to one decidable mean-field-game bound.</p>
     </li>
     <li>
       <div class="k">Network equilibrium &middot; reproduction</div>
       <a class="t" href="/technical-reports/wardrop-repro">A certified reproduction of the AIMS
         Mathematics 2026 multi-population Wardrop paper</a>
-      <p>Three scenarios, three different outcomes: one solved exactly over rationals, one bounded by
-        a Krawczyk argument, one refused because that instance admits more than one equilibrium.</p>
+      <p>Three scenarios, three different outcomes: one solved exactly over rationals, one
+        bounded by a Krawczyk argument, one refused because that instance admits more than one
+        equilibrium.</p>
+    </li>
+    <li>
+      <div class="k">Machine learning &middot; softmax attention</div>
+      <a class="t" href="/technical-reports/attention-geometry">Softmax attention sharpens with
+        temperature &mdash; here is the certificate</a>
+      <p>The phenomenon is classical; the contribution is the certificate: an exact-arithmetic
+        decision on a rational kernel, sound interval exp/log on the softmax itself, and planted
+        mutants kept red.</p>
+    </li>
+    <li>
+      <div class="k">Real analysis &middot; mean-field games</div>
+      <a class="t" href="/technical-reports/mfg-congest">A computer-assisted proof for a
+        congestion mean-field game</a>
+      <p>Existence, local uniqueness, and a strictly positive density, for a game with no
+        reduction to a simpler known problem. The certificate mechanism runs live in the
+        browser.</p>
     </li>
   </ul>
 
-  <p class="more">The rest are listed under <a href="/technical-reports">Reports</a>.</p>
+  <p class="more">Everything else, including the pages this list leaves out, is under
+    <a href="/technical-reports">Reports</a>.</p>
 
 </div>
 
-<footer>
-  <div class="wrap">
-    <div class="cred">
+<footer class="sitefoot">
+  <div class="foot-cred">
+    <div class="foot-cred-in">
       <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
         These notes are self-published and not peer-reviewed. Every number is produced by a
         program published beside it, and every check has been shown to fail on a deliberately
@@ -160,16 +231,16 @@ p b{color:var(--ink)}
       <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
         including by its author &mdash; are recorded with their date and their correction in the
         <a href="/defects">errata log</a>, never quietly fixed.</p>
-      <nav class="sitemap" aria-label="Site map">
+    </div>
+  </div>
+  <nav class="sitemap" aria-label="Site map">
     <a href="/technical-reports">Reports</a>
     <a href="/defects">Errata</a>
     <a href="/about">About</a>
     <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
   </nav>
-      <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
-        programs MIT</p>
-    </div>
-  </div>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026
+    &middot; text CC&#8209;BY&nbsp;4.0, programs MIT</div>
 </footer>
 
 </body>

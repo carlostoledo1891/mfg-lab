@@ -23,11 +23,19 @@
   Chrome (topnav markup, footer markup, :root tokens, theme script) is the seed's, verbatim:
   research/challenges/erdos290/paper.html. Self-contained — no external CSS, JS, fonts or
   images, and no network request of any kind.
+
+  REVISED 2026-08-04. (1) The verification lane joined the notes table and the intro — the
+  stale "five of the ten" count is gone. (2) The errata paragraph gained the freshest entry
+  (the 4 Aug figure re-attribution), quoted from the log as the page's own rule requires.
+  (3) The footer sitemap/byline moved out of .cred to match the seed's footer stack.
+  (4) The "no network request of any kind" line above and in the rendered foot went stale
+  when the same-origin analytics tag landed; the rendered line is corrected, this comment
+  kept as the record of what was true when written.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — Carlos Toledo</title>
-<meta name="description" content="Carlos Toledo — computer-assisted proof and validated numerics. What the work is, the standard the notes are held to, and the address to write to.">
+<meta name="description" content="Carlos Toledo — computer-assisted proof and validated numerics, including verification of machine-generated mathematics. Every number produced by a program published beside it, every check shown to fail on a broken copy, errors recorded in a dated public log.">
 <meta name="author" content="Carlos Toledo">
 <meta name="robots" content="index,follow,max-snippet:-1">
 <link rel="canonical" href="https://mfg-lab.vercel.app/about">
@@ -143,22 +151,32 @@ td.what{width:34%}
   <div class="eyebrow">About &middot; Carlos Toledo &middot; Brazil</div>
   <h1>I work on computer-assisted proof and validated numerics.</h1>
   <p class="lede">The job is narrow, and it is not solving: take a numerical claim someone already
-    believes &mdash; from a published paper, from a language model, or from my own draft &mdash; and
+    believes &mdash; from a language model, from a published paper, or from my own draft &mdash; and
     either produce an <b>interval that provably contains the true answer</b>, together with the
-    program that produced it, or report that the method did not reach one and stop there. The tools
-    are interval arithmetic with outward rounding, exact rational arithmetic, and contraction
-    arguments of the radii-polynomial and Krawczyk kind. I work alone, from Brazil, and I travel
-    when there is a reason to.</p>
+    program that produced it, or report that the method did not reach one and stop there. Much of
+    the recent work is <b>verification of machine-generated mathematics</b>: AI-claimed results
+    re-checked in independent arithmetic, each check first shown to fail on a deliberately broken
+    copy of itself. The tools are interval arithmetic with outward rounding, exact rational
+    arithmetic, and contraction arguments of the radii-polynomial and Krawczyk kind. I work alone,
+    from Brazil, and I travel when there is a reason to.</p>
 
   <section>
     <h2>What the work is</h2>
     <p>The notes on this site are the work, not a summary of it. Each states what it certifies, what
       it assumes, and what it will not claim; each ships the program that produced its numbers, and
       several run the argument live in the page. Where the method fails, the note says which step
-      failed rather than loosening a tolerance until something turns green. Five of the ten on the
+      failed rather than loosening a tolerance until something turns green. Six of the notes on the
       <a href="/technical-reports">reports page</a>:</p>
     <div class="tw"><table>
       <tr><th>Note</th><th>What it is</th></tr>
+      <tr>
+        <td class="what"><a href="/technical-reports/verification-lane">Verification lane</a></td>
+        <td>Six AI-claimed mathematical results from a public claim database, each re-checked from
+          scratch in independent arithmetic with a planted bug proving the check can fail: five
+          confirmed on the layer checked, one PARTIAL &mdash; its machine-checkable fragment
+          confirmed in full, its analytic core not audited, and the note says so rather than
+          smoothing it away.</td>
+      </tr>
       <tr>
         <td class="what"><a href="/technical-reports/erdos290">Erd&#337;s #290</a></td>
         <td>The Galois data van Doorn's problem page asked for, computed in plain Node.js over exact
@@ -211,7 +229,10 @@ td.what{width:34%}
       were found by me, after publishing, which is the part that makes the log worth reading: a
       fabricated error floor that had to be retracted twice, and a modulus written into a kernel from
       memory as a prime that turned out to be composite, so a fingerprint check went on printing
-      agreement while silently ceasing to be evidence. Neither was caught by a reader.</p>
+      agreement while silently ceasing to be evidence. Neither was caught by a reader. The newest
+      entry is dated 4 August 2026: source figures, correct as reported, shipped under the wrong
+      method&rsquo;s name on a live page and in its runnable pack &mdash; re-attributed three days
+      after publication, again before any reader reported it.</p>
     <p>None of that makes the work correct. It makes it <b>checkable</b>, which is a weaker property
       and a more useful one: you can disagree with a result here by running something, and the
       disagreement is then about the mathematics rather than about who is more credible.</p>
@@ -243,9 +264,10 @@ td.what{width:34%}
       expensive to be wrong about, and enquiries are welcome at the same address.</p>
   </section>
 
-  <div class="foot">site/about.html &middot; rewritten 2026-08-03 &middot; merged with the former
-    contact page &middot; self-contained: no external fonts, scripts, stylesheets or images, and no
-    network request of any kind &middot; text CC&#8209;BY 4.0</div>
+  <div class="foot">site/about.html &middot; rewritten 2026-08-03, revised 2026-08-04 &middot;
+    merged with the former contact page &middot; no external fonts, scripts, stylesheets or
+    images; the one script is same-origin, cookieless page counting &middot; text
+    CC&#8209;BY 4.0</div>
 </div>
 
 <footer>
@@ -258,15 +280,15 @@ td.what{width:34%}
       <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
         including by its author &mdash; are recorded with their date and their correction in the
         <a href="/defects">errata log</a>, never quietly fixed.</p>
-      <nav class="sitemap" aria-label="Site map">
-    <a href="/technical-reports">Reports</a>
-    <a href="/defects">Errata</a>
-    <a href="/about">About</a>
-    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
-  </nav>
-      <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
-        programs MIT</p>
     </div>
+    <nav class="sitemap" aria-label="Site map">
+      <a href="/technical-reports">Reports</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+      <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+    </nav>
+    <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+      programs MIT</p>
   </div>
 </footer>
 

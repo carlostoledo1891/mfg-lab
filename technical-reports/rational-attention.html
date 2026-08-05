@@ -134,6 +134,10 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
   .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
   .sitemap a:hover{color:var(--fp-deep)}
+  /* seed footer stack (research/_engine/paper.html) */
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
 
   </style>
 <!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
@@ -406,13 +410,17 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     &middot; <span class="mono">python3 research/_frontier/attention-basin.py</span><br>
     Carlos Toledo &middot; 2026
   </div>
+</div>
+
+<footer class="sitefoot">
   <nav class="sitemap" aria-label="Site map">
     <a href="/technical-reports">Reports</a>
     <a href="/defects">Errata</a>
     <a href="/about">About</a>
     <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
   </nav>
-</div>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
 
 </body>
 </html>

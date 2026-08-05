@@ -16,18 +16,27 @@
   re-run are all measured. No figure here is remembered.
 
   TOKEN-SCANNED: names no private project, mission, ledger record or internal path.
+
+  REVISED 2026-08-04. (1) Reframed the lede: this page leads with what the record IS —
+  dated, public, errors found in our own shipped work, none reported by a reader first —
+  before the verifier essay. (2) Every case now carries its date. (3) Case 4 added: the
+  alien-science figure re-attribution (right numbers, wrong method's name, live 3 days,
+  corrected at page + fixture + both clients + gate; public commit c22d531). (4) The
+  "not in the primary nav" line above and in the meta strip went stale when Errata
+  joined the topbar on every page; the rendered line is corrected, this comment kept
+  as the record of what was true at build time.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Defects — Carlos Toledo</title>
-<meta name="description" content="Three cases in this site's own failure record: a gate that checked presence instead of position, a contraction argument that certified uniqueness it had not established, and a false tail identity that put a wrong constant on a live page under a green suite.">
+<meta name="description" content="A dated public record of errors caught in this site's own shipped work: a gate that checked presence instead of position, a contraction argument that certified uniqueness it had not established, a false tail identity that put a wrong constant on a live page, and source figures re-attributed on a live page — none reported by a reader first.">
 <meta name="author" content="Carlos Toledo">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://mfg-lab.vercel.app/defects">
 <meta property="og:site_name" content="Carlos Toledo">
 <meta property="og:url" content="https://mfg-lab.vercel.app/defects">
 <meta property="og:title" content="Defects — three ways my own verification lied to me">
-<meta property="og:description" content="A broken verifier does not crash — it agrees with you. Three cases in the measuring apparatus, each with a witness, a fix, and a control that now goes red.">
+<meta property="og:description" content="A broken verifier does not crash — it agrees with you. Four dated cases in the measuring apparatus, each with a witness, a fix, and a control that now goes red.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://mfg-lab.vercel.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -212,18 +221,20 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   <div class="hero">
     <div class="eyebrow">the failure record</div>
     <h1>When the verifier agreed with me.</h1>
-    <p class="lede">A verifier is a <b>claim about a claim</b>. Its failure mode is not a crash &mdash;
-      it <b>agrees with you</b>. So the only evidence that one works is a record of it going red on
-      something that was actually wrong. Below: three shipping cases &mdash; the third with a wrong
-      number that reached a live page &mdash; then eight failures that were <b>live in the
-      Laboratory</b> behind a green suite. A page that publishes only
-      successes is a brochure.</p>
-    <p class="meta">Measured numbers only &middot; not in the primary nav &mdash; linked because
-      hiding the log would be the defect</p>
+    <p class="lede">This is the <b>dated record of errors found in this site&rsquo;s own shipped
+      work</b> &mdash; most after publication, none reported by a reader first. It exists because a
+      verifier is a <b>claim about a claim</b>, and its failure mode is not a crash &mdash; it
+      <b>agrees with you</b>. The only evidence that one works is a record of it going red on
+      something that was actually wrong. Below: four shipping cases &mdash; two caught while live
+      on public pages &mdash; then eight failures that were <b>live in the Laboratory</b> behind a
+      green suite. A page that publishes only successes is a brochure.</p>
+    <p class="meta">Measured numbers only &middot; every case dated &middot; linked from every page
+      &mdash; hiding the log would be the defect</p>
     <nav class="jump" aria-label="On this page">
       <a href="#case-1">Case 1 &middot; presence &ne; position</a>
       <a href="#case-2">Case 2 &middot; uniqueness without contraction</a>
       <a href="#erdos290">Case 3 &middot; a check that cannot go red</a>
+      <a href="#case-4">Case 4 &middot; right numbers, wrong name</a>
       <a href="#lab-log">Laboratory log &middot; 8</a>
       <a href="#method">Five rules</a>
       <a href="#scope">What this does not claim</a>
@@ -250,6 +261,13 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
       <span class="d">&mdash; the only check on the value could not go red &mdash; and put a constant
         wrong from the sixth decimal on a live page.</span>
     </a>
+    <a class="case" href="#case-4">
+      <span class="k">Case 04 <span class="badge fixed">fixed</span> <span class="badge caught">wrong label, published</span></span>
+      <span class="t">Right numbers, attributed to the wrong method</span>
+      <span class="d">Source figures <b>0.94 / 0.47</b> shipped under another idea&rsquo;s name on a
+        live page, its fixture and both clients &mdash; and the pack&rsquo;s own gate pinned the
+        mislabel as truth.</span>
+    </a>
   </div>
 
   <section>
@@ -263,7 +281,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
   <section id="case-1">
     <h2>Case One <span class="tag" style="color:var(--bad)">was fake</span></h2>
-    <p class="sub">The gate that checked presence, not position. Lives on the
+    <p class="sub">27 July 2026 &middot; the gate that checked presence, not position. Lives on the
       <a href="/technical-reports/ai-verify">AI-verify</a> scoreboard: eight blind model attempts,
       headline <b>&ldquo;5 of 8 said NO&rdquo;</b>.</p>
 
@@ -315,8 +333,9 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
   <section id="case-2">
     <h2>Case Two <span class="tag" style="color:var(--bad)">unsound</span></h2>
-    <p class="sub">Certifying uniqueness the radii polynomial had not established. Core of
-      <span class="mono">eqcert</span> &mdash; the shared interval library behind the reports.</p>
+    <p class="sub">30 July 2026 &middot; certifying uniqueness the radii polynomial had not
+      established. Core of <span class="mono">eqcert</span> &mdash; the shared interval library
+      behind the reports.</p>
 
     <div class="card">
       <p>The core of the library is the radii polynomial. Given a defect bound
@@ -487,6 +506,62 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     </div>
   </section>
 
+  <section id="case-4">
+    <h2>Case Four <span class="tag" style="color:var(--bad)">wrong attribution, published</span></h2>
+    <p class="sub">4 August 2026 &middot; on the
+      <a href="/technical-reports/alien-science">alien-science evaluation note</a>, live since
+      1 August: every number correct as reported, two of them printed under the wrong
+      method&rsquo;s name &mdash; on the page, in its machine-readable fixture, and in both
+      runnable clients. Caught on a direct re-read of the source figure, before any reader
+      reported it.</p>
+
+    <div class="card">
+      <p><b>What was wrong.</b> The note evaluates ideas from Anthropic&rsquo;s published
+        automated-alignment study, and its comparison table attributed the study&rsquo;s held-out
+        transfer figures &mdash; <span class="mono">math 0.94 &middot; code 0.47</span> &mdash; to
+        the method the note certifies a fragment of (CCS&nbsp;+&nbsp;Evolution Strategy
+        Refinement). Read directly, the source&rsquo;s fig.&nbsp;8 says those figures belong to a
+        <b>different method</b>, CCS&nbsp;+&nbsp;Self-Distill &mdash; and reports <b>no held-out
+        figures at all</b> for the method they were printed under. A second cell reported
+        <span class="mono">0.94 (math)</span> where the source&rsquo;s figure for that method is
+        <span class="mono">0.93</span>, on chat. A sidebar additionally called the study&rsquo;s
+        future-work recommendation a &ldquo;verbatim invite&rdquo;, which it is not.</p>
+
+      <h3>Where it shipped</h3>
+      <p>Not only prose. The same attribution sat in the fixture and in both clients &mdash; Node
+        and Python &mdash; of the page&rsquo;s downloadable repro pack, so anyone re-running the
+        pack printed the mislabel in their own terminal. <b>And the pack&rsquo;s own battery
+        pinned it as truth:</b> the check covering that fixture asserted the mis-attributed
+        <span class="mono">0.94</span> was present. A gate can be worse than absent &mdash; this
+        one enforced the error. The page had been live for three days.</p>
+
+      <h3>Why nothing caught it</h3>
+      <p>Citation verification had confirmed every figure <i>as reported at source</i> &mdash;
+        and every value was. The defect was the attribution, and a value check cannot see a
+        label. Each internal copy agreed with the others because each inherited the same first
+        transcription, and one hostile re-read passed for the same reason: the reader checked
+        the copies against the doctrine rather than against the figure. Case Three&rsquo;s
+        closing line, again: <b>agreement between checks that share a source is not
+        evidence.</b></p>
+
+      <h3>The fix, and the control</h3>
+      <p>Corrected at every surface in one pass, each with a dated note: the page table
+        re-attributed, the &ldquo;verbatim invite&rdquo; relabeled to what the source actually
+        says, the fixture and both clients now carrying <span class="mono">0.93 (chat)</span>
+        and <b>no held-out fields</b> for the method that has none, and the goldens regenerated.
+        The battery&rsquo;s check now asserts the fixture carries chat
+        <span class="mono">0.93</span> and that the held-out fields are <b>absent</b> &mdash;
+        re-introducing <span class="mono">0.94/0.47</span> under that method turns it red.
+        Public commit <span class="mono">c22d531</span> in the site&rsquo;s source repository.</p>
+
+      <p class="note">Found by re-reading one source figure before sending the note to the
+        people it is addressed to &mdash; so the correction landed before any recipient ran the
+        pack. The transferable part: <b>a number can be verbatim-correct and still say something
+        false. Attribution is part of the claim, and a check that verifies values verifies only
+        half of it.</b></p>
+    </div>
+  </section>
+
   <section id="method">
     <h2>The method, in five rules</h2>
     <p class="sub">The transferable part &mdash; what the cases cost, written so the next failure
@@ -627,20 +702,24 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   <section id="scope">
     <h2>What this page does not claim</h2>
     <div class="caveat">
-      <p><b>Cases One and Two produced no wrong published number; Case Three did.</b> Case
-        One&rsquo;s mutations were mine, written to test the gate; Case Two was unreachable in the
-        regime that shipped; Case Three put a constant wrong from the sixth decimal on a live page,
-        and its section above says so in its first line. If any other case had corrupted a result
-        it would say so here, which is the only reason this section is worth reading.</p>
-      <p><b>Three cases found is not a bound on defects present.</b> There is no claim that the
+      <p><b>Cases One and Two produced no wrong published number; Cases Three and Four reached
+        live pages.</b> Case One&rsquo;s mutations were mine, written to test the gate; Case Two
+        was unreachable in the regime that shipped; Case Three put a constant wrong from the sixth
+        decimal on a live page; Case Four put correct values under the wrong method&rsquo;s name on
+        a live page and in its repro pack for three days. Each section above says so in its first
+        line. If any other case had corrupted a result it would say so here, which is the only
+        reason this section is worth reading.</p>
+      <p><b>Four cases found is not a bound on defects present.</b> There is no claim that the
         apparatus is now correct &mdash; only that it is now wrong in ways not yet found, and that these
-        three have controls.</p>
+        four have controls.</p>
       <p><b>Nothing here is a new theorem.</b> The mathematics is standard: the Banach fixed-point
         argument in the van&nbsp;den&nbsp;Berg&ndash;Lessard radii-polynomial formulation, and
         Krawczyk&ndash;Moore for the interval Newton step. The contribution is the engineering discipline
         around it &mdash; and the honest failure of that discipline twice.</p>
-      <p>The repository is private, so the commit references behind these cases are internal; the
-        figures above are measured. The library in Case Two, <span class="mono">eqcert</span>, is MIT.
+      <p>The working repository is private, so the commit references behind Cases One to Three are
+        internal; Case Four&rsquo;s correction is public, commit <span class="mono">c22d531</span>
+        in the site&rsquo;s source repository. The figures above are measured. The library in Case
+        Two, <span class="mono">eqcert</span>, is MIT.
         One further note, recorded because it is the same defect class: the first draft of the
         <span class="mono">R9</span> control named a private ledger record id in a file that ships
         publicly, and the export token scan caught it before it left the tree.</p>
@@ -659,9 +738,11 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <footer>
   <div class="wrap">
     <div class="cred">
-      <p><b>Carlos Toledo</b> makes numerical and math claims checkable &mdash; enclose or refuse.
-        A certificate that cannot go red is fake, so the failures are public. Built by
-        <b>Carlos&nbsp;Toledo</b>.</p>
+      <p><b>Carlos Toledo</b> makes numerical and mathematical claims checkable &mdash; enclose
+        or refuse. A certificate that cannot go red is fake, so the failures are public.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded here with their date and their correction,
+        never quietly fixed.</p>
     </div>
   <nav class="sitemap" aria-label="Site map">
     <a href="/technical-reports">Reports</a>

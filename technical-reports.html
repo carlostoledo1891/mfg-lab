@@ -6,7 +6,7 @@
 
   WHY A LIST. Cards give every entry the same visual weight and force each description down to
   a fragment, so a reader scanning for the one note relevant to them pays the same cost on all
-  twenty-eight. A list lets the eye skip by group heading and lets each row say, in a full
+  thirty-four. A list lets the eye skip by group heading and lets each row say, in a full
   sentence, what it actually establishes.
 
   THE GROUPING IS A CLAIM, AND IT IS DELIBERATELY CONSERVATIVE. Three groups: notes carrying a
@@ -156,6 +156,15 @@ p{margin-bottom:11px;max-width:76ch}
       <div class="m"><b>single-file Python verifier</b> &middot; standard library only &middot; runs in seconds</div>
     </li>
     <li>
+      <a class="t" href="/technical-reports/mfg-cap">A mean-field game equilibrium, enclosed in your browser</a>
+      <div class="d">The page does not solve the equations and show you the answer &mdash; it
+        solves them, then proves the answer: a radii-polynomial contraction argument, every
+        inequality evaluated in outward-rounded interval arithmetic, returning either an explicit
+        ball that contains an exact solution or a refusal. Includes a certified multiplicity
+        result where uniqueness theory is silent.</div>
+      <div class="m"><b>runs in the page</b> &middot; interval arithmetic + radii polynomial &middot; refusal is an outcome</div>
+    </li>
+    <li>
       <a class="t" href="/technical-reports/wardrop-repro">A convergent flow finds the equilibrium. A certificate encloses it.</a>
       <div class="d">An independent reproduction of the AIMS Mathematics 2026 multi-population
         Wardrop paper. Three scenarios, three different outcomes: one solved exactly over
@@ -175,6 +184,12 @@ p{margin-bottom:11px;max-width:76ch}
       <div class="d">A certificate on a frozen attention row of a small GPT, with the fixture and a
         one-file verifier published beside it.</div>
       <div class="m"><b>certificate trio + fixture</b> &middot; <span class="mono">verify_ml_beta.py</span></div>
+    </li>
+    <li>
+      <a class="t" href="/technical-reports/stock-constraint">Price formation with a stock constraint &mdash; a mean-field model of a hydro-dominated power system</a>
+      <div class="d">A living note: the model is solved live in the page, every claim carrying
+        its certificate.</div>
+      <div class="m"><b>living note</b> &middot; runs in the page</div>
     </li>
     <li>
       <a class="t" href="/technical-reports/price-saturation">The coordination thesis does not hold on the ONS population</a>
@@ -201,10 +216,10 @@ p{margin-bottom:11px;max-width:76ch}
     original. Confirming a result is the expected outcome; publishing the confirmation is the point.</p>
   <ul class="rl">
     <li>
-      <a class="t" href="/technical-reports/verification-lane">Three AI-claimed results, re-checked. All three hold. Nobody had checked them.</a>
-      <div class="d">The index for the three below, and what the exercise actually found: on each
+      <a class="t" href="/technical-reports/verification-lane">Six AI-claimed results, re-checked. Five hold; the sixth holds on every fragment a machine can check.</a>
+      <div class="d">The index for the six below, and what the exercise actually found: on every
         one, the only check on record was the original author&rsquo;s own.</div>
-      <div class="m"><b>index</b> &middot; three independent re-derivations</div>
+      <div class="m"><b>index</b> &middot; six independent re-derivations &middot; five CONFIRMED, one PARTIAL</div>
     </li>
     <li>
       <a class="t" href="/technical-reports/verify-poisson">The rank-two Poisson counterexample holds</a>
@@ -221,6 +236,31 @@ p{margin-bottom:11px;max-width:76ch}
       <a class="t" href="/technical-reports/verify-korenblum">Korenblum&rsquo;s constant survives a second arithmetic</a>
       <div class="d">A second implementation sharing no code with the first reaches the same bound.</div>
       <div class="m">CONFIRMED</div>
+    </li>
+    <li>
+      <a class="t" href="/technical-reports/verify-ranteng">Ran&ndash;Teng Conjecture 20: every machine-checkable fragment holds. The analytic core is not audited.</a>
+      <div class="d">Re-verified in an independent reimplementation on an exact-rational and
+        certified-interval stack: 43 checks, 0 failures, 5/5 mutation controls rejected. The
+        proof&rsquo;s analytic core is prose, was not audited, and the verdict is PARTIAL for
+        exactly that reason.</div>
+      <div class="m">PARTIAL &middot; fragment CONFIRMED, analytic core not audited</div>
+    </li>
+    <li>
+      <a class="t" href="/technical-reports/verify-lemniscate">Erd&#337;s #1038: every printed decimal of the extremal constant is right &mdash; and the 30th digit is a rounding, not an expansion</a>
+      <div class="d">An independent reimplementation &mdash; two interval backends, automatic
+        differentiation, Krawczyk for existence and uniqueness &mdash; confirms all 30 printed
+        decimals with certified enclosures to 40+ decimals, and finds the headline value&rsquo;s
+        last digit is a half-up rounding presented with an expansion&rsquo;s trailing ellipsis.</div>
+      <div class="m">CONFIRMED &middot; computational fragment; the extremality proof is not audited</div>
+    </li>
+    <li>
+      <a class="t" href="/technical-reports/verify-maxwell">Maxwell said five charges allow at most 16 equilibria. At &epsilon;&nbsp;=&nbsp;1/6, the counterexample&rsquo;s 24 are now certified.</a>
+      <div class="d">The refutation&rsquo;s published evidence was floating-point computer algebra
+        &mdash; no code artifact, no certificate, no concrete &epsilon;. Pinned at the
+        paper&rsquo;s own Figure&nbsp;1 configuration: 24 pairwise-disjoint Krawczyk boxes, each
+        proving existence, local uniqueness and nondegeneracy of a critical point. And
+        24&nbsp;&gt;&nbsp;16 in exact integers.</div>
+      <div class="m">CONFIRMED at &epsilon;&nbsp;=&nbsp;1/6 &middot; one pinned instance; the asymptotic statement is not audited</div>
     </li>
   </ul>
 
