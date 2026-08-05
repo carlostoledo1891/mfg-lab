@@ -12,7 +12,16 @@
      featured works and seven more, every route curl-verified live before it was linked. Design
      tokens, shared chrome and type scale are unchanged; the footer stack was aligned to the seed
      at research/_engine/paper.html (sitefoot / foot-cred / foot-cred-in / sitemap / foot-base),
-     which it had drifted from (sitemap nested inside .cred, .byline instead of .foot-base). -->
+     which it had drifted from (sitemap nested inside .cred, .byline instead of .foot-base).
+     RESTRUCTURED 2026-08-05 on owner feedback ("almost the same as the reports page but smaller"):
+     the two identical link-lists were broken up with three sections of a different KIND — the
+     house method in three numbered obligations (wording from CONSTITUTION C10/C23 and the seed at
+     research/_engine/paper.html), a paste-and-run command block (each command re-run 2026-08-05
+     from a clean --depth 1 clone of the public repo before being quoted here: clean run ends
+     verdict CERTIFIED, ‑‑plant-mutant ends verdict REFUSED), and a quiet band for the errata
+     record (numbers from site/defects.html's own lede). All ten report links kept; the seven-item
+     list compressed to an index (kicker + title, no blurbs). Tokens, chrome, type scale,
+     analytics: untouched. All twelve linked routes curl-200 on the live host 2026-08-05. -->
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -87,6 +96,37 @@ p b{color:var(--ink)}
 .notes .t:hover{color:var(--fp-deep)}
 .notes p{font-size:13.5px;line-height:1.6;color:var(--ink-soft);margin:0;max-width:76ch}
 .more{font-size:13px;line-height:1.6;color:var(--ink-soft);margin:20px 0 0;max-width:76ch}
+
+/* ── Method rows — numbered obligations, not link cards. No hover states at all,
+      so dimensional stability holds vacuously. Tokens only. ─────────────────── */
+.method{list-style:none;counter-reset:step;margin:14px 0 0;padding:0}
+.method li{counter-increment:step;display:grid;grid-template-columns:38px 1fr;
+  padding:13px 0;border-bottom:1px solid var(--grid)}
+.method li:last-child{border-bottom:0;padding-bottom:6px}
+.method li::before{content:counter(step,decimal-leading-zero);grid-row:1/3;
+  font-family:var(--data);font-size:var(--text-small);color:var(--fp-deep);padding-top:3px}
+.method .h{grid-column:2;font-family:var(--ui);font-size:var(--text-h3);font-weight:600;
+  letter-spacing:-.012em;line-height:1.35;color:var(--ink)}
+.method p{grid-column:2;font-size:13.5px;line-height:1.6;color:var(--ink-soft);
+  margin:4px 0 0;max-width:70ch}
+
+/* ── Command block — wide content scrolls inside its own box (no page overflow). ── */
+.cmd{font-family:var(--data);font-size:12.5px;line-height:1.85;color:var(--ink);
+  background:var(--card);border:1px solid var(--grid);border-radius:var(--radius-sm);
+  padding:13px 18px;margin:14px 0 10px;overflow-x:auto}
+.cmd-note{font-size:var(--text-small);color:var(--ink-soft);margin:0;max-width:76ch}
+
+/* ── Quiet full-width band — bleeds to the column edges; not a card, no radius,
+      no shadow, no interactive states. ─────────────────────────────────────── */
+.band{margin:46px -20px 0;padding:15px 20px;background:var(--warn-soft);
+  border-top:1px solid var(--grid);border-bottom:1px solid var(--grid)}
+.band p{font-size:var(--text-small);line-height:1.7;color:var(--ink-soft);margin:0;max-width:none}
+.band b{color:var(--ink)}
+
+/* ── Index variant of .notes — kicker + title only, tight rows. ──────────────── */
+.notes.index li{padding:8px 0}
+.notes.index .k{margin-bottom:2px}
+.notes.index .t{font-size:13.5px;margin-bottom:0}
 </style>
 <!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
      data. Declared here rather than injected at build time BECAUSE tools/check-public.js
@@ -158,61 +198,83 @@ p b{color:var(--ink)}
     </li>
   </ul>
 
+  <h2>How a result earns a green light</h2>
+  <p>The house rule is that <b>green proves nothing until it can go red</b>. Three obligations,
+    on every page here:</p>
+  <ol class="method">
+    <li>
+      <span class="h">Every certificate ships with its falsifier.</span>
+      <p>The claim and the program that would refute it are published together. Believing a page
+        never requires trusting its author &mdash; re-run the check and watch it pass, or fail.</p>
+    </li>
+    <li>
+      <span class="h">Every check is proven able to fail.</span>
+      <p>Before a green counts, the same check runs on a deliberately broken copy of the program
+        and must go red &mdash; then green again on the clean one. A check that cannot fail
+        proves nothing.</p>
+    </li>
+    <li>
+      <span class="h">REFUSED is an output, not a failure.</span>
+      <p>When the mathematics does not support a certificate, the verdict says so. One
+        reproduction below refuses a scenario because it admits more than one equilibrium
+        &mdash; the page states that instead of quietly picking one.</p>
+    </li>
+  </ol>
+
+  <h2>Run one now</h2>
+  <p>Node only, nothing installed &mdash; one verdict says CERTIFIED, the planted mutant says
+    REFUSED, in about a minute.</p>
+  <pre class="cmd">git clone --depth 1 https://github.com/carlostoledo1891/mfg-lab
+cd mfg-lab/technical-reports/alien-science
+node dual-client.js --fixture heldout-ccs-es
+node dual-client.js --fixture heldout-ccs-es --plant-mutant</pre>
+  <p class="cmd-note">The last command breaks the program on purpose. Watching the verdict flip
+    from CERTIFIED to REFUSED is the point &mdash; it is the proof that the first answer could
+    have come out differently.</p>
+
+  <div class="band">
+    <p><b>For the record:</b> four shipping cases, dated &mdash; errors found in this
+      site&rsquo;s own published work, none reported by a reader first. Each is in the
+      <a href="/defects">errata log</a> with its witness, its fix, and a control that now goes
+      red &mdash; never quietly corrected.</p>
+  </div>
+
   <h2>More</h2>
-  <ul class="notes">
+  <ul class="notes index">
     <li>
       <div class="k">Number theory &middot; Erd&#337;s #290</div>
       <a class="t" href="/technical-reports/erdos290">A certified bracket for van Doorn&rsquo;s
         constant, seven times narrower than the published 0.82&nbsp;&lt;&nbsp;c&nbsp;&lt;&nbsp;0.85</a>
-      <p>With a short proof that disc(f<sub>d</sub>) is a perfect square exactly at
-        d&nbsp;=&nbsp;4k(k+1). Read the proof; re-run the enclosure.</p>
     </li>
     <li>
       <div class="k">Independent verification &middot; Erd&#337;s #1038</div>
       <a class="t" href="/technical-reports/verify-lemniscate">All 30 printed decimals of the
         Erd&#337;s #1038 constant hold &mdash; and the 30th is a rounding, not an expansion</a>
-      <p>An independent enclosure of the Darvas&ndash;Peng&ndash;Tao extremal value, rebuilt over
-        two interval backends with a Krawczyk existence-and-uniqueness argument. Re-run it in
-        seconds.</p>
     </li>
     <li>
       <div class="k">Independent verification &middot; Bergman spaces</div>
       <a class="t" href="/technical-reports/verify-korenblum">Korenblum&rsquo;s constant: the
         improved lower bound survives a second arithmetic that shares no code with the first</a>
-      <p>The AI-assisted claim&rsquo;s numerical-inequality side, re-derived in outward-rounded
-        intervals plus exact rationals: 17 of 17 checks hold, 4 of 4 mutation controls rejected.
-        Run it yourself.</p>
     </li>
     <li>
       <div class="k">Pipeline &middot; AI-generated claims</div>
       <a class="t" href="/technical-reports/ai-verify">A model&rsquo;s numerical claim goes in;
         VERIFIED with an enclosure or REFUSED comes out</a>
-      <p>A live pipeline with no LLM in the verification loop, shown on eight blind
-        frontier-model answers to one decidable mean-field-game bound.</p>
     </li>
     <li>
       <div class="k">Network equilibrium &middot; reproduction</div>
       <a class="t" href="/technical-reports/wardrop-repro">A certified reproduction of the AIMS
-        Mathematics 2026 multi-population Wardrop paper</a>
-      <p>Three scenarios, three different outcomes: one solved exactly over rationals, one
-        bounded by a Krawczyk argument, one refused because that instance admits more than one
-        equilibrium.</p>
+        Mathematics 2026 multi-population Wardrop paper &mdash; one scenario refused</a>
     </li>
     <li>
       <div class="k">Machine learning &middot; softmax attention</div>
       <a class="t" href="/technical-reports/attention-geometry">Softmax attention sharpens with
         temperature &mdash; here is the certificate</a>
-      <p>The phenomenon is classical; the contribution is the certificate: an exact-arithmetic
-        decision on a rational kernel, sound interval exp/log on the softmax itself, and planted
-        mutants kept red.</p>
     </li>
     <li>
       <div class="k">Real analysis &middot; mean-field games</div>
       <a class="t" href="/technical-reports/mfg-congest">A computer-assisted proof for a
         congestion mean-field game</a>
-      <p>Existence, local uniqueness, and a strictly positive density, for a game with no
-        reduction to a simpler known problem. The certificate mechanism runs live in the
-        browser.</p>
     </li>
   </ul>
 
