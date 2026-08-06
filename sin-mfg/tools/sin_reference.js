@@ -1,7 +1,7 @@
 /* sin_reference.js — headless reference run of the SHIPPED sin-mfg kernel,
    for the cross-language differential (mfglab test_crosslang_continuum.py).
 
-   Pattern of mfglab/tools/js_reference.js: extract the kernel from the
+   Pattern of python/tools/js_reference.js: extract the kernel from the
    artifact at run time (never a copy that can go stale), solve, print JSON
    with the artifact's PATH and sha256 so the battery records exactly which
    file the Python port was validated against. The Picard mechanics mirror the

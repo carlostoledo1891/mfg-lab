@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mfg-lab.vercel.app/</loc>
+    <loc>https://www.carlostoledo.co/</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports</loc>
+    <loc>https://www.carlostoledo.co/technical-reports</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/ai-verify</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/ai-verify</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/alien-science</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/alien-science</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/mfg-congest</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/mfg-congest</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/wardrop-repro</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/wardrop-repro</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/mfg-cap</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/mfg-cap</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/stock-constraint</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/stock-constraint</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/program</loc>
+    <loc>https://www.carlostoledo.co/program</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -57,19 +57,19 @@
   <!-- /about is priority 0.9, ABOVE /program and level with the reports. It is the page a
        name search has to land on, and the only one carrying Person structured data. -->
   <url>
-    <loc>https://mfg-lab.vercel.app/about</loc>
+    <loc>https://www.carlostoledo.co/about</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/mfg-lab</loc>
+    <loc>https://www.carlostoledo.co/mfg-lab</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/certificates</loc>
+    <loc>https://www.carlostoledo.co/certificates</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -80,127 +80,127 @@
      with them. The reasoning the old note gave was sound and is exactly why the contradiction
      had to be resolved in one direction or the other rather than left standing. -->
   <url>
-    <loc>https://mfg-lab.vercel.app/contact</loc>
+    <loc>https://www.carlostoledo.co/contact</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/catalogue</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/catalogue</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/cap-for-mfg</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/cap-for-mfg</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/certified-multiplicity</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/certified-multiplicity</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/certified-price-formation</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/certified-price-formation</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/circuit-path-truncation</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/circuit-path-truncation</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/cobb-douglas-bracket</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/cobb-douglas-bracket</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/degree-sensitivity</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/degree-sensitivity</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/edge-of-chaos</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/edge-of-chaos</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/equilibrium-geometry</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/equilibrium-geometry</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/geometry-approaches</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/geometry-approaches</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/huggett-rational</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/huggett-rational</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/interval-transcendentals</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/interval-transcendentals</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/rational-attention</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/rational-attention</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/refusal-as-output</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/refusal-as-output</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/refusal-taxonomy</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/refusal-taxonomy</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/seaport-uniqueness</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/seaport-uniqueness</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/emergent-geometry</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/emergent-geometry</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/price-saturation</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/price-saturation</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/erdos290</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/erdos290</loc>
     <lastmod>2026-08-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/defects</loc>
+    <loc>https://www.carlostoledo.co/defects</loc>
     <lastmod>2026-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -223,55 +223,55 @@
        a crawler nothing at all, so validity is the one thing worth checking before anything else
        and it was the one thing nobody was checking. -->
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/faithfulness-ceiling</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/faithfulness-ceiling</loc>
     <lastmod>2026-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/verification-lane</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/verification-lane</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/verify-maxwell</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/verify-maxwell</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/verify-lemniscate</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/verify-lemniscate</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/verify-ranteng</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/verify-ranteng</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/verify-poisson</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/verify-poisson</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/verify-mathieu</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/verify-mathieu</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/verify-korenblum</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/verify-korenblum</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/stack</loc>
+    <loc>https://www.carlostoledo.co/stack</loc>
     <lastmod>2026-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -281,13 +281,13 @@
        and check-discoverable.js caught both immediately — the gate doing the exact job it was
        written for, on a change made after it was written. -->
   <url>
-    <loc>https://mfg-lab.vercel.app/technical-reports/attention-geometry</loc>
+    <loc>https://www.carlostoledo.co/technical-reports/attention-geometry</loc>
     <lastmod>2026-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mfg-lab.vercel.app/sin-mfg/water-value</loc>
+    <loc>https://www.carlostoledo.co/sin-mfg/water-value</loc>
     <lastmod>2026-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

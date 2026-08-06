@@ -58,7 +58,7 @@ positive there. Every inequality is evaluated in outward-rounded interval
 arithmetic, so it holds for exact real arithmetic and not merely for the
 floating-point computation that suggested it.
 
-The page [`papers/mfg-cap.html`](papers/mfg-cap.html) is **generated** from
+The page [`technical-reports/mfg-cap.html`](technical-reports/mfg-cap.html) is **generated** from
 the kernels and gated on byte-identity, so what the browser shows is what the
 battery proved. What the literature check killed — three of the four claims that
 would have been natural to make — is recorded in
@@ -67,7 +67,7 @@ with a sign error it caught in our own algebra.
 
 ## The two interactive artifacts
 
-Open either file in a browser — no build, no server, no libraries. The deployed homepage (`/`) is [`mfg-lab/onepager.html`](mfg-lab/onepager.html) — every experiment collapsed onto one scrolling page; the routed lab is at `/mfg-lab`.
+Open either file in a browser — no build, no server, no libraries. The deployed homepage (`/`) is [`index.html`](index.html), the landing page for the whole body of work; the routed lab is at `/mfg-lab`.
 
 **[`mfg-lab/mfg-lab.html`](mfg-lab/mfg-lab.html)** — one page, eight live
 experiments, organised as an argument rather than a menu. Every section has its
@@ -118,7 +118,7 @@ The eight experiments:
 The Certificates section states the standard, solver-structure matching, and
 lineage — every claim checkable against the code in the same file.
 
-**[`papers/stock-constraint.html`](papers/stock-constraint.html)** — a living research note:
+**[`technical-reports/stock-constraint.html`](technical-reports/stock-constraint.html)** — a living research note:
 the Brazilian interconnected system (SIN) as a mean-field game with an
 administered price band (the ANEEL PLD floor/cap as a first-class object), a
 storage crowd coupled to Hotelling hydro stock, formulated as a monotone
@@ -164,7 +164,7 @@ JS by a cross-language differential run at test time with sha256 provenance:
   certificates; agreement with `mfg-lab.html` to < 1e-9.
 - **SIN-MFG continuum** (`mfglab.continuum`): the HJB/FP field solve, band
   clearing, hydro dispatch, Picard driver and DP audit, ported
-  statement-for-statement; agreement with `papers/stock-constraint.html` at ~1e-16 on the
+  statement-for-statement; agreement with `technical-reports/stock-constraint.html` at ~1e-16 on the
   equilibrium price path (same iteration count, same certificates). Also
   ships the Achdou adjoint-matched scheme (`solve_field_upwind`,
   FP = HJBᵀ exact — see

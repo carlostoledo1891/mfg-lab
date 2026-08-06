@@ -9,6 +9,18 @@
   ],
   "redirects": [
     {
+      "_comment": "THE CUSTOM DOMAIN IS THE SITE; the vercel.app host is now only a deployment address. This rule must stay FIRST: Vercel evaluates redirects in order, and every path-specific rule below is meant to run on the canonical host, not on the one being left behind. $1 preserves the path, so a link anyone has already shared still lands on the same page. 308 permanent, so search engines transfer rather than duplicate — which is the whole point, since every canonical tag and every sitemap <loc> now names www.carlostoledo.co and a page whose canonical disagrees with its host is worse than either alone.",
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "mfg-lab.vercel.app"
+        }
+      ],
+      "destination": "https://www.carlostoledo.co/$1",
+      "permanent": true
+    },
+    {
       "source": "/onepager",
       "destination": "/",
       "permanent": true

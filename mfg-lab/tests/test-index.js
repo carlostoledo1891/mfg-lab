@@ -44,9 +44,10 @@
          and it was found by reading the markup, not by running this file.
 
          The pattern (redirects -> filesystem -> rewrites, the redirect hop kept
-         visible rather than folded in) is taken from tools/check-redirects.js
-         and tools/check-enclosure.js, which already model it correctly. It is
-         not reinvented here.
+         visible rather than folded in) was taken from two gates that this repo
+         RETIRED on 2026-07-28 (commit a4dd280, "remove all 28 gates"), so do not
+         go looking for them: they modelled it correctly and the model outlived
+         them. It is not reinvented here.
 
      I2  every in-page `data-goto` target is a route the artifact actually has.
 
@@ -184,8 +185,9 @@ if (!mapFile) {
   console.error('   FAIL  I1 no route map found — looked in:\n     ' + ROUTE_MAPS.join('\n     '));
   console.error('landing-page gate FAILED'); process.exit(1);
 }
-/* ---- route algebra. Pure, and shaped exactly like tools/check-redirects.js's, which is
-   where this project's model of Vercel's pipeline is written down. Strip query and fragment
+/* ---- route algebra. Pure, and shaped like the redirect gate RETIRED on 2026-07-28
+   (a4dd280), where this project's model of Vercel's pipeline was first written down and
+   from which it was carried here rather than reinvented. Strip query and fragment
    (a fragment is client-side and never reaches the router), strip the trailing slash. */
 const norm = r => {
   if (typeof r !== 'string') return '';
@@ -227,7 +229,8 @@ const PAGE_MAP = process.env.MFG_PAGE_MAP ? JSON.parse(process.env.MFG_PAGE_MAP)
    and treating it as one is not a near miss — it swallows the rewrite step entirely. Measured
    while writing this: `/mfg-lab` matched the `mfg-lab/` directory, the rewrite to
    /mfg-lab/mfg-lab never ran, and the gate died on EISDIR instead of reporting anything.
-   tools/check-links.js states the same rule as `fs.statSync(abs).isFile()`. */
+   The link gate RETIRED on 2026-07-28 (a4dd280) stated the same rule, as
+   `fs.statSync(abs).isFile()`. */
 const isFile = p => { try { return fs.statSync(p).isFile(); } catch (e) { return false; } };
 function onDisk(rel) {
   const direct = path.join(ROOT, rel);

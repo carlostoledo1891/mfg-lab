@@ -37,7 +37,7 @@
 <title>The stack &mdash; Carlos Toledo</title>
 <meta name="author" content="Carlos Toledo">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://mfg-lab.vercel.app/stack">
+<link rel="canonical" href="https://www.carlostoledo.co/stack">
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   :root{
@@ -537,7 +537,7 @@ say(CLEAN.holds, 'CLAIM GATE: 24 disjoint certified nondegenerate critical point
     <div class="twrap"><table class="mtable">
       <tr><th>dimension</th><th>this stack (eqcert, JS/Node)</th><th>Arb / MPFI (C)</th><th>Lean 4 + mathlib</th><th>C++ suites (CAPD, kv)</th></tr>
       <tr><td>speed</td><td>interpreter overhead accepted; the shipped verifiers run in &le; seconds because the problems are kept small</td><td><b>wins by orders of magnitude</b>; arbitrary precision</td><td>not the point</td><td><b>wins by orders of magnitude</b></td></tr>
-      <tr><td>scope</td><td>rational functions, integer powers, enclosed exp/log/cos; finite-dimensional Krawczyk; no rigorous ODE integrator</td><td><b>full special-function library</b>, ball arithmetic</td><td><b>anything formalizable</b>, at formalization cost</td><td><b>rigorous ODE/PDE integration</b>, dynamical systems machinery</td></tr>
+      <tr><td>scope</td><td>rational functions, integer powers, enclosed exp/log/cos; finite-dimensional Krawczyk <i>and</i> the radii polynomial in a weighted-&#8467;<sup>1</sup> sequence algebra, where the infinite Fourier tail is bounded explicitly rather than truncated; no rigorous ODE integrator</td><td><b>full special-function library</b>, ball arithmetic</td><td><b>anything formalizable</b>, at formalization cost</td><td><b>rigorous ODE/PDE integration</b>, dynamical systems machinery</td></tr>
       <tr><td>trust base</td><td>IEEE-754 correct rounding of + &minus; &times; &divide; &radic; plus a ~130-line arithmetic file you can read in one sitting</td><td>large, mature, well-tested C codebase</td><td><b>a proof kernel &mdash; the deepest axiomatic grounding available</b></td><td>large, mature C++ codebase</td></tr>
       <tr><td>install friction</td><td><b>git clone + node, nothing else</b>: no compiler, no CAS licence, no package manager</td><td>C toolchain + deps</td><td>elan + mathlib cache (gigabytes)</td><td>C++ toolchain + CMake + deps</td></tr>
       <tr><td>audit one claim</td><td><b>one file, self-contained; prints the sha256 of what it read; its checker is mutation-tested in both directions</b></td><td>library call inside your program; you audit your program</td><td>kernel-checked, definitionally airtight; auditing means reading the formalization</td><td>library call inside your program</td></tr>
