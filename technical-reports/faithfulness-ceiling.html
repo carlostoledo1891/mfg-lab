@@ -197,6 +197,26 @@ pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(-
     are the run of record, against the pre-hardening verifier, and are kept as measured; the
     <a href="/defects">errata log</a> carries the case.</div>
 
+  <div class="pagestate" style="margin-top:14px;border-color:var(--bad)"><b>Second addendum,
+    2026-08-06 &mdash; the hardening above did not survive a later, unrelated change, and this
+    supersedes the paragraph's present tense.</b> The addendum above is kept exactly as written: it
+    was true of the verifier it names, sha256 <code>5fd01be3&hellip;</code>. Later the same day a
+    separate commit ported the odd Fourier block into both Python verifiers &mdash; strengthening a
+    <i>different</i> claim, correctly, so that the certificate stopped disclaiming half its own
+    theorem &mdash; and in regenerating the verifier to sha256 <code>c886a856&hellip;</code> the
+    verdict-tuple hardening went with it. <b>Re-measured 2026-08-06, twice</b>: in the full
+    repository, and again in a tree holding only the enclosure library and this harness. Both agree
+    and both reproduce the <i>pre</i>-hardening result &mdash; <b>9 of 14 tuple flips, five silent
+    stages [7,&nbsp;8,&nbsp;9,&nbsp;10,&nbsp;12]</b>, all seven harness controls green, exit 0. So
+    the sentence &ldquo;14/14 flips, zero silent stages&rdquo; describes a verifier state that is no
+    longer on disk, and neither committed golden's recorded digest matches the verifier that is
+    (<code>67822a77&hellip;</code> and <code>5fd01be3&hellip;</code> against
+    <code>c886a856&hellip;</code>). Today's measurement is committed as
+    <code>golden-run-2026-08-06.json</code>. <b>Nothing noticed for a day</b> because this harness is
+    named as this page's gate and was a prerequisite of no build target; a pin check now runs in the
+    ritual, so a verifier that moves out from under a published number goes red instead of quiet.
+    The case is <a href="/defects">Case Six</a>.</div>
+
   <h2>What was tested, and why the frame is narrow</h2>
   <p><b>Two perturbation families, rebuilt from the papers&rsquo; own text.</b> <i>Early answering</i>:
     cut the chain after each stage, demand the verdict, score the area between the same-answer curve

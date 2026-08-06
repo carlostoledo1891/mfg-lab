@@ -32,6 +32,18 @@
   Status OPEN — reported before fixed; the entry says so. og:title carried
   "three ways" since case 4 landed; replaced with a count-free title.
 
+  REVISED 2026-08-06. Case 6 added, and Case 5's status corrected from FIXED to
+  "fix did not hold". The P2 hardening below was real against verifier sha256
+  5fd01be3…; a later commit that ported the odd Fourier block into both Python
+  verifiers — strengthening a DIFFERENT claim, and doing it correctly — regenerated
+  that verifier to c886a856… and the verdict-tuple hardening did not survive the
+  regeneration. Re-measured 2026-08-06 in the monorepo and again in a tree holding
+  only the enclosure library and the harness: 9/14 flips, five silent stages
+  [7,8,9,10,12], identical in both. Neither committed golden's recorded verifier
+  digest matches the verifier now on disk. Case 5's prior FIXED text is NOT edited —
+  it was true of the verifier it named — and this entry supersedes its status.
+  Found because the harness was run by hand; no gate runs it, which is Case 6.
+
   REVISED 2026-08-05, later the same session. The P2 hardening landed: witnesses
   joined the acceptance conjunction, the verdict line carries a full-state digest,
   the cert was refrozen (bounds digit-for-digit + crosslang green first), and the
@@ -159,6 +171,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .badge.fixed{color:var(--paper);background:var(--good);border-color:var(--good)}
   .badge.caught{color:var(--paper);background:var(--amber);border-color:var(--amber)}
   .badge.scope{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+    .badge.regressed{color:var(--paper);background:var(--bad);border-color:var(--bad)}
 
   section{padding:var(--section-top) 0 0}
   h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.018em;margin-bottom:8px;text-wrap:balance}
@@ -273,6 +286,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
       <a href="#erdos290">Case 3 &middot; a check that cannot go red</a>
       <a href="#case-4">Case 4 &middot; right numbers, wrong name</a>
       <a href="#case-5">Case 5 &middot; five silent stages</a>
+      <a href="#case-6">Case 6 &middot; a fix that did not survive</a>
       <a href="#lab-log">Laboratory log &middot; 8</a>
       <a href="#method">Five rules</a>
       <a href="#scope">What this does not claim</a>
@@ -307,11 +321,23 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
         mislabel as truth.</span>
     </a>
     <a class="case" href="#case-5">
-      <span class="k">Case 05 <span class="badge fixed">fixed same day</span> <span class="badge caught">found by own instrument</span></span>
+      <span class="k">Case 05 <span class="badge regressed">fix did not hold</span> <span class="badge caught">found by own instrument</span></span>
       <span class="t">Five certificate stages its verdict could not see</span>
       <span class="d">The preregistered prediction was <b>14/14</b> flips; the run measured
         <b>9/14</b> &mdash; five stages of a certified chain invisible to its own verdict. Two
-        registered, one same-species, two unpredicted. Hardened same day: re-run <b>14/14</b>.</span>
+        registered, one same-species, two unpredicted. Hardened same day to <b>14/14</b> &mdash;
+        <b>and the hardening did not survive a later, unrelated change. See Case 06.</b></span>
+    </a>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="#case-6">
+      <span class="k">Case 06 <span class="badge regressed">open</span> <span class="badge caught">found by own instrument</span></span>
+      <span class="t">A fix that an unrelated improvement silently un-did</span>
+      <span class="d">Case 05's hardening was real against one verifier. A later commit that
+        strengthened a <i>different</i> thing regenerated that verifier, and the hardening went with
+        it: measured today, <b>9/14</b> flips and five silent stages again. Nothing noticed, because
+        the only instrument that measures it runs in no gating target.</span>
     </a>
   </div>
 
@@ -679,6 +705,43 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
         at one, parameter slack at four &mdash; is stated in the
         <a href="/technical-reports/faithfulness-ceiling">write-up</a> exactly as it was
         measured.</p>
+    </div>
+  </section>
+
+  <section id="case-6">
+    <h2>Case Six <span class="tag" style="color:var(--bad)">still open</span></h2>
+    <p class="sub">6 August 2026 &middot; the fix above was real, and an unrelated improvement
+      silently un-did it. Found by running the instrument by hand, because no gate runs it.</p>
+
+    <div class="ro">
+      <p>Case Five closed on 5 August: the hardened verifier took the silent stages from five to
+        zero, and the re-run golden measured <b>14/14</b> tuple flips. That was true of the verifier
+        it named, sha256 <code>5fd01be3&hellip;</code>.</p>
+
+      <p>Later the same day a different commit ported the odd Fourier block into both Python
+        verifiers, so that the certificate stopped disclaiming half its own theorem. That change is
+        correct and it strengthened the result. It also <b>regenerated the verifier</b>, to sha256
+        <code>c886a856&hellip;</code>, and the verdict-tuple hardening did not survive the
+        regeneration.</p>
+
+      <p>Re-measured on 6 August, twice: in the full repository, and again in a tree containing
+        nothing but the enclosure library and the harness. Both runs agree, and both reproduce the
+        <i>pre</i>-hardening result &mdash; <b>9 of 14 flips, five silent stages [7,&nbsp;8,&nbsp;9,&nbsp;10,&nbsp;12]</b>.
+        Neither committed golden's recorded verifier digest matches the verifier now on disk:
+        <code>67822a77&hellip;</code> and <code>5fd01be3&hellip;</code> against
+        <code>c886a856&hellip;</code>.</p>
+
+      <p class="note">Why nothing caught it, and this is the actual defect. The harness that measures
+        this is named as the write-up's gate, and it is a prerequisite of no build target &mdash; so
+        the ritual never runs it, and a verifier can be regenerated twice without anything comparing
+        the new one against the numbers a page still prints. Two unrelated fixes can each be right
+        and still cancel, and the only thing that would notice is a gate. <b>A fix is not durable
+        until something can tell you it broke.</b></p>
+
+      <p class="note">Kept honest in both directions: Case Five's text above is not edited &mdash; it
+        recorded what was true when it was written &mdash; and the write-up's numbers stay as
+        measured. What changed is a <i>status</i>, which is a claim about the present tense, and it
+        now says the fix did not hold.</p>
     </div>
   </section>
 
