@@ -111,9 +111,13 @@ The eight experiments:
 8. The water value on a scenario tree — price formation with a stock
    constraint, solved exactly and certified by LP duality: zero duality gap,
    then the martingale identity read off the certified dual over interior
-   nodes only. The kernel is `sin-mfg/tools/water_value_tree.js` embedded
-   verbatim, with byte-identity gated by
-   `mfg-lab/tests/test-water-value-diff.js` — one kernel, two artifacts.
+   nodes only. The kernel is embedded verbatim in this page and in
+   [`sin-mfg/water-value.html`](sin-mfg/water-value.html) — one kernel, two
+   artifacts, and the block between the `BEGIN VERBATIM` / `END VERBATIM`
+   markers is identical in both, which you can diff. The standalone solver
+   file and the battery that holds the two copies byte-identical are withheld
+   from this export (see **What is not here**, below); the kernel itself is in
+   front of you.
 
 The Certificates section states the standard, solver-structure matching, and
 lineage — every claim checkable against the code in the same file.
@@ -143,12 +147,30 @@ certificate.
 | `mfg-lab/tests/test-wardrop.js` | Wardrop kernel (21 assertions, incl. Table I comparison and the projected-gradient duel) |
 | `mfg-lab/tests/test-wardrop-diff.js` | shipped kernel ≡ battery kernel differential |
 | `mfg-lab/tests/test-wardrop-interval.js` | the equilibrium **proved**: exact rational (S2), Krawczyk enclosure (S3), required refusal (S1); 15 checks + 5 falsifiers |
-| `mfg-lab/tests/test-water-value-diff.js` | one kernel, two artifacts: byte-identity of the embedded water-value tree, plus its certificates |
 | `mfg-lab/tests/test-transpose.js` | FP = HJBᵀ certified for the lab's continuum kernel |
 | `mfg-lab/tests/test-invariant.js` | GGR's §3.1 balance condition carried pathwise by the scheme (their relation, our certificate), ray unique within the linear ansatz, knife-edge under loading deformation; beyond-LQ first integrals obstructed (Lie-closure rank certificate) |
 | `sin-mfg/tests/test-sin.js` | SIN-MFG kernel battery (43 checks; two-layer: math + display path) |
 | `sin-mfg/tests/test-transpose-sin.js` | the Achdou adjoint-matched pair for the SIN Hamiltonian, `FP = HJBᵀ` exact |
-| `sin-mfg/tests/test-water-value.js` | the water-value LP theorems: piecewise-constant w (deterministic) and martingale-off-binding w (scenario trees), zero-gap LP duality |
+
+### What is not here
+
+Four programs are withheld from this repository, and naming them is more useful
+than leaving a reader to notice the gap: the deterministic bounded-reservoir
+dispatch LP and the scenario-tree water-value solver (water_value_lp.js,
+water_value_tree.js), and the two batteries that execute them
+(test-water-value.js, test-water-value-diff.js — the names are given in plain
+text, not as links, because in this tree they are not files). **The
+mathematics is not
+withheld.** The water-value theorems, their proofs and the full certificate
+conditions — primal feasibility, the Hotelling trichotomy, the jump and wedge
+signs, complementary slackness, the zero duality gap, and the measured results
+they certify — are stated in
+[`sin-mfg/docs/SIN_MFG_Model_Spec_v0.3.md`](sin-mfg/docs/SIN_MFG_Model_Spec_v0.3.md)
+and [`sin-mfg/docs/FINDINGS_SIN.md`](sin-mfg/docs/FINDINGS_SIN.md), which ship in
+full. What does not travel is the certified implementation of the solve. Note
+what that does and does not mean: the scenario-tree kernel itself **does** ship,
+embedded verbatim in both artifacts above, so the withheld file is a file and not
+the code. Licence boundary: [`LICENSING.md`](LICENSING.md).
 
 `make check-py` adds the Python batteries: the `mfglab` pytest suite (with a
 cross-language differential holding Python == the shipped JS kernel) and the

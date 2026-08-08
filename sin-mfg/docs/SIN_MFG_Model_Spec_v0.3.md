@@ -227,8 +227,8 @@ jumping only at stock-binding events — up across a full-reservoir event, down
 across an empty event** — and on each maximal interior interval the argument
 of (a) applies verbatim with the interval budget. Strong duality closes it:
 Σϖ_t h_t = w_1R_0 − w_TR_end + Σw_tI_t + ΣR̄(Δw)⁺ + Σh̄(ϖ−w)⁺. ∎
-Certified live: `sin-mfg/tools/water_value_lp.js` (active-set solve in the
-Wardrop-polish pattern) + `sin-mfg/tests/test-water-value.js` in `make
+Certified live: **water_value_lp.js [withheld]** (active-set solve in the
+Wardrop-polish pattern) + **test-water-value.js [withheld]** in `make
 check` — the certificate IS the proof instance-by-instance (primal
 feasibility, trichotomy, jump signs, complementary slackness, zero duality
 gap; 200-instance random sweep certified with worst gap 6.1e-16, 170/200
@@ -280,9 +280,9 @@ by p_n:
 the water value is a martingale between stock-binding events, stepping down
 across full-reservoir events and up across empty ones, the exact
 discrete-time content of dw = Z dB + dL⁰ − dL̄. ∎ Certified live:
-`sin-mfg/tools/water_value_tree.js` (exact piecewise-linear-concave DP for
+**water_value_tree.js [withheld]** (exact piecewise-linear-concave DP for
 the primal; duals by superdifferential selection of the value functions,
-distributed top-down) + `sin-mfg/tests/test-water-value.js` in `make check`
+distributed top-down) + **test-water-value.js [withheld]** in `make check`
 (zero duality gap ⇒ optimality with no CQ; 120-tree random sweep all
 certified, worst gap 1.3e-14, worst off-binding martingale residual 3.9e-13;
 binding, spill and pure-martingale trees all exercised; mutants prove the
@@ -430,3 +430,21 @@ reflecting-boundary duality — are stated at collaborator precision
 3. Only then the write-up for the group: the running benchmark, the proved
    deterministic T3, the honest open problems, and Conjecture C offered as a
    shared question.
+
+
+---
+
+**`[withheld]` — what that marker means in this copy.** Four programs are withheld from
+the public export of this repository: the deterministic bounded-reservoir dispatch LP and
+the scenario-tree water-value solver (water_value_lp.js, water_value_tree.js), and the two
+batteries that execute them (test-water-value.js, test-water-value-diff.js). **The
+mathematics is not withheld.** The theorems, their proofs and the full certificate
+conditions — primal feasibility, the Hotelling trichotomy, the jump and wedge signs,
+complementary slackness and the zero duality gap — are stated in these documents, and the
+measured results they certify are quoted with them; what does not travel is our certified
+implementation of the solve. Stated so this is not read as more than it is: the
+scenario-tree kernel itself **does** ship, embedded verbatim in
+`sin-mfg/water-value.html`, so what the withhold removes there is the standalone file and
+its byte-identity gate, not the code. The licence boundary is stated in `LICENSING.md`.
+This paragraph is written when the public copy is built; the working copy of this document
+names live paths and is not edited.

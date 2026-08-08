@@ -207,8 +207,8 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
         <li><b>Mutation testing coupled to certificates.</b> A certificate is theatre until its checker
         is proven able to go red. Every falsifier is verified in <em>two directions</em>: a planted
         mutant must flip it red, and the clean tree must leave it green. One tool owns that record
-        (<code>ledger/tools/mutate.js</code>), and anything short of the pair (nonzero, zero) is a
-        failure, not partial credit.</li>
+        &mdash; the mutation runner, which is <b>not in the public repository</b> &mdash; and anything
+        short of the pair (nonzero, zero) is a failure, not partial credit.</li>
         <li><b>Refusal as a first-class verdict.</b> <code>REFUSED</code> and <code>OUT-OF-SCOPE</code>
         are outputs, not failures. An enclosure that cannot be established is reported as exactly that,
         with its reason &mdash; because a wrong enclosure is worse than a refusal, and a silent one is
@@ -415,7 +415,7 @@ const feq = (a, b) =&gt; a[0] === b[0] &amp;&amp; a[1] === b[1];
       take its quoting on trust:</p>
     </div>
     <div class="codeblock">
-      <div class="cbar"><span class="src">ledger/tools/mutate.js &middot; lines 18&ndash;36</span>
+      <div class="cbar"><span class="src">the mutation runner (private) &middot; lines 18&ndash;36</span>
         <span class="what">why both directions are required</span></div>
       <pre><code> * WHAT "RED-VERIFIED" MEANS AND WHY BOTH DIRECTIONS ARE REQUIRED.
  * A falsifier's whole job is to be wrong about a broken kernel. If nobody has

@@ -544,9 +544,9 @@ is not the evidence — the effect sizes above are.
 
 Both halves of B1's remaining caveats were closed in discrete time, where the
 problems are finite LPs and KKT needs no constraint qualification. Proofs in
-Spec v0.3 §B; solvers + certificates: `sin-mfg/tools/water_value_lp.js`,
-`sin-mfg/tools/water_value_tree.js`, battery
-`sin-mfg/tests/test-water-value.js` (in `make check`). The solvers follow the Wardrop flow→polish doctrine: the solve
+Spec v0.3 §B; solvers + certificates: **water_value_lp.js [withheld]**,
+**water_value_tree.js [withheld]**, battery
+**test-water-value.js [withheld]** (in `make check`). The solvers follow the Wardrop flow→polish doctrine: the solve
 is a guess, the certificate (primal feasibility + trichotomy + jump/wedge
 signs + complementary slackness + ZERO duality gap) is the proof, instance by
 instance.
@@ -640,3 +640,21 @@ of 2025). Findings:
   Next sharpening: split the COFF index by reason class (CNF/ENE vs REL) and
   re-run the conditional — the model predicts the class split IS the
   explanation; also extend the index to all 12 months.
+
+
+---
+
+**`[withheld]` — what that marker means in this copy.** Four programs are withheld from
+the public export of this repository: the deterministic bounded-reservoir dispatch LP and
+the scenario-tree water-value solver (water_value_lp.js, water_value_tree.js), and the two
+batteries that execute them (test-water-value.js, test-water-value-diff.js). **The
+mathematics is not withheld.** The theorems, their proofs and the full certificate
+conditions — primal feasibility, the Hotelling trichotomy, the jump and wedge signs,
+complementary slackness and the zero duality gap — are stated in these documents, and the
+measured results they certify are quoted with them; what does not travel is our certified
+implementation of the solve. Stated so this is not read as more than it is: the
+scenario-tree kernel itself **does** ship, embedded verbatim in
+`sin-mfg/water-value.html`, so what the withhold removes there is the standalone file and
+its byte-identity gate, not the code. The licence boundary is stated in `LICENSING.md`.
+This paragraph is written when the public copy is built; the working copy of this document
+names live paths and is not edited.

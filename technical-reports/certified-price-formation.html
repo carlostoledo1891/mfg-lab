@@ -4,11 +4,13 @@
 <!--
   PATH 5 of 5 — certified price formation under scarcity and congestion. Opened 2026-07-31.
 
-  The only path with an external clock: the LRCAP auction dates, 2 and 4 December 2026
-  (commercial plan is the authority on that date).
+  The only path with an external clock. The clock itself is an engagement timetable held privately
+  and is deliberately not named here or anywhere in the shipped tree.
 
-  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every file in _frontier/: it may state what it
-  INTENDS to certify and may never state that anything IS certified. No literature gate has run.
+  THIS PAGE IS EXPORTED AND ROUTED (/technical-reports/certified-price-formation). It is PUBLIC — do
+  not write a private path, a client name, a counterparty or a date into it. Same rule as every file
+  in _frontier/: it may state what it INTENDS to certify and may never state that anything IS
+  certified. No literature gate has run.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,7 +111,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
   </style>
 <!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
-     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
      asserts "every copy is byte-identical to its source" — an export that differs from
      what is committed is exactly the drift that gate exists to catch, so the tag lives in
      the source or it does not exist.
@@ -136,7 +138,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <div class="wrap">
     <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
 <div class="hero">
-    <div class="eyebrow">Frontier path 05 of 05 &middot; The commercial spine</div>
+    <div class="eyebrow">Frontier path 05 of 05</div>
     <h1>Certified price formation</h1>
     <p class="lede">Five artefacts in this tree are the same object seen five ways: <b>a price or dispatch you can hand a
 regulator with a certificate AND a refusal.</b> The refusal is the differentiator and it is already wired.</p>
@@ -172,7 +174,7 @@ regulator with a certificate AND a refusal.</b> The refusal is the differentiato
     <h2>The clock and the blocker</h2>
     <table>
       <tr><th>Item</th><th>State</th></tr>
-      <tr><td><b>External deadline</b></td><td><b>2 and 4 December 2026</b>, the LRCAP auction dates. The commercial energy track is gated on the Python port and the certificate API only.</td></tr>
+      <tr><td><b>External deadline</b></td><td>This path is the only one of the five with a clock outside this tree. The timetable is an engagement matter and is held privately; it is not stated here. What it gates on this side is narrow and public: the Python port and the certificate API.</td></tr>
       <tr><td><b>Interval transcendentals</b></td><td><b>BUILT &mdash; corrected 2026-08-04.</b> This row read <b>MISSING</b> until today, and it was true when written. <code>eqcert/src/transcendental.js</code> now ships sound interval <code>exp / log / sin / cos / tanh</code> with a 93-check battery, 0 failures; its header names <code>edge-of-chaos</code> and aerospace as consumers. <b>Fractional <code>pow</code> is still absent</b> (<code>eqcert/src/interval.js:94</code> still throws on non-integer exponents) and no battery has yet demanded it, so the narrow claim survives and the broad one does not. The blocker this page put on its own critical route is retired.</td></tr>
       <tr><td><b>Rust kernel</b></td><td>Named in <code>PLAN.md</code> §5.3, not started. <b>Do not send an aerospace report before it exists</b> &mdash; an uncertified report under a certification brand is the one liability that cannot be repaired.</td></tr>
     </table>
@@ -181,15 +183,15 @@ regulator with a certificate AND a refusal.</b> The refusal is the differentiato
   <section>
     <h2>Scored, and the honest risk</h2>
     <div class="box"><div class="k">N / A</div><p><b>N: ZERO</b> and it does not matter here &mdash; nobody
-      buys novelty. <b>A: the highest of the five in commercial terms</b>, unverified.</p></div>
-    <div class="box risk"><p><b>The deadline is the risk.</b> A path with a clock will pull effort from the
-      four that do not. <b>Corrected 2026-08-04:</b> this paragraph also named the transcendental blocker as
+      buys novelty. <b>A: the highest applicability of the five</b>, unverified.</p></div>
+    <div class="box risk"><p><b>The clock is the risk.</b> A path with an external deadline will pull effort from the
+      four that have none. <b>Corrected 2026-08-04:</b> this paragraph also named the transcendental blocker as
       sitting on the critical route and warned the path would stop at the wall aerospace stopped at. That half
       is retired &mdash; the library is built (see the table above). The clock risk stands; the blocker does not.</p></div>
   </section>
 </div>
 <footer><div class="wrap"><div class="foot">
-  Frontier path &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  Frontier path &middot; published and routed &middot; open / unsigned &middot; Carlos Toledo &middot; 2026<br>
   no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record &middot; opened 2026-07-31
 </div></div></footer>
 <footer class="sitefoot">

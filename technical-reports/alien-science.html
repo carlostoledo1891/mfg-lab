@@ -240,7 +240,7 @@ ol.steps li{margin-bottom:10px} ol.steps b{color:var(--ink)}
 
   </style>
 <!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
-     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
      asserts "every copy is byte-identical to its source" — an export that differs from
      what is committed is exactly the drift that gate exists to catch, so the tag lives in
      the source or it does not exist.
@@ -1082,12 +1082,12 @@ node dual-client.js --fixture heldout-ccs-es --plant-mutant</pre>
     { id: 'EXAM-LR-0010', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
     { id: 'EXAM-LR-0011', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
     { id: 'EXAM-LR-0012', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
-    { id: 'EXAM-KC-0001', source: 'kill_control', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
-    { id: 'EXAM-KC-0002', source: 'kill_control', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
-    { id: 'EXAM-KC-0003', source: 'kill_control', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
-    { id: 'EXAM-KC-0004', source: 'kill_control', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
-    { id: 'EXAM-KC-0005', source: 'kill_control', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
-    { id: 'EXAM-KC-0006', source: 'kill_control', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' }
+    { id: 'EXAM-LR-0016', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
+    { id: 'EXAM-LR-0020', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
+    { id: 'EXAM-LR-draft-no-warning', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
+    { id: 'EXAM-LR-draft-practice-index', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
+    { id: 'EXAM-LR-draft-exact-audit', source: 'mutation.last_red', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' },
+    { id: 'EXAM-KC-0001', source: 'kill_control', clean: 'OUT-OF-SCOPE', mutant: 'REFUSED' }
   ];
 
   function validateDisposition(d) {

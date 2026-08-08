@@ -184,7 +184,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
   </style>
 <!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
-     data. Declared here rather than injected at build time BECAUSE tools/check-public.js
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
      asserts "every copy is byte-identical to its source" — an export that differs from
      what is committed is exactly the drift that gate exists to catch, so the tag lives in
      the source or it does not exist.
@@ -342,7 +342,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <script>
 'use strict';
 
-/* The three kernel files below are spliced VERBATIM by tools/build-artifact.js.
+/* The three kernel files below are spliced VERBATIM by this unit's artifact builder.
    Do not edit them here — edit kernel/*.js and rebuild; tests/test-artifact.js
    asserts byte-identity and will go red if these copies drift. */
 const __mods = {};

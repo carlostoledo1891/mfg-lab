@@ -25,7 +25,7 @@ only at binding events, with w = 0 at spilling nodes — one page of LP duality
 (linear constraints, so strong duality is automatic and no constraint
 qualification has to be assumed: a property of finite LPs, not a strength of
 the argument), machine-certified
-(`sin-mfg/tests/test-water-value.js`: zero duality gap, off-binding
+(**test-water-value.js [withheld]**: zero duality gap, off-binding
 martingale residual ≤ 4e-13 across a 120-tree random sweep). What remains
 open is exactly the continuum limit — and the tree theorem sharpens the
 target: any continuum well-posedness result must reproduce the tree
@@ -173,3 +173,21 @@ people whose toolkits they belong to — OP-1 sits in the reflected-FBSDE /
 master-equation area, OP-2 in the variational-MFG duality area. Neither is a
 blocker for the note, the benchmark, or the empirical layer; both are where
 the model's mathematics genuinely ends today.
+
+
+---
+
+**`[withheld]` — what that marker means in this copy.** Four programs are withheld from
+the public export of this repository: the deterministic bounded-reservoir dispatch LP and
+the scenario-tree water-value solver (water_value_lp.js, water_value_tree.js), and the two
+batteries that execute them (test-water-value.js, test-water-value-diff.js). **The
+mathematics is not withheld.** The theorems, their proofs and the full certificate
+conditions — primal feasibility, the Hotelling trichotomy, the jump and wedge signs,
+complementary slackness and the zero duality gap — are stated in these documents, and the
+measured results they certify are quoted with them; what does not travel is our certified
+implementation of the solve. Stated so this is not read as more than it is: the
+scenario-tree kernel itself **does** ship, embedded verbatim in
+`sin-mfg/water-value.html`, so what the withhold removes there is the standalone file and
+its byte-identity gate, not the code. The licence boundary is stated in `LICENSING.md`.
+This paragraph is written when the public copy is built; the working copy of this document
+names live paths and is not edited.

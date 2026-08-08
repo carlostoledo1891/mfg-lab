@@ -47,7 +47,7 @@ const E = n => `/* ==== END VERBATIM ${n} ==== */`;
 
 /* CommonJS shim: each kernel is wrapped so `require` resolves to its siblings. */
 const bundle = `
-/* The three kernel files below are spliced VERBATIM by tools/build-artifact.js.
+/* The three kernel files below are spliced VERBATIM by this unit's artifact builder.
    Do not edit them here — edit kernel/*.js and rebuild; tests/test-artifact.js
    asserts byte-identity and will go red if these copies drift. */
 const __mods = {};

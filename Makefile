@@ -54,7 +54,13 @@ check-lab:
 	@$(NODE) $(LAB)/test-wardrop.js
 	@$(NODE) $(LAB)/test-wardrop-diff.js
 	@$(NODE) $(LAB)/test-wardrop-interval.js
-	@$(NODE) $(LAB)/test-water-value-diff.js
+# test-water-value-diff.js is NOT in this tree (2026-08-07). It is the ONE-KERNEL GATE: it holds
+# the water-value scenario-tree kernel embedded in the laboratory page byte-identical to the copy
+# embedded in the water-value page. It requires the standalone solver by path, and that solver is
+# withheld from this export, so the battery would die on a missing file rather than run.
+# WHAT THAT COSTS A READER HERE, stated rather than left implicit: the two pages still carry the
+# same kernel between their VERBATIM markers, and you can diff them yourself, but nothing in this
+# tree asserts it for you. The property is still gated at source on every push.
 	@$(NODE) $(LAB)/test-transpose.js
 	@$(NODE) $(LAB)/test-invariant.js
 
@@ -62,7 +68,12 @@ check-sin:
 	@echo "== sin-mfg battery =="
 	@$(NODE) $(SIN)/test-sin.js
 	@$(NODE) $(SIN)/test-transpose-sin.js
-	@$(NODE) $(SIN)/test-water-value.js
+# test-water-value.js is NOT in this tree (2026-08-07), because the two solvers it certifies —
+# the deterministic dispatch LP and the scenario-tree water value — are withheld from this export.
+# The theorems it gates, their proofs and the certificate conditions are documented in full in
+# sin-mfg/docs/; the certified implementation is not published. A battery whose subject is absent
+# fails with a missing file and runs no check at all, which reads as a broken tree rather than as
+# a boundary, so it is omitted here and named instead.
 
 check-all: check layout check-py
 
