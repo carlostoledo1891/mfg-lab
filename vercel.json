@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [],
+  "redirects": [
+    {
+      "source": "/mfg-lab/mfg-lab",
+      "destination": "/mfg-lab",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "mfg-lab.vercel.app"
+        }
+      ],
+      "destination": "https://www.carlostoledo.co/$1",
+      "permanent": true
+    },
+    {
+      "source": "/onepager",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/lab",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/byo",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/mfg-cap",
+      "destination": "/technical-reports/mfg-cap",
+      "permanent": true
+    },
+    {
+      "source": "/sin-mfg",
+      "destination": "/technical-reports/stock-constraint",
+      "permanent": true
+    },
+    {
+      "source": "/enclosure/wardrop-repro",
+      "destination": "/technical-reports/wardrop-repro",
+      "permanent": true
+    },
+    {
+      "source": "/enclosure/mfg-congest",
+      "destination": "/technical-reports/mfg-congest",
+      "permanent": true
+    },
+    {
+      "source": "/papers",
+      "destination": "/technical-reports",
+      "permanent": true
+    },
+    {
+      "source": "/papers/mfg-congest",
+      "destination": "/technical-reports/mfg-congest",
+      "permanent": true
+    },
+    {
+      "source": "/papers/wardrop-repro",
+      "destination": "/technical-reports/wardrop-repro",
+      "permanent": true
+    },
+    {
+      "source": "/papers/mfg-cap",
+      "destination": "/technical-reports/mfg-cap",
+      "permanent": true
+    },
+    {
+      "source": "/papers/stock-constraint",
+      "destination": "/technical-reports/stock-constraint",
+      "permanent": true
+    }
+  ]
+}

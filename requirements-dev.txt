@@ -1,0 +1,13 @@
+# Dev dependencies for the MFG monorepo. Install into .venv via `make venv`,
+# which builds on python 3.11+ (system 3.9.6 is EOL and unsuitable).
+#
+# playwright — drives chromium for mfg-lab/tests/test-layout.py (the visual
+#   layout-stability battery).
+# numpy, scipy — sin-mfg/tests/pld_martingale_test.py (the PLD martingale test).
+# pytest — the harness the future mfglab Python package's batteries will use
+#   (kernels port to Python, batteries become the pytest suite).
+playwright>=1.56
+numpy>=1.26
+scipy>=1.13
+pandas>=2.0
+pytest>=8.0

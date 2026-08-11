@@ -1,0 +1,85 @@
+# verify.yml — continuous verification for the public MFG Lab repo.
+#
+# A project whose thesis is "numerical honesty is the product" cannot ask a
+# reader to take the batteries on faith. This runs every one of them on every
+# push, and the green badge on the README is the receipt.
+#
+# HONEST BY CONSTRUCTION — the one thing this file must get right. Two of the
+# gates (`make check-py`, `make layout`) SKIP LOUDLY and exit 0 when their
+# dependencies are absent, because on a developer's laptop a loud skip is more
+# useful than a hard failure. In CI that same behaviour would be a lie: a run
+# that installed nothing and skipped everything would still go green. So CI
+# does two things — it INSTALLS the dependencies so the gates run for real, and
+# it then ASSERTS the word SKIPPED never appeared. A skipped gate is not a pass,
+# and this workflow cannot be green unless every gate actually executed.
+#
+# This file is generated into the repository and is not edited here; changes
+# are made upstream, in the source that produces this published tree.
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Least privilege: the batteries read the tree and compute. They never need to
+# write to the repo, and CI should not be able to.
+permissions:
+  contents: read
+
+# A newer push supersedes an in-flight run on the same ref.
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 24 and Python 3.12 are the runtimes the batteries are validated on
+      # locally. Pinning the major version keeps CI reproducible without pinning
+      # to a patch release that may vanish from the runner image.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # The JS batteries are deterministic, offline and fixture-pinned, so they
+      # need nothing but node. `make check` is green iff the code is correct.
+      - name: make check — the JS batteries
+        run: make check
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Build the venv (numpy/scipy/pytest + a chromium for the layout battery)
+      # so the two gates below CANNOT skip. If this step is ever weakened, the
+      # assertions below turn the resulting skip into a red build.
+      - name: build the venv — so nothing below can silently skip
+        run: make venv
+
+      - name: make check-py — and a SKIP is a failure, not a pass
+        run: |
+          set -o pipefail
+          make check-py 2>&1 | tee py.log
+          # The grep is CASE-SENSITIVE on purpose. "SKIPPED" (uppercase) is the
+          # Makefile's sentinel for "the whole gate did not run" — that must fail
+          # CI. pytest's own lowercase "skipped" marks a legitimate conditional
+          # skip of one test (e.g. a data-dependent case) and must NOT fail CI.
+          if grep -q SKIPPED py.log; then
+            echo "::error::check-py reported SKIPPED — the Python gate did not run. A skipped gate is not a pass."
+            exit 1
+          fi
+
+      - name: make layout — and a SKIP is a failure, not a pass
+        run: |
+          set -o pipefail
+          make layout 2>&1 | tee layout.log
+          if grep -q SKIPPED layout.log; then
+            echo "::error::layout reported SKIPPED — the browser battery did not run. Visual claims would be unverified."
+            exit 1
+          fi

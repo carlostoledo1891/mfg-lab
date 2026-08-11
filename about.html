@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  ABOUT — who wrote these notes, and the address. Rewritten 2026-08-03.
+
+  This page and site/contact.html said the same things twice, and both were written to
+  convert a reader rather than to inform one. They are now one page, and the selling is
+  gone: no services table, no role wish-list, no button. A researcher landing here from a
+  forum should not be able to tell whether the author is looking for work.
+
+  WHAT IS ALLOWED HERE, AND IT IS NARROW. Only claims a stranger can check: the notes are
+  linked and each ships the program that produced its numbers; the errata log is public and
+  named entries are quoted from it. There is no employment history, no degree, no
+  years-of-experience figure and no skills rating — not an oversight, and the page says so
+  in its own text rather than in this comment.
+
+  NO NUMBERS ARE RE-TYPED HERE. The previous version copied six readouts from the homepage
+  evidence strip; no gate pinned them, and that is exactly how a retracted density floor
+  reached three shipping surfaces in July. A number belongs on the page whose program
+  produces it. This page links to those pages instead.
+
+  Chrome (topnav markup, footer markup, :root tokens, theme script) is the seed's, verbatim:
+  site/technical-reports/erdos290.html. Self-contained — no external CSS, JS, fonts or
+  images, and no network request of any kind.
+
+  REVISED 2026-08-04. (1) The verification lane joined the notes table and the intro — the
+  stale "five of the ten" count is gone. (2) The errata paragraph gained the freshest entry
+  (the 4 Aug figure re-attribution), quoted from the log as the page's own rule requires.
+  (3) The footer sitemap/byline moved out of .cred to match the seed's footer stack.
+  (4) The "no network request of any kind" line above and in the rendered foot went stale
+  when the same-origin analytics tag landed; the rendered line is corrected, this comment
+  kept as the record of what was true when written.
+
+  REVISED 2026-08-10, and both changes are this page's own rule applied to itself.
+  (1) THE SIX-NOTE TABLE IS GONE. "NO NUMBERS ARE RE-TYPED HERE" above is the rule, and a
+  hand-kept list of six notes is the same defect one type up: a second copy of the reports
+  page, with nothing pinning it, that goes stale the day a seventh note ships. It is replaced
+  by a sentence describing the RANGE of the work and a link to the list that is kept current.
+  Measured before removing: five of the six were already on /technical-reports, so the table
+  was carrying almost nothing the link does not.
+  (2) THE ERRATA PARAGRAPH WAS STALE BY TWO CASES. It named the 4 August re-attribution as
+  "the newest entry"; the log has carried Case Five (5 Aug) and Case Six (6 Aug) since. It now
+  names Case Six and says it is STILL OPEN, which is the entry most worth naming anyway.
+  Revision (2) of 2026-08-04 above is left exactly as written — it was true when written, and
+  a record is not edited to match what happened next.
+
+  REVISED 2026-08-13 (evening): the "How these pages are made" paragraph gained one sentence —
+  a link to /technical-reports/how-this-shop-runs, the methodology essay born that day, which is
+  that paragraph at full length. The paragraph stays; the essay is where it goes deeper, and
+  this page keeps only the summary, per this page's own one-copy rule.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Carlos Toledo</title>
+<meta name="description" content="Carlos Toledo — computer-assisted proof and validated numerics, including verification of machine-generated mathematics. Every number produced by a program published beside it, every check shown to fail on a broken copy, errors recorded in a dated public log.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow,max-snippet:-1">
+<link rel="canonical" href="https://www.carlostoledo.co/about">
+<meta property="og:url" content="https://www.carlostoledo.co/about">
+<meta property="og:title" content="About — Carlos Toledo">
+<meta property="og:description" content="Computer-assisted proof and validated numerics. Every number is produced by a program published beside it; every check has been shown to fail on a deliberately broken copy of it; errors are recorded, with dates, in a public log.">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="https://www.carlostoledo.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.carlostoledo.co/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfilePage","url":"https://www.carlostoledo.co/about","name":"About — Carlos Toledo","mainEntity":{"@type":"Person","name":"Carlos Toledo","email":"carlos@carlostoledo.co","url":"https://www.carlostoledo.co/about","address":{"@type":"PostalAddress","addressCountry":"BR"},"knowsAbout":["computer-assisted proof","validated numerics","interval arithmetic","exact rational arithmetic","radii-polynomial method","Krawczyk operator","mean-field games","Wardrop equilibrium","price formation","verification of machine-generated mathematics"]}}
+</script>
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13.5px;margin:8px 0 4px}
+td,th{padding:9px 12px 9px 0;border-bottom:1px solid var(--grid);vertical-align:top;line-height:1.5;text-align:left}
+th{font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+td.mono{font-family:var(--data);font-size:12.5px}
+td.what{width:34%}
+
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+/* the engagement record — added 2026-08-05; hairline rows, no bullets, house type scale */
+section ul{list-style:none;margin:4px 0 12px;padding:0;border-top:1px solid var(--grid)}
+section ul li{padding:11px 0;border-bottom:1px solid var(--grid);font-size:13.5px;
+  line-height:1.6;color:var(--ink-soft);max-width:80ch}
+section ul li b{color:var(--ink);font-weight:600}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
+     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+    </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">About &middot; Carlos Toledo &middot; Brazil</div>
+  <h1>I work on computer-assisted proof and validated numerics.</h1>
+  <p class="lede">The job is narrow, and it is not solving: take a numerical claim someone already
+    believes &mdash; from a language model, from a published paper, or from my own draft &mdash; and
+    either produce an <b>interval that provably contains the true answer</b>, together with the
+    program that produced it, or report that the method did not reach one and stop there. Much of
+    the recent work is <b>verification of machine-generated mathematics</b>: AI-claimed results
+    re-checked in independent arithmetic, each check first shown to fail on a deliberately broken
+    copy of itself. The tools are interval arithmetic with outward rounding, exact rational
+    arithmetic, and contraction arguments of the radii-polynomial and Krawczyk kind. I work alone,
+    from Brazil, and I travel when there is a reason to.</p>
+
+  <section>
+    <h2>What the work is</h2>
+    <p>The notes on this site are the work, not a summary of it. Each states what it certifies, what
+      it assumes, and what it will not claim; each ships the program that produced its numbers, and
+      several run the argument live in the page. Where the method fails, the note says which step
+      failed rather than loosening a tolerance until something turns green. The tempo is part of
+      the method: when a frontier paper ships a machine-checkable claim, an independent
+      re-verification here typically exists within days &mdash; the Maxwell counterexample paper
+      appeared on 29 July 2026 and its 24 equilibria were certified here on 4 August. Six of the
+      notes on the <a href="/technical-reports">reports page</a> run from independent
+      re-verification of AI-claimed results to certified reproductions of published papers to
+      measuring whether a benchmark&rsquo;s own tests can tell a right answer from a wrong one.
+      <b>That list lives on the <a href="/technical-reports">reports page</a> and is kept current
+      there</b> &mdash; a second copy here would be a second thing to update, and the one that
+      went stale would be this one.</p>
+  </section>
+
+  <section>
+    <h2>The standard these are held to</h2>
+    <p><b>Every number is produced by a program published beside it.</b> Not a description of a
+      program, and not the numbers a program once printed: the file itself, downloadable, on the page
+      that quotes it. Most run in plain Node.js or the Python standard library with no dependencies
+      and no licence to buy, which also means the next person to extend one does not need my
+      permission or my machine.</p>
+    <p><b>Every check has been shown to fail on a deliberately broken copy of that program.</b> A
+      check that has never gone red is decorative &mdash; it is consistent with the code being right,
+      and equally consistent with the check testing nothing. So each one is run against a mutated
+      kernel first and has to reject it, and the count of falsifiers that fired is printed with the
+      result.</p>
+    <p><b>Errors are recorded, with their date, in a public log</b> &mdash; the
+      <a href="/defects">errata</a> &mdash; and never quietly fixed. Nearly all of the entries there
+      were found by me, after publishing, which is the part that makes the log worth reading: a
+      fabricated error floor that had to be retracted twice, and a modulus written into a kernel from
+      memory as a prime that turned out to be composite, so a fingerprint check went on printing
+      agreement while silently ceasing to be evidence. Neither was caught by a reader. <b>The newest
+      entry is dated 6 August 2026 and it is still open:</b> a fix that was real, and that an
+      unrelated improvement later un-did without anything going red &mdash; found only by running
+      the instrument by hand, because no gate runs it. It stays on the log, open, until it
+      closes.</p>
+    <p>None of that makes the work correct. It makes it <b>checkable</b>, which is a weaker property
+      and a more useful one: you can disagree with a result here by running something, and the
+      disagreement is then about the mathematics rather than about who is more credible.</p>
+  </section>
+
+  <section>
+    <h2>Where the work has gone, and what has come back</h2>
+    <p>Everything on this site is self-published and self-checked, so the honest question is what
+      happens when it leaves. The complete record, with the status words meant exactly:</p>
+    <ul>
+      <li><b>Filed, 5 August 2026 &mdash; no reply yet.</b> An independent confirmation of the
+        computational appendix of a claimed proof of Erd&#337;s&nbsp;#1038, filed as
+        <a href="https://github.com/Pengbinghui/pipeline-math/issues/5">an issue on the claiming
+        authors&rsquo; own repository</a>: all 30 printed decimals of the extremal constant
+        verified by a different route (Krawczyk rather than bisection), with a note that the
+        30th digit is a rounding rather than an expansion.</li>
+      <li><b>Posted, 4 August 2026 &mdash; no reply yet.</b> An evaluation note on
+        Anthropic&rsquo;s public automated-alignment sandbox, posted as
+        <a href="https://github.com/safety-research/automated-w2s-research/issues/2">an issue on
+        the repository whose authors invited stress-testing</a>.</li>
+      <li><b>Submitted, awaiting moderation.</b> A note on Erd&#337;s&nbsp;#290 to
+        erdosproblems.com.</li>
+      <li><b>The code is public</b> at
+        <a href="https://github.com/carlostoledo1891/mfg-lab">github.com/carlostoledo1891/mfg-lab</a>
+        &mdash; this site and the programs it ships, including the
+        <a href="https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert"><code>eqcert</code></a>
+        interval and certificate library the reports are built on.</li>
+    </ul>
+    <p><b>Filed is not accepted; posted is not replied.</b> No result on this site has yet been
+      reproduced by anyone else, and none has been peer-reviewed. That is the plain state of it,
+      and it is why the pages ship their own falsifiers rather than asking for trust.</p>
+  </section>
+
+  <section>
+    <h2>What this page does not contain</h2>
+    <p>No employment history, no degrees, no years-of-experience figure, no self-rated skills. Each
+      of those is a claim a reader would have to take on trust, and putting them beside claims that
+      can be re-run devalues the second kind. If a process needs a conventional CV, ask and you will
+      get one.</p>
+    <p><b>How these pages are made, since it bears on how fast they appear.</b> The mathematics,
+      the design of every check and the decision about what may be claimed are mine. The writing
+      and much of the implementation are done with AI assistance, under the discipline this site
+      describes: a gate counts only once it has been shown to go red on a broken copy, a
+      preregistration is committed before the instrument that tests it exists, and a hostile read
+      precedes publication. The output rate is a consequence of that arrangement, and saying so
+      seems better than letting a reader wonder. The full statement of the method &mdash; the
+      checks, the agents, and the failure modes it guards against &mdash; is a page of its own:
+      <a href="/technical-reports/how-this-shop-runs">how this shop runs</a>.</p>
+    <div class="caveat">
+      <p>These notes are self-published and <b>not peer-reviewed</b>. The code and the checks on it
+        share one author, so they rule out slips but not a shared misconception; an independent
+        recomputation of any result here &mdash; in Sage, in Magma, in whatever you already trust
+        &mdash; is the thing this site most wants, and a refutation gets published like any other
+        result, with the name of whoever found it if they want it there.</p>
+    </div>
+  </section>
+
+<!-- Working-with-me section HIDDEN 2026-08-13 by owner instruction ("hidden for now").
+     The text is kept here for the reveal:
+  <section>
+    <h2>Working with me</h2>
+    <p><b>I am open to roles, stated plainly:</b> research engineer, evaluations scientist, or
+      verification lead &mdash; anywhere the job is building checks that cannot be gamed and
+      saying honestly what they do and do not establish. Remote, from Florianópolis, Santa Catarina, Brazil
+      (UTC&minus;3), with working overlap for US and European hours; contract or full-time.
+      Everything on this site is the portfolio: the harnesses, the falsifiers, the errata log,
+      and the rate at which they appeared &mdash; dates are on every page, and the discipline
+      that produced them is described two sections above.</p>
+    <p>Hiring conversations get priority over the reply cadence described below. If your process
+      needs a conventional CV, ask and it arrives promptly. And some of this work is done for
+      clients &mdash; mostly where a number that is quietly wrong is expensive to be wrong about
+      &mdash; at the same address.</p>
+  </section>
+-->
+
+  <section>
+    <h2>Contact</h2>
+    <p>One address, <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>, for
+      everything: corrections, questions about a step, collaboration. There is no form &mdash; there
+      is no backend behind one &mdash; and no queue: replies come from one person between other work
+      and are often slow. A message that names the page and the one step it doubts can be answered
+      properly; a general introduction usually cannot.</p>
+
+  </section>
+
+  <div class="foot">site/about.html &middot; rewritten 2026-08-03, revised 2026-08-04 and 2026-08-13 &middot;
+    merged with the former contact page &middot; no external fonts, scripts, stylesheets or
+    images; the one script is same-origin, cookieless page counting &middot; text
+    CC&#8209;BY 4.0</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/defects">errata log</a>, never quietly fixed.</p>
+    </div>
+    <nav class="sitemap" aria-label="Site map">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+      <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+    </nav>
+    <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+      programs MIT</p>
+  </div>
+</footer>
+
+</body>
+</html>

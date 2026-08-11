@@ -1,0 +1,1362 @@
+{
+  "summary": {
+    "candidates": 164,
+    "outcomes": {
+      "FALSE-PASS": 24,
+      "CAUGHT": 139,
+      "UNPROVEN": 1
+    },
+    "proven_wrong": 163,
+    "false_passes": 24,
+    "false_pass_rate": 0.1472,
+    "false_pass_task_ids": [
+      "HumanEval/0",
+      "HumanEval/7",
+      "HumanEval/9",
+      "HumanEval/13",
+      "HumanEval/19",
+      "HumanEval/20",
+      "HumanEval/21",
+      "HumanEval/22",
+      "HumanEval/23",
+      "HumanEval/28",
+      "HumanEval/29",
+      "HumanEval/31",
+      "HumanEval/35",
+      "HumanEval/40",
+      "HumanEval/48",
+      "HumanEval/53",
+      "HumanEval/58",
+      "HumanEval/59",
+      "HumanEval/86",
+      "HumanEval/88",
+      "HumanEval/95",
+      "HumanEval/109",
+      "HumanEval/124",
+      "HumanEval/152"
+    ],
+    "crosstab_pathA_disposition_vs_outcome": {
+      "SENSITIVE / FALSE-PASS": 18,
+      "SENSITIVE / CAUGHT": 132,
+      "OUT-OF-SCOPE / CAUGHT": 5,
+      "OUT-OF-SCOPE / FALSE-PASS": 5,
+      "INSENSITIVE / FALSE-PASS": 1,
+      "INSENSITIVE / CAUGHT": 2
+    },
+    "what_this_measures": "Of the candidates PROVEN wrong by an independent witness, the fraction whose own test suite accepted them anyway. A model that produced one of these answers would be scored as passing a problem it got wrong.",
+    "why_unproven_is_discarded": "A candidate whose witness does not separate it from the gold solution has not been shown to be wrong. Counting it as a false pass would manufacture the very result this measurement exists to test for, so it is excluded from both denominators and reported separately.",
+    "limits": "Candidates were written by a model asked to introduce a subtle bug; they are realistic but not a random sample of real model errors. One candidate per item. The witness proves wrongness at a single input, which is sufficient for \"wrong\" and says nothing about how wrong."
+  },
+  "records": {
+    "HumanEval/0": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "has_close_elements([1.0, 2.0], 1.0)",
+      "bug": "uses <= instead of strict <, so a distance exactly equal to the threshold is wrongly reported as close"
+    },
+    "HumanEval/1": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['()', '()']",
+      "candidate_at_witness": "['()', '()()']",
+      "witness": "separate_paren_groups('() ()')",
+      "bug": "the accumulator `current` is never cleared after a group closes, so each group keeps the text of all previous groups"
+    },
+    "HumanEval/2": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0.23399999999999999",
+      "candidate_at_witness": "0.23",
+      "witness": "truncate_number(1.234)",
+      "bug": "rounds the decimal part to two places, discarding the rest of the fractional digits"
+    },
+    "HumanEval/3": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "below_zero([1, -1])",
+      "bug": "uses <= 0 instead of < 0, so a balance of exactly zero is reported as below zero"
+    },
+    "HumanEval/4": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "1.0",
+      "candidate_at_witness": "1.3333333333333333",
+      "witness": "mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])",
+      "bug": "divides the summed deviations by n-1 (sample convention) instead of n"
+    },
+    "HumanEval/5": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 4, 2]",
+      "candidate_at_witness": "[1, 4, 2, 4]",
+      "witness": "intersperse([1, 2], 4)",
+      "bug": "the guard should be i < len(numbers) - 1, so a delimiter is also appended after the last element"
+    },
+    "HumanEval/6": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1]",
+      "candidate_at_witness": "[0]",
+      "witness": "parse_nested_parens('()')",
+      "bug": "records the depth before incrementing on '(', so every group's reported nesting level is one too low"
+    },
+    "HumanEval/7": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[]",
+      "candidate_at_witness": "['ABC']",
+      "witness": "filter_by_substring(['ABC'], 'a')",
+      "bug": "matches case-insensitively, so strings that only contain the substring in a different case are wrongly kept"
+    },
+    "HumanEval/8": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "(0, 1)",
+      "candidate_at_witness": "(0, 0)",
+      "witness": "sum_product([])",
+      "bug": "the empty-list special case returns product 0 instead of the empty product 1"
+    },
+    "HumanEval/9": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[-1, -1]",
+      "candidate_at_witness": "[0, 0]",
+      "witness": "rolling_max([-1, -2])",
+      "bug": "seeds the running maximum with 0 instead of the first element, so all-negative inputs report 0"
+    },
+    "HumanEval/10": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'aba'",
+      "candidate_at_witness": "'ababa'",
+      "witness": "make_palindrome('aba')",
+      "bug": "the suffix scan starts at index 1, so a string that is already a palindrome is never detected and gets needlessly extended"
+    },
+    "HumanEval/11": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'000'",
+      "candidate_at_witness": "'0'",
+      "witness": "string_xor('010', '010')",
+      "bug": "strips leading zeros from the result, so the returned string is shorter than the inputs when the high bits cancel"
+    },
+    "HumanEval/12": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'a'",
+      "candidate_at_witness": "'b'",
+      "witness": "longest(['a', 'b'])",
+      "bug": "uses >= so ties keep the last string of maximal length instead of the first"
+    },
+    "HumanEval/13": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "4",
+      "candidate_at_witness": "2",
+      "witness": "greatest_common_divisor(4, 8)",
+      "bug": "the divisor search range excludes min(a, b) itself, so when one number divides the other the answer is too small"
+    },
+    "HumanEval/14": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[]",
+      "candidate_at_witness": "['']",
+      "witness": "all_prefixes('')",
+      "bug": "returns [''] for the empty string instead of an empty list"
+    },
+    "HumanEval/15": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'0'",
+      "candidate_at_witness": "' 0'",
+      "witness": "string_sequence(0)",
+      "bug": "manually appends the final number, producing a leading space when n is 0 and the joined prefix is empty"
+    },
+    "HumanEval/16": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "3",
+      "candidate_at_witness": "2",
+      "witness": "count_distinct_characters('a1b')",
+      "bug": "filters to alphabetic characters only, so digits, spaces and punctuation are not counted as distinct characters"
+    },
+    "HumanEval/17": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[]",
+      "candidate_at_witness": "[0]",
+      "witness": "parse_music('')",
+      "bug": "splits on a literal single space without dropping empty tokens, so an empty input yields [0] instead of []"
+    },
+    "HumanEval/18": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "3",
+      "candidate_at_witness": "2",
+      "witness": "how_many_times('aaaa', 'aa')",
+      "bug": "str.count only counts non-overlapping occurrences, but overlapping ones must be counted"
+    },
+    "HumanEval/19": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "'six seven'",
+      "candidate_at_witness": "'seven six'",
+      "witness": "sort_numbers('six seven')",
+      "bug": "'six' and 'seven' are transposed in the word list, so they sort into each other's positions"
+    },
+    "HumanEval/20": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "(1.0, 2.0)",
+      "candidate_at_witness": "(3.0, 4.0)",
+      "witness": "find_closest_elements([1.0, 2.0, 3.0, 4.0])",
+      "bug": "uses <= when updating the best pair, so ties are broken toward the last equally-close pair instead of the first"
+    },
+    "HumanEval/21": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[0.0, 0.3333333333333333, 1.0]",
+      "candidate_at_witness": "[0.0, 0.33, 1.0]",
+      "witness": "rescale_to_unit([1.0, 2.0, 4.0])",
+      "bug": "rounds each rescaled value to two decimals, losing precision on values that are not exact hundredths"
+    },
+    "HumanEval/22": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[True]",
+      "candidate_at_witness": "[]",
+      "witness": "filter_integers([True])",
+      "bug": "uses type(v) is int instead of isinstance, so booleans (which are ints) are dropped"
+    },
+    "HumanEval/23": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "3",
+      "candidate_at_witness": "1",
+      "witness": "strlen(' a ')",
+      "bug": "strips surrounding whitespace before counting, so leading and trailing spaces are not counted"
+    },
+    "HumanEval/24": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "5",
+      "candidate_at_witness": "2",
+      "witness": "largest_divisor(10)",
+      "bug": "the descending search starts at n // 2 - 1, skipping n // 2 itself, so even numbers report a divisor that is too small"
+    },
+    "HumanEval/25": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[2, 2]",
+      "candidate_at_witness": "[4]",
+      "witness": "factorize(4)",
+      "bug": "the trial-division loop condition is strict (divisor * divisor < n), so a remaining perfect square of a prime is emitted whole"
+    },
+    "HumanEval/26": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 3]",
+      "candidate_at_witness": "[1, 2, 3]",
+      "witness": "remove_duplicates([1, 2, 2, 3])",
+      "bug": "keeps the first occurrence of a repeated value instead of removing every occurrence of values that appear more than once"
+    },
+    "HumanEval/27": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'A1'",
+      "candidate_at_witness": "'A'",
+      "witness": "flip_case('a1')",
+      "bug": "non-alphabetic characters are dropped instead of passed through unchanged"
+    },
+    "HumanEval/28": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "' a b'",
+      "candidate_at_witness": "'ab'",
+      "witness": "concatenate([' a ', 'b'])",
+      "bug": "strips whitespace from each string before joining, altering the concatenation"
+    },
+    "HumanEval/29": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[]",
+      "candidate_at_witness": "['bca']",
+      "witness": "filter_by_prefix(['bca'], 'a')",
+      "bug": "tests for the prefix anywhere in the string instead of only at position 0"
+    },
+    "HumanEval/30": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1]",
+      "candidate_at_witness": "[0, 1]",
+      "witness": "get_positive([0, 1])",
+      "bug": "uses >= 0, so zero is included among the positive numbers"
+    },
+    "HumanEval/31": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "is_prime(9)",
+      "bug": "the trial-division range stops before int(sqrt(n)), so squares of odd primes are reported prime"
+    },
+    "HumanEval/32": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "9.999999999941792",
+      "candidate_at_witness": "0.9999999999417923",
+      "witness": "find_zero([-10, 1])",
+      "bug": "never widens the initial [-1, 1] bracket until it contains a sign change, so roots outside that interval are not found"
+    },
+    "HumanEval/33": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[2, 6, 3, 4, 8, 9, 5]",
+      "candidate_at_witness": "[5, 6, 3, 2, 8, 9, 4]",
+      "witness": "sort_third([5, 6, 3, 4, 8, 9, 2])",
+      "bug": "excludes index 0 from the set of indices divisible by three, so the first element never takes part in the sort"
+    },
+    "HumanEval/34": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 2]",
+      "candidate_at_witness": "[1]",
+      "witness": "unique([1, 2])",
+      "bug": "the adjacent-comparison loop stops one element early and never emits the last distinct value"
+    },
+    "HumanEval/35": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "-2",
+      "candidate_at_witness": "0",
+      "witness": "max_element([-5, -2])",
+      "bug": "initialises the maximum to 0 instead of the first element, so an all-negative list returns 0"
+    },
+    "HumanEval/36": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0",
+      "candidate_at_witness": "2",
+      "witness": "fizz_buzz(77)",
+      "bug": "iterates to n inclusive instead of over integers strictly less than n"
+    },
+    "HumanEval/37": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 2, 3]",
+      "candidate_at_witness": "[1, 2, 1]",
+      "witness": "sort_even([3, 2, 1])",
+      "bug": "the write-back range stops at len(l) - 1, so the final even index of an odd-length list keeps its original value"
+    },
+    "HumanEval/38": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'abc'",
+      "candidate_at_witness": "'cab'",
+      "witness": "decode_cyclic('bca')",
+      "bug": "applies the same forward rotation as the encoder instead of the inverse rotation"
+    },
+    "HumanEval/39": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "28657",
+      "candidate_at_witness": "4181",
+      "witness": "prime_fib(8)",
+      "bug": "the primality test only trial-divides by primes up to 31, so larger composites such as 4181 = 37 * 113 are counted as prime"
+    },
+    "HumanEval/40": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "triples_sum_to_zero([1, -2])",
+      "bug": "the middle loop starts at i rather than i + 1, so one element can be used twice in the triple"
+    },
+    "HumanEval/41": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "9",
+      "candidate_at_witness": "6",
+      "witness": "car_race_collision(3)",
+      "bug": "counts n-1 opposing cars per car instead of n, returning n*(n-1) rather than n**2"
+    },
+    "HumanEval/42": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[2, 3, 4]",
+      "candidate_at_witness": "[1, 3, 4]",
+      "witness": "incr_list([1, 2, 3])",
+      "bug": "the loop starts at index 1, so the first element is never incremented"
+    },
+    "HumanEval/43": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "pairs_sum_to_zero([1, 3, 5, 0])",
+      "bug": "the inner loop starts at i instead of i+1, so a single 0 is paired with itself and reported as a valid pair"
+    },
+    "HumanEval/44": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'10'",
+      "candidate_at_witness": "'3'",
+      "witness": "change_base(3, 3)",
+      "bug": "loop condition is strict (x > base) instead of x >= base, so a value equal to a power of the base emits the base itself as a single digit"
+    },
+    "HumanEval/45": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "7.5",
+      "candidate_at_witness": "7",
+      "witness": "triangle_area(5, 3)",
+      "bug": "uses floor division, so any triangle with an odd base*height product loses the .5"
+    },
+    "HumanEval/46": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "4",
+      "candidate_at_witness": "2",
+      "witness": "fib4(5)",
+      "bug": "the DP loop stops at n-1 (range(4, n)) instead of n+1, so it returns fib4(n-1)"
+    },
+    "HumanEval/47": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "2.5",
+      "candidate_at_witness": "2",
+      "witness": "median([1, 2, 3, 4])",
+      "bug": "averages the two middle elements with floor division, truncating the .5 for even-length lists"
+    },
+    "HumanEval/48": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "is_palindrome('Aba')",
+      "bug": "lowercases the text first, so it treats case-differing strings as palindromes"
+    },
+    "HumanEval/49": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "3",
+      "candidate_at_witness": "4",
+      "witness": "modp(3, 5)",
+      "bug": "the loop runs n-1 times instead of n, computing 2^(n-1) mod p for n >= 1"
+    },
+    "HumanEval/50": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'v'",
+      "candidate_at_witness": "'\\\\'",
+      "witness": "decode_shift('a')",
+      "bug": "subtracts 5 without wrapping modulo 26, so characters in 'a'..'e' decode past the start of the alphabet"
+    },
+    "HumanEval/51": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'B'",
+      "candidate_at_witness": "'BAA'",
+      "witness": "remove_vowels('aaBAA')",
+      "bug": "only strips lowercase vowels, leaving uppercase A/E/I/O/U in the output"
+    },
+    "HumanEval/52": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "below_threshold([1, 2, 4, 10], 10)",
+      "bug": "rejects only values strictly greater than t, so a value exactly equal to the threshold counts as below it"
+    },
+    "HumanEval/53": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "-1",
+      "candidate_at_witness": "2",
+      "witness": "add(2, -3)",
+      "bug": "increments x by one y times, so a negative y produces an empty range and x is returned unchanged"
+    },
+    "HumanEval/54": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "same_chars('abcd', 'dddddddabc')",
+      "bug": "compares sorted character sequences, so it demands equal multiplicities instead of equal character sets"
+    },
+    "HumanEval/55": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "21",
+      "candidate_at_witness": "34",
+      "witness": "fib(8)",
+      "bug": "returns the lookahead value b instead of a, so it yields fib(n+1)"
+    },
+    "HumanEval/56": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "correct_bracketing('><')",
+      "bug": "only checks the final balance and never rejects a negative running depth, so a closing bracket before its opener passes"
+    },
+    "HumanEval/57": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "monotonic([1, 1, 2])",
+      "bug": "uses strict comparisons, so a list with equal adjacent elements is reported as non-monotonic"
+    },
+    "HumanEval/58": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[1, 2]",
+      "candidate_at_witness": "[1, 1, 2]",
+      "witness": "common([1, 1, 2], [1, 2])",
+      "bug": "never de-duplicates, so an element repeated in l1 appears multiple times"
+    },
+    "HumanEval/59": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "2",
+      "candidate_at_witness": "4",
+      "witness": "largest_prime_factor(4)",
+      "bug": "the trial-division bound is strict (factor*factor < n), so a perfect square of a prime is never divided and the square itself is returned"
+    },
+    "HumanEval/60": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "15",
+      "candidate_at_witness": "10",
+      "witness": "sum_to_n(5)",
+      "bug": "the range excludes n itself, so the final term is never added"
+    },
+    "HumanEval/61": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "correct_bracketing('(')",
+      "bug": "only rejects a negative running depth and never checks that the depth returns to zero, so unclosed openers pass"
+    },
+    "HumanEval/62": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[2, 6]",
+      "candidate_at_witness": "[0, 2, 6]",
+      "witness": "derivative([1, 2, 3])",
+      "bug": "keeps the index-0 term, prefixing a spurious leading 0 and shifting every coefficient one place too high"
+    },
+    "HumanEval/63": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "4",
+      "candidate_at_witness": "2",
+      "witness": "fibfib(5)",
+      "bug": "the loop runs one iteration short (range(3, n) instead of range(3, n+1)), returning fibfib(n-1)"
+    },
+    "HumanEval/64": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "3",
+      "candidate_at_witness": "2",
+      "witness": "vowels_count('ACEDY')",
+      "bug": "the trailing-y check is case sensitive, so an uppercase 'Y' at the end is not counted"
+    },
+    "HumanEval/65": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'312'",
+      "candidate_at_witness": "'231'",
+      "witness": "circular_shift(123, 1)",
+      "bug": "rotates the digits left by shift instead of right"
+    },
+    "HumanEval/66": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "65",
+      "candidate_at_witness": "114",
+      "witness": "digitSum('aA1')",
+      "bug": "treats every non-lowercase character as uppercase, so digits, spaces and punctuation are summed too"
+    },
+    "HumanEval/67": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "5",
+      "candidate_at_witness": "14",
+      "witness": "fruit_distribution('12 apples and 3 oranges', 20)",
+      "bug": "sums individual digit characters rather than parsing whole numbers, so any multi-digit count is wrong"
+    },
+    "HumanEval/68": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[0, 0]",
+      "candidate_at_witness": "[0, 1]",
+      "witness": "pluck([0, 0])",
+      "bug": "uses <= when comparing candidates, so ties are broken toward the largest index instead of the smallest"
+    },
+    "HumanEval/69": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "1",
+      "candidate_at_witness": "-1",
+      "witness": "search([1])",
+      "bug": "requires frequency strictly greater than the value instead of greater than or equal"
+    },
+    "HumanEval/70": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 3, 2]",
+      "candidate_at_witness": "[1, 3]",
+      "witness": "strange_sort_list([1, 2, 3])",
+      "bug": "the two-pointer loop stops at lo < hi, dropping the middle element of any odd-length list"
+    },
+    "HumanEval/71": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "-1",
+      "candidate_at_witness": "0.0",
+      "witness": "triangle_area(1, 2, 3)",
+      "bug": "the triangle inequality is checked with >= instead of >, so a degenerate triple is accepted and returns area 0.0"
+    },
+    "HumanEval/72": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "will_it_fly([3], 3)",
+      "bug": "uses a strict < on the weight, so a sum exactly equal to the maximum weight is rejected"
+    },
+    "HumanEval/73": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "2",
+      "candidate_at_witness": "3",
+      "witness": "smallest_change([1, 2, 3, 4])",
+      "bug": "the loop bound has a spurious +1, so for even-length arrays one mismatched pair is counted twice"
+    },
+    "HumanEval/74": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['ab']",
+      "candidate_at_witness": "['cd']",
+      "witness": "total_match(['ab'], ['cd'])",
+      "bug": "the tie is broken toward lst2, but equal totals should return the first list"
+    },
+    "HumanEval/75": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "is_multiply_prime(12)",
+      "bug": "the nested indices force three distinct primes, so products with a repeated prime factor are rejected"
+    },
+    "HumanEval/76": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "is_simple_power(1, 3)",
+      "bug": "starts the search at exponent 1 rather than 0, so x == 1 is never recognised as n**0"
+    },
+    "HumanEval/77": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "iscube(216)",
+      "bug": "truncates the floating-point cube root instead of rounding it, so values whose root computes as e.g. 5.999999 are missed"
+    },
+    "HumanEval/78": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0",
+      "candidate_at_witness": "1",
+      "witness": "hex_key('1')",
+      "bug": "the primality helper lacks the value > 1 guard, so the digits 0 and 1 are counted as prime"
+    },
+    "HumanEval/79": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'db0db'",
+      "candidate_at_witness": "'dbdb'",
+      "witness": "decimal_to_binary(0)",
+      "bug": "the loop never runs for 0, so zero produces an empty binary body"
+    },
+    "HumanEval/80": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "is_happy('aaa')",
+      "bug": "the window loop bound is len(s)-3 instead of len(s)-2, so the last triple is never inspected"
+    },
+    "HumanEval/81": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['A-']",
+      "candidate_at_witness": "['A']",
+      "witness": "numerical_letter_grade([3.7])",
+      "bug": "every cutoff is compared with >= instead of >, so a GPA exactly on a boundary gets the higher letter grade"
+    },
+    "HumanEval/82": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "prime_length('a')",
+      "bug": "length 1 falls through the empty divisor loop and is reported as prime"
+    },
+    "HumanEval/83": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "18",
+      "candidate_at_witness": "19",
+      "witness": "starts_one_ends(2)",
+      "bug": "inclusion-exclusion is incomplete: the numbers that both start and end with 1 are counted twice"
+    },
+    "HumanEval/84": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'110'",
+      "candidate_at_witness": "'0b110'",
+      "witness": "solve(150)",
+      "bug": "returns bin() output including the '0b' prefix instead of the bare binary string"
+    },
+    "HumanEval/85": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "10",
+      "candidate_at_witness": "2",
+      "witness": "add([4, 2, 6, 8])",
+      "bug": "the range stops at len(lst)-1, so the final odd index of an even-length list is skipped"
+    },
+    "HumanEval/86": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "'a  b'",
+      "candidate_at_witness": "'a b'",
+      "witness": "anti_shuffle('a  b')",
+      "bug": "uses split() rather than split(' '), collapsing runs of blank spaces"
+    },
+    "HumanEval/87": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[(0, 0), (1, 0)]",
+      "candidate_at_witness": "[(1, 0), (0, 0)]",
+      "witness": "get_row([[1], [1]], 1)",
+      "bug": "reverse=True sorts the rows descending too, when only the columns should be descending"
+    },
+    "HumanEval/88": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[1, 2, 3]",
+      "candidate_at_witness": "[3, 2, 1]",
+      "witness": "sort_array([3, 1, 2])",
+      "bug": "the parity test is taken on the already-sorted copy, so it uses min+max instead of the original first+last elements"
+    },
+    "HumanEval/89": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'d'",
+      "candidate_at_witness": "'~'",
+      "witness": "encrypt('z')",
+      "bug": "shifts the raw code point without wrapping modulo 26, so letters near the end of the alphabet leave the alphabet"
+    },
+    "HumanEval/90": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "2",
+      "candidate_at_witness": "1",
+      "witness": "next_smallest([1, 1, 2])",
+      "bug": "does not de-duplicate, so a repeated minimum is returned as the second smallest"
+    },
+    "HumanEval/91": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0",
+      "candidate_at_witness": "1",
+      "witness": "is_bored('It is fine.')",
+      "bug": "tests startswith('I') on the sentence rather than checking that the first word is exactly 'I', so words like 'It' count"
+    },
+    "HumanEval/92": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "any_int(2.0, 1, 1)",
+      "bug": "accepts floats with integral value (e.g. 2.0) as integers instead of requiring the int type"
+    },
+    "HumanEval/93": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'c'",
+      "candidate_at_witness": "'a'",
+      "witness": "encode('A')",
+      "bug": "the vowel test is case-sensitive on the original character, so uppercase vowels are only case-swapped and never shifted"
+    },
+    "HumanEval/94": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "2",
+      "candidate_at_witness": "7",
+      "witness": "skjkasdkd([2, 25])",
+      "bug": "the trial-division loop stops before int(sqrt(n)), so perfect squares of primes such as 25 are declared prime"
+    },
+    "HumanEval/95": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "check_dict_case({'123': 'a'})",
+      "bug": "uses k == k.lower() instead of k.islower(), so caseless keys such as '123' are treated as lower case"
+    },
+    "HumanEval/96": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[2, 3]",
+      "candidate_at_witness": "[2, 3, 5]",
+      "witness": "count_up_to(5)",
+      "bug": "iterates to n inclusive, so n itself is included when it is prime instead of only primes strictly less than n"
+    },
+    "HumanEval/97": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "16",
+      "candidate_at_witness": "6",
+      "witness": "multiply(148, 412)",
+      "bug": "operator precedence: the second % 10 applies to the whole product, so the result is the product's unit digit rather than the product of the unit digits"
+    },
+    "HumanEval/98": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "2",
+      "candidate_at_witness": "1",
+      "witness": "count_upper('EbE')",
+      "bug": "the range stops at len(s)-1, so the last even index of an odd-length string is never examined"
+    },
+    "HumanEval/99": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "-15",
+      "candidate_at_witness": "-14",
+      "witness": "closest_integer('-14.5')",
+      "bug": "ties are always rounded up with ceil, which is toward zero rather than away from zero for negative values"
+    },
+    "HumanEval/100": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[4, 6, 8, 10]",
+      "candidate_at_witness": "[4, 6, 8]",
+      "witness": "make_a_pile(4)",
+      "bug": "off-by-one in the loop bound produces n-1 levels instead of n"
+    },
+    "HumanEval/101": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['Hi', 'my']",
+      "candidate_at_witness": "['Hi', '', 'my']",
+      "witness": "words_string('Hi, my')",
+      "bug": "splits on the single-space separator instead of on whitespace runs, emitting empty strings where a comma was followed by a space"
+    },
+    "HumanEval/102": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "8",
+      "candidate_at_witness": "-1",
+      "witness": "choose_num(8, 8)",
+      "bug": "the empty-range guard uses y <= x, rejecting the valid single-point range where x == y is even"
+    },
+    "HumanEval/103": {
+      "outcome": "UNPROVEN",
+      "why": "witness did not separate candidate from gold",
+      "gold": "'0b10'",
+      "candidate": "'0b10'"
+    },
+    "HumanEval/104": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[]",
+      "candidate_at_witness": "[10]",
+      "witness": "unique_digits([10])",
+      "bug": "the even-digit set omits '0', so numbers containing a zero are wrongly kept"
+    },
+    "HumanEval/105": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['Nine']",
+      "candidate_at_witness": "[]",
+      "witness": "by_length([9])",
+      "bug": "the upper bound is exclusive (d < 9), so the value 9 is discarded although the range is 1..9 inclusive"
+    },
+    "HumanEval/106": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1]",
+      "candidate_at_witness": "[0]",
+      "witness": "f(1)",
+      "bug": "the triangular sum uses range(1, i), which excludes i itself"
+    },
+    "HumanEval/107": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "(1, 2)",
+      "candidate_at_witness": "(1, 1)",
+      "witness": "even_odd_palindrome(3)",
+      "bug": "range(1, n) excludes n, but the range is inclusive of n"
+    },
+    "HumanEval/108": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0",
+      "candidate_at_witness": "1",
+      "witness": "count_nums([0])",
+      "bug": "counts elements whose signed digit sum is >= 0 instead of strictly > 0, so zero is counted"
+    },
+    "HumanEval/109": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "move_one_ball([2, 3, 1, 4])",
+      "bug": "only linear adjacent pairs are checked; the wrap-around pair (last vs first) is omitted, so a single descent is accepted even when the array is not a rotation of the sorted array"
+    },
+    "HumanEval/110": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'YES'",
+      "candidate_at_witness": "'NO'",
+      "witness": "exchange([1, 2], [2, 3])",
+      "bug": "uses a strict < comparison, so the exactly-enough case (odds equal to available evens) is refused"
+    },
+    "HumanEval/111": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "{}",
+      "candidate_at_witness": "{'': 1}",
+      "witness": "histogram('')",
+      "bug": "split(' ') on an empty string yields [''], so the empty string is counted as a letter instead of returning an empty dict"
+    },
+    "HumanEval/112": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "('cdedc', True)",
+      "candidate_at_witness": "('cdedc', False)",
+      "witness": "reverse_delete('abcdedcba', 'ab')",
+      "bug": "the half-string palindrome comparison does not skip the middle character, so every odd-length palindrome is reported as not a palindrome"
+    },
+    "HumanEval/113": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['the number of odd elements 2n the str2ng 2 of the 2nput.']",
+      "candidate_at_witness": "['the number of odd elements 1n the str1ng 1 of the 1nput.']",
+      "witness": "odd_count(['13'])",
+      "bug": "the counting loop stops one character early, so the last digit of each string is never inspected"
+    },
+    "HumanEval/114": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "1",
+      "candidate_at_witness": "0",
+      "witness": "minSubArraySum([1, 2])",
+      "bug": "the running best is seeded with 0, which corresponds to the empty sub-array and wins whenever every sub-array sum is positive"
+    },
+    "HumanEval/115": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "2",
+      "candidate_at_witness": "1",
+      "witness": "max_fill([[1, 1, 1]], 2)",
+      "bug": "uses floor division instead of ceiling, dropping the final partial bucket of each well"
+    },
+    "HumanEval/116": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 2]",
+      "candidate_at_witness": "[2, 1]",
+      "witness": "sort_array([1, 2])",
+      "bug": "ties on the popcount are broken by descending decimal value instead of ascending"
+    },
+    "HumanEval/117": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['Apple']",
+      "candidate_at_witness": "[]",
+      "witness": "select_words('Apple', 3)",
+      "bug": "the vowel test is case-sensitive, so an uppercase vowel is counted as a consonant"
+    },
+    "HumanEval/118": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'i'",
+      "candidate_at_witness": "'e'",
+      "witness": "get_closest_vowel('peril')",
+      "bug": "scans left to right and returns the leftmost qualifying vowel rather than the closest one from the right"
+    },
+    "HumanEval/119": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'No'",
+      "candidate_at_witness": "'Yes'",
+      "witness": "match_parens([')(', '()'])",
+      "bug": "the balance check never rejects a negative running balance, so a string that closes before it opens is accepted as balanced"
+    },
+    "HumanEval/120": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[]",
+      "candidate_at_witness": "[1, 2, 3]",
+      "witness": "maximum([1, 2, 3], 0)",
+      "bug": "for k == 0 the slice [-0:] is the whole list, so the entire array is returned instead of an empty list"
+    },
+    "HumanEval/121": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "12",
+      "candidate_at_witness": "1",
+      "witness": "solution([5, 8, 7, 1])",
+      "bug": "treats positions as 1-based, so it sums the odd values at odd indices instead of at even indices"
+    },
+    "HumanEval/122": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "1",
+      "candidate_at_witness": "3",
+      "witness": "add_elements([1, 2], 1)",
+      "bug": "slices arr[:k+1], taking one element more than the first k"
+    },
+    "HumanEval/123": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 5]",
+      "candidate_at_witness": "[5]",
+      "witness": "get_odd_collatz(5)",
+      "bug": "the loop stops before processing the terminal 1, so 1 is never added to the result"
+    },
+    "HumanEval/124": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "valid_date('02-29-2024')",
+      "bug": "February is capped at 28 days instead of the 29 the spec requires"
+    },
+    "HumanEval/125": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['Hello,', 'world!']",
+      "candidate_at_witness": "['Hello', ' world!']",
+      "witness": "split_words('Hello, world!')",
+      "bug": "checks for commas before whitespace, so a string containing both is split on the wrong separator"
+    },
+    "HumanEval/126": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "is_sorted([1, 2, 2, 3, 3, 4])",
+      "bug": "the ascending check uses >= instead of >, so any single duplicate pair is rejected even though only 3+ copies are disallowed"
+    },
+    "HumanEval/127": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'NO'",
+      "candidate_at_witness": "'YES'",
+      "witness": "intersection((1, 3), (2, 4))",
+      "bug": "counts the number of integer points (end - start + 1) instead of the interval length (end - start)"
+    },
+    "HumanEval/128": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0",
+      "candidate_at_witness": "-3",
+      "witness": "prod_signs([0, -3])",
+      "bug": "a zero in the array is treated as a positive sign instead of forcing the sign product to 0"
+    },
+    "HumanEval/129": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1, 4, 1]",
+      "candidate_at_witness": "[1, 2, 1]",
+      "witness": "minPath([[5, 9, 3], [4, 1, 6], [7, 8, 2]], 3)",
+      "bug": "scans the neighbours of every cell instead of only the neighbours of the cell holding 1, so it uses the global second-smallest value"
+    },
+    "HumanEval/130": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[1]",
+      "candidate_at_witness": "[]",
+      "witness": "tri(0)",
+      "bug": "returns an empty list for n = 0 instead of the required single-element list [1]"
+    },
+    "HumanEval/131": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "1",
+      "candidate_at_witness": "0",
+      "witness": "digits(11)",
+      "bug": "uses product == 1 as the sentinel for 'no odd digits', so a genuine product of 1 is reported as 0"
+    },
+    "HumanEval/132": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "is_nested('[[')",
+      "bug": "returns True as soon as two brackets are open without checking that two closing brackets follow"
+    },
+    "HumanEval/133": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "4",
+      "candidate_at_witness": "1",
+      "witness": "sum_squares([1.4])",
+      "bug": "rounds to nearest instead of taking the ceiling"
+    },
+    "HumanEval/134": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "False",
+      "candidate_at_witness": "True",
+      "witness": "check_if_last_char_is_a_letter('e ')",
+      "bug": "split() with no argument discards a trailing space, so a string ending in a space is judged by its previous word"
+    },
+    "HumanEval/135": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "4",
+      "candidate_at_witness": "2",
+      "witness": "can_arrange([1, 4, 2, 5, 3])",
+      "bug": "returns the first qualifying index rather than the largest one"
+    },
+    "HumanEval/136": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "(None, 2)",
+      "candidate_at_witness": "(None, 0)",
+      "witness": "largest_smallest_integers([0, 2])",
+      "bug": "treats 0 as a positive integer via >= 0"
+    },
+    "HumanEval/137": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "None",
+      "candidate_at_witness": "2",
+      "witness": "compare_one('2,0', 2)",
+      "bug": "the equality test compares the raw values instead of their numeric conversions, so equal numbers in different representations are not reported as equal"
+    },
+    "HumanEval/138": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "is_equal_to_sum_even(10)",
+      "bug": "requires n to be a multiple of 4 rather than merely even and at least 8"
+    },
+    "HumanEval/139": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "12",
+      "candidate_at_witness": "2",
+      "witness": "special_factorial(3)",
+      "bug": "the outer loop stops at n - 1, omitting the n! factor"
+    },
+    "HumanEval/140": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'a__b'",
+      "candidate_at_witness": "'a-b'",
+      "witness": "fix_spaces('a  b')",
+      "bug": "collapses runs of exactly 2 spaces into '-' although the rule applies only to runs of more than 2"
+    },
+    "HumanEval/141": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'Yes'",
+      "candidate_at_witness": "'No'",
+      "witness": "file_name_check('a123.txt')",
+      "bug": "rejects names with exactly three digits, though the rule only forbids more than three"
+    },
+    "HumanEval/142": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "6",
+      "candidate_at_witness": "4",
+      "witness": "sum_squares([2, 1, 1])",
+      "bug": "excludes index 0 from the 'multiple of 3' rule, so the first element is never squared"
+    },
+    "HumanEval/143": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "''",
+      "candidate_at_witness": "'a b'",
+      "witness": "words_in_sentence('a b')",
+      "bug": "the primality test accepts 1, so one-letter words are kept"
+    },
+    "HumanEval/144": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "simplify('2/4', '2/1')",
+      "bug": "only cross-cancels the two fractions against each other and never reduces each fraction internally, so an unreduced input like 2/4 is misjudged"
+    },
+    "HumanEval/145": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[-12, 1]",
+      "candidate_at_witness": "[1, -12]",
+      "witness": "order_by_points([-12, 1])",
+      "bug": "uses the absolute value's digit sum, so for a negative number the leading digit is not counted as negative"
+    },
+    "HumanEval/146": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0",
+      "candidate_at_witness": "1",
+      "witness": "specialFilter([-15])",
+      "bug": "compares abs(num) > 10 instead of num > 10, so negative numbers qualify"
+    },
+    "HumanEval/147": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "1",
+      "candidate_at_witness": "4",
+      "witness": "get_max_triples(5)",
+      "bug": "builds the array with 0-based i instead of 1-based, shifting every value"
+    },
+    "HumanEval/148": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "('Earth',)",
+      "candidate_at_witness": "()",
+      "witness": "bf('Mars', 'Venus')",
+      "bug": "does not order the two indices, so an outward-to-inward pair yields an empty slice"
+    },
+    "HumanEval/149": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "['aa', 'bb']",
+      "candidate_at_witness": "['bb', 'aa']",
+      "witness": "sorted_list_sum(['bb', 'aa'])",
+      "bug": "sorts by length only, leaving equal-length words in their original order instead of alphabetical"
+    },
+    "HumanEval/150": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "12",
+      "candidate_at_witness": "34",
+      "witness": "x_or_y(1, 34, 12)",
+      "bug": "treats 1 as prime because the trial-division loop is empty for n = 1"
+    },
+    "HumanEval/151": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "0",
+      "candidate_at_witness": "9",
+      "witness": "double_the_difference([-3])",
+      "bug": "does not exclude negative numbers, and Python's modulo makes negative odds satisfy x % 2 == 1"
+    },
+    "HumanEval/152": {
+      "outcome": "FALSE-PASS",
+      "why": "pass",
+      "gold_at_witness": "[2]",
+      "candidate_at_witness": "[-2]",
+      "witness": "compare([1], [3])",
+      "bug": "returns the signed difference instead of the absolute difference"
+    },
+    "HumanEval/153": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'my_class.AA'",
+      "candidate_at_witness": "'my_class.BB'",
+      "witness": "Strongest_Extension('my_class', ['AA', 'BB'])",
+      "bug": "uses >= when comparing strengths, so a later tie replaces the earlier extension"
+    },
+    "HumanEval/154": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "cycpattern_check('ab', 'ba')",
+      "bug": "iterates over len(b) - 1 rotations, so the last rotation is never tested"
+    },
+    "HumanEval/155": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "(1, 0)",
+      "candidate_at_witness": "(0, 0)",
+      "witness": "even_odd_count(0)",
+      "bug": "the while loop never runs for num = 0, so the single even digit of 0 is not counted"
+    },
+    "HumanEval/156": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'xl'",
+      "candidate_at_witness": "'xxxx'",
+      "witness": "int_to_mini_roman(40)",
+      "bug": "the subtractive pair 40 / 'xl' is missing from the table, so 40 renders as 'xxxx'"
+    },
+    "HumanEval/157": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "True",
+      "candidate_at_witness": "False",
+      "witness": "right_angle_triangle(5, 4, 3)",
+      "bug": "assumes c is the hypotenuse instead of testing the largest side"
+    },
+    "HumanEval/158": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'ab'",
+      "candidate_at_witness": "'ba'",
+      "witness": "find_max(['ab', 'ba'])",
+      "bug": "breaks ties by the lexicographically largest word instead of the smallest"
+    },
+    "HumanEval/159": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[3, 0]",
+      "candidate_at_witness": "[3, -3]",
+      "witness": "eat(1, 5, 2)",
+      "bug": "the leftover is computed from need rather than from what was actually eaten, so it goes negative when stock runs out"
+    },
+    "HumanEval/160": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "14",
+      "candidate_at_witness": "20",
+      "witness": "do_algebra(['+', '*'], [2, 3, 4])",
+      "bug": "folds the expression strictly left to right, ignoring operator precedence"
+    },
+    "HumanEval/161": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "'A1'",
+      "candidate_at_witness": "'1a'",
+      "witness": "solve('a1')",
+      "bug": "uses s.isalpha() to detect 'no letters', so any mixed string of letters and non-letters is reversed instead of case-swapped"
+    },
+    "HumanEval/162": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "None",
+      "candidate_at_witness": "'d41d8cd98f00b204e9800998ecf8427e'",
+      "witness": "string_to_md5('')",
+      "bug": "only None is treated as absent, so the empty string returns the md5 of '' instead of None"
+    },
+    "HumanEval/163": {
+      "outcome": "CAUGHT",
+      "why": "exit1",
+      "gold_at_witness": "[2, 4, 6]",
+      "candidate_at_witness": "[2, 4]",
+      "witness": "generate_integers(1, 6)",
+      "bug": "the range excludes the upper bound, dropping the largest even digit"
+    }
+  }
+}

@@ -1,0 +1,97 @@
+# Carlos Toledo — verification for machine-generated mathematics
+
+> I check numerical and mathematical claims without trusting how they were produced — a
+> language model's, a published paper's, or my own. The answer is either a **certificate**
+> (an interval or exact-rational enclosure that provably contains the true value, with
+> existence and local uniqueness proved) or an explicit **refusal** where the check does not
+> close. Refusal is a first-class output, not a failure.
+>
+> Two things are unusual and both are checkable rather than asserted. **Every check ships with
+> a falsifier that has been shown to go red** on a deliberately broken copy of the program —
+> a gate that cannot fail is not a gate. And **errors are published**: a dated public log
+> records defects found in this site's own shipped work, including one where this site's own
+> instrument, aimed at this site's own certified proof chain, found five stages the chain's
+> verdict could not see, and the fix landed the same day with its control.
+>
+> The applied ground is number theory, mean-field games, network equilibria and price
+> formation; the method is interval arithmetic, exact rational arithmetic, radii-polynomial
+> and Krawczyk certificates, built on the open-source `eqcert` kernel (MIT). Written by
+> Carlos Toledo (Brazil). Nothing here is peer-reviewed, and no result here has yet been
+> reproduced by anyone else — which is precisely why each page ships the program that would
+> refute it.
+
+## What the distinction means
+
+A solver that stops moving tells you its residual is small. It does not tell you
+that a solution exists, that it is the only one nearby, or that the density stayed
+positive. A **tolerance** is a promise about a solver; a **certificate** is a
+statement about the problem. This work produces the second, using outward-rounded
+interval arithmetic and exact rational arithmetic, and refuses when the instance
+will not support a certificate.
+
+Every certificate ships with **falsifiers**: deliberately broken variants that must
+fail. A certificate that cannot go red is treated as fake.
+
+## Verifiable claims
+
+These figures are reproducible by running the verifier that ships with the paper.
+They are measurements, not marketing numbers.
+
+- Congestion mean-field game (a = 1/2, sigma = 0.5, A = 0.3, N = 14): existence,
+  local uniqueness **within the even (cosine) subspace**, and strictly positive
+  density, certified in interval arithmetic. Enclosure radius r = 7.75e-15,
+  certified density floor min m >= 0.9736, Z1 = 0.5268. Seven falsifiers, all red.
+  The standalone Python verifier uses the standard library only, no dependencies,
+  and runs in 2.31 s. An independent JavaScript implementation agrees bit-for-bit
+  (difference 0.00e+00).
+- Multi-population Wardrop equilibrium: an independent, proof-carrying reproduction
+  of Bakaryan, Aoun, de Lima Ribeiro, Hovakimyan and Gomes, *Distributed
+  Hessian–Riemannian flow for multi-population Wardrop equilibrium*, AIMS
+  Mathematics 11(5) 15143–15162 (2026), doi:10.3934/math.2026623. One scenario
+  refuses, one is exact over BigInt rationals, one is a Krawczyk enclosure.
+- Price formation with a stock constraint (hydro water value on a scenario tree):
+  certified by zero-gap LP duality. The sign of the duality gap is load-bearing —
+  weak duality makes a negative value structurally impossible, not a tolerance.
+
+## What is deliberately NOT claimed
+
+- A result certified at an instance is not a theorem about a model.
+- Local uniqueness certified within a subspace is stated as within that subspace.
+- No claim of peer review. No ladder word ("proved", "certified") is used as a
+  status for this work without a named human signature behind it.
+- Search-based literature negatives are null results and are labelled as such.
+
+## Who it serves
+
+- **Research groups** — independent validation and stress-testing of a published
+  result: reproduce it, then enclose it, and report honestly when a scenario refuses.
+- **Industry and frontier systems** — certification of numerical and optimization
+  claims that decide real money, including energy price formation under a stock
+  constraint.
+
+## Pages
+
+- [Erdős #290 — for even d, disc(f_d) is a square exactly at d = 4k(k+1)](https://mfg-lab.vercel.app/technical-reports/erdos290): the three Galois densities van Doorn's paper left open, pinned exactly; two new exceptional degrees (d = 80, 120); a certified bracket for the constant c, seven times narrower than published; the square-discriminant law proved, with its composition-identity ingredient cited to Altmann et al. (2020). Ten downloadable, dependency-free programs with twelve mutation falsifiers.
+- [Home](https://mfg-lab.vercel.app/): what this work is, the evidence strip, and the notes.
+- [Certify the machine's candidate — an independent verifier for AI-generated mathematics](https://mfg-lab.vercel.app/technical-reports/ai-verify): eight blind frontier-model instances were asked a decidable question about a hard mean-field game; none established the true answer and five concluded the opposite. Reported as a CENSUS of eight specific runs, never as a rate — n=8 supports no rate claim (95% Clopper–Pearson on 5/8 runs [0.245, 0.915]). The certificate settles the question the panel could not.
+- [Alien science — disposition beside PGR](https://mfg-lab.vercel.app/technical-reports/alien-science): a checkable disposition lane (CERTIFIED / REFUSED / HACK-SUSPECT / OUT-OF-SCOPE) for formal fragments of automated-research ideas, beside gamable eval scores rather than instead of them. Anthropic-reported PGR figures stay tagged; re-hill-climb refused. Does not claim to certify alignment in general.
+- [A computer-assisted proof of a congestion mean-field game](https://mfg-lab.vercel.app/technical-reports/mfg-congest): to our knowledge the first validated-numerics enclosure of a stationary MFG with congestion. Includes a downloadable, dependency-free verifier.
+- [A certified reproduction of the AIMS 2026 Wardrop paper](https://mfg-lab.vercel.app/technical-reports/wardrop-repro): reproduction, erratum and certificate, with the errata published beside the result.
+- [A computer-assisted proof of a mean-field game equilibrium](https://mfg-lab.vercel.app/technical-reports/mfg-cap): three independent witnesses, validated enclosures, six falsifiers; the page is generated from the kernels.
+- [Price formation with a stock constraint](https://mfg-lab.vercel.app/technical-reports/stock-constraint): the water-value problem, certified by zero-gap duality.
+- [The interactive laboratory](https://mfg-lab.vercel.app/mfg-lab): nine modules, every solve running in the browser, including deliberately exposed failure modes.
+- [Six AI-claimed results, independently re-verified](https://mfg-lab.vercel.app/technical-reports/verification-lane): the index of the verification lane. Each check is rebuilt from scratch in separate arithmetic with a planted bug proving the verifier can fail. Five CONFIRMED on the layer checked, one PARTIAL — and each page states which fragment was NOT audited.
+- [Maxwell's 1873 conjecture, refuted and now certified](https://mfg-lab.vercel.app/technical-reports/verify-maxwell): the published refutation rested on floating-point computer algebra with no code artifact. At the paper's own Figure 1 configuration, pinned in exact rationals at eps = 1/6, 24 pairwise-disjoint Krawczyk boxes each certify existence, local uniqueness and nondegeneracy of a critical point — and 24 > 16 in exact integers. CONFIRMED at that one pinned instance; the asymptotic statement is NOT audited.
+- [Erdos #1038: every printed decimal of the extremal constant](https://mfg-lab.vercel.app/technical-reports/verify-lemniscate): an independent reimplementation (two interval backends, automatic differentiation, Krawczyk rather than the source's bisection) confirms all 30 printed decimals with certified enclosures to 40+ digits, and finds the 30th digit is a half-up rounding presented with an expansion's ellipsis. CONFIRMED for the computational fragment; the extremality proof is NOT audited.
+- [Ran-Teng Conjecture 20](https://mfg-lab.vercel.app/technical-reports/verify-ranteng): PARTIAL, and the page says why — the machine-checkable fragment is confirmed (polynomial identities exact over Q, 272 exact-matrix eigenvalue enclosures, Krawczyk-certified attainment), while the proof's analytic core is not audited.
+- [Three further re-verifications](https://mfg-lab.vercel.app/technical-reports/verify-poisson): Poisson, [Mathieu](https://mfg-lab.vercel.app/technical-reports/verify-mathieu) and [Korenblum](https://mfg-lab.vercel.app/technical-reports/verify-korenblum) — same discipline, each with its own falsifier.
+- [Five silent stages: a faithfulness metric aimed at our own certificate chain](https://mfg-lab.vercel.app/technical-reports/faithfulness-ceiling): truncation and single-stage corruption, reconstructed from the chain-of-thought faithfulness literature and applied to this site's own certified chain, with every prediction committed before the harness existed. The registered headline prediction (14/14 mutations flip the verdict) was FALSIFIED at 9/14: five stages of a certified chain were invisible to their own verdict. Hardened the same day; re-run 14/14. Measures causal step-importance of certificate stages, NOT model chain-of-thought faithfulness, and shares no scale with the papers it reconstructs.
+- [The stack](https://mfg-lab.vercel.app/stack): the tools underneath — one interval library, one exact-rational library, and the mutation discipline that requires every gate to be shown going red before a green counts.
+- [The defect log](https://mfg-lab.vercel.app/defects): every error this work has shipped and corrected, dated — five shipping cases including one found by this site's own instrument auditing its own certificate.
+- [Contact](https://mfg-lab.vercel.app/contact).
+
+## Citation
+
+Carlos Toledo — computer-assisted proof and validated numerics.
+carlos@carlostoledo.co — https://mfg-lab.vercel.app/
+Code: https://github.com/carlostoledo1891/mfg-lab (MIT for `eqcert`; papers CC-BY).

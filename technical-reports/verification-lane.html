@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We re-checked six AI-claimed results in our own arithmetic. Five hold; one holds on every machine-checkable fragment.</title>
+<meta name="robots" content="index,follow">
+<!-- Promoted out of the explore notebook 2026-08-03 on the owner publish decision. -->
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+.pagestate{border:1px solid var(--good);border-left:3px solid var(--good);border-radius:var(--radius);
+  background:var(--good-soft);padding:12px 16px;font-size:13px;color:var(--ink-soft);margin-bottom:26px}
+.pagestate b{color:var(--ink)}
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+.strip{margin-top:26px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+  padding:19px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+.strip .cap{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:15px}
+.readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:15px 22px}
+.ro{min-width:0}
+.ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:3px}
+.ro .v{font-family:var(--data);font-size:11.5px;line-height:1.5;letter-spacing:-.005em;color:var(--ink);
+  position:relative;padding-left:14px;overflow-wrap:anywhere;hyphens:none}
+  /* a bracketed interval must never orphan its closing bracket onto a line of its own:
+     the pair reads as one value, so it wraps as one or not at all. */
+  .ro .v .nb{white-space:nowrap}
+.ro .v::before{content:'';position:absolute;left:0;top:.45em;width:7px;height:7px;
+  border:1px solid var(--grid);background:transparent}
+.ro .v.ok::before{background:var(--good);border-color:var(--good)}
+.strip .note{font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:15px;
+  padding-top:14px;border-top:1px solid var(--grid)}
+.strip .note b{color:var(--ink)}
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
+     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="pagestate"><b>Research note &mdash; not peer-reviewed.</b> Each verifier below has been
+    shown to <b>fail on a deliberately broken copy</b> of itself and pass on the real one. No contact
+    with any claim&rsquo;s author or with the claim database has been made &mdash; that, like every
+    send, is an owner action.</div>
+
+  <div class="eyebrow">Independent verification &middot; challenges &middot; 2026-08-03 &middot; extended 2026-08-04</div>
+  <h1>We re-checked six AI-claimed results in our own arithmetic. Five hold; the sixth holds on
+    every fragment a machine can check.</h1>
+  <p class="lede">Roughly 400 AI-assisted mathematical results sit in a public claim database. On
+    every numeric one we examined, the verification label is the author&rsquo;s own &mdash; the
+    author&rsquo;s manuscript, the author&rsquo;s script, the author&rsquo;s run. We picked six,
+    from the weakest prior evidence to the strongest, and rebuilt each check from scratch: our own
+    arithmetic, no shared code, a planted bug in every verifier to prove the check can fail.
+    <b>Five are CONFIRMED on the layer we checked; one is PARTIAL &mdash; its machine-checkable
+    fragment confirmed in full, its analytic core not audited.</b> Total runtime: under five
+    seconds.</p>
+
+  <div class="tw"><table>
+    <tr><th>Claim</th><th>Verdict</th><th>What existed before</th><th>What we ran</th><th>Time</th></tr>
+    <tr><td><a href="/technical-reports/verify-poisson">Rank-two Poisson counterexample</a></td>
+      <td class="mono">CONFIRMED (computational claims)</td>
+      <td>author-checked manuscript + author-run scripts</td>
+      <td>our own exact rationals in &#x211A;[x,q,p,z]</td><td class="mono">0.4 s</td></tr>
+    <tr><td><a href="/technical-reports/verify-mathieu">Mathieu&ndash;Zhao classification identities</a></td>
+      <td class="mono">CONFIRMED (identities only)</td>
+      <td>author-checked manuscript + author-run SymPy</td>
+      <td>our own BigInt Laurent polynomials, incl. &#x211A;[i]</td><td class="mono">0.04 s</td></tr>
+    <tr><td><a href="/technical-reports/verify-korenblum">Korenblum constant c&#8322;&nbsp;&ge;&nbsp;0.4263</a></td>
+      <td class="mono">CONFIRMED (numerical side)</td>
+      <td><b>a published, rigorous Arb certificate</b></td>
+      <td>our own outward-rounded intervals, no Arb</td><td class="mono">4.2 s</td></tr>
+    <tr><td><a href="/technical-reports/verify-ranteng">Ran&ndash;Teng Conjecture 20 spectral region</a></td>
+      <td class="mono"><b>PARTIAL</b> — fragment CONFIRMED, analytic core not audited</td>
+      <td>human-checked proof, <b>no code, no certificate</b></td>
+      <td>exact polynomial identities + certified eigenvalue enclosures (272 matrices)</td><td class="mono">41 ms</td></tr>
+    <tr><td><a href="/technical-reports/verify-lemniscate">Erd&#337;s #1038 extremal constant D (30 decimals)</a></td>
+      <td class="mono">CONFIRMED (computational fragment)</td>
+      <td>author-checked manuscript + author-run Arb/SymPy certificates</td>
+      <td>our own two-backend intervals + AD + Krawczyk, 45-digit enclosure</td><td class="mono">&lt; 0.1 s</td></tr>
+    <tr><td><a href="/technical-reports/verify-maxwell">Maxwell 1873 refutation: 24 critical points, 5 charges</a></td>
+      <td class="mono">CONFIRMED at &epsilon; = 1/6 (one pinned instance)</td>
+      <td>author-run Mathematica/Maple float checks, no artifact</td>
+      <td>24 disjoint Krawczyk boxes + interval Hessian nondegeneracy</td><td class="mono">0.1 s</td></tr>
+  </table></div>
+
+  <h2>What a confirmation is worth</h2>
+  <p>We went looking for errors in AI-claimed mathematics and found no mathematical error. On the
+    layers we checked, five claims are confirmed outright and the sixth &mdash; Ran&ndash;Teng
+    &mdash; is confirmed on every fragment a machine can check, with its analytic core left
+    explicitly unaudited: a PARTIAL we state as PARTIAL rather than smooth away. The sharpest thing
+    the lane surfaced is fine print, not refutation: the Erd&#337;s #1038 manuscript&rsquo;s
+    headline constant carries a <b>rounded 30th decimal presented with an expansion&rsquo;s
+    trailing ellipsis</b>, and one of its face inequalities is uncertifiable by naive interval
+    evaluation at the printed radii &mdash; both caught only because an independent implementation
+    produced its own certified expansion. What we found beyond that is that <b>nobody had
+    looked</b> &mdash; including at the ones that already ship rigorous certificates, where our
+    margins matched theirs from implementations that share no code with them.</p>
+  <p>That is the more useful result. A refutation would have been a fact about one paper; a
+    confirmation from an independent implementation is a fact about the <i>infrastructure</i> — it
+    says the checking layer can be reconstructed by a stranger, cheaply, and that doing so is
+    currently nobody&rsquo;s job. It is also the discipline this shop holds itself to elsewhere: a
+    verification lane that only publishes its refutations is a lane you cannot trust.</p>
+
+  <h2>What none of the six establishes</h2>
+  <div class="caveat">
+    <p>Each page states, in the same place and the same words, exactly what it did <b>not</b> check
+      &mdash; and on all six, the theorem sitting above the checked layer is still nobody&rsquo;s
+      job. We confirm computational layers: bracket relations and a Jacobian, a family of moment
+      identities, a finite system of inequalities, the algebra and certified enclosures of a
+      spectral-region proof, the implicit definition and digits of an extremal constant, one pinned
+      instance of a counterexample configuration. We do not audit the Poisson conjecture&rsquo;s
+      disproof logic, the Mathieu&ndash;Zhao classification theorem, Korenblum&rsquo;s duality
+      argument, Ran&ndash;Teng&rsquo;s analytic necessity argument, the Erd&#337;s #1038 extremality
+      proof, or Maxwell-refutation Theorem 1&rsquo;s asymptotic statement. And in every case our
+      implementation and the author&rsquo;s share the manuscript&rsquo;s formulation: an error
+      identical in both would pass.</p>
+  </div>
+
+  <div class="foot">research/challenges &middot; six verifiers, each <code>node verify.js</code>,
+    no dependencies &middot; claim source: aimath.robertj1.com &middot; first three green
+    2026-08-03 &middot; ranteng / lemniscate / maxwell green 2026-08-04</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/defects">errata log</a>, never quietly fixed.</p>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+      <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+        programs MIT</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

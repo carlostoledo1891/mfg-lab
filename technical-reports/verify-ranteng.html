@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ran–Teng Conjecture 20: the machine-checkable fragment holds; the analytic core is not audited</title>
+<meta name="robots" content="index,follow">
+<!-- Built 2026-08-04; exported:false in PAGES.json — owner publish decision pending. -->
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+.pagestate{border:1px solid var(--good);border-left:3px solid var(--good);border-radius:var(--radius);
+  background:var(--good-soft);padding:12px 16px;font-size:13px;color:var(--ink-soft);margin-bottom:26px}
+.pagestate b{color:var(--ink)}
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+.strip{margin-top:26px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);
+  padding:19px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06)}
+.strip .cap{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:15px}
+.readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:15px 22px}
+.ro{min-width:0}
+.ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:3px}
+.ro .v{font-family:var(--data);font-size:11.5px;line-height:1.5;letter-spacing:-.005em;color:var(--ink);
+  position:relative;padding-left:14px;overflow-wrap:anywhere;hyphens:none}
+  /* a bracketed interval must never orphan its closing bracket onto a line of its own:
+     the pair reads as one value, so it wraps as one or not at all. */
+  .ro .v .nb{white-space:nowrap}
+.ro .v::before{content:'';position:absolute;left:0;top:.45em;width:7px;height:7px;
+  border:1px solid var(--grid);background:transparent}
+.ro .v.ok::before{background:var(--good);border-color:var(--good)}
+.strip .note{font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-top:15px;
+  padding-top:14px;border-top:1px solid var(--grid)}
+.strip .note b{color:var(--ink)}
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
+     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="pagestate"><b>Research note — not peer-reviewed.</b> Lane-B verification unit:
+    an AI-claimed mathematical result, re-verified in our own arithmetic with checks proven able
+    to fail. <b>The verdict on this page is PARTIAL, and it says so in the same size type as a
+    confirmation would.</b> No contact with the claim&rsquo;s authors or the database maintainer
+    has been made &mdash; that, like every send, is an owner action.</div>
+
+  <div class="eyebrow">Lane B claim 4 &middot; AI-claimed results &middot; challenges &middot; 2026-08-04</div>
+  <h1>Ran&ndash;Teng Conjecture 20: every machine-checkable fragment holds. The analytic core we did not audit &mdash; and we say which is which.</h1>
+  <p class="lede">A GPT-5.2-claimed resolution of Conjecture 20 of Ran and Teng (ELA 40, 2024)
+    determines the exact nonreal spectral region of a 4-cycle row-stochastic matrix family
+    (arXiv:2602.18918 and its companion arXiv:2605.06743). The claim chain carries <b>no code and
+    no machine certificate</b> &mdash; the database&rsquo;s own line is &ldquo;no formal proof
+    assistant artifact located&rdquo;. We re-verified every fragment of the proof a machine can
+    check, in an <b>independent reimplementation</b> on our own exact-rational and certified-interval
+    stack. All of it holds: <b>43 checks, 0 failures, 5/5 mutation controls rejected, 41&nbsp;ms.</b>
+    The proof&rsquo;s analytic core is prose, was not audited, and the verdict is PARTIAL for
+    exactly that reason.</p>
+
+  <div class="strip">
+    <div class="cap">Verdict &middot; <code>node verify.js</code> &middot; exit 0 &middot; 43 checks &middot; 5/5 mutations rejected &middot; 41 ms</div>
+    <div class="readouts">
+      <div class="ro"><div class="k">Verdict</div><div class="v">PARTIAL — fragment CONFIRMED, core not audited</div></div>
+      <div class="ro"><div class="k">Polynomial identities</div><div class="v ok">char. poly · G/N factorization · Lemma 4 chain, exact over &#x211A;</div></div>
+      <div class="ro"><div class="k">Boundary families</div><div class="v ok">C_R tie a+b&#8330;=1 exact · A_L lies ON G=0, exact</div></div>
+      <div class="ro"><div class="k">Certified sweep</div><div class="v ok">272 matrices · 1088 eigenvalues enclosed · 0 violations</div></div>
+      <div class="ro"><div class="k">Attainment witnesses</div><div class="v ok">10 interior points, Krawczyk-certified</div></div>
+      <div class="ro"><div class="k">Mutation controls</div><div class="v ok">5 / 5 rejected</div></div>
+    </div>
+    <div class="note"><b>Independence, stated precisely:</b> there is nothing of the authors&rsquo; to
+      run &mdash; no scripts, no certificate. Definitions were extracted by reading the TeX of both
+      papers and cross-checked three ways (case study vs companion vs the ELA original);
+      <code>verify.js</code> is our implementation end to end, on the eqcert stack (exact BigInt
+      rationals, outward-rounded intervals, Krawczyk operator). This is an independent machine
+      verification of the computational fragment of a human-checked proof &mdash; <b>not</b> a first
+      verification, and <b>not</b> a machine verification of the theorem.</div>
+  </div>
+
+  <h2>What was verified</h2>
+  <p>For the family A(&alpha;,&beta;,&gamma;,&delta;) with nonreal eigenvalues claimed to fill
+    R&nbsp;=&nbsp;{a+bi&nbsp;&isin;&nbsp;K&#8324;&nbsp;:&nbsp;a&nbsp;&gt;&nbsp;0,
+    G(a,b)&nbsp;&gt;&nbsp;0}, G(a,b)&nbsp;=&nbsp;(b&sup2;+a&sup2;+a)&sup2;+2a&sup2;&minus;b&sup2;:
+    the characteristic-polynomial identity
+    det(&lambda;I&minus;A)&nbsp;=&nbsp;&Pi;(&lambda;&minus;params)&nbsp;&minus;&nbsp;&Pi;(1&minus;params)
+    exactly in &#x211A;[&lambda;,&alpha;,&beta;,&gamma;,&delta;]; the discriminant factorization
+    &Delta;&nbsp;=&nbsp;(2a+1)(1&minus;6a) that the referee pass surfaced; the load-bearing
+    factorization |&lambda;|&#8310;&minus;N&nbsp;=&nbsp;|&lambda;&minus;1|&sup2;G; the complete
+    algebra chain of the tight-regime Lemma&nbsp;4 including both closing margins; and both
+    boundary-attainment families exactly &mdash; the diagonal family&rsquo;s spectrum is exactly
+    {c+(1&minus;c)i&#7495;} with the tie a+b&#8330;&nbsp;=&nbsp;1 holding <i>with equality</i>, and
+    every nonreal eigenvalue of the A_L(&alpha;) family lies <i>on</i> the curve G&nbsp;=&nbsp;0,
+    re-proved exactly, not numerically.</p>
+  <p>On top of the exact layer, a falsification-grade certified sweep: 272 deterministic parameter
+    tuples, all 1088 eigenvalues enclosed by 2-D Krawczyk in pairwise-disjoint boxes so that no
+    eigenvalue is unaccounted; all 488 certified-nonreal eigenvalues decide all three necessity
+    conditions PASS with zero undecided &mdash; minimum certified G lower bound 2.995e&minus;5,
+    minimum certified 1&minus;(a+|b|) of 3.3e&minus;6. One certified violation here would have
+    refuted the theorem. Conversely, 10 exact rational interior targets are certified attained:
+    Krawczyk proves parameters in (0,1)&sup2; whose matrix has the target as an exact eigenvalue.
+    The A_L trace is shadowed numerically too: certified nonreal roots at 9 values of &alpha; have
+    interval G straddling 0 at width &le;&nbsp;1.6e&minus;12.</p>
+
+  <h2>The mutation that proves the teeth</h2>
+  <p>Five controls, each rejected. The instructive one is <b>M3</b>: strengthen the claim to strict
+    inequality a+b&#8330;&nbsp;&lt;&nbsp;1 and it is rejected by the exact tie &mdash; the diagonal
+    family gives a+b&#8330;&nbsp;=&nbsp;1 exactly, a boundary case <i>no interval method could
+    decide</i>; only the exact layer kills it. The interval layer has its own teeth: <b>M4</b>, a
+    fake eigenvalue 1e&minus;3 off the C_L curve, is caught with certified
+    G&nbsp;&le;&nbsp;&minus;9.6e&minus;4, and <b>M5</b> shows the certifier can refuse &mdash; a
+    candidate 0.07 from any root under a 0.02 radius cap is not certified.</p>
+
+  <h2>What was NOT audited, stated so it cannot be assumed</h2>
+  <div class="caveat">
+    <p><b>The analytic core of necessity</b> &mdash; the argument parametrization
+      t&nbsp;&harr;&nbsp;u&nbsp;=&nbsp;Arg(z+t), the convexity and Jensen/Karamata optimization
+      over the feasible polytope, and the Arg/arctan branch bookkeeping. That is the part making
+      the necessity conditions hold for <i>all</i> parameters; our sweep spot-checks it with 272
+      certificates and proves nothing universal. <b>Full interior attainment</b> &mdash; the
+      continuity/IVT argument that every interior point is attained; we certify 10 sampled points
+      constructively, no more. <b>Surjectivity of A_L onto the whole arc</b> &mdash; we prove its
+      eigenvalues lie on G&nbsp;=&nbsp;0, not that every point of the arc is hit. <b>The
+      conjecture-level framing</b> &mdash; membership in the Karpelevich region K&#8324;, the
+      irreducibility framing, the real-eigenvalue case, and the case study&rsquo;s process-level
+      claims about LLM workflows. This is why the verdict is PARTIAL and not CONFIRMED, and no
+      sentence on this page rounds that up.</p>
+  </div>
+
+  <h2>Where this sits in the lane</h2>
+  <p>The earlier Lane-B notes confirmed computational layers that turned out to hold in full. This
+    unit is the lane meeting a claim whose verification label is &ldquo;human-checked mathematical
+    proof&rdquo; with no artifact at all &mdash; the machine-checkable fragment turns out to be
+    substantial (all the proof&rsquo;s algebra, both boundary families, and a certified
+    falsification sweep), and all of it holds. The honest product is the split itself: a reader now
+    knows exactly which sentences of that proof a machine has checked and which still rest on the
+    referees.</p>
+
+  <div class="foot">research/challenges/laneb-ranteng &middot; <code>node verify.js</code> — own
+    implementation on the eqcert stack, 43 checks, 5/5 mutation controls rejected, 41 ms &middot;
+    VERDICT.md — full record, sources pinned by sha256 (arXiv:2602.18918, arXiv:2605.06743, ELA 40
+    (2024) 506&ndash;537) &middot; claim source: aimath.robertj1.com entry ran-teng-20 &middot;
+    battery green 2026-08-04</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/defects">errata log</a>, never quietly fixed.</p>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+      <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+        programs MIT</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

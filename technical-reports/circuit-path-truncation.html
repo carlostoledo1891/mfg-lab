@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  PATH 10 — extracted 2026-07-31 from Elhage et al., "A Mathematical Framework for Transformer Circuits",
+  transformer-circuits.pub, 2021.
+
+  WEAKEST OF THE THREE and the page says so. Read via a SUMMARISER, not the paper. Five years old in a
+  field that has moved enormously (sparse autoencoders, attribution graphs), so occupancy risk is HIGH.
+
+  IT ALSO CARRIES AN UNRESOLVED CONTRADICTION, recorded rather than silently settled: the fetched summary
+  states "No eigenvalue/spectral arguments are employed", while my own recollection of the paper is that
+  OV-circuit eigenvalues are used to argue copying behaviour. Two sources disagree. NOTHING on this page is
+  built on the eigenvalue reading.
+
+  NOT EXPORTED, NOT ROUTED, kind `private`. It may state what it INTENDS to certify and may never state
+  that anything IS certified. No literature gate has run.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certified truncation of circuit path expansions</title>
+<meta name="robots" content="index,follow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  .eyebrow,.badge,.k{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+  .hero{padding:0}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:26ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:100%;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  .box.good{border-left:3px solid var(--good)}
+  code{font-family:var(--data);font-size:13px;background:color-mix(in srgb,var(--grid) 45%,transparent);
+    padding:1px 5px;border-radius:var(--radius-sm)}
+  table{border-collapse:collapse;margin-top:13px;font-size:13.6px;width:100%;max-width:100%}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--data);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft)}
+  td{color:var(--ink-soft)} td b{color:var(--ink);font-weight:600}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+  .alertbar,.draftbar{font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;padding:11px 15px;margin:0 0 18px;line-height:1.5;border-radius:var(--radius);border:0}
+  .alertbar.draft,.draftbar,.alertbar.danger{background:var(--bad)}
+  .alertbar.warn{background:var(--warn-soft);color:var(--ink);border:1px solid var(--grid)}
+  .alertbar.info{background:var(--fp-deep);color:var(--paper)}
+  .alertbar.ok{background:var(--good);color:var(--paper)}
+  .alertbar.muted{background:var(--grid);color:var(--ink)}
+
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid;vertical-align:middle;white-space:nowrap}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.standard{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.unsigned{color:var(--hjb);background:transparent;border-color:var(--hjb);border-style:dashed}
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+
+  </style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
+     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+    <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
+<div class="hero">
+    <div class="eyebrow">FrontierExtracted from transformer-circuits, 2021</div>
+    <h1>Certified path truncation</h1>
+    <p class="lede">The transformer-circuits framework writes a model's output as a <b>sum over paths</b>. In two-layer toy
+models that sum is finite and enumerable. <b>The paper's own central open question is whether the framework
+scales &mdash; and the obstruction to scaling is a truncation with no tail bound.</b></p>
+
+    <div class="callout">
+      <div class="k">Status — read this before anything below</div>
+      <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> No kernel, no certificate,
+        no falsifier, no ledger record, and <b>no literature gate has run on it</b>. It names a direction
+        extracted from someone else's published work and what would have to be true for it to be ours.
+        <b>A prospectus that reads like a result is the defect</b>, so this one says so at the top.</p>
+    </div>
+  </div>
+  <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">The opening, in one line</div>
+      <p>Path expansion expresses the output as a sum over end-to-end paths; with attention patterns frozen
+        those paths are <b>linear compositions of weight matrices</b>. At two layers you enumerate them all.
+        At ninety-six you cannot &mdash; you keep the paths you can interpret and drop the rest.
+        <b>A truncated expansion with no bound on the discarded remainder is an uncontrolled approximation,
+        and bounding a discarded tail is the one thing this tree does best.</b></p>
+    </div>
+
+  <section>
+    <h2>The first decidable claim</h2>
+    <div class="box claim"><p>For a given model and a chosen set <code>S</code> of retained paths:
+      <b>the contribution of every path outside <code>S</code> is bounded in norm by an explicit
+      &epsilon;</b>, computed with outward-rounded arithmetic. An interpretability claim of the form
+      <i>&ldquo;this behaviour is implemented by these heads&rdquo;</i> then carries a number saying how much
+      of the model's behaviour it does <b>not</b> account for.</p></div>
+    <div class="box"><div class="k">what would falsify it</div><p>A path outside <code>S</code> whose
+      measured contribution exceeds the bound &mdash; found by direct evaluation on a planted example. The
+      bound must be shown to go red on a deliberately understated &epsilon;.</p></div>
+  </section>
+
+  <section>
+    <h2>The unresolved contradiction, recorded rather than settled</h2>
+    <div class="box risk"><p><b>The fetched summary of the paper states that &ldquo;no eigenvalue/spectral
+      arguments are employed&rdquo;. My own recollection is that the paper uses OV-circuit eigenvalues to
+      argue copying behaviour in one-layer models.</b> Those cannot both be right about the same text. The
+      summary is a machine reading; the recollection is unsourced. <b>Neither is authority, so nothing on
+      this page rests on the eigenvalue reading</b>, and resolving it requires reading the paper itself.</p>
+      <p style="margin-top:9px">Written this way deliberately. The most expensive documented error in this
+      tree came from two records disagreeing about one paper and the discrepancy being resolved silently in
+      favour of the convenient one.</p></div>
+  </section>
+
+  <section>
+    <h2>The honest risk, and it is the largest in the set</h2>
+    <div class="box risk"><p><b>Occupancy risk is HIGH and probably fatal.</b> The paper is from 2021 and
+      mechanistic interpretability has moved enormously since &mdash; sparse autoencoders, attribution
+      graphs, and successor work from the same group. The question <i>&ldquo;how much of the model does this
+      circuit explain&rdquo;</i> is unlikely to be unasked five years on. <b>A literature gate is not
+      optional here, it is the first move,</b> and this direction should be expected to die to it.</p>
+      <p style="margin-top:9px"><b>Second risk: the source was not read.</b> Everything above rests on a
+      summariser's rendering of the paper, not the paper. Any real work starts by reading it properly.</p></div>
+    <div class="box"><div class="k">and the paper's own stated limits</div><p>MLP layers are described as
+      <b>&ldquo;a major weakness of our work&rdquo;</b>; layer normalisation is set aside; biases are folded
+      into weights; only attention-only models of at most two layers are analysed. <b>A tail bound over
+      attention paths that ignores MLPs bounds the wrong remainder</b> &mdash; which may be the structural
+      objection that kills this before the literature does.</p></div>
+  </section>
+
+  <section>
+    <h2>Scored</h2>
+    <div class="box"><div class="k">N / A</div><p><b>N: unknown, plausibly nonzero</b> as an application of
+      validated numerics to interpretability; <b>A: unknown.</b> Both unverified, and given the two risks
+      above <b>this is the one of the three to gate first and abandon fastest.</b></p></div>
+  </section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Frontier path &middot; published and routed &middot; open / unsigned &middot; Carlos Toledo &middot; 2026<br>
+  extracted from external published work &middot; opened 2026-07-31
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

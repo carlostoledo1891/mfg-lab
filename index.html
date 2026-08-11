@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carlos Toledo — verification for machine-generated mathematics, and for the tests that grade it</title>
+<meta name="description" content="Verification for machine-generated mathematics, and measurement of the evaluations that grade it: AI-claimed results re-checked in independent arithmetic, benchmark test suites measured for whether they can tell a right answer from a plausible wrong one, and computer-assisted proofs. Each page publishes the program that produced its numbers.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.carlostoledo.co/">
+<meta property="og:site_name" content="Carlos Toledo">
+<meta property="og:url" content="https://www.carlostoledo.co/">
+<meta property="og:title" content="Carlos Toledo — verification for machine-generated mathematics, and for the tests that grade it">
+<meta property="og:description" content="Proofs you can try to break: AI-claimed results re-checked in independent arithmetic, benchmarks measured for whether they can tell right from plausible-wrong, and computer-assisted proofs — every check shown able to fail.">
+<meta property="og:image" content="https://www.carlostoledo.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.carlostoledo.co/og.png">
+<!-- Rewritten 2026-08-03 as a front door; REWORKED 2026-08-04 per the site plan of that date, phase 4:
+     one page in the reader's vocabulary — verification for machine-generated mathematics — three
+     featured works and seven more, every route curl-verified live before it was linked. Design
+     tokens, shared chrome and type scale are unchanged; the footer stack was aligned to the seed
+     at research/_engine/paper.html (sitefoot / foot-cred / foot-cred-in / sitemap / foot-base),
+     which it had drifted from (sitemap nested inside .cred, .byline instead of .foot-base).
+     RESTRUCTURED 2026-08-05 on owner feedback ("almost the same as the reports page but smaller"):
+     the two identical link-lists were broken up with three sections of a different KIND — the
+     house method in three numbered obligations (wording from the house rules C10/C23 and the seed at
+     research/_engine/paper.html), a paste-and-run command block (each command re-run 2026-08-05
+     from a clean --depth 1 clone of the public repo before being quoted here: clean run ends
+     verdict CERTIFIED, ‑‑plant-mutant ends verdict REFUSED), and a quiet band for the errata
+     record (numbers from site/defects.html's own lede). All ten report links kept; the seven-item
+     list compressed to an index (kicker + title, no blurbs). Tokens, chrome, type scale,
+     analytics: untouched. All twelve linked routes curl-200 on the live host 2026-08-05.
+
+     REVISED 2026-08-05 (item A5 of the 2026-08-05 external review of this site): "Start here" became
+     "Start here — for a reviewer with ten minutes", and its entries carry an explicit three-beat
+     block: THE CLAIM somebody else made, WHAT I DID to it, WHAT HAPPENED. Three of five hostile
+     lenses said this site's density punishes a short-attention reader; the fix is to give the
+     shape of a result before its prose.
+
+     TWO THINGS TO NOTE, because both are judgement calls and neither should be silently
+     inherited. (1) THE ORDER CHANGED. alien-science led this section and now closes it, because
+     it is a PROPOSAL with a runnable pack rather than a verified result — leading a ten-minute
+     reviewer with an unresolved proposal is the exact failure the panel named. It is now labelled
+     as a proposal in its own kicker and its own first clause, which is a demotion in placement
+     and a promotion in honesty. (2) THE PANEL ASKED FOR TWO REPORTS AND THIS KEEPS THREE. Cutting
+     one would have removed the entry that matches the engagement strip directly above it; the
+     three-beat treatment is applied to the two VERIFICATIONS only, since claim/did/happened is
+     the wrong shape for a proposal and forcing it would have manufactured a "what happened" that
+     has not happened.
+
+     NO NEW CLAIM IS MADE HERE. Every beat is a re-ordering of text already on this page or on the
+     linked page, and each of the two verification entries now states its own scope limit in the
+     WHAT HAPPENED beat — Maxwell's one pinned instance with the asymptotic statement unaudited,
+     and the sixth result's unaudited analytic core. §5 of the review is explicit that the frame
+     may be fixed and the claims may not; a beat that dropped a scope caveat to read cleaner would
+     be the failure that section names.
+
+     RESHAPED 2026-08-12, owner-directed (part of the communication pass; copy and structure of
+     this page only, no new gates). (1) THE TOP CARD'S BETTER USE: the engagement strip ("Where
+     this work has gone...") moved down beside the errata band, content verbatim — both GitHub
+     issues were re-checked via the API this session and still carry zero replies, so "No reply
+     yet" is re-measured, not remembered — and the card under the lede now makes the thesis
+     actionable instead: three timed ways to try to break a result, nothing installed. (2) The
+     three method obligations moved inside card chrome (.engage reused; no new CSS) so the
+     section reads as the house method rather than another report list. (3) erdos290 was promoted
+     from the More index into "Start here" with the full three-beat treatment; its old More row
+     predated the 4k(k+1) theorem and the live falsifier layer and had gone stale — the promoted
+     row is derived from the page's current lede. (4) mfg-cap and stock-constraint, until now
+     absent from this page entirely, join the More index with descriptions derived from the hub's
+     five-doors rows. (5) canonical + og meta added, matching the hub. No claim is upgraded
+     anywhere: every new line derives from the linked page's own H1/lede or from a hub row that
+     was itself derived that way.
+
+     EXTENDED 2026-08-12 (later, same owner direction — "proceed all, promote emergent-geometry"):
+     (6) the no-gradient-certificate page, promoted out of _gated this session with its recorded
+     conditions executed (narration zero, citations 4/4 verified at source, splice byte-true
+     after the move), joins "Start here" as the fifth result — its status word, conjectured, is
+     in the row's own last line. (7) Every kicker now carries its date, copied from the hub's
+     rows with the hub's own convention (plain = the page prints it; dagger = first publication
+     to the repository), and the Start-here note states the convention. (8) A three-readers
+     routing line under the lede (referee / eval builder / hydro operator). (9) The engagement
+     card's foot now routes to /about. (10) og:image was CONSIDERED AND REFUSED: site/og.png
+     still carries the retired "Enclosure" branding and the old mean-field-only scope — wiring it
+     would stamp a dead identity on every link preview. Regenerate it under the current identity
+     first; the decision is recorded here so the next editor does not wire it unseen.
+
+     ADDED 2026-08-13: the uniqueness-certificate page (born that day, after this page's
+     reshape) joins the More index — the homepage otherwise carried no route to the newest
+     flagship. Row derived from the page's own H1 and verdict grammar.
+
+     P6 2026-08-13 (night): THE og:image REFUSAL IN (10) ABOVE LIFTS, on its own stated terms —
+     "regenerate it under the current identity first". site/og.png is regenerated: the retired
+     "Enclosure" brand is replaced by the site's own mark and name, the mean-field-only scope
+     line by the current one, and the old foot strip of four RETYPED LIVE READOUTS (runtime,
+     radius, falsifier count — the exact defect class the site forbids on unpinned surfaces) by
+     four structural claims that cannot go stale. The headline survives: "A converged iterate
+     is not a proof." og:image + twitter meta wired here and on the eight other pages that
+     carried og:title without an image; contact/defects/program already pointed at the file and
+     get the new identity for free.
+
+     ADDED 2026-08-13 (late night): the uam-corridor report joins the More index in the same
+     commit as its page — row derived from the page's own H1 and lede.
+
+     ADDED 2026-08-14 (night): the certificate-falsifiers proposal note joins the More index
+     beside the essay it sequels, same-commit with all its rows.
+     ADDED 2026-08-13 (evening): the how-this-shop-runs methodology essay joins the More index
+     the day it is born — the step that was forgotten at the uniqueness page's birth and fixed
+     four hours later; this time the row ships with the page. Row derived from the page's own
+     H1 and lede. -->
+
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+/* —— SHARED FOOTER (overfooter tailored; base constant) — verbatim from the seed —— */
+.sitefoot,footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+.foot-cred,.cred{max-width:var(--read-max);width:100%;margin:0 auto;padding:26px 20px 4px}
+.foot-cred-in,.cred{font-size:13px;line-height:1.64;color:var(--ink-soft)}
+.foot-cred-in p,.cred p{margin:0 0 9px} .foot-cred-in p:last-child,.cred p:last-child{margin:0}
+.foot-cred-in b,.cred b{color:var(--ink);font-weight:600}
+.foot-cred-in a,.cred a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+.foot-cred-in a:hover,.cred a:hover{text-decoration:underline}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.foot-base,.byline{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+  font-size:11px;line-height:1.5;color:var(--ink-soft)}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 4px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+
+.notes{list-style:none;margin:0;padding:0}
+.notes li{padding:15px 0;border-bottom:1px solid var(--grid)}
+.notes li:last-child{border-bottom:0;padding-bottom:4px}
+.notes .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:5px}
+.notes .t{font-family:var(--ui);font-size:var(--text-h3);font-weight:600;letter-spacing:-.012em;
+  line-height:1.3;color:var(--ink);text-decoration:none;display:block;margin-bottom:5px}
+.notes .t:hover{color:var(--fp-deep)}
+.notes p{font-size:13.5px;line-height:1.6;color:var(--ink-soft);margin:0;max-width:76ch}
+/* three-beat reviewer rows — CLAIM / WHAT I DID / WHAT HAPPENED, always that order.
+   Added 2026-08-05 per the 2026-08-05 external review of this site, item A5: a reviewer with ten
+   minutes needs the SHAPE of a result before its prose, and three of five lenses said the
+   density of this site punishes exactly that reader. The beats carry no number and no verdict
+   that is not already on the linked page — this is a re-ordering of what is said, never an
+   upgrade of it. dt is a fixed-width label column so the three rows align down the page and
+   the eye can read one beat across several entries. */
+.beats{display:grid;grid-template-columns:max-content 1fr;gap:4px 13px;margin:0 0 8px;
+  font-size:13px;line-height:1.55}
+.beats dt{font-family:var(--data);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);padding-top:3px;white-space:nowrap}
+.beats dd{margin:0;color:var(--ink)}
+.beats dd b{font-weight:600}
+@media(max-width:560px){
+  .beats{grid-template-columns:1fr;gap:2px}
+  .beats dt{padding-top:7px}
+}
+.h2note{color:var(--ink-soft);font-size:var(--text-small);margin:0 0 10px;max-width:74ch;text-wrap:pretty}
+/* external-engagement strip — the work as it leaves the site. Status words are load-bearing:
+   filed is not accepted, posted is not replied. Added 2026-08-05. */
+.engage{margin:26px 0 0;padding:15px 17px;background:var(--card);border:1px solid var(--grid);
+  border-radius:var(--radius)}
+.engage .cap{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:10px}
+.engage ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.engage li{font-size:13px;line-height:1.55;color:var(--ink-soft)}
+.engage .st{font-family:var(--data);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink);background:var(--grid);border-radius:var(--radius-sm);padding:1px 6px;
+  margin-right:7px;white-space:nowrap}
+.engage .foot{font-size:12.5px;color:var(--ink-soft);margin-top:11px;padding-top:10px;
+  border-top:1px solid var(--grid)}
+.more{font-size:13px;line-height:1.6;color:var(--ink-soft);margin:20px 0 0;max-width:76ch}
+
+/* ── Method rows — numbered obligations, not link cards. No hover states at all,
+      so dimensional stability holds vacuously. Tokens only. ─────────────────── */
+.method{list-style:none;counter-reset:step;margin:14px 0 0;padding:0}
+.method li{counter-increment:step;display:grid;grid-template-columns:38px 1fr;
+  padding:13px 0;border-bottom:1px solid var(--grid)}
+.method li:last-child{border-bottom:0;padding-bottom:6px}
+.method li::before{content:counter(step,decimal-leading-zero);grid-row:1/3;
+  font-family:var(--data);font-size:var(--text-small);color:var(--fp-deep);padding-top:3px}
+.method .h{grid-column:2;font-family:var(--ui);font-size:var(--text-h3);font-weight:600;
+  letter-spacing:-.012em;line-height:1.35;color:var(--ink)}
+.method p{grid-column:2;font-size:13.5px;line-height:1.6;color:var(--ink-soft);
+  margin:4px 0 0;max-width:70ch}
+
+/* ── Command block — wide content scrolls inside its own box (no page overflow). ── */
+.cmd{font-family:var(--data);font-size:12.5px;line-height:1.85;color:var(--ink);
+  background:var(--card);border:1px solid var(--grid);border-radius:var(--radius-sm);
+  padding:13px 18px;margin:14px 0 10px;overflow-x:auto}
+.cmd-note{font-size:var(--text-small);color:var(--ink-soft);margin:0;max-width:76ch}
+
+/* ── Quiet full-width band — bleeds to the column edges; not a card, no radius,
+      no shadow, no interactive states. ─────────────────────────────────────── */
+.band{margin:46px -20px 0;padding:15px 20px;background:var(--warn-soft);
+  border-top:1px solid var(--grid);border-bottom:1px solid var(--grid)}
+.band p{font-size:var(--text-small);line-height:1.7;color:var(--ink-soft);margin:0;max-width:none}
+.band b{color:var(--ink)}
+
+/* ── Index variant of .notes — kicker + title only, tight rows. ──────────────── */
+.notes.index li{padding:8px 0}
+.notes.index .k{margin-bottom:2px}
+.notes.index .t{font-size:13.5px;margin-bottom:0}
+</style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
+     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+    </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">Research notes &middot; Florianópolis, Santa Catarina, Brazil &middot; UTC&minus;3</div>
+  <h1>Verification for machine-generated mathematics &mdash; and for the tests that grade it</h1>
+  <p class="lede"><b>Proofs you can try to break.</b> I am Carlos Toledo. I check numerical and
+    mathematical claims without trusting
+    how they were produced &mdash; a language model&rsquo;s, a published paper&rsquo;s, or my own
+    &mdash; and the answer is either a certified enclosure that provably contains the true value,
+    or a plain statement that the check did not close. <b>The same question turned on the graders
+    themselves:</b> given a test suite, can it tell a correct answer from a plausible wrong one?
+    On HumanEval, 24 of 163 items could not. Every page below publishes the program that produced
+    its numbers &mdash; beside the page, or running live inside it &mdash; and every check has been
+    shown to fail on a deliberately broken copy of that program.</p>
+
+  <p class="h2note"><b>In plain terms:</b> I build verification harnesses and evaluations
+    that cannot be gamed &mdash; and prove it, live, on this site.</p>
+
+  <p class="h2note">Three readers, three doors: if you referee or review mathematics,
+    <a href="#start">start here</a> &middot; if you build or grade evaluations, start with
+    <a href="/technical-reports/evidence-first-bench">the graders, graded</a> &middot; if you
+    dispatch or price hydro, start with
+    <a href="/technical-reports/stock-constraint">a power system priced live</a> &middot;
+    and what earns the word &ldquo;certificate&rdquo; here at all:
+    <a href="/certificates">/certificates</a>.</p>
+
+  <div class="engage">
+    <div class="cap">Try to break one &mdash; right now, nothing installed</div>
+    <ul>
+      <li><span class="st">this browser &middot; ~10 s</span>Open <a
+        href="/technical-reports/erdos290">the Erd&#337;s&nbsp;#290 page</a>: a proved theorem
+        re-verifies itself live as you read. Press &ldquo;break it:
+        (d+1)&nbsp;&#8614;&nbsp;(d+2)&rdquo; and the page must go red, naming the line of the
+        proof that noticed.</li>
+      <li><span class="st">python &middot; ~30 s</span>Reproduce the number at the top of this
+        page from a clean clone &mdash; Python standard library, no network, no model.
+        <a href="#run">The commands are below.</a></li>
+      <li><span class="st">node &middot; ~1 min</span>Watch a verdict flip: one run says
+        CERTIFIED, the same run with a planted mutant says REFUSED &mdash; proof the first
+        answer could have come out differently. <a href="#run">Also below.</a></li>
+    </ul>
+    <div class="foot">The rule behind all three: <b>a check that cannot go red proves
+      nothing</b> &mdash; so every check on this site has already been shown failing on a
+      deliberately broken copy of its own program.</div>
+  </div>
+
+  <h2 id="start">Start here &mdash; for a reviewer with ten minutes</h2>
+  <p class="h2note">Five results and one proposal. Each result comes in three lines: <b>the
+    claim</b> somebody else made, <b>what I did</b> to it, and <b>what happened</b> &mdash; the
+    proposal does not, because it has not happened yet. Nothing below is stronger than the page it
+    links to &mdash; where a check did not close, these lines say so. Dates follow the
+    <a href="/technical-reports">hub&rsquo;s</a> convention: a plain date is printed by the page
+    itself; &dagger; marks first publication to the repository.</p>
+  <ul class="notes">
+    <li>
+      <div class="k">Number theory &middot; Erd&#337;s #290 &middot; live in the page &middot; 2026-08-03</div>
+      <a class="t" href="/technical-reports/erdos290">The proof you can attack: five exceptional
+        degrees, a theorem &mdash; and falsifier buttons wired to it</a>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>van Doorn&rsquo;s published bound on Erd&#337;s&nbsp;#290 rests on one constant,
+          assembled from Galois groups &mdash; and at three degrees, d&nbsp;=&nbsp;8, 24, 48, the
+          paper records the group as unidentified, bounding the missing terms by
+          &delta;&nbsp;&le;&nbsp;1. The author later called the needed group data an open
+          request.</dd>
+        <dt>What I did</dt>
+        <dd>Pinned all three exactly, found two more the paper never reached
+          (d&nbsp;=&nbsp;80 and 120), wrote the pattern down as a conjecture, tested it blind at
+          k&nbsp;=&nbsp;6 &mdash; then <b>proved</b> it: for even degree the exceptions are
+          exactly d&nbsp;=&nbsp;4k(k+1). Recomputed the constant with every finite piece an
+          exact rational.</dd>
+        <dt>What happened</dt>
+        <dd>A certified bracket <b>seven times narrower</b> than the paper&rsquo;s published
+          0.82&nbsp;&lt;&nbsp;c&nbsp;&lt;&nbsp;0.85 &mdash; and the theorem re-proves itself
+          live in the page, with falsifier buttons that mutate the mathematics and must turn it
+          red. <b>Scope, stated:</b> this claims no solution to #290 itself &mdash; the
+          asymptotics remain open.</dd>
+      </dl>
+      <p>No install: press &ldquo;break it&rdquo; on the page. Or run theorem.js &mdash; about
+        fifteen seconds, plain Node.</p>
+    </li>
+    <li>
+      <div class="k">Measuring the evaluator &middot; HumanEval &middot; 2026-08-08</div>
+      <a class="t" href="/technical-reports/evidence-first-bench">24 of 163 HumanEval items accept
+        a solution proved wrong &mdash; and a perfect mutation score did not predict it</a>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>HumanEval is a standard benchmark for code generation. A model that passes an item is
+          recorded as having solved it &mdash; which assumes the item&rsquo;s own test suite can
+          tell a correct solution from a wrong one.</dd>
+        <dt>What I did</dt>
+        <dd>Asked that of the benchmark instead of the model, per item, with no model in the loop.
+          First by mutating each reference solution mechanically; then with realistic wrong
+          solutions, <b>each shipping a witness</b> &mdash; one concrete input where it provably
+          differs from the reference. A candidate whose witness fails to separate it is discarded
+          and counted in neither denominator.</dd>
+        <dt>What happened</dt>
+        <dd><b>24 of 163 items &mdash; 14.7% &mdash; accepted a solution proved wrong.</b> 18 of
+          those had been rated fine by mutation testing, and 10 of them killed <i>every</i>
+          mutant: a perfect score. <b>Scope, stated:</b> one benchmark, one adversary, one
+          candidate per item &mdash; so 14.7% is a rate for this adversary, not a constant.</dd>
+      </dl>
+      <p>Reproduce Path A in about 30 seconds, Python standard library only.</p>
+    </li>
+    <li>
+      <div class="k">Computer-assisted proof &middot; Maxwell 1873 &middot; 2026-08-04</div>
+      <a class="t" href="/technical-reports/verify-maxwell">The AI-found counterexample to
+        Maxwell&rsquo;s 1873 conjecture, certified: 24 equilibria where the conjecture allows
+        at most 16</a>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>Maxwell said in 1873 that five point charges admit at most 16 equilibrium points. A
+          2026 paper refutes him with a configuration having 24 &mdash; the idea credited to an
+          OpenAI model. Its evidence was floating&#8209;point computer algebra, published with
+          <b>no code artifact and no concrete &epsilon;</b>.</dd>
+        <dt>What I did</dt>
+        <dd>Pinned the paper&rsquo;s own Figure&nbsp;1 configuration at &epsilon;&nbsp;=&nbsp;1/6
+          and enclosed every critical point in outward&#8209;rounded interval arithmetic, so each
+          one is proved to exist rather than found by search.</dd>
+        <dt>What happened</dt>
+        <dd>24 pairwise&#8209;disjoint boxes, each certifying existence, local uniqueness and
+          nondegeneracy of one critical point &mdash; and 24&nbsp;&gt;&nbsp;16 in exact integers.
+          <b>Scope, stated:</b> one pinned instance. The paper&rsquo;s asymptotic statement is
+          not audited.</dd>
+      </dl>
+      <p>Run the verifier and its mutation controls yourself.</p>
+    </li>
+    <li>
+      <div class="k">Independent verification &middot; six results &middot; 2026-08-03</div>
+      <a class="t" href="/technical-reports/verification-lane">Six AI-claimed math results,
+        independently re-verified</a>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>Six mathematical results produced or assisted by AI systems. On every one, <b>the only
+          check on record was the original author&rsquo;s own</b>.</dd>
+        <dt>What I did</dt>
+        <dd>Re-derived each from scratch in separate arithmetic sharing no code with the original,
+          then planted a bug in every verifier to prove it was capable of going red.</dd>
+        <dt>What happened</dt>
+        <dd>Five CONFIRMED on the layer checked. One PARTIAL &mdash; its machine-checkable
+          fragment holds, its analytic core is prose and <b>was not audited</b>, and the page says
+          so rather than letting the confirmation stand in for it. The lane re-runs in under five
+          seconds.</dd>
+      </dl>
+    </li>
+    <li>
+      <div class="k">New certificate class &middot; gradient structure &middot; live in the page &middot; 2026-08-12&dagger;</div>
+      <a class="t" href="/technical-reports/no-gradient-certificate">No metric, no potential
+        &mdash; a machine-checked certificate that a flow is not a gradient</a>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>A folklore fact: a gradient flow&rsquo;s Jacobian at an equilibrium has real spectrum,
+          under <i>any</i> Riemannian metric. For softmax attention, the published non-gradient
+          statement covers one metric &mdash; Wasserstein-2, in the mean-field limit, under tied
+          weights.</dd>
+        <dt>What I did</dt>
+        <dd>Made the contrapositive machine-checkable &mdash; an exact-rational Sturm count that
+          certifies a complex eigenvalue pair, ruling out <b>every metric and every potential at
+          once</b> &mdash; and ran it over two preregistered enumerations: engineered
+          softmax-attention equilibria, and the Brusselator beside an independent exact twin.</dd>
+        <dt>What happened</dt>
+        <dd>224 of 864 attention instances and 37 of 60 Brusselator instances certified; the
+          d&nbsp;=&nbsp;2 slice is all-real by a theorem the census forced; the twin agreed on
+          all 60, and both falsifiers carry a mutation-verified red. <b>Scope, stated:</b> local,
+          Riemannian-gradient only, the criterion&rsquo;s necessary half &mdash; and the claim
+          status on the page&rsquo;s face is <b>conjectured</b>.</dd>
+      </dl>
+      <p>The certificate re-runs live in the page, on the same spliced kernels the batteries
+        gate.</p>
+    </li>
+    <li>
+      <div class="k">Proposal &middot; evaluation for automated researchers &middot; 2026-07-31&dagger;</div>
+      <a class="t" href="/technical-reports/alien-science">An eval for automated researchers that
+        answers in dispositions, not scores: CERTIFIED, REFUSED, HACK&#8209;SUSPECT, or
+        OUT&#8209;OF&#8209;SCOPE</a>
+      <p><b>A proposal with a runnable pack, not a verified result</b> &mdash; listed last for
+        that reason. A second lane beside the reward metric, for the cases where a scalar can be
+        gamed. Runs in about a minute with Node and nothing else: one command scores a held-out
+        fixture, a second plants a mutant to prove the lane can say no.</p>
+    </li>
+  </ul>
+
+  <h2>How a result earns a green light</h2>
+  <div class="engage">
+    <div class="cap">The house method &mdash; not a report, the rule every report obeys</div>
+    <p>The house rule is that <b>green proves nothing until it can go red</b>. Three obligations,
+      on every page here:</p>
+    <ol class="method">
+    <li>
+      <span class="h">Every certificate ships with its falsifier.</span>
+      <p>The claim and the program that would refute it are published together. Believing a page
+        never requires trusting its author &mdash; re-run the check and watch it pass, or fail.</p>
+    </li>
+    <li>
+      <span class="h">Every check is proven able to fail.</span>
+      <p>Before a green counts, the same check runs on a deliberately broken copy of the program
+        and must go red &mdash; then green again on the clean one. A check that cannot fail
+        proves nothing.</p>
+    </li>
+    <li>
+      <span class="h">REFUSED is an output, not a failure.</span>
+      <p>When the mathematics does not support a certificate, the verdict says so. One
+        reproduction below refuses a scenario because it admits more than one equilibrium
+        &mdash; the page states that instead of quietly picking one.</p>
+    </li>
+    </ol>
+    <div class="foot">What counts as a certificate here &mdash; and what is refused:
+      <a href="/certificates">/certificates</a>. The full toolchain, with its own code on the
+      page: <a href="/stack">/stack</a>.</div>
+  </div>
+
+  <h2 id="run">Run one now</h2>
+  <p><b>Reproduce the number at the top of this page.</b> Python standard library, nothing
+    installed, no network and no model &mdash; about 30 seconds.</p>
+  <pre class="cmd">git clone --depth 1 https://github.com/carlostoledo1891/mfg-lab
+cd mfg-lab/technical-reports/bench
+python3 sensitivity.py</pre>
+  <p class="cmd-note">That prints the mutation table for all 164 HumanEval items and the 1.9% of
+    them that cannot tell the reference solution from a broken one. <code>verifier_audit.py</code>
+    beside it reproduces the three-direction table. <code>falsepass.py</code> is there too and
+    <b>will refuse</b> &mdash; the wrong-answer candidates it scores are deliberately not
+    published, because several hundred of them are solutions engineered to pass HumanEval while
+    being wrong, and putting those on the internet would contaminate a benchmark other people
+    still use. A refusal is an output here, so it says so and stops.</p>
+
+  <p>Or watch a verdict flip. Node only, nothing installed &mdash; one run says CERTIFIED, the
+    planted mutant says REFUSED, in about a minute.</p>
+  <pre class="cmd">cd ../alien-science
+node dual-client.js --fixture heldout-ccs-es
+node dual-client.js --fixture heldout-ccs-es --plant-mutant</pre>
+  <p class="cmd-note">The last command breaks the program on purpose. Compare the
+    <code>verdict</code> field between the two runs: <code>CERTIFIED</code> becomes
+    <code>REFUSED</code>, and the headline goes from <i>high PGR + CERTIFIED fragment</i> to
+    <i>high PGR + REFUSED</i>. That flip is the point &mdash; it is the proof that the first
+    answer could have come out differently. <b>Read the <code>verdict</code>, not the outer
+    <code>status</code>:</b> the run as a whole reports <code>REFUSED</code> either way, because
+    the pack withholds a scenario it cannot certify, and that is the correct answer both
+    times.</p>
+
+  <div class="band">
+    <p><b>For the record:</b> six shipping cases, dated &mdash; errors found in this
+      site&rsquo;s own published work, none reported by a reader first. Five are in the
+      <a href="/defects">errata log</a> with their witness, their fix, and a control that now
+      goes red. <b>The sixth is still open:</b> a fix that was real, silently un-done by an
+      unrelated improvement, caught only because the instrument was run by hand. It stays on
+      the page until it closes &mdash; nothing here is quietly corrected.</p>
+  </div>
+
+  <div class="engage">
+    <div class="cap">Where this work has gone, and what has come back</div>
+    <ul>
+      <li><span class="st">filed 5 Aug 2026</span>An independent confirmation of the computational
+        appendix of a claimed proof of Erd&#337;s&nbsp;#1038, filed as
+        <a href="https://github.com/Pengbinghui/pipeline-math/issues/5">an issue on the claiming
+        authors&rsquo; own repository</a> &mdash; all 30 printed decimals verified by a different
+        route, with one trailing-digit note. <b>No reply yet.</b></li>
+      <li><span class="st">posted 4 Aug 2026</span>An evaluation note on Anthropic&rsquo;s public
+        automated-alignment sandbox, posted as
+        <a href="https://github.com/safety-research/automated-w2s-research/issues/2">an issue on
+        the repository whose authors invited stress-testing</a>. <b>No reply yet.</b></li>
+      <li><span class="st">in moderation</span>A note on Erd&#337;s&nbsp;#290, submitted to
+        erdosproblems.com and awaiting moderation.</li>
+    </ul>
+    <div class="foot">Stated exactly: <b>filed is not accepted, and posted is not replied.</b>
+      Nothing on this site has been peer-reviewed, and no result here has yet been reproduced by
+      anyone else &mdash; which is why every page ships the program that would refute it. If any
+      of this is your problem, the person and the terms are at <a href="/about">/about</a>.</div>
+  </div>
+
+  <h2>More</h2>
+  <ul class="notes index">
+    <li>
+      <div class="k">Method &middot; auditing a verifier in three directions &middot; 2026-08-08</div>
+      <a class="t" href="/technical-reports/verifier-audit">D1 accepts correct, D2 rejects
+        constructed-wrong, D3 rejects plausibly-wrong &mdash; and D2 does not predict D3:
+        10 of 103 verifiers with a perfect D2 fail D3</a>
+    </li>
+    <li>
+      <div class="k">Auditing my own verifier &middot; preregistered &middot; 2026-08-05</div>
+      <a class="t" href="/technical-reports/faithfulness-ceiling">I preregistered that all 14
+        stages would flip the verdict; the run measured 9 &mdash; five stages of a certified chain
+        were invisible to it</a>
+    </li>
+    <li>
+      <div class="k">Independent verification &middot; Erd&#337;s #1038 &middot; 2026-08-04</div>
+      <a class="t" href="/technical-reports/verify-lemniscate">All 30 printed decimals of the
+        Erd&#337;s #1038 constant hold &mdash; and the 30th is a rounding, not an expansion</a>
+    </li>
+    <li>
+      <div class="k">Independent verification &middot; Bergman spaces &middot; 2026-08-03</div>
+      <a class="t" href="/technical-reports/verify-korenblum">Korenblum&rsquo;s constant: the
+        improved lower bound survives a second arithmetic that shares no code with the first</a>
+    </li>
+    <li>
+      <div class="k">Pipeline &middot; AI-generated claims &middot; 2026-07-23&dagger;</div>
+      <a class="t" href="/technical-reports/ai-verify">A model&rsquo;s numerical claim goes in;
+        VERIFIED with an enclosure or REFUSED comes out</a>
+    </li>
+    <li>
+      <div class="k">Network equilibrium &middot; reproduction &middot; 2026-07-23&dagger;</div>
+      <a class="t" href="/technical-reports/wardrop-repro">A certified reproduction of the AIMS
+        Mathematics 2026 multi-population Wardrop paper &mdash; one scenario refused</a>
+    </li>
+    <li>
+      <div class="k">Operations research &middot; living note &middot; 2026-07-28&dagger;</div>
+      <a class="t" href="/technical-reports/stock-constraint">A hydro-dominated power system
+        priced live in the page, every numerical claim carrying its certificate</a>
+    </li>
+    <li>
+      <div class="k">Machine learning &middot; softmax attention &middot; 2026-08-01&dagger;</div>
+      <a class="t" href="/technical-reports/attention-geometry">Softmax attention sharpens with
+        temperature &mdash; here is the certificate</a>
+    </li>
+    <li>
+      <div class="k">Mean-field games &middot; two certificate families &middot; 2026-08-13</div>
+      <a class="t" href="/technical-reports/uniqueness-certificate">One equilibrium, or three?
+        Instance-level global-uniqueness certificates, live &mdash; with an honest REFUSED and
+        machine-verified witnesses</a>
+    </li>
+    <li>
+      <div class="k">Methods &middot; essay &middot; 2026-08-13</div>
+      <a class="t" href="/technical-reports/how-this-shop-runs">How this shop runs &mdash;
+        directing AI agents under falsifiable verification, with the checks themselves probed
+        for vacuous passes</a>
+    </li>
+    <li>
+      <div class="k">Methods &middot; audit &middot; 2026-08-14</div>
+      <a class="t" href="/technical-reports/ten-proofs-audit">An independent audit of
+        OpenAI&rsquo;s ten-proofs &mdash; the tree built at its pin, twelve declarations
+        kernel-checked, the repo&rsquo;s own cross-kernel protocol run twelve-for-twelve,
+        and the week the human authors wrote back</a>
+    </li>
+    <li>
+      <div class="k">Methods &middot; proposal &middot; 2026-08-14</div>
+      <a class="t" href="/technical-reports/certificate-falsifiers">A certificate should ship
+        with its falsifier &mdash; a proposal for computer-assisted proofs, with the prior art
+        credited and the 2026 audit incident that shows why</a>
+    </li>
+    <li>
+      <div class="k">Operations research &middot; air-taxi networks &middot; 2026-08-13</div>
+      <a class="t" href="/technical-reports/uam-corridor">The corridor totals are pinned. The
+        operator split is not &mdash; an exact-arithmetic air-taxi instance where the
+        point-uniqueness certificate is honestly refused</a>
+    </li>
+    <li>
+      <div class="k">Mean-field games &middot; live proof &middot; 2026-07-28&dagger;</div>
+      <a class="t" href="/technical-reports/mfg-cap">A mean-field game solved and then proved in
+        your browser &mdash; a contraction argument in interval arithmetic, every run</a>
+    </li>
+    <li>
+      <div class="k">Real analysis &middot; mean-field games &middot; 2026-07-23&dagger;</div>
+      <a class="t" href="/technical-reports/mfg-congest">A computer-assisted proof for a
+        congestion mean-field game</a>
+    </li>
+  </ul>
+
+  <p class="more">Everything else, including the pages this list leaves out, is under
+    <a href="/technical-reports">Reports</a>.</p>
+
+</div>
+
+<footer class="sitefoot">
+  <div class="foot-cred">
+    <div class="foot-cred-in">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/defects">errata log</a>, never quietly fixed.</p>
+    </div>
+  </div>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026
+    &middot; text CC&#8209;BY&nbsp;4.0, programs MIT</div>
+</footer>
+
+</body>
+</html>

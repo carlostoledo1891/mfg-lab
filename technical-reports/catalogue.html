@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="en"><head>
+<!-- THE CATALOGUE. Owner: "it's a catalogue" — one place holding every research direction in this
+     programme with an honest verdict, including the dead ones. Sandbox: never routed, never
+     exported. Rows marked KILLED are kept deliberately; their kill reasons are the reusable part.
+
+     CORRECTED 2026-08-13 (P4 of the reports culling): the two lines above were written before
+     the 2026-07-31 publish wave and went stale the day it shipped — this page has been routed at
+     /technical-reports/catalogue, exported and in the sitemap since then, while its own lede and
+     footer still said "not routed, not exported / not published". Both rendered lines are fixed
+     in this edit; this comment records what they used to claim, per the append-only rule. The
+     draft alertbar STAYS — "not reviewed, verdicts are judgements" is still true and is the
+     page's honesty banner, distinct from the false publication claim.
+
+     EXTENDED 2026-08-13, same edit: a new group, THE OPEN NOTEBOOKS, lists the sixteen rows
+     that left the /technical-reports hub when it became finished-work-only (P4). Two of them
+     already had rows above (equilibrium-geometry as THE FRAME's thesis; rational-attention as
+     OPENED — the group notes both in place); the other fourteen are new rows, each one-liner
+     derived from that page's own face — title, date, and its own status words — never from
+     memory. The hub's gnotes now point here.
+
+     SWEPT IN THE SAME COMMIT: eleven of these pages carried "not published, not routed, not
+     exported" in their rendered footers, and rational-attention's title said UNPUBLISHED DRAFT
+     — all false since the 2026-07-31 publish wave, the same stale class this page's own lede
+     carried. Fixed to the corrected form certified-price-formation has used since 2026-08-04
+     ("published and routed · open / unsigned"). The _gated twins keep the line; behind the
+     password it is not false. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research catalogue — every direction, with its verdict</title>
+<meta name="robots" content="index,follow"><style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.ro .k,.ro .v,.meta,.k{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+
+  /* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in,.topbar .wrap{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+    font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{font-family:var(--data);font-size:12px;color:var(--ink-soft);font-weight:500;margin:0;max-width:none;letter-spacing:0}
+  .nav{display:flex;align-items:center;gap:22px}
+  .nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .nav a:hover{color:var(--fp-deep)}
+  .nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .nav{gap:14px} .nav a{font-size:10.5px;letter-spacing:.05em} }
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  @media(max-width:430px){ .brand .sub{display:none} }
+  
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+  .hero{padding:0}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:22ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:70ch;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{max-width:var(--read-max);width:100%;padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+
+  .cat{margin-top:10px}
+  .grp{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);margin:26px 0 10px;padding-top:14px;border-top:1px solid var(--grid)}
+  .it{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:14px 17px;margin-bottom:9px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .it .hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .it .ti{font-family:var(--ui);font-size:15px;font-weight:600;letter-spacing:-.012em;flex:1 1 300px}
+  .it .ti a{color:var(--ink);text-decoration:none} .it .ti a:hover{color:var(--fp-deep)}
+  .it .bg{font-family:var(--data);font-size:9px;letter-spacing:.11em;text-transform:uppercase;
+    padding:2px 8px;border-radius:var(--radius-sm);color:#fff;white-space:nowrap}
+  .it p{font-size:13.6px;line-height:1.62;color:var(--ink-soft)}
+  .it .src{font-family:var(--data);font-size:10.5px;color:var(--ink-soft);margin-top:5px}
+  .alertbar,.draftbar{font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;padding:11px 15px;margin:0 0 18px;line-height:1.5;border-radius:var(--radius);border:0}
+  .alertbar.draft,.draftbar,.alertbar.danger{background:var(--bad)}
+  .alertbar.warn{background:var(--warn-soft);color:var(--ink);border:1px solid var(--grid)}
+  .alertbar.info{background:var(--fp-deep);color:var(--paper)}
+  .alertbar.ok{background:var(--good);color:var(--paper)}
+  .alertbar.muted{background:var(--grid);color:var(--ink)}
+
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid;vertical-align:middle;white-space:nowrap}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.standard{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.unsigned{color:var(--hjb);background:transparent;border-color:var(--hjb);border-style:dashed}
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+
+  
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+
+  </style><!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
+     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head><body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">  <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
+<div class="hero">
+  <div class="eyebrow">Sandbox &middot; catalogue</div>
+  <h1>Every direction, with its verdict</h1>
+  <p class="lede">One place for the whole research surface &mdash; <b>including the dead ones</b>.
+    A catalogue that lists only survivors is a sales sheet; the kill reasons are the reusable part,
+    and two of them have already prevented a second mistake. Verdicts here are this shop&rsquo;s
+    own judgements, not certificates &mdash; the certified work is on the
+    <a href="/technical-reports">reports page</a>, which since 13 August 2026 carries finished
+    work only and points here for everything still being worked out.</p>
+  <div class="callout">
+    <div class="k">How to read it</div>
+    <p><b>Verdicts are this repo's own judgement, and the occupancy half is separate from the
+      feasibility half.</b> A direction can be perfectly good mathematics and still be
+      <i>infeasible here</i> &mdash; this tree does validated numerics and ships zero-dependency
+      verifiers; <b>it cannot train models</b>. Two entries below died on that alone. Three turned
+      out to be things already delivered in this programme under another name, which is the most
+      common outcome so far and the most useful one.</p>
+  </div>
+</div><div class="cat">
+<div class="grp">THE FRAME</div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="equilibrium-geometry.html">Equilibrium is a geometry — and refusal is how you measure it</a></div>
+          <span class="bg" style="background:var(--fp-deep)">THESIS</span></div>
+          <p>A pattern over three artifacts that already pass their gates: multiplicity PROVED in disjoint balls, a Wardrop face DEMONSTRATED, a refusal wall MEASURED. Cannot be killed by a literature search — it claims no empty ground.</p><div class="src">equilibrium-geometry.html</div></div>
+<div class="grp">FEASIBLE AND ALIGNED — the short list</div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="rational-attention.html">A certified bifurcation bracket for rational attention</a></div>
+          <span class="bg" style="background:var(--fp-deep)">OPENED</span></div>
+          <p>PATH 13, opened 2026-07-31 after requisite 0 survived: the polynomial kernel clusters and bifurcates in cluster count, so substituting a rational attention for softmax does not kill the phenomenon. Continuous-&beta; form named. Locator / Newton / (2.5,2.7) under-iteration defects demoted. Existence, 1-cluster spectrum, bistability at &beta;=5/3, and reduced 2-cluster angle law (one-sided semi-stable, exact rationals) decided. Tight &omega;-limit not claimed. Never about Transformers.</p><div class="src">rational-attention.html · attention-enclosure.js · attention-stability.js · attention-spectrum.py · attention-basin.py</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="attention-bifurcation.html">A certified critical threshold for attention clustering</a></div>
+          <span class="bg" style="background:var(--fp-deep)">PURSUE</span></div>
+          <p>Finite-dimensional dynamics; certifying a bifurcation = enclosing an eigenvalue crossing. Reuses the stack unchanged. Softmax put it behind interval-transcendentals; PATH 13 takes the rational substitute out from behind that blocker. Occupancy check pending — validated continuation may already cover it generically.</p><div class="src">attention-bifurcation.html · see also rational-attention.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="constrained-transport.html">Transport under a hard constraint — the continuum step</a></div>
+          <span class="bg" style="background:var(--fp-deep)">SURVIVOR</span></div>
+          <p>The only survivor of the first five. Discrete enclosure DISCHARGED 2026-07-31 (exact-rational signedGap≡0 + interval wrap contains 0 with explicit r); open is the continuum with the discretization clause.</p><div class="src">constrained-transport.html</div></div>
+<div class="grp">ALREADY DELIVERED — proposals that turned out to be ours</div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="adjoint-transformer.html">Exact discrete adjoint, M_FP = M_HJB^T</a></div>
+          <span class="bg" style="background:var(--good)">BUILT</span></div>
+          <p>test-transpose-sin.js: 'adjoint-matched pair FP = HJBᵀ certified (operator level)', two mutants caught. The core is delivered; only the Transformer framing is new. The 'eliminates vanishing gradients' claim is almost certainly false — adjointness is structural, explosion is spectral.</p><div class="src">adjoint-transformer.html</div></div>
+<div class="grp">KILLED — and why, because the reasons are reusable</div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="tropical-relu.html">Tropical certification of ReLU boundaries</a></div>
+          <span class="bg" style="background:var(--hjb)">KILLED</span></div>
+          <p>min-max representation IS the tropical form (ICML 2018), and certified robustness over min-max representations is published (arXiv:2310.04916). A search for 'tropical' never surfaces it.</p><div class="src">tropical-relu.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="rotor-trajectory.html">Singularity-free rigid-body enclosures</a></div>
+          <span class="bg" style="background:var(--hjb)">KILLED</span></div>
+          <p>Died on its own premise: an interval rotor is a SET, and a set cannot satisfy R R† = 1 exactly unless it is a point. The word carrying the proposal cannot survive interval arithmetic. This constraint recurs whenever someone proposes exactness inside an enclosure.</p><div class="src">rotor-trajectory.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="mf-jepa.html">Mean-field JEPA — a density-valued predictor</a></div>
+          <span class="bg" style="background:var(--hjb)">INFEASIBLE</span></div>
+          <p>The deliverable is a trained world model. No GPU, no torch, no datasets here. An idea whose proof is an experiment cannot be certified in this tree.</p><div class="src">mf-jepa.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="w2-latent-loss.html">W₂ optimal-transport latent loss</a></div>
+          <span class="bg" style="background:var(--hjb)">KILLED</span></div>
+          <p>Two independent kills: heavily occupied since the WGAN lineage and Sinkhorn divergences, AND the deliverable is again a trained model.</p><div class="src">w2-latent-loss.html</div></div>
+<div class="grp">NEEDS REFORMULATION</div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="sheaf-consensus.html">Certified consensus bounds for sheaf Laplacians</a></div>
+          <span class="bg" style="background:var(--amber)">REFRAME</span></div>
+          <p>Empty by keyword, occupied in substance: a sheaf Laplacian is a finite symmetric PSD matrix and verified Hermitian eigensolvers are mature. The empty search measured the absence of a paper nobody needs.</p><div class="src">sheaf-consensus.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="signature-truncation.html">Validated bounds for truncated path signatures</a></div>
+          <span class="bg" style="background:var(--amber)">PARTIAL</span></div>
+          <p>Two of three tiers die — the truncation bound is folklore, exact Chen is degenerate (exact arithmetic on exact data). The third is unlocated but blocked: for H < ½ the true value needs a definition before it can be enclosed.</p><div class="src">signature-truncation.html</div></div>
+<div class="grp">THE OPEN NOTEBOOKS — off the hub's index since 2026-08-13</div>
+<div class="it"><div class="hd"><div class="ti">Why these rows are here</div></div>
+      <p>On 13 August 2026 the <a href="/technical-reports">reports page</a> became finished-work-only
+      and its open-notebook rows moved to this catalogue. Every page below stays live at its old
+      URL; each line is derived from that page's own face — its title, its date, and its own status
+      words. Two of the sixteen movers already have rows above: <b>equilibrium-geometry</b> under
+      THE FRAME, and <b>rational-attention</b> under the short list.</p><div class="src">the hub's gnotes point here</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="refusal-as-output.html">When the honest answer is &ldquo;I refuse, and here is why&rdquo;</a></div>
+          <span class="bg" style="background:var(--ink-soft)">DRAFT</span></div>
+          <p>A five-rung ladder for refusal as a product. Its own section head: the ladder is real,
+          the product is not built &mdash; levels 0&ndash;1 BUILT, the rest DESIGNED or prototyped
+          in a scratchpad, never productised. No date on its face.</p><div class="src">refusal-as-output.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="refusal-taxonomy.html">The refusal taxonomy</a></div>
+          <span class="bg" style="background:var(--ink-soft)">NOTEBOOK</span></div>
+          <p>Six kinds of refusal already present in the tree, named. Its own face: nothing claimed,
+          certified, enclosed or proved; no literature gate has run. Opened 2026-07-31.</p><div class="src">refusal-taxonomy.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="geometry-approaches.html">Three attacks on the geometry thesis &mdash; what survives</a></div>
+          <span class="bg" style="background:var(--ink-soft)">TRACKER</span></div>
+          <p>A survival tracker over three rival attacks on the thesis, opened 2026-07-30; all four
+          positions RESOLVED on its face, and the record of a wrong position is never edited to
+          match what happened next.</p><div class="src">geometry-approaches.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="cap-for-mfg.html">Computer-assisted proof for MFG</a></div>
+          <span class="bg" style="background:var(--ink-soft)">PROSPECTUS</span></div>
+          <p>Positions this tree inside the CAP-for-MFG intersection. Its own top line: a prospectus
+          that reads like a result is the defect, so it says so at the top. A scoping correction is
+          dated on its face. Opened 2026-07-31.</p><div class="src">cap-for-mfg.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="certified-multiplicity.html">Certified multiplicity</a></div>
+          <span class="bg" style="background:var(--ink-soft)">PROSPECTUS</span></div>
+          <p>Certifying the dimension of an equilibrium set, not just a point. Nothing claimed on
+          its face; no literature gate has run. Opened 2026-07-31.</p><div class="src">certified-multiplicity.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="certified-price-formation.html">Certified price formation</a></div>
+          <span class="bg" style="background:var(--ink-soft)">PROSPECTUS</span></div>
+          <p>Five existing artefacts read as one priced-refusal object. Nothing claimed on its face,
+          with two corrections dated 2026-08-04 &mdash; one of them the BUILT line. Opened
+          2026-07-31.</p><div class="src">certified-price-formation.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="edge-of-chaos.html">The edge of chaos, certified</a></div>
+          <span class="bg" style="background:var(--amber)">PARTIAL</span></div>
+          <p>Its own literature gate ran 2026-08-04 and returned PARTIAL, additionally ruling the
+          phrase FOLKLORE-ADJACENT &mdash; the callout that said no gate had run was replaced, not
+          deleted. The arithmetic blocker fell 2026-08-01. Opened 2026-07-31.</p><div class="src">edge-of-chaos.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="circuit-path-truncation.html">Certified path truncation</a></div>
+          <span class="bg" style="background:var(--ink-soft)">PROSPECTUS</span></div>
+          <p>A direction extracted from someone else&rsquo;s published circuits work &mdash; bound
+          the tail a truncated path expansion drops &mdash; and what would have to be true for it
+          to be ours. Nothing claimed. Opened 2026-07-31.</p><div class="src">circuit-path-truncation.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="cobb-douglas-bracket.html">Bracketing Cobb&ndash;Douglas with rational arithmetic</a></div>
+          <span class="bg" style="background:var(--hjb)">REFUTED</span></div>
+          <p>Proposed and killed by counterexample before the page shipped, 2026-07-31: the sandwich
+          holds for output and fails for the derivatives, and only the derivatives matter. The
+          falsifier that killed it ships on the page. Kept because the kill took thirty seconds and
+          the reason is reusable.</p><div class="src">cobb-douglas-bracket.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="huggett-rational.html">Het-agent macro with only + &minus; &times; &divide;</a></div>
+          <span class="bg" style="background:var(--ink-soft)">SKETCH</span></div>
+          <p>A Huggett equilibrium needing no roots and no powers: a checked algebraic identity with
+          green, red and trap controls, tested 2026-07-31 &mdash; and a recipe that has not been
+          built. Its falsifier ships on the page.</p><div class="src">huggett-rational.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="interval-transcendentals.html">Interval transcendentals</a></div>
+          <span class="bg" style="background:var(--good)">DELIVERED</span></div>
+          <p>Opened 2026-07-31 as the shared blocker in front of every softmax direction; retired by
+          its own dated advance 2026-08-01 &mdash; sound interval exp, log, sin, cos and tanh now
+          ship in the public interval library.</p><div class="src">interval-transcendentals.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="degree-sensitivity.html">Degree vs sensitivity for Boolean functions</a></div>
+          <span class="bg" style="background:var(--hjb)">KILLED</span></div>
+          <p>A starter report assessed and killed 2026-07-31, structural: two independent
+          objections, either fatal on its own. Its own rule: structural kills survive a rescoring,
+          occupancy kills do not &mdash; this one stays dead.</p><div class="src">degree-sensitivity.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="seaport-uniqueness.html">A seaport MFG whose uniqueness condition is a determinant sign</a></div>
+          <span class="bg" style="background:var(--ink-soft)">ASSESSMENT</span></div>
+          <p>Someone else&rsquo;s preprint (submitted 26 Nov 2025) assessed 2026-07-31: an instance
+          for an unanswered question, and what could be built against it. Nothing claimed; no
+          kernel, no certificate.</p><div class="src">seaport-uniqueness.html</div></div>
+<div class="it"><div class="hd">
+          <div class="ti"><a href="alien-science.html">Alien science needs a disposition, not a sermon</a></div>
+          <span class="bg" style="background:var(--fp-deep)">ESSAY</span></div>
+          <p>How to respond to a claim whose reasoning you cannot follow, with runnable labs. Two
+          algebraic fragments CERTIFIED on its face; the full recomputation refused, with the
+          refusal priced and stated; literature review partial by its own admission.</p><div class="src">alien-science.html</div></div>
+<div class="grp">ELSEWHERE IN THE TREE — same theme, different pages</div>
+<div class="it"><div class="hd"><div class="ti">A certified phase diagram</div></div>
+      <p>the flagship forward item — a map of where behaviour changes across a parameter box, rather than one equilibrium. Directly instantiates the thesis above.</p><div class="src">site/program.html · Next</div></div>
+<div class="it"><div class="hd"><div class="ti">The price extremum</div></div>
+      <p>a parameter-bracketing candidate; survived triage on the same 'certifiable by bracketing' pattern.</p><div class="src">site/program.html · Next</div></div>
+<div class="it"><div class="hd"><div class="ti">A cross-language witness</div></div>
+      <p>the python-vs-js agreement raised from a check to a claim.</p><div class="src">site/program.html · Next</div></div>
+<div class="it"><div class="hd"><div class="ti">certified-resolution · envelope · oscillation-bound · stability-law</div></div>
+      <p>UNBACKED DRAFTS, owner ruling 2026-07-30: notes, not reports. Each is the sole file in its unit — no kernel, no battery, no gate, no ledger record.</p><div class="src">research/&lt;unit&gt;/paper.html</div></div>
+<div class="it"><div class="hd"><div class="ti">lawcert-compression</div></div>
+      <p>an interval-arithmetic certificate of a parametric monotonicity law; carries its own PARTIAL_RULING. Unshipped.</p><div class="src">research/lawcert-compression/</div></div>
+<div class="it"><div class="hd"><div class="ti">congestion-monotonicity</div></div>
+      <p>unshipped draft, but its tests/probe-tierb.js is CITED BY a certificate record — the directory is load-bearing even though the page is not.</p><div class="src">research/congestion-monotonicity/</div></div>
+<div class="it"><div class="hd"><div class="ti">emergent-geometry</div></div>
+      <p>NOT unbacked: exact rationals + Sturm, with a battery wired into make check. Listed here for completeness, not as a draft.</p><div class="src">research/emergent-geometry/</div></div>
+</div></div>
+<footer><div class="wrap"><div class="foot">
+  Research catalogue &middot; a working index, not reviewed &middot; Carlos Toledo &middot; 2026<br>
+  verdicts are judgements, not certificates &mdash; the certified work is at /technical-reports
+</div></div></footer><footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body></html>

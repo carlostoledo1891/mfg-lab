@@ -1,0 +1,7248 @@
+{
+  "summary": {
+    "benchmark": "HumanEval.jsonl.gz",
+    "items": 164,
+    "threshold": 0.5,
+    "per_operator_cap": 3,
+    "timeout_seconds": 10,
+    "dispositions": {
+      "SENSITIVE": 151,
+      "OUT-OF-SCOPE": 10,
+      "INSENSITIVE": 3
+    },
+    "mutants_total": 853,
+    "mutants_killed": 759,
+    "overall_kill_rate": 0.8898,
+    "unfalsifiable_items": 3,
+    "unfalsifiable_fraction": 0.0195,
+    "unfalsifiable_task_ids": [
+      "HumanEval/35",
+      "HumanEval/108",
+      "HumanEval/116"
+    ],
+    "elapsed_seconds": 30.6,
+    "what_this_is_not": "This is not a model score and not a claim that any model is wrong. It measures whether each item could DISTINGUISH a correct solution from a deliberately broken one. An item counted unfalsifiable may still have a correct reference solution; what it lacks is a suite that would have noticed otherwise."
+  },
+  "records": [
+    {
+      "task_id": "HumanEval/0",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 4,
+      "kill_rate": 0.8,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/1",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 6,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/2",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/3",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 5,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/4",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/5",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/6",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 3,
+      "kill_rate": 0.75,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/7",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/8",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/9",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/10",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 6,
+      "kill_rate": 0.8571,
+      "timeouts": 2,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "timeout"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 1,
+          "killed": true,
+          "reason": "timeout"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/11",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/12",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/13",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/14",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/15",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/16",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/17",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/18",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 5,
+      "kill_rate": 0.7143,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/19",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/20",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 3,
+      "kill_rate": 0.6,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/21",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/22",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/23",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/24",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/25",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 6,
+      "kill_rate": 0.75,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/26",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/27",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/28",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/29",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/30",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/31",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/10 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 10,
+      "killed": 8,
+      "kill_rate": 0.8,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/32",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 5,
+      "kill_rate": 0.625,
+      "timeouts": 1,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "timeout"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/33",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/34",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/35",
+      "disposition": "INSENSITIVE",
+      "why": "suite killed only 0/2 first-order mutants \u2014 a pass here is not evidence the solution is correct",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 0,
+      "kill_rate": 0.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/36",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 9/9 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 9,
+      "killed": 9,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/37",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/38",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/39",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 10/12 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 12,
+      "killed": 10,
+      "kill_rate": 0.8333,
+      "timeouts": 1,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "timeout"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/40",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/9 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 9,
+      "killed": 6,
+      "kill_rate": 0.6667,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/41",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/42",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/43",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 6,
+      "kill_rate": 0.8571,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/44",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 1,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "timeout"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/45",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/46",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 6,
+      "kill_rate": 0.8571,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/47",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/48",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 6,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/49",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/50",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 6,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/51",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/52",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/53",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/54",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/55",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/56",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/57",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 6,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/58",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/59",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/13 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 13,
+      "killed": 7,
+      "kill_rate": 0.5385,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/60",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/61",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/62",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/63",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 9/9 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 9,
+      "killed": 9,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/64",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/65",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 5,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/66",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/67",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/68",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 6,
+      "kill_rate": 0.8571,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/69",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 5,
+      "kill_rate": 0.8333,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/70",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/71",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/10 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 10,
+      "killed": 8,
+      "kill_rate": 0.8,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/72",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/10 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 10,
+      "killed": 8,
+      "kill_rate": 0.8,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/73",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/74",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/75",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 13/14 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 14,
+      "killed": 13,
+      "kill_rate": 0.9286,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/76",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 1,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "timeout"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/77",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/78",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/79",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/80",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 12/13 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 13,
+      "killed": 12,
+      "kill_rate": 0.9231,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/81",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 2,
+      "kill_rate": 0.6667,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/82",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 11/11 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 11,
+      "killed": 11,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/83",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 6,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/84",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/85",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 5,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/86",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/87",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/88",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 6,
+      "kill_rate": 0.8571,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/89",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/90",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/91",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/92",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 11/11 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 11,
+      "killed": 11,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/93",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/94",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 9/11 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 11,
+      "killed": 9,
+      "kill_rate": 0.8182,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/95",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 10/11 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 11,
+      "killed": 10,
+      "kill_rate": 0.9091,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/96",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/97",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 5,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/98",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/99",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 3,
+      "kill_rate": 0.5,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/100",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/101",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/102",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/103",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/104",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/105",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/106",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/107",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 11/11 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 11,
+      "killed": 11,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/108",
+      "disposition": "INSENSITIVE",
+      "why": "suite killed only 3/7 first-order mutants \u2014 a pass here is not evidence the solution is correct",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 3,
+      "kill_rate": 0.4286,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/109",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/110",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/111",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 4,
+      "kill_rate": 0.6667,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/112",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/113",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 6,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/114",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 3,
+      "kill_rate": 0.6,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/115",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/116",
+      "disposition": "INSENSITIVE",
+      "why": "suite killed only 0/1 first-order mutants \u2014 a pass here is not evidence the solution is correct",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 0,
+      "kill_rate": 0.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/117",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 5,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/118",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 10/10 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 10,
+      "killed": 10,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/119",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 13/13 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 13,
+      "killed": 13,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/120",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/121",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/122",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/123",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 9/9 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 9,
+      "killed": 9,
+      "kill_rate": 1.0,
+      "timeouts": 2,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "timeout"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "timeout"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/124",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/12 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 12,
+      "killed": 7,
+      "kill_rate": 0.5833,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/125",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/126",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 9/9 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 9,
+      "killed": 9,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/127",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/13 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 13,
+      "killed": 8,
+      "kill_rate": 0.6154,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/128",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 6,
+      "kill_rate": 0.8571,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/129",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/9 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 9,
+      "killed": 6,
+      "kill_rate": 0.6667,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/130",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/131",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/132",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 6/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 6,
+      "kill_rate": 0.8571,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/133",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 2/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 2,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/134",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/135",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 4,
+      "kill_rate": 0.6667,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/136",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/137",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/2 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 2,
+      "killed": 1,
+      "kill_rate": 0.5,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/138",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/139",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 3,
+      "kill_rate": 0.75,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/140",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/9 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 9,
+      "killed": 8,
+      "kill_rate": 0.8889,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/141",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "drop_not",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/142",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 9/10 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 10,
+      "killed": 9,
+      "kill_rate": 0.9,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/143",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 7,
+      "kill_rate": 0.875,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/144",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 5,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/145",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 3,
+      "kill_rate": 0.5,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/146",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 5,
+      "kill_rate": 0.7143,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/147",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 4,
+      "kill_rate": 0.5714,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/148",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 8/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 8,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/149",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/150",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 5,
+      "kill_rate": 0.8333,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/151",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 7,
+      "kill_rate": 0.875,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/152",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/153",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 9/10 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 10,
+      "killed": 9,
+      "kill_rate": 0.9,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "boolean",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/154",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/8 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 8,
+      "killed": 5,
+      "kill_rate": 0.625,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "bool_flip",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/155",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 5/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 5,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/156",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 4,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/157",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 7/7 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 7,
+      "killed": 7,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "comparison",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "boolean",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/158",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 1/1 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 1,
+      "killed": 1,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/159",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/5 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 5,
+      "killed": 4,
+      "kill_rate": 0.8,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 2,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/160",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/3 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 3,
+      "killed": 3,
+      "kill_rate": 1.0,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/161",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 3/4 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 4,
+      "killed": 3,
+      "kill_rate": 0.75,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/162",
+      "disposition": "OUT-OF-SCOPE",
+      "why": "no first-order mutant compiled for this solution \u2014 the item cannot be probed by this operator set, which is a limit of the prober not the suite",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 0,
+      "killed": 0,
+      "kill_rate": null
+    },
+    {
+      "task_id": "HumanEval/163",
+      "disposition": "SENSITIVE",
+      "why": "suite killed 4/6 first-order mutants",
+      "gold_passes": true,
+      "null_killed": true,
+      "mutants": 6,
+      "killed": 4,
+      "kill_rate": 0.6667,
+      "timeouts": 0,
+      "detail": [
+        {
+          "operator": "comparison",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "arithmetic",
+          "site": 1,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 0,
+          "killed": true,
+          "reason": "exit1"
+        },
+        {
+          "operator": "const_offset",
+          "site": 1,
+          "killed": false,
+          "reason": "pass"
+        },
+        {
+          "operator": "const_offset",
+          "site": 2,
+          "killed": false,
+          "reason": "pass"
+        }
+      ]
+    }
+  ]
+}

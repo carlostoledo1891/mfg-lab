@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite it as below."
+title: "MFG Lab: certificate-first mean-field games — a certification toolkit, computer-assisted proofs, and two live laboratories"
+type: software
+authors:
+  - family-names: Toledo
+    given-names: Carlos
+    email: carlos@carlostoledo.co
+year: 2026
+license: MIT
+abstract: >-
+  A certification toolkit (eqcert: interval and exact-rational arithmetic,
+  radii-polynomial and Krawczyk operators, and a Certificate type that cannot
+  be constructed without a falsifier); computer-assisted proofs for a
+  stationary mean-field game (mfg-cap: existence, local uniqueness, a validated
+  ergodic constant, density positivity, and certified multiplicity in the
+  regime where uniqueness theory is silent); two single-file interactive
+  laboratories; and a validated Python kernel — for mean-field games and
+  network equilibria in the monotonicity school. Every solve runs live; every
+  claim ships with a certificate (pre-update residuals, adjoint identities,
+  machine-zero KKT audits, verified interval enclosures), validated by headless
+  batteries that extract the kernels from the artifacts at run time.
