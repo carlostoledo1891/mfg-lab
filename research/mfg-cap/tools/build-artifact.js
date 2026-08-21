@@ -77,7 +77,25 @@ const IV = __mods.interval, MFG = __mods.mfg1d, VAL = __mods.validate;
 
 const tpl = fs.readFileSync(path.join(ROOT, 'tools', 'artifact-template.html'), 'utf8');
 if (tpl.indexOf('/*@@KERNELS@@*/') < 0) throw new Error('template lost its kernel marker');
-const out = tpl.replace('/*@@KERNELS@@*/', bundle);
+let out = tpl.replace('/*@@KERNELS@@*/', bundle);
+/* ROBOTS — and why the template and the page must DISAGREE. artifact-template.html is an
+   UNLISTED template that was shipping indexable under the real report's <title>, competing with
+   it in search; it was given `noindex, nofollow` on 2026-08-21 and keeps it. mfg-cap.html is a
+   PUBLIC page and must be indexable. The generated page inherited the refusal verbatim, so the
+   flagship artifact was noindex on the live site while its PAGES.json row said `public` — a
+   page held back by a directive meant for its mould. The inversion happens HERE so that neither
+   file is hand-maintained and the two cannot drift apart.
+   ASSERTED, not best-effort: if the template's block ever changes shape this THROWS instead of
+   silently shipping whatever it found. A noindex nothing notices is the vacuous species C10
+   names — the page would keep passing every gate while being invisible. */
+const TPL_ROBOTS = /<!-- This is a TEMPLATE, not a page\.[\s\S]*?-->\n<meta name="robots" content="noindex, nofollow">/;
+if (!TPL_ROBOTS.test(out)) {
+  throw new Error('artifact-template.html lost its noindex block — refusing to build (see the ROBOTS note above)');
+}
+out = out.replace(TPL_ROBOTS,
+  '<!-- Robots INVERTED from the template by tools/build-artifact.js: the template is unlisted and\n' +
+  '     noindex, this generated page is public and must be indexable. Never hand-edit. -->\n' +
+  '<meta name="robots" content="index, follow">');
 /* WHERE THE ARTIFACT GOES, and it moved on 2026-08-08 (REBUILD_PLAN phase 2).
    It was ROOT/mfg-cap.html — the unit directory — while the page PUBLISHED at
    technical-reports/mfg-cap.html. Two consequences, both measured:

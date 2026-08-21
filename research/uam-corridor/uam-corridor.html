@@ -10,7 +10,7 @@
       no-airworthiness disclaimer ON THE PAGE, not in this comment. The forbidden-sentence
       list was checked against the rendered prose before shipping.
   (2) Every number on this page is produced by the verifier published beside it
-      (research/challenges/lane/uam-corridor/verify.js, 13 checks incl. two mutation controls)
+      (research/challenges/lane/uam-corridor/verify.js, 18 checks incl. two mutation controls)
       and pinned by the unit's page battery — no number is prose-only.
   (3) The instance is ILLUSTRATIVE and says so in its own section, with the source document
       sha256-pinned and the derived-vs-stylized split stated. Nothing here is Eve's data;
@@ -380,8 +380,8 @@ td.mono{font-family:var(--data);font-size:12.5px;font-variant-numeric:tabular-nu
       controls that must go red, because a check that has never been seen failing proves
       nothing:</p>
     <div class="codeblock"><pre><code>git clone --depth 1 https://github.com/carlostoledo1891/mfg-lab
-cd mfg-lab/technical-reports/lane/uam-corridor
-node verify.js        # 13 checks, incl. 2 mutation controls -> ALL PASS, exit 0</code></pre></div>
+cd mfg-lab/research/challenges/lane/uam-corridor
+node verify.js        # 18 checks, incl. 2 mutation controls -> ALL PASS, exit 0</code></pre></div>
     <p>What counts as a certificate on this site &mdash; and what gets refused the word &mdash;
       is defined once, at <a href="/certificates">/certificates</a>. The refusal grammar this page
       uses (an honest REFUSED as a first-class verdict) is the same one the

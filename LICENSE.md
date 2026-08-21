@@ -29,7 +29,7 @@ check it yourself.
 
 The interval-arithmetic, radii-polynomial and exact-rational machinery this work builds
 on is **`eqcert`**, released separately under the **MIT License** and attributed as such —
-https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert. Those components remain under
+https://github.com/carlostoledo1891/mfg-lab/tree/main/core/interval. Those components remain under
 MIT, and the sections of each verifier ported from them carry that attribution in-file.
 
 ## What is NOT included, and is not licensed here
