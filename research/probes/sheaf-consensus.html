@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  DRAFT PROSPECTUS — sheaf-consensus. Owner ruling 2026-07-30: "Those pages will be drafts for now."
+
+  NOT EXPORTED, NOT ROUTED, kind `private` in PAGES.json. This is deliberate and it is the whole
+  design. Five pages built on the PAPER template, carrying the same chrome and the same implied
+  authority while carrying no evidence, would have been five more unbacked drafts — the exact
+  species archived as notes earlier the same day. A prospectus that looks like a report IS the
+  defect, whatever its prose says.
+
+  THE RULE: this file may state what it INTENDS to certify. It may never state that anything IS
+  certified, enclosed, proved or verified. The day this earns a certificate it stops being a
+  prospectus and becomes a report at /reports/<slug>.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[REOPENED as an artifact] Certified consensus bounds for discrete sheaf Laplacians — draft prospectus</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px; --nav-h:58px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.ro .k,.ro .v,.meta,.k{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:14px;
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+
+  /* ── SHARED SITE CHROME — adapted from the seed research/_engine/paper.html; identical
+       markup and CSS to the conforming _frontier siblings (cap-for-mfg.html et al). ───────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  .sitenav a,.nav a,.sitemap a{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  @media(max-width:430px){ .brand .sub{display:none} }
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+  
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+  .hero{padding:44px 0 0}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:22ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:70ch;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:19px;font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:9px;padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Draft prospectus 03 of 05 &middot; Applied category theory &amp; sheaf theory</div>
+    <h1>Certified consensus bounds for discrete sheaf Laplacians</h1>
+    <p class="lede">Target: <b>Agentic AI orchestration · multi-robot coordination</b></p>
+
+    <div class="callout">
+      <div class="k">Status — read this before anything below</div>
+      <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> There is no kernel, no
+        certificate, no falsifier and no ledger record behind it. It states a field, the first claim in
+        that field that would be <i>decidable</i>, what a certificate would have to assert, and what
+        would have to exist before any of it could be attempted. <b>A prospectus that reads like a result
+        is the defect</b>, so this one says so at the top and is not published.</p>
+    </div>
+
+    <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">Occupancy check, 2026-07-30 &mdash; NEEDS REFORMULATION &middot; OCCUPIED by generic technology</div>
+      <p><b>Empty by keyword, occupied in substance.</b> The gate's first reading was CLEAR and it
+   overruled itself, correctly. A cellular sheaf on a finite complex with finite-dimensional stalks
+   has a Laplacian that is <b>a finite symmetric PSD matrix</b> &mdash; and rigorous enclosure of all
+   eigenvalues of a Hermitian matrix is mature off-the-shelf technology (arXiv:2606.16217 "symveig",
+   behind two decades of Rump/Miyajima/INTLAB work). Cohomology dimensions are ranks of exact-rational
+   matrices. <b>The empty keyword search was measuring the absence of a paper nobody needs.</b>
+   Survives only if reformulated: uncertain stalk data, or a continuum limit.</p>
+      <p style="margin-top:9px"><b>Evidence and its holes:</b> 13 queries, 8 fetches, <b>abstract-level
+        metadata only</b> &mdash; no body was read, no MathSciNet/zbMATH/Scopus, no VNN-COMP or CAPD
+        publication lists. This is a scoping pass. It tested occupancy, <b>not feasibility</b>. Full
+        record and its falsifier: the mission's literature gate findings, held internally.</p>
+    </div>
+  </div>
+
+<div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">RESCORED 2026-07-30 &mdash; REOPENED at low priority — an application note, honestly labelled</div>
+      <p><b>The first verdict on this page was scored on ONE axis: is the mathematics new. That axis
+      contradicts this programme's own record.</b> mfg-congest is not new mathematics &mdash; it is the
+      first validated ENCLOSURE of known mathematics. wardrop-repro is explicitly a REPRODUCTION.
+      stock-constraint certifies an LP duality argument a century old. <b>None of the delivered work
+      here is novel mathematics and all of it is valuable</b>, so killing new ideas by a standard the
+      existing work would itself fail was an error.</p>
+      <p style="margin-top:9px"><b>Academic novelty:</b> ZERO — a sheaf Laplacian is a finite symmetric PSD matrix and verified Hermitian eigensolvers are mature.</p>
+      <p style="margin-top:6px"><b>Artifact value &mdash; does a CHECKABLE version exist?</b> MEDIUM. The eigensolver exists; nobody has pointed it at sheaf Laplacians and shipped the result as a re-runnable artifact with a consensus-rate reading attached.</p>
+      <p style="margin-top:9px">Weakest of the reopened three: the assembly step is the only work, and 'we called an existing verified eigensolver' is thin even as an artifact.</p>
+    </div>
+  <section>
+    <h2>What it is</h2>
+    <p class="body">A cellular sheaf attaches a vector space to each node and edge of a graph plus restriction maps
+    between them; its Laplacian measures how far local data are from agreeing globally. The kernel is
+    exactly the globally consistent states.</p>
+  </section>
+
+  <section>
+    <h2>Why it is a frontier</h2>
+    <p class="body">Multi-agent systems fail by disagreeing silently. A sheaf Laplacian's spectral gap is a
+    <b>rate</b>: how fast local disagreement must decay. That is the quantity an orchestration engineer
+    actually wants and rarely gets as a guarantee.</p>
+  </section>
+
+  <section>
+    <h2>The first decidable claim</h2>
+    <p class="body">Not a research programme &mdash; <b>one statement that is either true or false</b>, small
+      enough to be attacked. Everything else follows from having one of these.</p>
+    <div class="box claim"><div class="k">the claim</div><p>For a given discrete sheaf on a finite graph: <b>the smallest non-zero eigenvalue of the sheaf
+    Laplacian is at least c &gt; 0</b>, with c explicit &mdash; hence a certified consensus rate.</p></div>
+    <div class="box"><div class="k">what a certificate would assert</div><p>A rigorous interval enclosure of the spectral gap, and an exact-arithmetic determination of the
+    kernel dimension, so "how many independent global sections exist" is answered exactly rather than
+    numerically.</p></div>
+    <div class="box"><div class="k">what would falsify it</div><p>An eigenvalue below c, exhibited by an eigenvector whose Rayleigh quotient is certified below
+    the claimed floor.</p></div>
+  </section>
+
+  <section>
+    <h2>What must exist first</h2>
+    <p class="body">Exact restriction maps over rationals, a coboundary operator that is verified against the
+    definition rather than assumed, and an eigenvalue enclosure that does not silently assume
+    symmetry.</p>
+  </section>
+
+  <section>
+    <h2>The honest risk</h2>
+    <div class="box risk"><p>Rigorous eigenvalue enclosure is a mature craft &mdash; the contribution would be the sheaf
+    formulation and the consensus reading, not the enclosure technique. If that reading is already
+    standard in the ACT literature, the honest outcome is to say so and stop.</p></div>
+  </section>
+
+  <section>
+    <h2>Literature occupancy</h2>
+    <p class="body"><b>An occupancy check is a precondition, not a formality.</b> No claim here may be
+      called ours until a literature gate has returned a verdict on this specific niche &mdash; not on the
+      field, which in every one of these five is old and well populated, but on the narrow question of
+      whether <i>certified, rigorously enclosed</i> results already exist in it. Any of these five may be
+      killed by that check, and killing four of five now would be a good outcome.</p>
+  </section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Draft prospectus &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/errata">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

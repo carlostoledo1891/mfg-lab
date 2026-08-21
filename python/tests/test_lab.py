@@ -1,5 +1,5 @@
 """Battery for the Python Lab instruments — the twin of the two JavaScript
-batteries (``mfg-lab/tests/test-order-study.js``, ``test-failure-map.js``).
+batteries (``research/mfg-lab/tests/test-order-study.js``, ``test-failure-map.js``).
 
 The load-bearing checks are the ones where the instruments must REFUSE. A study
 that reports "order 2" for a second-order scheme proves nothing that a study

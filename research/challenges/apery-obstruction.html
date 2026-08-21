@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  STARTER REPORT — FrontierMath "Apéry-style irrationality proofs", assessed 2026-07-31.
+  Written at the owner's request, against a proposal the owner supplied: use MFG equilibrium
+  search as a GENERATOR of Apéry-like recurrences, with this tree's certification stack as the
+  back end.
+
+  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every other file in _frontier/:
+  it may state what it INTENDS to certify and may never state that anything IS certified.
+
+  THE FINDING THAT MATTERS is a correction to the proposal's premise, not an endorsement of it.
+  The proposal says the hard part is discovering the recurrence. For the flagship target, ζ(5),
+  the recurrence was published in 2002 and irrationality is still open. The bottleneck is
+  somewhere else, and this page says where.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[STARTER REPORT] Apéry-style irrationality — the recurrence is not the bottleneck</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px; --nav-h:58px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.ro .k,.ro .v,.meta,.k{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:14px;
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+  .hero{padding:44px 0 0}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:26ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:70ch;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:19px;font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:9px;padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  .box.good{border-left:3px solid var(--good)}
+  code{font-family:var(--data);font-size:13px;background:color-mix(in srgb,var(--grid) 45%,transparent);
+    padding:1px 5px;border-radius:4px}
+  table{border-collapse:collapse;margin-top:13px;font-size:13.6px;width:100%;max-width:100%}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--data);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft)}
+  td{color:var(--ink-soft)} td b{color:var(--ink);font-weight:600}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+
+  /* ── SHARED SITE CHROME — adapted from the seed research/_engine/paper.html; identical
+       markup and CSS to the conforming _frontier siblings (cap-for-mfg.html et al). ───────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  .sitenav a,.nav a,.sitemap a{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  @media(max-width:430px){ .brand .sub{display:none} }
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">FrontierMath starter report 01 of 02 &middot; Number theory</div>
+    <h1>Apéry-style irrationality proofs</h1>
+    <p class="lede">FrontierMath open problem, verbatim: <b>&ldquo;Adapt Apéry's proof of the irrationality
+      of &zeta;(3) to other constants.&rdquo;</b> Assessed against a proposal to use mean-field equilibrium
+      search as the generator of the missing recurrence.</p>
+
+    <div class="callout">
+      <div class="k">Status — read this before anything below</div>
+      <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> There is no kernel, no
+        certificate, no falsifier and no ledger record behind it. It assesses a direction and names one
+        artifact that could be built. <b>A prospectus that reads like a result is the defect</b>, so this
+        one says so at the top and is not published.</p>
+    </div>
+
+    <div class="callout" style="border-color:var(--hjb);background:color-mix(in srgb,var(--hjb) 6%,transparent)">
+      <div class="k" style="color:var(--hjb)">The premise correction &mdash; this is the finding</div>
+      <p><b>The proposal says: &ldquo;The difficult part is discovering the recurrence.&rdquo; For &zeta;(5),
+        that is not true, and it has not been true since 2002.</b> Zudilin published a third-order
+        Apéry-like recursion for &zeta;(5) &mdash; <code>arXiv:math/0206178</code>, <i>&ldquo;A third-order
+        Apéry-like recursion for &zeta;(5)&rdquo;</i> &mdash; with solutions whose quotients converge to
+        &zeta;(5). <b>The irrationality of &zeta;(5) remains open anyway.</b> The recurrence exists; the
+        proof does not follow from it.</p>
+      <p style="margin-top:9px">A generator aimed at producing recurrences is therefore aimed at a
+        bottleneck that is <b>already cleared</b> on the flagship target. Any proposal in this direction has
+        to be re-aimed at what actually blocks, which is stated in the next section.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>What actually blocks — the arithmetic, not the recurrence</h2>
+    <p class="body">An Apéry proof has three ingredients and the proposal names them correctly: a recurrence,
+      a quantity approximating the constant extraordinarily well, and asymptotic control. What the proposal
+      misses is that these are not three independent difficulties. <b>The third is a race between two rates,
+      and the race is arithmetic.</b></p>
+    <p class="body" style="margin-top:11px">Apéry's argument produces linear forms <code>a&#8345;&zeta;(3) &minus; b&#8345;</code>
+      where <code>a&#8345;</code> and <code>b&#8345;</code> are rationals with <i>controlled denominators</i>
+      &mdash; the classical <code>d&#8345;&sup3;a&#8345; &isin; &#8484;</code> integrality. Irrationality
+      follows only when the error decays <b>faster than the denominators grow</b>. Zudilin's &zeta;(5)
+      recursion loses that race: the decay and growth exponents are governed by the roots of the
+      characteristic polynomial <code>&mu;&sup3; + 2368&mu;&sup2; &minus; 752&mu; &minus; 16</code>, and they
+      do not clear the bar. The search literature records the same thing from the other side &mdash;
+      extensive computer searching has failed to find the constants needed to push Apéry's method onto the
+      higher odd zeta values.</p>
+    <div class="box risk"><div class="k">why this kills the MFG generator, structurally</div>
+      <p><b>Irrationality turns on integrality, and no continuum limit can see integrality.</b> The proposal's
+      mechanism is an HJB equation whose optimal drift <code>u*(t)</code> yields the recurrence coefficients.
+      An HJB drift is real-valued. It can optimise growth <i>rates</i>; it cannot distinguish a coefficient
+      whose denominators clear <code>d&#8345;&sup3;</code> from one that misses by a prime. The single
+      property that decides an Apéry proof is invisible to the machinery proposed to find it.</p>
+      <p style="margin-top:9px">This is a <b>structural</b> objection in the sense <code>SCORING.json</code>
+      fixes: it says the thing cannot work, not that someone got there first. Under this tree's own rule,
+      structural kills survive rescoring and occupancy kills do not. <b>MFG-as-generator for Apéry is
+      killed.</b> What is not killed is on the next screen, and it is worth more.</p></div>
+  </section>
+
+  <section>
+    <h2>What survives — and it is exactly this tree's product</h2>
+    <p class="body">Turn the problem around. If the bottleneck is a race between two certified exponents,
+      then <b>deciding whether a given recurrence wins that race is a certification problem</b>, and
+      certification is what this tree does. The artifact is not a prover. It is a
+      <b>refuter with a measured margin.</b></p>
+
+    <div class="box claim"><div class="k">the first decidable claim</div>
+      <p>For a given Apéry-like recurrence, presented as its characteristic polynomial with integer
+      coefficients and a denominator-growth exponent: <b>the resulting linear forms do &mdash; or do not
+      &mdash; satisfy the irrationality inequality</b>, decided by certified real-root isolation of that
+      polynomial in exact rational arithmetic.</p></div>
+
+    <div class="box"><div class="k">what a certificate would assert</div>
+      <p>A certified bracket on each real root of the characteristic polynomial, obtained by
+      <b>Sturm sequences over exact rationals</b> &mdash; no floating point anywhere in the decision &mdash;
+      and hence certified upper and lower bounds on the decay and growth exponents, and the sign of their
+      difference. The verdict is <code>PROVED</code>, or <code>REFUSED</code> together with
+      <b>the margin by which it missed</b>.</p></div>
+
+    <div class="box"><div class="k">the red and green controls, which already exist as mathematics</div>
+      <p><b>&zeta;(3) is the green control:</b> Apéry's own recurrence must come out <code>PROVED</code>, or
+      the artifact is wrong. <b>&zeta;(5) with Zudilin's recursion is the red control:</b> it must come out
+      <code>REFUSED</code>, because irrationality of &zeta;(5) is open &mdash; if the artifact ever proves
+      it, the artifact is broken. A checker that ships with a case it must fail is the falsifier discipline
+      this tree already requires, handed to us by the literature for free.</p></div>
+
+    <div class="box"><div class="k">what would falsify it</div>
+      <p>A recurrence whose exponents the checker brackets on the wrong side of the truth &mdash; detectable
+      by mutation, since a deliberately perturbed characteristic polynomial must flip the verdict. Standard mutation-harness territory, and this tree has the harness.</p></div>
+  </section>
+
+  <section>
+    <h2>What must exist first</h2>
+    <p class="body">Less than usual, which is the point of naming this one.</p>
+    <table>
+      <tr><th>Requisite</th><th>State in this tree</th></tr>
+      <tr><td><b>Exact rational arithmetic</b></td><td><code>core/interval/rational.js</code> &mdash; exists</td></tr>
+      <tr><td><b>Sturm sequences / real root counting</b></td><td>exists at <code>research/emergent-geometry/</code>, where it already backs a certificate class</td></tr>
+      <tr><td><b>Certificate with a falsifier</b></td><td><code>core/interval/certificate.js</code> &mdash; <code>PROVED / REFUSED / NOT_CHECKED</code>, exists</td></tr>
+      <tr><td><b>The irrationality inequality, stated once, correctly</b></td><td><b>DOES NOT EXIST.</b> This is the whole mathematical requisite and it must be read out of the literature, not remembered</td></tr>
+      <tr><td><b>Denominator-growth exponent per recurrence</b></td><td><b>DOES NOT EXIST.</b> Needs to be sourced per instance; it is an input to the checker, not something the checker derives</td></tr>
+    </table>
+    <p class="body" style="margin-top:13px">Two requisites, both bibliographic rather than engineering. That
+      is an unusually cheap frontier item, and the reason it is worth writing down.</p>
+  </section>
+
+  <section>
+    <h2>Scored on the two axes</h2>
+    <p class="body"><code>SCORING.json</code>, owner's correction 2026-07-30: score on academic novelty
+      <b>and</b> artifact value, never novelty alone.</p>
+    <div class="box"><div class="k">N — academic novelty</div>
+      <p><b>ZERO.</b> Every ingredient is classical. Apéry 1978, Zudilin 2002, Sturm 1829. Nothing here is
+      new mathematics and the report should not pretend otherwise.</p></div>
+    <div class="box good"><div class="k">A — artifact value: does a checkable version exist?</div>
+      <p><b>Provisionally HIGH, and unverified.</b> The claim would be that no zero-dependency, seconds-to-run,
+      independently checkable decision procedure exists that takes an Apéry-like recurrence and returns a
+      certified verdict with a margin. <b>That claim has not been through a literature gate and must not be
+      stated until it has.</b> Computer algebra systems certainly compute Sturm sequences; whether anyone has
+      shipped this specific artifact, with a refusal that reports its own margin, is exactly the narrow
+      occupancy question the gate exists to answer.</p></div>
+  </section>
+
+  <section>
+    <h2>The honest risk</h2>
+    <div class="box risk"><p><b>The artifact may be true and boring.</b> If the answer for every recurrence
+      anyone cares about is already in the literature as a printed exponent, then a checker that recomputes
+      it certifiedly adds rigour nobody was missing. The defence is the refusal margin &mdash; &ldquo;&zeta;(5)
+      misses by <i>this much</i>&rdquo; is a number that points at how much a new construction would have to
+      improve, and that is a usable research instrument rather than a re-derivation.</p>
+      <p style="margin-top:9px"><b>And the larger risk: it does not solve the FrontierMath problem.</b> It
+      decides candidates; it does not produce them. Nothing in this report claims a route to the irrationality
+      of &zeta;(5), and the page would be dishonest if it implied one.</p></div>
+  </section>
+
+  <section>
+    <h2>The general proposal, assessed separately</h2>
+    <p class="body">The supplied text's broadest idea &mdash; <i>&ldquo;MFG not as a proof technique but as
+      a search engine for mathematics&rdquo;</i>, treating recurrences, inequalities and proof fragments as
+      populations of interacting agents &mdash; is the most original thing in it, and it is
+      <b>not</b> killed by anything above.</p>
+    <p class="body" style="margin-top:11px">But it is very likely <b>occupied</b>, and by strong incumbents:
+      optimisation-driven discovery of mathematical structures, verified afterwards by an exact checker, is
+      the operating principle of FunSearch, PatternBoost and the reinforcement-learning-for-combinatorics
+      line of work. <b>Occupancy is not a structural kill</b> under this tree's corrected rubric, so the
+      direction stays open &mdash; but the differentiator cannot be &ldquo;we verify the output&rdquo;,
+      because those systems already do. <b>This needs a real literature gate before another word is written
+      about it,</b> and this page deliberately stops here rather than guessing the verdict.</p>
+  </section>
+
+  <section>
+    <h2>Citations and the holes in them</h2>
+    <p class="body">Identifiers and titles below were confirmed at search level on 2026-07-31.
+      <b>No paper body was read. No MathSciNet, zbMATH or Scopus pass was run.</b> This is a scoping pass:
+      it tested premises, not correctness of the mathematics quoted. Before any of this is repeated
+      anywhere outward-facing it goes through a citation check that fetches every identifier at
+      source &mdash; the standing rule after a live false attribution on the flagship page.</p>
+    <table>
+      <tr><th>Reference</th><th>Used here for</th></tr>
+      <tr><td><b>Zudilin</b>, <i>A third-order Apéry-like recursion for &zeta;(5)</i>, <code>arXiv:math/0206178</code></td><td>The premise correction: the &zeta;(5) recurrence exists and does not yield irrationality</td></tr>
+      <tr><td><b>Huang</b>, <code>arXiv:1907.00847</code></td><td>Not used here; see the sibling report</td></tr>
+      <tr><td>Apéry's theorem, &zeta;(3), 1978</td><td>The green control</td></tr>
+    </table>
+  </section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Starter report &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record &middot; assessed 2026-07-31
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/errata">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

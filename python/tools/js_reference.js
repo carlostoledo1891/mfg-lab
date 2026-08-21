@@ -40,10 +40,12 @@ const ROOT = path.resolve(__dirname, '..', '..');       // python/tools -> the t
    every page now lives at its route and site/ publishes at the export root. The monorepo
    path is therefore the export path with `site/` in front of it, which is the first time
    these two candidates have differed by a prefix instead of by a rename. */
-const MFGLAB_DIR = [path.join(ROOT, 'site', 'mfg-lab'),  /* the monorepo: site/<route> */
-                    path.join(ROOT, 'mfg-lab')]              /* the flat exported tree */
-                   .find(d => fs.existsSync(d)) || path.join(ROOT, 'mfg-lab');
-const HTML = path.resolve(process.env.MFG_HTML || path.join(MFGLAB_DIR, 'index.html'));
+/* ONE DIRECTORY SINCE 2026-08-21: the structure migration makes source path and published path
+   the same string, so `research/mfg-lab/` is the answer in the monorepo and in the export, and the
+   artifact is `mfg-lab.html` in both (it was `index.html` only so a directory could answer to its
+   own name — unnecessary once a page's path IS its URL). */
+const MFGLAB_DIR = path.join(ROOT, 'research', 'mfg-lab');
+const HTML = path.resolve(process.env.MFG_HTML || path.join(MFGLAB_DIR, 'mfg-lab.html'));
 if (!fs.existsSync(HTML)) {
   /* This is a MISSING FILE, not a failed assertion — say so, instead of dying in
      an ENOENT stack trace that reads like a bug in fs. js_reference.js exists to

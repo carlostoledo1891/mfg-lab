@@ -34,7 +34,7 @@ pytest                       # certificate battery, mirrors test-wardrop.js
 pytest tests/test_crosslang.py   # Python vs shipped JS agree to ~1e-9 on totals
 ```
 
-The cross-language test extracts the MWD kernel from `mfg-lab/index.html`, solves each
+The cross-language test extracts the MWD kernel from `research/mfg-lab/mfg-lab.html`, solves each
 scenario in Node, and asserts the Python totals match to `1e-9` — so the two
 implementations cannot silently drift. Chain: Python ↔ shipped JS ↔ dev battery
 ↔ paper Table I.
@@ -49,7 +49,7 @@ ports next; its battery `test-sin.js` becomes the pytest suite the same way.
 `mfglab.continuum`: the coupled HJB/Fokker–Planck field solve, band-clearing
 case analysis, hydro dispatch (water-value bisection, spill and cap-mixed
 regimes), damped Picard driver, and the independent DP exploitability audit —
-ported statement-for-statement from `technical-reports/stock-constraint.html`.
+ported statement-for-statement from `research/stock-constraint/stock-constraint.html`.
 `tests/test_crosslang_continuum.py` extracts and runs the shipped artifact at
 test time and holds the Python against it at ~1e-16 on the equilibrium price
 path (same iteration count, same certificates). A second solver,

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  A CERTIFICATE SHOULD SHIP WITH ITS FALSIFIER — the proposal note. Born 2026-08-14,
+  commissioned as P1 of the session radar record (internal), sequel to how-this-shop-runs: that
+  essay states how this shop verifies its own work; this note proposes one piece of the
+  discipline to the computer-assisted-proof genre, with the incident that shows why.
+
+  GATE: the literature gate for this note (internal record, 2026-08-14, PARTIAL, three
+  addenda). Its
+  forbidden-sentence list binds every line here. In particular: the mechanism is FOLKLORE
+  and is credited, never claimed (DeMillo-Lipton-Sayward 1978; Salari-Knupp 2000 with a
+  placebo; mCoq 2019); the negative is a DOCUMENTED SEARCH with its evidence base stated
+  in the text; "first/only/nobody" appear nowhere in this page's own voice; Zheng's
+  priority sentence is HIS, attributed; the ACM badging contrast was DROPPED because the
+  policy page could not be fetched at source (unquotable is unshippable); the cake_lpr
+  LNCS volume number is omitted (two sources conflict); Appel-Haken is not cited at all.
+
+  EVERY NUMBER IS A DATED RECORD, NOT A LIVE READOUT (the parent essay's rule). The
+  "seven verifiers" count was measured 2026-08-14 by grepping the shipped lane verifiers;
+  the ledger counts carry their measurement date in the text.
+
+  CITATIONS: all verified at source 2026-08-14 (the gate's fetch logs and its addenda). Zheng's abstract was re-extracted byte-faithfully by curl before the one
+  verbatim quote here was written. Salari-Knupp §7 was read as page images from the OSTI
+  PDF. RadiiPolynomial.jl's test file was read inside a shallow clone of the repository.
+  mCoq, Gambit and the DSA 2017 paper are cited at TITLE level - their identifiers are
+  verified, their bodies unread, and the prose claims nothing beyond their titles.
+
+  DELIBERATELY ABSENT: any hiring ask (standing rule); any internal record identifier or
+  internal path; any characterization of Zheng's 11 defects beyond his abstract (the body's
+  enumeration was not read); any adjective about the audited authors - the audited
+  certificate is identified exactly as Zheng identifies it, clinically, because the point
+  of this note is the proposal, not the incident's protagonists; the Popper line (no
+  citable edition obtained); the ACM badging contrast (policy page unreachable at source).
+
+  Chrome (topnav markup, footer markup, :root tokens) is the house chrome, verbatim from
+  how-this-shop-runs.html, which carries it from about.html, which carries it from
+  the seed.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A certificate should ship with its falsifier — Carlos Toledo</title>
+<meta name="description" content="A proposal for computer-assisted proofs: publish, beside every certificate, the mutation that makes its checker go red — the patch, both exit codes, the hashes. With the 2026 audit incident that shows why, and the prior art credited.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow,max-snippet:-1">
+<link rel="canonical" href="https://www.carlostoledo.co/research/methods/certificate-falsifiers">
+<meta property="og:url" content="https://www.carlostoledo.co/research/methods/certificate-falsifiers">
+<meta property="og:title" content="A certificate should ship with its falsifier">
+<meta property="og:description" content="A proposal for the computer-assisted-proof genre: no checker counts until it has been seen going red on a deliberately broken copy — and the artifact proving it should ship beside the certificate.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.carlostoledo.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.carlostoledo.co/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","url":"https://www.carlostoledo.co/research/methods/certificate-falsifiers","headline":"A certificate should ship with its falsifier","datePublished":"2026-08-14","author":{"@type":"Person","name":"Carlos Toledo","email":"carlos@carlostoledo.co","url":"https://www.carlostoledo.co/about"}}
+</script>
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.crumb{display:flex;align-items:center;gap:7px;font-family:var(--data);font-size:11px;color:var(--ink-soft);min-width:0;overflow:hidden;white-space:nowrap}
+.crumb a{color:var(--ink-soft);text-decoration:none}
+.crumb a:hover{color:var(--fp-deep)}
+.crumb .s{opacity:.6}
+.crumb .here{color:var(--ink)}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} .crumb{display:none} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+blockquote{border-left:2px solid var(--grid);padding:4px 0 4px 17px;margin:14px 0;
+  font-size:13.5px;color:var(--ink-soft);max-width:76ch}
+section ul{list-style:none;margin:4px 0 12px;padding:0;border-top:1px solid var(--grid)}
+section ul li{padding:11px 0;border-bottom:1px solid var(--grid);font-size:13.5px;
+  line-height:1.6;color:var(--ink-soft);max-width:80ch}
+section ul li b{color:var(--ink);font-weight:600}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/reports">technical-reports</a><span class="s">/</span><span class="here">certificate-falsifiers</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+    </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">Methods &middot; proposal &middot; 14 August 2026</div>
+  <h1>A certificate should ship with its falsifier</h1>
+  <p class="lede">A computer-assisted proof rests on a checker, and a checker that has never
+    been seen failing proves nothing about its own attention. The proposal here is one
+    sentence: <b>publish, beside every computational certificate, the mutation that makes its
+    checker go red</b> &mdash; the minimal semantic corruption of the certified object, the
+    clean run&rsquo;s zero exit, the corrupted run&rsquo;s nonzero exit, and the hashes of
+    what was run. This page states the proposal, credits the prior art it is built from,
+    reports the audit incident that shows what its absence costs, and points at working
+    examples &mdash; every one of them on this site, checkable now.</p>
+
+  <section>
+    <h2>The trivially green checker</h2>
+    <p>The idea is old, and it is not mine. A checker that exits zero on every input has
+      passed every certificate ever written; so <i>some</i> demonstration that it can exit
+      nonzero is logically prior to reading anything into a green result. Software
+      engineering made this a discipline in 1978 &mdash; <b>mutation testing</b>: seed a small
+      deliberate fault, and a test suite that fails to notice is measured by that miss
+      (DeMillo, Lipton &amp; Sayward, <i>Hints on Test Data Selection: Help for the Practicing
+      Programmer</i>, Computer 11(4):34&ndash;41, 1978, <a
+      href="https://doi.org/10.1109/C-M.1978.218136">DOI 10.1109/C-M.1978.218136</a>).
+      Experimental science has owned the same idea longer under a different name: an assay
+      earns its readings by passing a positive and a negative control. Nothing in this note
+      claims that mechanism as new. The claim is narrower and about publishing practice: in
+      the computer-assisted-proof genre, the control is <b>run privately or not at all, and
+      almost never ships</b> &mdash; of six computer-assisted-proof artifact repositories
+      opened for this note, four ship no tests of any kind.</p>
+  </section>
+
+  <section>
+    <h2>The prior art, credited</h2>
+    <p>The strongest published relative is twenty-six years old and comes from scientific
+      computing. In Sandia report SAND2000-1444 (Salari &amp; Knupp, <i>Code Verification by
+      the Method of Manufactured Solutions</i>, June 2000, <a
+      href="https://doi.org/10.2172/759450">DOI 10.2172/759450</a>), one author took the
+      Navier&ndash;Stokes code the report had just verified to second order and
+      <b>deliberately sabotaged it, blind, twenty times across twenty-one cases</b>
+      &mdash; the twenty-first, by design, contained no mistake at all. The other author then had to find the faults using the
+      verification procedure itself. Their §7 reports the outcome with a candour worth
+      imitating: all ten order-of-accuracy mistakes were caught, the static and divergence
+      mistakes were caught, the efficiency mistake and seven formal mistakes were not &mdash;
+      and none of the escapes affected whether the equations were solved correctly. A seeded
+      blind protocol, a placebo, and an honestly stated detection scope, in 2000.</p>
+    <p>Mutation has reached proof artifacts too. <i>Mutation Analysis for Coq</i> (Celik,
+      Palmskog, Parovic, Gallego Arias &amp; Gligoric, ASE 2019, pp. 539&ndash;551, <a
+      href="https://doi.org/10.1109/ASE.2019.00057">DOI 10.1109/ASE.2019.00057</a>, with the
+      <a href="https://doi.org/10.1145/3377812.3382156">mCoq tool demo</a>) mutates Coq
+      definitions and asks whether a project&rsquo;s proofs notice; <i>Using Mutations to
+      Analyze Formal Specifications</i> (<a
+      href="https://doi.org/10.1145/3563768.3563960">DOI 10.1145/3563768.3563960</a>, 2022)
+      and <i>Mutation Testing Based Evaluation of Formal Verification Tools</i> (<a
+      href="https://doi.org/10.1109/DSA.2017.10">DOI 10.1109/DSA.2017.10</a>, 2017) carry
+      the same operator into specification and tool evaluation &mdash; both cited here by
+      title, their identifiers verified and their bodies unread.</p>
+    <p>And where a <b>verified checker</b> exists, the question &ldquo;can it go red?&rdquo;
+      is answered by something stronger than a test: a soundness theorem about the checker
+      itself. The SAT world has this &mdash; machine-checked certificate checkers proved
+      correct down to machine code (Tan, Heule &amp; Myreen, <i>cake_lpr: Verified
+      Propagation Redundancy Checking in CakeML</i>, TACAS 2021, pp. 223&ndash;241, <a
+      href="https://doi.org/10.1007/978-3-030-72013-1_12">DOI
+      10.1007/978-3-030-72013-1_12</a>; Lammich, <i>Efficient Verified (UN)SAT Certificate
+      Checking</i>, J. Automated Reasoning 64(3):513&ndash;532, <a
+      href="https://doi.org/10.1007/s10817-019-09525-z">DOI 10.1007/s10817-019-09525-z</a>).
+      That is the right answer where it exists. To our knowledge, none of the pipelines
+      that carry computer-assisted proofs in analysis &mdash; CAPD, INTLAB, Arb, the
+      bespoke MATLAB and Julia archives that accompany the papers &mdash; has a verified
+      checker of that kind. In exactly that gap, the empirical falsifier is the instrument
+      that is available today, to every author, at the cost of one patch and two runs.</p>
+  </section>
+
+  <section>
+    <h2>What an audit finds in a released certificate</h2>
+    <p>On 13 August 2026, Fan Zheng posted the audit that makes the gap concrete
+      (<i>Computer-assisted Proof Under Audit: Typos, Certificate Errors, and Reproducible
+      Exact Checks for a Symbolic Invertibility Proof</i>, <a
+      href="https://arxiv.org/abs/2608.13067">arXiv:2608.13067</a>): a version-pinned,
+      source-level audit of the exact-arithmetic certificate accompanying <a
+      href="https://arxiv.org/abs/2310.19781v2">arXiv:2310.19781v2</a> and its 2025
+      <i>Communications in Mathematical Physics</i> version. The audit reports <b>11
+      proof-affecting defects</b>, alongside typographical slips, with reproducible exact
+      counterexamples to several implemented bounds. Zheng states the priority claim as his
+      own &mdash; the first such audit, to his knowledge &mdash; and his
+      conclusion draws exactly the line this note cares about, quoted verbatim:</p>
+    <blockquote>&ldquo;The findings do not refute the intended theorem or its analytic
+      reduction, but they show that the published certificate does not prove the claimed
+      conclusion.&rdquo;</blockquote>
+    <p>The theorem may well stand; the <i>certificate</i> &mdash; the artifact whose entire
+      purpose was to remove doubt &mdash; did not do its job, and it took an independent
+      auditor, after journal publication, to notice &mdash; the journal version corrects
+      none of the audited items, as Zheng&rsquo;s abstract states plainly. A shipped falsifier would not have caught every
+      one of those defects either &mdash; no single instrument would &mdash; but it would
+      have established the one thing now in doubt at the base of the stack: that the
+      checker, as released, was ever capable of rejecting anything.</p>
+  </section>
+
+  <section>
+    <h2>The proposal, precisely</h2>
+    <p>What shipping a falsifier means, in the form this site has converged on:</p>
+    <ul>
+      <li><b>One minimal semantic mutation per falsifier.</b> A real mathematical corruption
+        of the certified object, or of the kernel that produces it &mdash; a sign flipped in a margin formula, a denominator
+        changed in an exact constant &mdash; never a syntax error, never a deleted
+        assertion. The mutation states what it breaks and why the checker must see it.</li>
+      <li><b>Both directions, in a throwaway copy.</b> The patched object must drive the
+        shipped checker to a nonzero exit; the clean object must exit zero. One direction
+        alone proves nothing: a checker that rejects everything passes the first test, one
+        that accepts everything passes the second.</li>
+      <li><b>The artifact is published beside the certificate</b>: the patch itself, both
+        recorded exit codes, and the hashes of the files as run &mdash; so a referee can
+        replay the pair, and so the claim &ldquo;this checker can go red&rdquo; is itself
+        checkable rather than asserted.</li>
+      <li><b>No bypass.</b> A mutation patch that no longer applies after a revision is a
+        failure to re-author, never a step to skip &mdash; the moment the falsifier is
+        allowed to rot, the certificate is back to unaccompanied green.</li>
+    </ul>
+    <p>This is not hypothetical practice. Measured on 14 August 2026: <b>all seven single-file lane verifiers published beside
+      this site&rsquo;s reports end with mutation controls that must fire</b> &mdash; the <a href="/research/uam-corridor/uam-corridor">air-taxi corridor
+      verifier</a> ends by showing its uniqueness condition failing at zero price and
+      conservation going red under a one-unit corruption; the <a
+      href="/research/challenges/verify-maxwell">Maxwell-counterexample verifier</a>
+      carries the same pattern, the <a href="/research/challenges/verify-poisson">Poisson
+      verifier</a> ends with its two controls as literally its last lines, and the
+      <a href="/certificates">certificate taxonomy</a> states what each verdict does and
+      does not establish. Behind the pages, the internal
+      evidence ledger held, same date, fifteen claims carrying seventeen recorded
+      mutation reds &mdash; each a patch with both exit codes and file hashes, produced by
+      a tool whose own header forbids a bypass flag. Measured against today&rsquo;s tree by
+      the deriving gate&rsquo;s own predicate, <b>eleven of the seventeen, across eight
+      claims, are fresh</b> &mdash; the recorded target still hashes to the bytes the red
+      was proven against &mdash; and <b>six have rotted</b> as targets moved or were
+      retired. That rot is exactly the failure mode the fourth bullet names, and it is
+      disclosed here rather than skipped, with the re-authoring owed: the rule would be
+      worth nothing if it exempted the page that proposes it. Dated records, not live
+      readouts; the linked pages carry the live checks.</p>
+    <p>One boundary drawn honestly, because the community&rsquo;s own tooling is moving.
+      On 3 August 2026, the <a
+      href="https://doi.org/10.5281/zenodo.5705258">RadiiPolynomial.jl</a> toolkit&rsquo;s
+      v0.11 added genuine negative-path tests: its existence checker is exercised on
+      hand-constructed infeasible bounds, with a paired accept/reject control and an
+      asserted failure message (<code>test/rpa/interval_existence.jl</code>). That is
+      checker-level negative control inside a <i>library&rsquo;s</i> unit suite &mdash; a
+      real step, eleven days before this note, and exactly the direction this proposal
+      points. The remaining step is the one this page argues for: the same discipline
+      attached to <i>each published certificate</i>, as part of what the paper ships.</p>
+  </section>
+
+  <section>
+    <h2>What this note does not claim</h2>
+    <div class="caveat">
+      <p>The mechanism is not new and is not claimed: it is mutation testing (1978), blind
+        seeded verification with a placebo (2000), and mutation analysis for proof
+        artifacts (2019), credited above. <b>We are not aware</b> of any published computer-assisted proof that ships a
+        mutation-verified falsifier beside its certificate &mdash; a <b>documented search,
+        not a proof</b>: eleven literal queries and six successful source fetches on
+        14 August 2026, plus six CAP artifact repositories cloned and read &mdash; four of
+        which ship no tests of any kind &mdash; and no sweep of MathSciNet, zbMATH, Scopus,
+        or full-text indices. One repository with a seeded-mutant test beside a published
+        certificate, found by anyone, falsifies the negative; corrections are wanted and
+        are published in the <a href="/errata">errata</a>. This is a proposal, not a
+        standard: one tree practices it. And an audit is not the practice proposed here
+        &mdash; Zheng&rsquo;s work is external and after publication; the falsifier belongs
+        to the author, at publication, which is precisely why it cannot be vacuous
+        reassurance: it ships with the artifact it indicts.</p>
+    </div>
+  </section>
+
+  <div class="foot">research/methods/certificate-falsifiers.html &middot; born 2026-08-14 &middot;
+    every number on this page is a dated record, not a live readout &mdash; the linked pages carry
+    the live ones &middot; no external fonts, scripts, stylesheets or images; the one script is
+    same-origin, cookieless page counting &middot; text CC&#8209;BY&nbsp;4.0</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/errata">errata log</a>, never quietly fixed.</p>
+    </div>
+    <nav class="sitemap" aria-label="Site map">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+      <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+    </nav>
+    <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+      programs MIT</p>
+  </div>
+</footer>
+
+</body>
+</html>

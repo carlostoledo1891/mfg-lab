@@ -7,8 +7,13 @@
 #   make check-all   check + headless-browser layout batteries + check-py.
 
 NODE := node
-LAB  := mfg-lab/tests
-SIN  := sin-mfg/tests
+# THE EXPORT AND THE MONOREPO SPELL THESE THE SAME WAY SINCE 2026-08-21. They were
+# `mfg-lab/tests` and `sin-mfg/tests` here and `research/mfg-lab/tests` /
+# `research/stock-constraint/tests` there, because the site tree published at the export root.
+# The structure migration makes a file's source path its published path, so there is one
+# spelling — which is also why this Makefile and the monorepo's now name the same targets.
+LAB  := research/mfg-lab/tests
+SIN  := research/stock-constraint/tests
 VENV := .venv
 PY   := $(VENV)/bin/python
 
@@ -39,8 +44,8 @@ check-eqcert:
 # cannot drift from what the battery proves.
 check-cap:
 	@echo "== mfg-cap batteries =="
-	@$(NODE) mfg-cap/tests/test-cap.js
-	@$(NODE) mfg-cap/tests/test-artifact.js
+	@$(NODE) research/mfg-cap/tests/test-cap.js
+	@$(NODE) research/mfg-cap/tests/test-artifact.js
 
 check-lab:
 	@echo "== mfg-lab batteries =="
@@ -71,7 +76,7 @@ check-sin:
 # test-water-value.js is NOT in this tree (2026-08-07), because the two solvers it certifies —
 # the deterministic dispatch LP and the scenario-tree water value — are withheld from this export.
 # The theorems it gates, their proofs and the certificate conditions are documented in full in
-# sin-mfg/docs/; the certified implementation is not published. A battery whose subject is absent
+# research/stock-constraint/docs/; the certified implementation is not published. A battery whose subject is absent
 # fails with a missing file and runs no check at all, which reads as a broken tree rather than as
 # a boundary, so it is omitted here and named instead.
 
@@ -82,7 +87,7 @@ check-py:
 	@if [ -x "$(PY)" ] && $(PY) -c "import numpy" 2>/dev/null; then \
 		$(PY) -m pytest -q python && \
 		echo "-- PLD martingale selftest --" && \
-		$(PY) sin-mfg/tests/pld_martingale_test.py --selftest >/dev/null && \
+		$(PY) research/stock-constraint/tests/pld_martingale_test.py --selftest >/dev/null && \
 		echo "PLD selftest: ALL PASS" ; \
 	else \
 		echo "SKIPPED — venv not built. This gate did NOT run. Run 'make venv'." ; \

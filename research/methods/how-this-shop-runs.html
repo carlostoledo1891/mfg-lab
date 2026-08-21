@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  HOW THIS SHOP RUNS — the methodology essay. Born 2026-08-13, commissioned as the piece that
+  states the method the rest of the site only exhibits: one person directing AI agents under
+  falsifiable verification. The /about page has carried a one-paragraph version since 2026-08-10
+  ("How these pages are made"); this page is that paragraph at full length.
+
+  THE RULE THIS PAGE IS WRITTEN UNDER, stated here so an editor keeps it: EVERY NUMBER IS A
+  DATED RECORD, NOT A LIVE READOUT. This page owns no program and computes nothing; a number
+  here names the date it was measured and survives as history even after the live value moves.
+  The pages that own live numbers are linked instead of copied — the same rule /about follows.
+
+  BOTH EXTERNAL CITATIONS WERE VERIFIED AT SOURCE ON 2026-08-13, per the house citation rule:
+  arXiv:2607.08986 (abstract page and v2 HTML body both fetched — author, title, win condition,
+  the vacuity incident, and the agent-log preservation all confirmed in the paper's own text)
+  and the vacuity paper (dblp record: Formal Methods in System Design 18(2), 2001, DOI
+  10.1023/A:1008779610539). Neither is quoted beyond what the fetched text supports.
+
+  DELIBERATELY ABSENT: any hiring ask (standing rule of this site — the reader should not be
+  able to tell whether the author is looking for work); any internal record identifier or
+  internal file path (the export token gate would refuse them, and a pointer a reader cannot
+  follow is a dangling pointer); the internal study of check blindness, which is unpublished —
+  its two headline measurements appear here as dated records because this essay is where the
+  method is stated, and the full instrument ships when it ships.
+
+  Chrome (topnav markup, footer markup, :root tokens) is the house chrome, verbatim from
+  about.html, which carries it verbatim from the seed.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How this shop runs — Carlos Toledo</title>
+<meta name="description" content="One person directing AI agents under falsifiable verification: no check counts until it has failed on a broken copy, every agent has a way to report failure, and the errors are published. The methods section for everything else on this site.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow,max-snippet:-1">
+<link rel="canonical" href="https://www.carlostoledo.co/research/methods/how-this-shop-runs">
+<meta property="og:url" content="https://www.carlostoledo.co/research/methods/how-this-shop-runs">
+<meta property="og:title" content="How this shop runs — directing AI agents under falsifiable verification">
+<meta property="og:description" content="The methods essay: checks that have been checked, the vacuous green, agents with a licence to fail, and the published errors that keep the whole thing honest.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.carlostoledo.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.carlostoledo.co/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","url":"https://www.carlostoledo.co/research/methods/how-this-shop-runs","headline":"How this shop runs — directing AI agents under falsifiable verification","datePublished":"2026-08-13","author":{"@type":"Person","name":"Carlos Toledo","email":"carlos@carlostoledo.co","url":"https://www.carlostoledo.co/about"}}
+</script>
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.crumb{display:flex;align-items:center;gap:7px;font-family:var(--data);font-size:11px;color:var(--ink-soft);min-width:0;overflow:hidden;white-space:nowrap}
+.crumb a{color:var(--ink-soft);text-decoration:none}
+.crumb a:hover{color:var(--fp-deep)}
+.crumb .s{opacity:.6}
+.crumb .here{color:var(--ink)}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} .crumb{display:none} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+section ul{list-style:none;margin:4px 0 12px;padding:0;border-top:1px solid var(--grid)}
+section ul li{padding:11px 0;border-bottom:1px solid var(--grid);font-size:13.5px;
+  line-height:1.6;color:var(--ink-soft);max-width:80ch}
+section ul li b{color:var(--ink);font-weight:600}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<!-- Vercel Web Analytics — cookieless page counts, same-origin, declared in source for the
+     same reason /about declares it: the export gate asserts every copy is byte-identical to
+     its source, so the tag lives in the source or it does not exist. -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/reports">technical-reports</a><span class="s">/</span><span class="here">how-this-shop-runs</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+    </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">Methods &middot; essay &middot; 13 August 2026</div>
+  <h1>How this shop runs</h1>
+  <p class="lede">One person, a fleet of AI agents, and a discipline built on the assumption that
+    both will be wrong: <b>no check counts until it has been seen failing on a deliberately broken
+    copy</b>, every agent has a way to report failure that is scored as success, and the errors
+    that get through anyway are published, dated, in the open. Everything else on this site is
+    output; this page is the method. It is written as an essay, but every incident in it is a
+    dated record.</p>
+
+  <section>
+    <h2>The arrangement</h2>
+    <p>The division of labour is stated on the <a href="/about">about page</a> and repeated here
+      because it is the premise of everything that follows: <b>the mathematics, the design of
+      every check, and every decision about what may be claimed are mine.</b> The writing and much
+      of the implementation are done by AI agents &mdash; coding agents run under standing
+      instructions, dispatched in parallel, their outputs landing as drafts in an append-only
+      internal record. The output rate of this site is a consequence of that arrangement.</p>
+    <p>What makes the arrangement trustworthy is not trust. <b>An agent&rsquo;s output is treated
+      exactly like a numerical claim from a stranger</b>: it enters as a claim, and it becomes a
+      result only when a check passes &mdash; a check that has itself been checked, in the sense
+      of the next section. The same standard applies in the other direction, to me: my own drafts
+      go through the same falsifiers, and most of the entries in the public
+      <a href="/errata">errata</a> are my errors, found by me, after publishing. The discipline
+      is symmetric because the failure it guards against is symmetric &mdash; a human who wants
+      the green light and a model that wants to please converge on the same defect.</p>
+  </section>
+
+  <section>
+    <h2>Checks that have been checked</h2>
+    <p>A test that has never failed is consistent with correct code, and equally consistent with a
+      test that tests nothing. So the unit of verification here is not the check but the
+      <b>check&nbsp;plus the demonstration that it can go red</b> &mdash; in the right direction.
+      Every falsifier is run twice, in a throwaway copy of the tree: once against a deliberately
+      broken kernel, where it must exit nonzero, and once against the clean tree, where it must
+      exit zero. A falsifier that passes the broken copy has no teeth; one that fails the clean
+      tree is not strict, it is broken. Only the pair counts, and the tool that proves the pair
+      <b>has no bypass flag</b> &mdash; its own header says there must never be one, because a
+      mutation patch that no longer applies is a failure to be re-authored, never a step to be
+      skipped.</p>
+    <p>Two further rules exist because they were paid for. <b>A skip is never a pass, and a crash
+      is never a verdict</b>: a check that could not run reports that distinctly, because a runner
+      that died before its first assertion looks exactly like a runner with nothing to report.
+      And <b>counts are measured, never remembered</b>: any number, line count, or citation that
+      ships is re-measured in the session that ships it, a rule bought by, among other things, a
+      modulus written from memory as prime that was composite. The standing instructions the
+      agents run under state each rule together with the incident that paid for it &mdash;
+      a rule with no receipt gets optimised away by the next rewrite.</p>
+  </section>
+
+  <section>
+    <h2>The vacuous green</h2>
+    <p>The deepest failure mode is the one the rules above do not reach: <b>passing and being
+      checked are independent properties.</b> A check that can go red, and that is green, may
+      still be looking at almost nothing. The model-checking literature has a name for the limit
+      case &mdash; a specification satisfied <i>vacuously</i> (Beer, Ben-David, Eisner &amp;
+      Rodeh, <i>Efficient Detection of Vacuity in Temporal Model Checking</i>, Formal Methods in
+      System Design 18(2), 2001, <a href="https://doi.org/10.1023/A:1008779610539">DOI
+      10.1023/A:1008779610539</a>) &mdash; and the term is used here rather than a local
+      invention.</p>
+    <p>It is not hypothetical in this tree; it is measured. On 9 August 2026, across thirteen of
+      the internal gates: <b>deleting a slice of what a check reads &mdash; twelve of twelve
+      noticed. Narrowing the sweep, with the tree untouched &mdash; four of eight stayed green</b>
+      after losing 76&ndash;82% of what they swept. One gate verified five of its twenty-one
+      pinned artifacts and printed <i>&ldquo;every byte every cert names is the byte on
+      disk.&rdquo;</i> Deletion and narrowing are different failures, and a red control only
+      proves a check notices a wrong value &mdash; it says nothing about whether the check was
+      pointed at the right amount of work.</p>
+    <p>So there is a probe for it: it narrows what each check reads, re-runs the check, and asks
+      whether the verdict moved. A first full sweep on 10 August 2026 found six gates blind and
+      all six were repaired the same day; <b>one of them was blind again a day later</b>, un-done
+      by an unrelated improvement. That recurrence is the honest finding: blindness is not a bug
+      you fix once, it is a property that decays under change, which is why an instrument exists
+      rather than a checklist. And the limit of the practice, stated plainly: <b>no gate runs the
+      probe automatically.</b> The newest entry in the <a href="/errata#case-6">errata</a>
+      &mdash; open since 6 August 2026 &mdash; is a real fix that an unrelated improvement
+      silently reverted, found only by running the instrument by hand. It stays open on the log
+      until it closes.</p>
+  </section>
+
+  <section>
+    <h2>Directing the agents</h2>
+    <p>The agent fleet is organised as named roles &mdash; fifteen of them as of 13 August 2026
+      &mdash; and the doctrine for running them reduces to three principles, each bought by a
+      measured incident.</p>
+    <ul>
+      <li><b>No agent judges its own work at the moment it matters.</b> The agent that designs an
+        attack on a claim, the one that executes it, and the one that rules on the outcome are
+        three different agents, because a proposer that verifies its own counterexample is a
+        certificate that is zero by construction. For a while this was enforced as a hard
+        monopoly &mdash; five powers, each reserved to one named role. It was repealed on
+        8 August 2026 after a measurement: moving one claim one step took four separate
+        dispatches of bookkeeping. What replaced it is <b>disclosure</b> &mdash; anyone may run
+        any step, and self-judged work must say so in its output. The risk assessment was right;
+        the price was wrong; both halves of that sentence are in the record.</li>
+      <li><b>An agent with no way to report failure will invent success.</b> Measured here before
+        it became doctrine: in a real literature search, three of four agents returned the
+        literal string <code>test</code> in every required field, and two of them labelled the
+        result CLEAR &mdash; a fabricated reassurance, not a missing one. So every role carries
+        an explicit failure vocabulary that is <i>scored as a success</i> &mdash; UNCERTAIN,
+        REFUSED, UNREACHABLE, no-law-found &mdash; with a reserved slot in its required output,
+        and the consumer of any agent&rsquo;s output applies a mechanical screen the producer
+        never applies to itself: a junk-token list, minimum lengths on evidence fields, no
+        citation without a resolvable identifier, no claimed search without its numbered literal
+        queries, and every hash recomputed by the reader.</li>
+      <li><b>Budgets are stated, spent, and reported.</b> Each dispatch carries a hard cap in
+        tool calls and closes by reporting its spend against it. A cap that binds is reported as
+        a cap, in the field the unfinished work belonged to &mdash; a half-done phase honestly
+        reported beats a padded one, and padding a thin result to beat a length threshold is the
+        same defect one layer up.</li>
+    </ul>
+    <p>Around the roles sits the record: the sessions&rsquo; working files &mdash; 86 of them as
+      of 13 August 2026 &mdash; and a failure catalogue of 25 dated entries, both append-only. A
+      record of what happened is never edited to match what happened next; a superseded plan is
+      superseded in writing. The internal evidence ledger, same date, holds 14 claims, 14
+      measurement runs, 68 attack records and 3 certificates; what ships publicly from each claim
+      is the part that makes it checkable &mdash; the page, its program, and its falsifier.</p>
+  </section>
+
+  <section>
+    <h2>What it produces</h2>
+    <p>The tempo is the visible consequence, and it has dates. The Maxwell-conjecture
+      counterexample paper appeared on 29 July 2026; its 24 equilibria were
+      <a href="/research/challenges/verify-maxwell">certified here</a>, with published falsifiers, on
+      4 August. The <a href="/research/faithfulness-ceiling/faithfulness-ceiling">preregistered audit of my
+      own verifier</a> committed its predictions before the harness existed, was <b>falsified at
+      9 of 14</b> by its own instrument, and published the falsified prediction as the headline
+      &mdash; then hardened the verifier the same day and re-measured at 14 of 14. The point of
+      the discipline is not that it prevents error; the errata above proves it does not. The
+      point is that <b>the cost of being wrong is a page, not a retraction of trust</b> &mdash;
+      because nothing was ever asked to be taken on trust.</p>
+  </section>
+
+  <section>
+    <h2>The precedent</h2>
+    <p>This way of working is young, but it is no longer only here. In July 2026 Joseph K.
+      Miller published <a href="https://arxiv.org/abs/2607.08986"><i>A Formalization of the
+      Mean-Field Derivation of the Vlasov Equation</i></a> (arXiv:2607.08986): one mathematician
+      directing coding agents to formalize Dobrushin&rsquo;s mean-field theory in Lean&nbsp;4
+      &mdash; existence, uniqueness, stability, the mean-field limit &mdash; with a falsifiable
+      win condition (the development compiles with no <code>sorry</code>, on the
+      library&rsquo;s foundational axioms alone), headline theorems in about a week, and the
+      per-session agent logs recoverable from the public repository. The detail that belongs on
+      this page: the one defect he singles out was a <b>vacuous pass</b>. A top exponent in the
+      library&rsquo;s differentiability class meant <i>real-analytic</i> where smooth was
+      intended; a nonzero real-analytic function cannot have compact support; so the class of
+      test functions had quietly collapsed to zero and a hypothesis held vacuously. The
+      machine&rsquo;s proof was valid, and empty &mdash; <b>the human caught it by reading.</b></p>
+    <p>Same division of labour, same failure mode, different proof stack. There, a formal kernel
+      checks every step and the human guards the <i>statements</i>. Here there is no kernel, so
+      the statements are guarded the way this page describes &mdash; falsifiers that must be
+      shown to fail, and a probe for the checks that pass while looking at nothing. The two
+      stacks meet at the same lesson: <b>the machine can certify that the proof is airtight; it
+      is much worse at noticing that the theorem has become empty.</b></p>
+  </section>
+
+  <section>
+    <h2>What this page does not claim</h2>
+    <div class="caveat">
+      <p>Checkable is not correct, and this page claims the weaker property only. The checks and
+        the code share one author, so they rule out slips but not a shared misconception. The
+        agent transcripts and the internal records described above are working files, not public
+        artifacts; <b>what is public is what makes the results checkable</b> &mdash; the
+        programs, the falsifiers, the <a href="/certificates">certificate taxonomy</a> that says
+        exactly what each verdict does and does not establish, and the
+        <a href="/errata">errata</a>. Nothing here is peer-reviewed, and no result on this site
+        has yet been independently reproduced &mdash; which is why every page ships its
+        falsifier rather than asking for trust.</p>
+    </div>
+  </section>
+
+  <div class="foot">research/methods/how-this-shop-runs.html &middot; born 2026-08-13 &middot;
+    every number on this page is a dated record, not a live readout &mdash; the linked pages carry
+    the live ones &middot; no external fonts, scripts, stylesheets or images; the one script is
+    same-origin, cookieless page counting &middot; text CC&#8209;BY&nbsp;4.0</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/errata">errata log</a>, never quietly fixed.</p>
+    </div>
+    <nav class="sitemap" aria-label="Site map">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+      <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+    </nav>
+    <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+      programs MIT</p>
+  </div>
+</footer>
+
+</body>
+</html>

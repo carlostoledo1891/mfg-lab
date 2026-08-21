@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>No metric, no potential — a machine-checked certificate that a flow is not a gradient</title>
+<meta name="description" content="An exact-rational certificate that a dynamical system admits no Riemannian gradient structure near an equilibrium — under every metric and every potential at once. Two exhibits: softmax attention (224 of 864 engineered instances certified; the d=2 slice all-real by theorem) and the Brusselator (37 of 60, with an exact twin predicate agreeing at every instance). The certificate runs in this page.">
+<style>
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A;
+    --fp:#6F93A1; --fp-deep:#4F6F7A;
+    --hjb:#B42318; --bad:#B42318;
+    --warn:#475569; --amber:#475569;
+    --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --page-top:40px; --section-top:46px;
+    --card-pad:18px; --card-gap:14px; --radius:10px; --radius-sm:3px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px); --text-h2:22px; --text-h3:16px;
+    --text-lede:16.5px; --text-body:14px; --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{overflow-x:clip;scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);line-height:1.62;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .topbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(248,248,250,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--grid);z-index:50}
+  .topbar-in{max-width:var(--nav-max);margin:0 auto;height:100%;display:flex;align-items:center;gap:18px;padding:0 20px}
+  .brand{font-family:var(--ui);font-weight:600;font-size:var(--text-h3);color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .brand .mk{color:var(--accent)}
+  .crumb{font-family:var(--data);font-size:var(--text-tiny);color:var(--ink-soft);display:flex;gap:6px;align-items:center}
+  .crumb a{color:var(--ink-soft);text-decoration:none}
+  .crumb a:hover{color:var(--ink)}
+  .crumb .s{color:var(--grid)}
+  .crumb .here{color:var(--ink)}
+  .sitenav{margin-left:auto;display:flex;gap:4px}
+  .sitenav a{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.06em;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-radius:var(--radius-sm)}
+  .sitenav a:hover{color:var(--ink);background:var(--warn-soft)}
+  @media(max-width:860px){.crumb{display:none}}
+  .wrap{max-width:var(--read-max);margin:0 auto;padding:var(--page-top) 20px 56px}
+  .alertbar{border:1px solid var(--grid);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:var(--radius-sm);padding:10px 14px;font-size:var(--text-small);color:var(--warn);margin-bottom:26px}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  h1{font-family:var(--ui);font-size:var(--text-h1);line-height:1.12;letter-spacing:-.015em;font-weight:650;margin-bottom:14px}
+  h1 .soft{color:var(--ink-soft)}
+  .lede{font-size:var(--text-lede);color:var(--ink-soft);line-height:1.6;max-width:64ch;margin-bottom:26px}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:640;letter-spacing:-.01em;margin:var(--section-top) 0 10px}
+  h3{font-family:var(--ui);font-size:var(--text-h3);font-weight:640;margin:22px 0 8px}
+  p{margin:0 0 12px;max-width:72ch}
+  .ros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--card-gap);margin:18px 0 8px}
+  .ro{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:12px 14px}
+  .ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft)}
+  .ro .v{font-family:var(--data);font-size:17px;line-height:1.35;color:var(--ink);position:relative;padding-left:14px}
+  .ro .v.small{font-size:13.5px}
+  .ro .v::before{content:'';position:absolute;left:0;top:.52em;width:7px;height:7px;border:1px solid var(--grid);background:transparent}
+  .ro .v.ok::before{background:var(--good);border-color:var(--good)}
+  .ro .v.bad::before{background:var(--bad);border-color:var(--bad)}
+  .mono,.eyebrow,.ro .v,.ro .k,table.mono td,table.mono th,.sitenav a{
+    font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  table.mono{width:100%;border-collapse:collapse;font-family:var(--data);font-size:var(--text-small);margin:12px 0}
+  table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);font-size:var(--text-tiny);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--grid);padding:6px 10px 6px 0}
+  table.mono td{border-bottom:1px solid var(--grid);padding:6px 10px 6px 0;vertical-align:top}
+  table.mono td.bad{color:var(--bad)}
+  table.mono td.good{color:var(--good)}
+  .tblwrap{overflow-x:auto}
+  blockquote{border-left:3px solid var(--grid);padding:2px 0 2px 14px;color:var(--ink-soft);margin:12px 0;max-width:70ch}
+  code{font-family:var(--data);font-size:.92em;background:var(--warn-soft);border-radius:var(--radius-sm);padding:1px 5px}
+  .scope{border:1px solid var(--grid);border-left:3px solid var(--accent);border-radius:var(--radius-sm);background:var(--card);padding:14px 16px;margin:18px 0}
+  .scope .t{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  ul{margin:0 0 12px 18px;max-width:70ch}
+  li{margin-bottom:6px}
+  .foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);font-family:var(--data);font-size:var(--text-tiny);color:var(--ink-soft);line-height:1.7}
+  .foot a{color:var(--accent-deep)}
+  .sitefoot{border-top:1px solid var(--grid);background:var(--card)}
+  .foot-cred{border-bottom:1px solid var(--grid)}
+  .foot-cred-in{max-width:var(--read-max);margin:0 auto;padding:22px 20px;font-size:var(--text-small);color:var(--ink-soft);line-height:1.65}
+  .foot-cred-in p{max-width:none;margin:0 0 8px}
+  .foot-cred-in a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+  .sitemap{max-width:var(--read-max);margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:4px 18px}
+  .sitemap a{font-family:var(--data);font-size:var(--text-tiny);color:var(--ink-soft);text-decoration:none}
+  .sitemap a:hover{color:var(--ink)}
+  .foot-base{max-width:var(--read-max);margin:0 auto;padding:0 20px 22px;font-family:var(--data);font-size:var(--text-tiny);color:var(--ink-soft)}
+  /* interactive layer — colour-only interaction, fixed boxes (design-system rule) */
+  .ngpanel{margin:18px 0;padding:14px 16px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius)}
+  .nghead{font-family:var(--ui);font-weight:600;font-size:13px;margin-bottom:8px}
+  .ngline{display:flex;gap:8px;align-items:baseline;font-family:var(--data);font-size:12px;min-height:1.7em}
+  .ngled{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--grid);position:relative;top:1px}
+  .ngled.ok{background:var(--good)} .ngled.bad{background:var(--bad)}
+  .ngrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .ngbtn{font-family:var(--data);font-size:11.5px;letter-spacing:.03em;padding:6px 10px;border:1px solid var(--grid);border-radius:var(--radius-sm);background:var(--card);color:var(--ink);cursor:pointer}
+  .ngbtn:hover{background:var(--warn-soft);border-color:var(--ink-soft)}
+  .ngbtn.mut:hover{background:#F6E7E5;border-color:var(--bad);color:var(--bad)}
+  .ngverdict{font-family:var(--data);font-size:12px;min-height:3.4em;margin-top:8px;color:var(--ink-soft);overflow-wrap:anywhere}
+  .ngverdict.bad{color:var(--bad)} .ngverdict.ok{color:var(--good)}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/reports">technical-reports</a><span class="s">/</span><span class="here">no-gradient-certificate</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="alertbar"><b>Born gated 2026-08-12; published the same day, by a recorded owner
+decision.</b> Every number below traces to a committed
+claim record in the repository &mdash; one per census, each with its run record &mdash; and
+regenerates from batteries inside <code>make check-emergent</code>; the census falsifier's mutation
+has been proved able to go red by <code>mutate.js</code>, both directions, in a throwaway worktree.
+Ledger status of both claims: <b>conjectured</b> — that is the evidence's own description, and this
+page claims nothing above it.</div>
+
+<div class="eyebrow">Technical report &middot; certificate class &middot; preregistered, amendments dated</div>
+<h1>No metric, no potential<span class="soft"> — a machine-checked certificate that a flow is not a gradient</span></h1>
+<p class="lede">If a vector field is the gradient of anything, under any Riemannian metric, its
+Jacobian at an equilibrium has real spectrum — a one-page folklore fact, cited below, never claimed
+here. The contrapositive is checkable by machine: an exact-rational Sturm count that certifies a
+complex eigenvalue pair rules out <em>every</em> metric and <em>every</em> potential at once. That
+certificate class appears to be unoccupied — a documented search, not a proof — and this page ships
+two exhibits of it. The certificate itself runs in this page, on the same spliced kernels the
+batteries gate.</p>
+
+<div class="ros">
+  <div class="ro"><div class="k">attention census (engineered instances)</div><div class="v ok">224 of 864 certified</div></div>
+  <div class="ro"><div class="k">d = 2 antipodal slice</div><div class="v ok">all-real, by theorem</div></div>
+  <div class="ro"><div class="k">Brusselator grid</div><div class="v ok">37 of 60 certified</div></div>
+  <div class="ro"><div class="k">exact twin disagreements</div><div class="v ok">0 of 60</div></div>
+</div>
+
+<h2>1 &middot; The certificate, and exactly what it decides</h2>
+<p>Suppose V = &minus;grad<sub>g</sub>&thinsp;E near an equilibrium z*. Then DV(z*) = &minus;G&#8315;&sup1;H
+with G positive definite and H symmetric, which is similar to a symmetric matrix — so its spectrum
+is real. The criterion is folklore (three one-page derivations; the linear-Markov case is a
+published <em>iff</em>, Dietert 2015, which is strictly stronger). What is checkable, exactly:
+build the characteristic polynomial of the reduced Jacobian over BigInt rationals, run a Sturm
+count, and if the count of distinct real roots falls short of the squarefree degree, a complex pair
+exists — <b>no C&sup1; metric and no C&sup2; potential realize the flow as a gradient near z*</b>.
+No floating point exists anywhere between the weights and the verdict.</p>
+<p>Three boundaries, stated before a referee states them: the statement is <b>local</b> (near this
+equilibrium); it rules out <b>Riemannian gradient structure only</b> (metriplectic and GENERIC
+splittings expect a skew part by design and are untouched); and it is the criterion's
+<b>necessary half</b> — a real spectrum decides nothing in either direction.</p>
+
+<h2>2 &middot; Exhibit 1: softmax attention, at an equilibrium engineered to be exact</h2>
+<p>Conventional softmax self-attention token dynamics, untied rational weights. At a zero-sum,
+row-constant-score configuration the softmax collapses to exactly 1/n — the one transcendental
+object in the problem becomes a rational number — the equilibrium is an identity in &#8474;, and
+the reduced Jacobian is exactly rational. The word for these instances is <b>engineered</b>: over
+the preregistered enumeration, certification is 26%, not typical, and every outcome ships:</p>
+<div class="tblwrap"><table class="mono">
+  <tr><th>slice</th><th>enumerated</th><th>certified</th><th>refused</th><th>lost</th></tr>
+  <tr><td>n = 2 antipodal, d = 2</td><td>192</td><td>0 — and provably always 0</td><td>192</td><td>0</td></tr>
+  <tr><td>n = 2 antipodal, d = 3</td><td>672</td><td class="good">224</td><td>448</td><td>0</td></tr>
+</table></div>
+<p>The d = 2 zero is a <b>theorem, found by the census and proved the same day</b>: the antipodal
+linearization is block-circulant and decouples into two operators of dimension d &minus; 1, so at
+d = 2 both are scalars and the spectrum is real for every admissible weight pair. The battery pins
+the decoupling exactly — the characteristic polynomial factors bit-for-bit through it. (The claim
+record's original scope carried the census as a measured negative, "not proved" — written hours
+before the proof existed; the record now carries a dated amendment rather than a silent edit, so
+the two documents agree by supersession, not by erasure.)</p>
+<p>Degeneracy, flagged not hidden: 296 of the 864 instances carry a repeated eigenvalue
+(squarefree degree drop), 44 of them among the 224 certified — those pairs live in the squarefree
+part, which is sound — and the flagship instance below is drop-free, so the exhibit never needs
+the multiplicity argument.</p>
+<blockquote>An honesty note the derivation itself produced: at this equilibrium class the softmax
+and unnormalized-attention Jacobians differ by a positive scalar only. This page therefore claims
+non-gradientness of the softmax flow at these equilibria and <b>never</b> claims to separate
+softmax from unnormalized attention here. The published non-gradient statement (Sinkformers,
+attributed by the Geshkovski–Letrouit–Polyanskiy–Rigollet survey) is for the Wasserstein-2 metric,
+in the mean-field limit, under a tied-weight assumption; the exhibit's delta is exactly three
+axes — metric-universal, finite-n, weight-general.</blockquote>
+
+<h2>3 &middot; Exhibit 2: the Brusselator, where the class meets an exact twin</h2>
+<p>The Brusselator's equilibrium (A, B/A) is exact for rational parameters with no construction
+work. That its eigenvalues go complex near the Hopf bifurcation is classical textbook material —
+<b>the spectrum fact is not claimed</b>. What the exhibit adds is the certified, metric-universal
+statement of the consequence, in the same machine-checked format: where the pair is certified,
+no metric and no potential make the flow a gradient near the equilibrium — the instance-wise form
+of a question the gradient-structure program for reaction networks leaves open beyond detailed
+balance. And the 2&times;2 case pays for its smallness: the certificate has an elementary exact
+twin, sign of (B&minus;1&minus;A&sup2;)&sup2; &minus; 4A&sup2;, evaluated beside every verdict.
+<b>On all 60 grid instances the twin agreed with the kernel</b>, and a deliberately corrupted
+Jacobian was shown to disagree — the check can go red, and was watched doing it.</p>
+
+<h2>4 &middot; The certificate runs here</h2>
+<p>The kernels are spliced verbatim from the repository into this page's script — a battery
+slices the bytes back out and asserts identity with the sources, then re-runs the verdicts from
+the page's own bytes. This section needs scripts; everything above it is static prose and stands
+complete without them.</p>
+<div id="ng-live"><noscript><p class="ngverdict">Scripts are off, so the certificate does not
+run here — this section is honestly empty. Every number above is static, traces to its committed
+record, and does not depend on this panel.</p></noscript></div>
+
+<h2>5 &middot; Scope, stated</h2>
+<div class="scope">
+  <div class="t">Not claimed</div>
+  <p>The criterion (folklore; Dietert owns the linear iff; Brooks&ndash;Maas characterize
+  metric-existence for a <em>given</em> potential — the delta here is exactly the quantification
+  over the potential, a step their paper does not take); the sentence &ldquo;attention is not a
+  gradient flow&rdquo; (in print with an attributed proof); any softmax-vs-unnormalized separation
+  at these equilibria (provably invisible here); anything about trained weights, the mean-field
+  limit, global structure, or metriplectic systems; typicality (the census says 26%, and the word
+  is engineered); any status above <b>conjectured</b>, which is what the ledger derives today.</p>
+  <div class="t">Claimed, and falsifiable</div>
+  <p>On the two preregistered enumerations: 224 of 864 attention instances and 37 of 60
+  Brusselator instances carry an exactly-verified equilibrium whose reduced Jacobian has a
+  certified non-real pair — hence no C&sup1; Riemannian metric and no C&sup2; potential realize
+  those flows as gradients near those equilibria; the d = 2 antipodal slice is all-real by a
+  proved decoupling; and every number regenerates from batteries whose falsifier has a
+  mutation-verified red. Falsifiers: <code>node research/emergent-geometry/tests/test-instance.js</code>
+  and <code>node research/emergent-geometry/tests/test-brusselator.js</code>.</p>
+</div>
+
+<h2>6 &middot; What the literature already owns, stated before a referee has to</h2>
+<p>The real-spectrum criterion is folklore with a published stronger cousin (Dietert 2015,
+arXiv:1405.2552 — real diagonalisability, an iff, for linear Markov generators). Metric existence
+for a given co-vector field is characterized by Brooks &amp; Maas (arXiv:2209.11149) — in their
+gradient case (Corollary 2.5, read at body level) the linearization must be <em>positive and
+symmetric</em> with respect to the given potential's Hessian scalar product, which is strictly
+stronger than the bare real-spectrum condition; the delta here is exactly the quantification over
+the potential. The non-gradientness of softmax attention is published for one metric: the survey of
+Geshkovski, Letrouit, Polyanskiy &amp; Rigollet (arXiv:2312.10794, Bull. AMS 2025) attributes to
+Sinkformers (Sander, Ablin, Blondel &amp; Peyr&eacute;, arXiv:2110.11773, AISTATS 2022,
+Proposition 3) the W&#8322; statement, under their tied-weight Assumption 1. The Brusselator's
+Hopf analysis is textbook. What was not located anywhere, across two search vocabularies: a
+machine-checked certificate whose conclusion is the non-existence of gradient structure under
+every metric — that absence is a documented search recorded in the unit's literature files, not a
+proof of novelty.</p>
+
+<div class="foot">
+  <p>Evidence: one committed claim record per census &mdash; attention (with its run record and
+  a falsifier whose mutation was verified red) and Brusselator (with its run record)
+  &middot; preregistration <span class="mono">research/emergent-geometry/PREREG.md</span>
+  (+ dated amendment A1, committed before its code) &middot; derivation and lemma
+  <span class="mono">research/emergent-geometry/docs/INSTANCE_DERIVATION.md</span>.</p>
+  <p>Reproduce: <span class="mono">make check-emergent</span> &middot; page battery:
+  <span class="mono">node research/emergent-geometry/tests/test-ng-page.js</span>. Paths are
+  monorepo paths; this unit's export decision is recorded in its release record.</p>
+</div>
+
+</div>
+
+<footer class="sitefoot">
+  <div class="foot-cred">
+    <div class="foot-cred-in">
+      <p><b>Carlos Toledo</b> builds computer-assisted proofs and the checks that keep them honest.
+        This page ships a certificate class with two exhibits and its own falsifiers: a
+        machine-checked "this flow is not a gradient, under any metric" — with the criterion
+        credited to folklore, the engineered instances called engineered, and the one thing the
+        page cannot see stated in its own blockquote.</p>
+      <p>Built on the open-source <a href="https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert" target="_blank" rel="noopener"><code>eqcert</code></a>
+        certification kernel (MIT). <a href="/contact">Get in touch</a>.</p>
+    </div>
+  </div>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/errata">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+<script>
+'use strict';
+/* module table + basename-resolving require shim; kernels land between the anchors,
+   spliced by research/emergent-geometry/build_page.js and byte-gated by tests/test-ng-page.js */
+var __NG_MODULES = {};
+function __def(name, fn) {
+  var module = { exports: {} };
+  fn(module, module.exports, function (req) {
+    var base = String(req).split('/').pop();
+    if (base === 'path') return { join: function () { return arguments[arguments.length - 1]; } };
+    if (base === 'fs') { var e = new Error('ENOENT'); e.code = 'ENOENT'; throw e; }
+    if (!(base in __NG_MODULES)) throw new Error('unresolved require: ' + req);
+    return __NG_MODULES[base];
+  }, '');
+  __NG_MODULES[name] = module.exports;
+}
+/*@@NG_KERNELS_BEGIN@@*/
+/* ==== BEGIN VERBATIM rational.js ==== */
+__def('rational.js', function (module, exports, require, __dirname) {
+/* rational.js — exact arithmetic over BigInt fractions.
+
+   Why this exists next to interval arithmetic rather than instead of it: the
+   two answer different questions, and choosing the wrong one silently weakens
+   a certificate.
+
+     · INTERVAL arithmetic bounds a quantity you cannot compute exactly. It is
+       the right tool when the problem is genuinely nonlinear (a Krawczyk
+       enclosure, a radii polynomial).
+     · EXACT arithmetic DECIDES. It is the right tool when the data is rational
+       and the question is a sign — and it is the ONLY tool when the answer is
+       a tie, because no interval method can ever decide whether a quantity is
+       exactly zero.
+
+   That distinction was learned, not designed. Certifying a multi-population
+   Wardrop equilibrium, an unused edge turned out to carry a slack of exactly
+   zero — an unused route exactly as short as the used ones. Interval
+   arithmetic returned −1.6e−12 and could not conclude; exact rational
+   arithmetic settled it immediately. Weak complementarity is invisible to
+   floating point and to intervals alike.
+
+   Every finite double is exactly m·2^e, so `fromDouble` is lossless and the
+   bridge between the two worlds is exact in that direction.
+
+   MIT licensed. Part of eqcert. */
+'use strict';
+
+function gcd(a, b) { a = a < 0n ? -a : a; b = b < 0n ? -b : b; while (b) { const t = a % b; a = b; b = t; } return a; }
+
+/* canonical: denominator > 0, reduced */
+function R(n, d) {
+  n = BigInt(n); d = d === undefined ? 1n : BigInt(d);
+  if (d === 0n) throw new Error('rational: zero denominator');
+  if (d < 0n) { n = -n; d = -d; }
+  const g = gcd(n, d) || 1n;
+  return { n: n / g, d: d / g };
+}
+const ZERO = R(0n), ONE = R(1n);
+
+/* every finite double is exactly m·2^e — this conversion loses nothing */
+function fromDouble(x) {
+  if (!Number.isFinite(x)) throw new Error('rational: non-finite double');
+  let e = 0n, y = x;
+  while (!Number.isInteger(y)) { y *= 2; e += 1n; if (e > 1200n) throw new Error('rational: conversion did not terminate'); }
+  return R(BigInt(y), 1n << e);
+}
+
+const add = (a, b) => R(a.n * b.d + b.n * a.d, a.d * b.d);
+const sub = (a, b) => R(a.n * b.d - b.n * a.d, a.d * b.d);
+const mul = (a, b) => R(a.n * b.n, a.d * b.d);
+const div = (a, b) => { if (b.n === 0n) throw new Error('rational: division by zero'); return R(a.n * b.d, a.d * b.n); };
+const neg = a => R(-a.n, a.d);
+const sign = a => (a.n < 0n ? -1 : a.n > 0n ? 1 : 0);
+const cmp = (a, b) => { const l = a.n * b.d, r = b.n * a.d; return l < r ? -1 : l > r ? 1 : 0; };
+const isZero = a => a.n === 0n;
+const abs = a => (a.n < 0n ? neg(a) : a);
+
+/* a double that is >= (resp <=) the exact value — for reporting only.
+   Number(n)/Number(d) overflows on large heights, so scale first. */
+function toDouble(a) {
+  const q = Number(a.n) / Number(a.d);
+  if (Number.isFinite(q)) return q;
+  const shift = BigInt(Math.max(0, a.d.toString(2).length - 1000));
+  return Number(a.n >> shift) / Number(a.d >> shift);
+}
+const toString = a => (a.d === 1n ? a.n.toString() : a.n + '/' + a.d);
+
+/* is the exact value inside the closed float interval [lo, hi]? */
+const inClosed = (a, lo, hi) => cmp(fromDouble(lo), a) <= 0 && cmp(a, fromDouble(hi)) <= 0;
+
+/* ---- exact dense linear algebra (Gaussian elimination, no pivoting error) ----
+   Returns null iff the matrix is EXACTLY singular — which is information, not
+   a failure: a singular exact system is a proof of degeneracy, whereas a small
+   float determinant is only a suspicion. */
+function solve(A, b, n) {
+  A = A.map(r => r.slice()); b = b.slice();
+  for (let k = 0; k < n; k++) {
+    let p = -1;
+    for (let r = k; r < n; r++) if (sign(A[r][k]) !== 0) { p = r; break; }
+    if (p < 0) return null;
+    if (p !== k) { const t = A[k]; A[k] = A[p]; A[p] = t; const tb = b[k]; b[k] = b[p]; b[p] = tb; }
+    for (let r = k + 1; r < n; r++) {
+      if (sign(A[r][k]) === 0) continue;
+      const f = div(A[r][k], A[k][k]);
+      for (let c = k; c < n; c++) A[r][c] = sub(A[r][c], mul(f, A[k][c]));
+      b[r] = sub(b[r], mul(f, b[k]));
+    }
+  }
+  const x = new Array(n).fill(ZERO);
+  for (let k = n - 1; k >= 0; k--) {
+    let s = b[k];
+    for (let c = k + 1; c < n; c++) s = sub(s, mul(A[k][c], x[c]));
+    x[k] = div(s, A[k][k]);
+  }
+  return x;
+}
+
+/* residual of A x − b, exactly. Zero here is a proof, not a tolerance. */
+function residual(A, x, b, n) {
+  const out = new Array(n);
+  for (let i = 0; i < n; i++) {
+    let s = ZERO;
+    for (let j = 0; j < n; j++) if (sign(A[i][j]) !== 0) s = add(s, mul(A[i][j], x[j]));
+    out[i] = sub(s, b[i]);
+  }
+  return out;
+}
+const allZero = v => v.every(isZero);
+
+module.exports = {
+  R, ZERO, ONE, fromDouble, toDouble, toString,
+  add, sub, mul, div, neg, abs, sign, cmp, isZero, inClosed,
+  solve, residual, allZero, gcd
+};
+
+});
+/* ==== END VERBATIM rational.js ==== */
+/* ==== BEGIN VERBATIM obstruction.js ==== */
+__def('obstruction.js', function (module, exports, require, __dirname) {
+/* obstruction.js — PROOF OF CONCEPT for a certificate class that does not exist yet:
+   a machine-checked certificate that a system admits NO gradient structure,
+   in ANY Riemannian metric.
+
+   ---- THE CRITERION, and it is stronger than "the Jacobian is not symmetric" ----
+
+   Suppose V = -grad_g E for SOME Riemannian metric g and some potential E, and let
+   z* be an equilibrium (so grad E(z*) = 0). In coordinates V^i = -g^{ij} d_j E, so
+
+       DV = -(G^{-1} Hess E)  -  (d G^{-1})(grad E)
+          = -G^{-1} H            at z*, because grad E(z*) = 0,
+
+   with G = g(z*) POSITIVE DEFINITE and H = Hess E(z*) SYMMETRIC. Now
+
+       G^{-1}H  =  G^{-1/2} ( G^{-1/2} H G^{-1/2} ) G^{1/2},
+
+   so G^{-1}H is SIMILAR to the real symmetric matrix G^{-1/2} H G^{-1/2}. Similar
+   matrices share a spectrum, and real symmetric matrices have real spectra. Hence:
+
+       ANY Riemannian gradient flow has REAL SPECTRUM at every equilibrium.
+
+   Contrapositive, which is the certificate:
+
+       a CERTIFIED complex eigenvalue pair in DV(z*) rules out EVERY metric g
+       and EVERY potential E. Not "this is not a Euclidean gradient" -- no
+       Riemannian gradient structure exists near z*, full stop.
+
+   ---- WHY THIS IS RIGOROUSLY CHECKABLE, with tools already in this tree ----
+
+   Counting real roots of a polynomial is EXACT, not approximate: build the
+   characteristic polynomial over BigInt rationals and run a STURM SEQUENCE. Sturm
+   gives the exact number of distinct real roots in an interval, with no floating
+   point anywhere. If that count is less than n, a complex pair exists and the
+   obstruction is certified.
+
+   This uses core/interval/rational.js -- the exact-arithmetic half of the toolkit,
+   which is currently the least exercised part of it.
+
+   ---- WHAT THIS DOES **NOT** CLAIM, stated here so the page cannot overreach ----
+
+   1. It is LOCAL. It rules out gradient structure near z*, not globally.
+   2. It rules out RIEMANNIAN gradient structure only. It does NOT rule out
+      gradient+Hamiltonian splittings (metriplectic / GENERIC / port-Hamiltonian),
+      where a skew part is expected BY DESIGN. Those systems are exactly the
+      interesting neighbours and the certificate says nothing about them.
+   3. Degenerate cases (repeated roots, defective matrices) need care: Sturm counts
+      DISTINCT real roots, so count < n is consistent with a real repeated root.
+      Handled below by testing the squarefree part, and flagged when it matters.
+*/
+'use strict';
+const path = require('path');
+const Q = require(path.join(__dirname, '..', '..', '..', 'core', 'interval', 'rational.js'));
+
+const q = (n, d = 1n) => Q.R(BigInt(n), BigInt(d));
+const QZERO = q(0), QONE = q(1);
+
+/* ---------- exact polynomial arithmetic over Q, coefficients low->high ---------- */
+const pTrim = p => { const a = p.slice(); while (a.length > 1 && Q.isZero(a[a.length - 1])) a.pop(); return a; };
+const pAdd = (a, b) => { const n = Math.max(a.length, b.length), r = []; for (let i = 0; i < n; i++) r.push(Q.add(a[i] || QZERO, b[i] || QZERO)); return pTrim(r); };
+const pScale = (a, s) => pTrim(a.map(c => Q.mul(c, s)));
+const pSub = (a, b) => pAdd(a, pScale(b, q(-1)));
+function pMul(a, b) {
+  const r = new Array(a.length + b.length - 1).fill(QZERO);
+  for (let i = 0; i < a.length; i++) for (let j = 0; j < b.length; j++) r[i + j] = Q.add(r[i + j], Q.mul(a[i], b[j]));
+  return pTrim(r);
+}
+const pDeg = a => pTrim(a).length - 1;
+/* remainder of a mod b, exact */
+function pRem(a, b) {
+  let r = pTrim(a).slice(); const bb = pTrim(b), db = pDeg(bb), lb = bb[db];
+  while (pDeg(r) >= db && !(pDeg(r) === 0 && Q.isZero(r[0]))) {
+    const dr = pDeg(r), c = Q.div(r[dr], lb), shift = dr - db;
+    const sub = new Array(shift).fill(QZERO).concat(pScale(bb, c));
+    r = pSub(r, sub);
+    if (pDeg(r) === dr) break;               /* no progress guard */
+  }
+  return pTrim(r);
+}
+const pDeriv = a => { const r = []; for (let i = 1; i < a.length; i++) r.push(Q.mul(a[i], q(i))); return pTrim(r.length ? r : [QZERO]); };
+
+/* ---------- characteristic polynomial det(xI - M), EXACT ----------
+   Exact Laplace expansion over polynomials with rational coefficients. n is small
+   here (the Jacobian at an equilibrium of a reduced system), so the factorial cost
+   is irrelevant and the exactness is the point: a floating-point characteristic
+   polynomial would make the Sturm count meaningless. */
+function charPolyExact(M, n) {
+  /* build the matrix of polynomials xI - M, then exact Laplace expansion */
+  const A = [];
+  for (let i = 0; i < n; i++) { A.push([]); for (let j = 0; j < n; j++) A[i].push(i === j ? [Q.mul(M[i][j], q(-1)), QONE] : [Q.mul(M[i][j], q(-1))]); }
+  function det(rows, cols) {
+    if (rows.length === 1) return A[rows[0]][cols[0]];
+    let acc = [QZERO];
+    for (let k = 0; k < cols.length; k++) {
+      const sub = det(rows.slice(1), cols.filter((_, i) => i !== k));
+      const term = pMul(A[rows[0]][cols[k]], sub);
+      acc = (k % 2 === 0) ? pAdd(acc, term) : pSub(acc, term);
+    }
+    return acc;
+  }
+  return det([...Array(n).keys()], [...Array(n).keys()]);
+}
+
+/* ---------- Sturm: EXACT count of DISTINCT real roots of p ---------- */
+function sturmRealRootCount(p) {
+  p = pTrim(p);
+  /* squarefree part: p / gcd(p, p') so repeated roots are counted once */
+  const gcd = (a, b) => { let x = pTrim(a), y = pTrim(b); while (!(pDeg(y) === 0 && Q.isZero(y[0]))) { const r = pRem(x, y); x = y; y = r; } return x; };
+  const g = gcd(p, pDeriv(p));
+  let sf = p;
+  if (pDeg(g) > 0) { /* exact division p/g by repeated remainder-free long division */
+    let a = pTrim(p).slice(), quo = new Array(pDeg(p) - pDeg(g) + 1).fill(QZERO);
+    const gg = pTrim(g), dg = pDeg(gg), lg = gg[dg];
+    while (pDeg(a) >= dg && !(pDeg(a) === 0 && Q.isZero(a[0]))) {
+      const da = pDeg(a), c = Q.div(a[da], lg), sh = da - dg;
+      quo[sh] = c;
+      a = pSub(a, new Array(sh).fill(QZERO).concat(pScale(gg, c)));
+      if (pDeg(a) === da) break;
+    }
+    sf = pTrim(quo);
+  }
+  /* Sturm chain */
+  const chain = [sf, pDeriv(sf)];
+  while (pDeg(chain[chain.length - 1]) > 0) {
+    const r = pRem(chain[chain.length - 2], chain[chain.length - 1]);
+    if (pDeg(r) === 0 && Q.isZero(r[0])) break;
+    chain.push(pScale(r, q(-1)));
+  }
+  /* sign variations at -inf and +inf from leading coefficients */
+  const signAt = (poly, atPlusInf) => {
+    const d = pDeg(poly), lead = pTrim(poly)[d];
+    if (Q.isZero(lead)) return 0;
+    const s = Q.sign(lead);
+    return atPlusInf ? s : (d % 2 === 0 ? s : -s);
+  };
+  const variations = atPlusInf => {
+    let v = 0, prev = 0;
+    for (const poly of chain) {
+      const s = signAt(poly, atPlusInf);
+      if (s === 0) continue;
+      if (prev !== 0 && s !== prev) v++;
+      prev = s;
+    }
+    return v;
+  };
+  return { distinctReal: variations(false) - variations(true), degree: pDeg(sf), chainLen: chain.length };
+}
+
+/* ---------- the certificate ---------- */
+/* certify(M, n) -> { certified, distinctReal, degree, nonReal }
+   M is an n-by-n matrix of eqcert rationals: the Jacobian at the equilibrium.
+   certified === true means: NO Riemannian metric g and NO potential E exist with
+   V = -grad_g E near this equilibrium. See the header for what it does NOT claim. */
+function certify(M, n) {
+  const p = charPolyExact(M, n);
+  const { distinctReal, degree } = sturmRealRootCount(p);
+  const nonReal = degree - distinctReal;
+  return { certified: nonReal > 0, distinctReal, degree, nonReal };
+}
+
+module.exports = { certify, charPolyExact, sturmRealRootCount,
+                   pAdd, pSub, pMul, pRem, pDeriv, pDeg, q };
+
+
+});
+/* ==== END VERBATIM obstruction.js ==== */
+/* ==== BEGIN VERBATIM instance.js ==== */
+__def('instance.js', function (module, exports, require, __dirname) {
+/* instance.js — the Track B instance harness: exact-rational reduced Jacobians of softmax
+   attention at symmetric equilibria, fed to obstruction.certify().
+
+   The mathematics is docs/INSTANCE_DERIVATION.md, implemented line-for-line:
+     (E1) zero-sum tokens + (E2) row-constant scores  ⇒ exact equilibrium, softmax ≡ 1/n;
+     (J3) ∂g_i/∂x_m = (1/n)[ δ_im·V·S_M + (V x_m)(Mᵀ x_i)ᵀ + V ],  S_M = Σ_j x_j (M x_j)ᵀ;
+     (J4) reduction to ⊕ x_i⊥ in a rational basis by exact solves — similarity, so the
+          spectrum certify() reads is basis-independent.
+   PREREG.md §2 pins the family and §4 the kills; the enumeration below is the "written down
+   in the harness before any Jacobian is computed" object. EVERY instance's outcome ships.
+
+   No floats anywhere in the verdict path. The float cross-check lives in the battery, as a
+   wiring check printed beside the exact result (PREREG KB4). */
+'use strict';
+const path = require('path');
+const Q = require(path.join(__dirname, '..', '..', '..', 'core', 'interval', 'rational.js'));
+const OB = require(path.join(__dirname, 'obstruction.js'));
+
+const q = (n, d = 1n) => Q.R(BigInt(n), BigInt(d));
+const ZERO = q(0), ONE = q(1);
+const { add, sub, mul, div } = Q;
+const isZ = Q.isZero;
+
+/* ---------- exact linear algebra over Q (dense, small) ---------- */
+const vAdd = (a, b) => a.map((x, i) => add(x, b[i]));
+const vScale = (a, s) => a.map(x => mul(x, s));
+const dot = (a, b) => a.reduce((s, x, i) => add(s, mul(x, b[i])), ZERO);
+const mVec = (M, v) => M.map(row => dot(row, v));
+const mT = M => M[0].map((_, j) => M.map(row => row[j]));
+const mAdd = (A, B) => A.map((r, i) => r.map((x, j) => add(x, B[i][j])));
+const mScale = (A, s) => A.map(r => r.map(x => mul(x, s)));
+const outer = (a, b) => a.map(x => b.map(y => mul(x, y)));
+const mMul = (A, B) => A.map(r => mT(B).map(c => dot(r, c)));
+const eye = d => Array.from({ length: d }, (_, i) =>
+  Array.from({ length: d }, (_, j) => (i === j ? ONE : ZERO)));
+
+/* exact inverse by Gauss-Jordan; throws on singular (a singular tangent frame is a bug) */
+function mInv(M) {
+  const d = M.length;
+  const A = M.map((r, i) => r.concat(eye(d)[i]));
+  for (let c = 0; c < d; c++) {
+    let p = c; while (p < d && isZ(A[p][c])) p++;
+    if (p === d) throw new Error('singular matrix in mInv');
+    [A[c], A[p]] = [A[p], A[c]];
+    const inv = div(ONE, A[c][c]);
+    A[c] = A[c].map(x => mul(x, inv));
+    for (let r = 0; r < d; r++) {
+      if (r === c || isZ(A[r][c])) continue;
+      const f = A[r][c];
+      A[r] = A[r].map((x, j) => sub(x, mul(f, A[c][j])));
+    }
+  }
+  return A.map(r => r.slice(d));
+}
+
+/* ---------- the equilibrium checks (E1, E2) — exact, refusing not rounding ---------- */
+function checkEquilibrium(X, M) {
+  const n = X.length, d = X[0].length;
+  for (const x of X) {
+    if (!isZ(sub(dot(x, x), ONE))) return { ok: false, why: 'token not on the sphere' };
+  }
+  let s = X[0].map(() => ZERO);
+  for (const x of X) s = vAdd(s, x);
+  if (!s.every(isZ)) return { ok: false, why: 'tokens do not sum to zero (E1)' };
+  for (let i = 0; i < n; i++) {
+    const s0 = dot(X[i], mVec(M, X[0]));
+    for (let j = 1; j < n; j++) {
+      if (!isZ(sub(dot(X[i], mVec(M, X[j])), s0)))
+        return { ok: false, why: `scores not row-constant at i=${i} (E2)` };
+    }
+  }
+  return { ok: true, d, n };
+}
+
+/* ---------- (J3): the ambient Jacobian blocks at the equilibrium ---------- */
+function ambientBlocks(X, M, V) {
+  const n = X.length, d = X[0].length;
+  const Mt = mT(M);
+  let S = Array.from({ length: d }, () => Array.from({ length: d }, () => ZERO));
+  for (const x of X) S = mAdd(S, outer(x, mVec(M, x)));   /* S_M = Σ x (Mx)ᵀ */
+  const VS = mMul(V, S);
+  const invN = div(ONE, q(n));
+  const blocks = [];
+  for (let i = 0; i < n; i++) {
+    const Pi = mAdd(eye(d), mScale(outer(X[i], X[i]), q(-1)));   /* I − x xᵀ */
+    blocks.push([]);
+    for (let m = 0; m < n; m++) {
+      let B = outer(mVec(V, X[m]), mVec(Mt, X[i]));               /* (V x_m)(Mᵀ x_i)ᵀ */
+      if (i === m) B = mAdd(B, VS);
+      B = mAdd(B, V);
+      blocks[i].push(mMul(Pi, mScale(B, invN)));
+    }
+  }
+  return blocks;
+}
+
+/* ---------- (J4): rational tangent frames and the reduced matrix ---------- */
+function tangentFrame(x) {
+  const d = x.length;
+  if (d === 2) return [[mul(x[1], q(-1)), x[0]]];
+  /* d = 3: pick two independent rational vectors ⊥ x from the three cross-style candidates */
+  const cands = [
+    [mul(x[1], q(-1)), x[0], ZERO],
+    [mul(x[2], q(-1)), ZERO, x[0]],
+    [ZERO, mul(x[2], q(-1)), x[1]],
+  ].filter(v => !v.every(isZ));
+  for (let a = 0; a < cands.length; a++) {
+    for (let b = a + 1; b < cands.length; b++) {
+      /* independent iff cross(c_a, c_b) ≠ 0; cheap test: some 2x2 minor nonzero */
+      const u = cands[a], w = cands[b];
+      const minors = [
+        sub(mul(u[0], w[1]), mul(u[1], w[0])),
+        sub(mul(u[0], w[2]), mul(u[2], w[0])),
+        sub(mul(u[1], w[2]), mul(u[2], w[1])),
+      ];
+      if (!minors.every(isZ)) return [u, w];
+    }
+  }
+  throw new Error('no rational tangent frame found (degenerate token)');
+}
+
+function reducedJacobian(X, M, V) {
+  const n = X.length, d = X[0].length, k = d - 1;
+  const blocks = ambientBlocks(X, M, V);
+  const frames = X.map(tangentFrame);
+  /* full frames [b_1..b_k, x_i] and their exact inverses, once per token */
+  const inv = X.map((x, i) => mInv(mT(frames[i].concat([x]))));
+  const R = Array.from({ length: n * k }, () => Array.from({ length: n * k }, () => ZERO));
+  for (let m = 0; m < n; m++) {
+    for (let c = 0; c < k; c++) {
+      const u = frames[m][c];                       /* perturb token m along basis vector c */
+      for (let i = 0; i < n; i++) {
+        const w = mVec(blocks[i][m], u);            /* response at token i (ambient) */
+        const coords = mVec(inv[i], w);             /* coords in [frame_i, x_i] */
+        if (!isZ(coords[k])) throw new Error('response left the tangent space — J4 violated');
+        for (let r = 0; r < k; r++) R[i * k + r][m * k + c] = coords[r];
+      }
+    }
+  }
+  return R;
+}
+
+/* ---------- the antipodal decoupling (docs/INSTANCE_DERIVATION.md §6) ----------
+   For n = 2 antipodal the ambient blocks satisfy ∂g₁/∂x₁ = ∂g₂/∂x₂ = A and
+   ∂g₁/∂x₂ = ∂g₂/∂x₁ = B with a COMMON projector P (x and −x span the same line), so the
+   linearization is block-circulant [[PA, PB], [PB, PA]] on x⊥ ⊕ x⊥ and decouples on the
+   invariant subspaces {(u, u)} and {(u, −u)} into P(A+B)|x⊥ and P(A−B)|x⊥, each of
+   dimension d−1. Consequences, both battery-pinned: charpoly(R) = charpoly(R⁺)·charpoly(R⁻)
+   exactly, and for d = 2 both halves are 1×1 so the spectrum is REAL for every admissible
+   M and V — the 0/192 census is a theorem, not a sample. */
+function decoupledBlocks(X, M, V) {
+  const n = X.length;
+  if (n !== 2 || !X[0].every((v, i) => isZ(add(v, X[1][i]))))
+    throw new Error('decoupledBlocks: n = 2 antipodal only');
+  const blocks = ambientBlocks(X, M, V);   /* [[PA, PB], [PB, PA]] by the symmetry above */
+  const PA = blocks[0][0], PB = blocks[0][1];
+  const plus = mAdd(PA, PB), minus = mAdd(PA, mScale(PB, q(-1)));
+  const frame = tangentFrame(X[0]);
+  const d = X[0].length, k = d - 1;
+  const inv = mInv(mT(frame.concat([X[0]])));
+  const restrict = (Amb) => {
+    const R = Array.from({ length: k }, () => Array.from({ length: k }, () => ZERO));
+    for (let c = 0; c < k; c++) {
+      const w = mVec(Amb, frame[c]);
+      const coords = mVec(inv, w);
+      if (!isZ(coords[k])) throw new Error('decoupled response left the tangent space');
+      for (let r = 0; r < k; r++) R[r][c] = coords[r];
+    }
+    return R;
+  };
+  return { plus: restrict(plus), minus: restrict(minus) };
+}
+
+/* ---------- the flagship certification of one instance ---------- */
+function certifyInstance(X, M, V) {
+  const eq = checkEquilibrium(X, M);
+  if (!eq.ok) return { status: 'no-exact-equilibrium', why: eq.why };
+  const R = reducedJacobian(X, M, V);
+  const res = OB.certify(R, R.length);
+  return { status: res.certified ? 'certified' : 'refused', dim: R.length, ...res };
+}
+
+/* ---------- controls (PREREG §3), same code path ---------- */
+
+/* KCB-G: the gradient case — USA hypothesis M = W_V, symmetric (survey Remark 3.6). At the
+   uniform-row equilibrium the USA Jacobian is a positive scalar times the same bracket
+   (INSTANCE_DERIVATION §4b), so running the softmax pipeline IS running the USA control. */
+function controlGradient(X, Msym) {
+  return certifyInstance(X, Msym, Msym);
+}
+
+/* KCB-R: RPS replicator at the barycenter, reduced to the simplex tangent (sum-zero). */
+function controlRPS() {
+  const A = [[ZERO, q(-1), ONE], [ONE, ZERO, q(-1)], [q(-1), ONE, ZERO]];
+  const x = [div(ONE, q(3)), div(ONE, q(3)), div(ONE, q(3))];
+  /* replicator: F_i = x_i((Ax)_i − xᵀAx); at barycenter Ax = 0 and xᵀAx = 0, so
+     dF_i/dx_j = δ_ij((Ax)_i − xᵀAx) + x_i(A_ij − (Ax)_j − Σ_k x_k A_kj − ... ) — computed
+     directly: dF_i/dx_j = δ_ij·(Ax)_i + x_i·A_ij − δ_ij·xᵀAx − x_i·((Ax)_j + (Aᵀx)_j)
+     with Ax = Aᵀx = 0 at the barycenter: dF = (1/3)·A. Reduce to sum-zero coordinates. */
+  const J = mScale(A, div(ONE, q(3)));
+  const basis = [[ONE, q(-1), ZERO], [ZERO, ONE, q(-1)]];
+  /* full frame [b1, b2, ones] and inverse */
+  const inv = mInv(mT(basis.concat([[ONE, ONE, ONE]])));
+  const R = Array.from({ length: 2 }, () => [ZERO, ZERO]);
+  for (let c = 0; c < 2; c++) {
+    const w = mVec(J, basis[c]);
+    const coords = mVec(inv, w);
+    for (let r = 0; r < 2; r++) R[r][c] = coords[r];
+  }
+  const res = OB.certify(R, 2);
+  return { status: res.certified ? 'certified' : 'refused', dim: 2, ...res, barycenterDrive: mVec(A, x) };
+}
+
+/* ---------- the PREREG §2 enumeration — written here, before any Jacobian ran ---------- */
+
+/* n = 2 antipodal family: x = (3/5, 4/5), x₂ = −x. E2 reduces to xᵀMx = 0, solved exactly
+   for m₀₀ given the other three entries; the box for the free entries and for V is fixed
+   below. Deterministic order, every outcome reported. */
+const X2 = [[q(3, 5), q(4, 5)], [q(-3, 5), q(-4, 5)]];
+const BOX = [-2, -1, 1, 2].map(v => q(v));      /* free-entry values; 0 excluded to avoid
+                                                   degenerate all-zero rows in M */
+const VLIST = [
+  [[ONE, ZERO], [ZERO, ONE]],
+  [[ONE, ONE], [ZERO, ONE]],
+  [[q(2), q(-1)], [ONE, ZERO]],
+  [[ONE, q(2)], [q(-1), ONE]],
+];
+
+function* enumerate2() {
+  const [a, b] = X2[0];
+  for (const m01 of BOX) for (const m10 of BOX) for (const m11 of BOX) {
+    /* xᵀMx = m00 a² + (m01+m10) ab + m11 b² = 0  →  m00 = −((m01+m10)ab + m11 b²)/a² */
+    const m00 = div(mul(q(-1), add(mul(add(m01, m10), mul(a, b)), mul(m11, mul(b, b)))), mul(a, a));
+    const M = [[m00, m01], [m10, m11]];
+    if (isZ(sub(m01, m10))) continue;            /* need M ≠ Mᵀ (PREREG §1) */
+    for (const V of VLIST) {
+      /* need M ≠ V (PREREG §1) — entrywise */
+      let eqV = true;
+      for (let i = 0; i < 2 && eqV; i++) for (let j = 0; j < 2 && eqV; j++) {
+        if (!isZ(sub(M[i][j], V[i][j]))) eqV = false;
+      }
+      if (eqV) continue;
+      yield { X: X2, M, V };
+    }
+  }
+}
+
+/* n = 2 antipodal, d = 3: x = (3/5, 0, 4/5). Same E2 reduction (xᵀMx = 0 solved for m₀₀);
+   the 8 free entries range over {−1, 1} — the deterministic d = 3 slice of the PREREG box,
+   sized so the full sweep reports in seconds. Reduced dimension n(d−1) = 4: room for a
+   complex pair that the 2-dimensional antipodal slice (measured all-real, 0/192) cannot hold. */
+const X3 = [[q(3, 5), ZERO, q(4, 5)], [q(-3, 5), ZERO, q(-4, 5)]];
+const BOX3 = [-1, 1].map(v => q(v));
+const VLIST3 = [
+  [[ONE, ZERO, ZERO], [ZERO, ONE, ZERO], [ZERO, ZERO, ONE]],
+  [[ONE, ONE, ZERO], [ZERO, ONE, ONE], [ZERO, ZERO, ONE]],
+  [[q(2), q(-1), ZERO], [ONE, ZERO, ONE], [ZERO, ONE, ONE]],
+];
+
+function* enumerate3() {
+  const x = X3[0];
+  for (const m01 of BOX3) for (const m02 of BOX3)
+  for (const m10 of BOX3) for (const m11 of BOX3) for (const m12 of BOX3)
+  for (const m20 of BOX3) for (const m21 of BOX3) for (const m22 of BOX3) {
+    /* xᵀMx = m00 x0² + m11 x1² + m22 x2² + (m01+m10)x0x1 + (m02+m20)x0x2 + (m12+m21)x1x2 = 0
+       with x1 = 0: m00 x0² + m22 x2² + (m02+m20) x0 x2 = 0 → solve for m00 */
+    const m00 = div(mul(q(-1), add(mul(m22, mul(x[2], x[2])), mul(add(m02, m20), mul(x[0], x[2])))),
+                    mul(x[0], x[0]));
+    const M = [[m00, m01, m02], [m10, m11, m12], [m20, m21, m22]];
+    let sym = true;
+    for (let i = 0; i < 3 && sym; i++) for (let j = i + 1; j < 3 && sym; j++) {
+      if (!isZ(sub(M[i][j], M[j][i]))) sym = false;
+    }
+    if (sym) continue;                            /* M ≠ Mᵀ (PREREG §1) */
+    for (const V of VLIST3) {
+      let eqV = true;
+      for (let i = 0; i < 3 && eqV; i++) for (let j = 0; j < 3 && eqV; j++) {
+        if (!isZ(sub(M[i][j], V[i][j]))) eqV = false;
+      }
+      if (eqV) continue;                          /* M ≠ V (PREREG §1) */
+      yield { X: X3, M, V };
+    }
+  }
+}
+
+function runEnumeration() {
+  const out = [];
+  for (const inst of enumerate2()) out.push({ slice: 'n2d2', inst, result: certifyInstance(inst.X, inst.M, inst.V) });
+  for (const inst of enumerate3()) out.push({ slice: 'n2d3', inst, result: certifyInstance(inst.X, inst.M, inst.V) });
+  return out;
+}
+
+module.exports = { q, checkEquilibrium, ambientBlocks, reducedJacobian, decoupledBlocks,
+                   certifyInstance, controlGradient, controlRPS, enumerate2, enumerate3,
+                   runEnumeration, X2, X3 };
+
+});
+/* ==== END VERBATIM instance.js ==== */
+/* ==== BEGIN VERBATIM brusselator.js ==== */
+__def('brusselator.js', function (module, exports, require, __dirname) {
+/* brusselator.js — exhibit 2 of the certificate class (PREREG.md AMENDMENTS A1).
+
+   The Brusselator ẋ = A − (B+1)x + x²y, ẏ = Bx − x²y, rational A, B > 0. Its unique
+   equilibrium (A, B/A) is exact in Q and its Jacobian there is [[B−1, A²], [−B, −A²]] —
+   handed to the SAME obstruction.certify() as the attention exhibit. A certified non-real
+   pair rules out every C¹ Riemannian metric and C² potential near the equilibrium.
+
+   The honesty clause (A1, binding): the spectrum fact is classical Hopf textbook; nothing
+   here claims new dynamics. The contribution is the certified metric-universal statement in
+   the class format — and the 2×2 case pays for its smallness with the strongest independent
+   check the class has: certify ⇔ (B−1−A²)² − 4A² < 0, an exact rational twin evaluated
+   beside every verdict (KB-B3: one disagreement anywhere is a pipeline defect, ship nothing). */
+'use strict';
+const path = require('path');
+const Q = require(path.join(__dirname, '..', '..', '..', 'core', 'interval', 'rational.js'));
+const OB = require(path.join(__dirname, 'obstruction.js'));
+
+const q = (n, d = 1n) => Q.R(BigInt(n), BigInt(d));
+const { add, sub, mul, div } = Q;
+const ONE = q(1);
+
+/* the flow at (x, y), exact — used to verify the equilibrium as an identity, never assumed */
+function flow(A, B, x, y) {
+  const x2y = mul(mul(x, x), y);
+  return [
+    add(sub(A, mul(add(B, ONE), x)), x2y),
+    sub(mul(B, x), x2y),
+  ];
+}
+
+function jacobianAtEquilibrium(A, B) {
+  /* J = [[B−1, A²], [−B, −A²]] at (A, B/A) — derived once, verified by the battery against
+     exact finite differences of `flow` in Q (a RATIONAL cross-check, not a float one: the
+     flow is polynomial, so central differences at h are exact up to the h² term, and the
+     battery checks the limit algebraically instead by symbolic expansion at two h values). */
+  const A2 = mul(A, A);
+  return [[sub(B, ONE), A2], [mul(B, q(-1)), mul(A2, q(-1))]];
+}
+
+function equilibrium(A, B) { return [A, div(B, A)]; }
+
+/* the exact twin: sign of (B−1−A²)² − 4A²; negative ⇔ complex pair for a real 2×2
+   with this trace/det (KB-B3's independent predicate) */
+function discriminantSign(A, B) {
+  const tr = sub(sub(B, ONE), mul(A, A));
+  const disc = sub(mul(tr, tr), mul(q(4), mul(A, A)));
+  return Q.sign(disc);
+}
+
+function certifyInstance(A, B) {
+  const [ex, ey] = equilibrium(A, B);
+  const F = flow(A, B, ex, ey);
+  if (!Q.isZero(F[0]) || !Q.isZero(F[1])) return { status: 'no-exact-equilibrium' };
+  const J = jacobianAtEquilibrium(A, B);
+  const res = OB.certify(J, 2);
+  return {
+    status: res.certified ? 'certified' : 'refused',
+    dim: 2,
+    ...res,
+    discSign: discriminantSign(A, B),
+    twinAgrees: res.certified === (discriminantSign(A, B) < 0),
+  };
+}
+
+/* AMENDMENT A1's grid, written before any Jacobian ran: A ∈ {1/2..3}, B ∈ {1/2..6} step 1/2 */
+function* enumerateGrid() {
+  const As = [q(1, 2), q(1), q(3, 2), q(2), q(3)];
+  const Bs = []; for (let k = 1; k <= 12; k++) Bs.push(q(k, 2));
+  for (const A of As) for (const B of Bs) yield { A, B };
+}
+
+function runCensus() {
+  const out = [];
+  for (const { A, B } of enumerateGrid()) out.push({ A, B, result: certifyInstance(A, B) });
+  return out;
+}
+
+module.exports = { q, flow, jacobianAtEquilibrium, equilibrium, discriminantSign,
+                   certifyInstance, enumerateGrid, runCensus };
+
+});
+/* ==== END VERBATIM brusselator.js ==== */
+/*@@NG_KERNELS_END@@*/
+</script>
+<script>
+'use strict';
+(function () {
+  var I = __NG_MODULES['instance.js'], BR = __NG_MODULES['brusselator.js'],
+      OB = __NG_MODULES['obstruction.js'];
+  var host = document.getElementById('ng-live');
+  if (!I || !BR || !OB || !host) return;
+  var q = I.q;
+  var $make = function (tag, cls, text) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  };
+  /* the flagship golden — the same literals the attention claim record pins; the battery
+     cross-checks these against that record, and everything downstream is COMPUTED from them here */
+  var GOLD_M = [[q(40, 9), q(-1), q(-1)], [q(-1), q(-1), q(-1)], [q(-1), q(1), q(-1)]];
+  var GOLD_V = [[q(2), q(-1), q(0)], [q(1), q(0), q(1)], [q(0), q(1), q(1)]];
+
+  var panel = $make('div', 'ngpanel');
+  panel.appendChild($make('div', 'nghead', 'Run the certificate on the flagship instance, and on its controls'));
+  var lines = $make('div'); panel.appendChild(lines);
+  var row = $make('div', 'ngrow');
+  var verdict = $make('div', 'ngverdict',
+    'Every verdict below is computed when you press — a Sturm count over BigInt rationals, in ' +
+    'this tab, from the spliced kernels. Nothing is prerecorded.');
+  var show = function (title, res, expectCertified) {
+    lines.textContent = '';
+    var healthy = (res.status === 'certified') === expectCertified;
+    var ln = $make('div', 'ngline');
+    ln.appendChild($make('span', 'ngled' + (healthy ? ' ok' : ' bad')));
+    ln.appendChild($make('span', null, title + ' — ' + res.status.toUpperCase() +
+      ' (distinct real ' + res.distinctReal + ', non-real ' + res.nonReal +
+      ' of squarefree degree ' + res.degree + ')'));
+    lines.appendChild(ln);
+    return healthy;
+  };
+  var bGold = $make('button', 'ngbtn', 'certify the flagship attention instance');
+  bGold.addEventListener('click', function () {
+    var res = I.certifyInstance(I.X3, GOLD_M, GOLD_V);
+    var healthy = show('flagship (n=2, d=3, untied M)', res, true);
+    verdict.className = 'ngverdict ' + (healthy ? 'ok' : 'bad');
+    verdict.textContent = healthy
+      ? 'A complex pair is certified, computed just now: no C¹ Riemannian metric and no C² ' +
+        'potential realize this softmax flow as a gradient near this equilibrium. The claim is ' +
+        'exactly this local, and exactly this instance-wise.'
+      : 'The flagship did NOT certify — this page disagrees with its committed record, which is ' +
+        'a defect report about the page.';
+  });
+  var bGrad = $make('button', 'ngbtn', 'the gradient case must refuse');
+  bGrad.addEventListener('click', function () {
+    /* d = 3, per PREREG amendment A2: at d = 2 our own lemma forces refusal for EVERY
+       instance, so only the d = 3 instantiation is a control with teeth (224/672 of the
+       general family fire here; the gradient case must not) */
+    var Msym3 = [[q(-40, 9), q(1), q(1)], [q(1), q(1), q(1)], [q(1), q(1), q(1)]];
+    var res = I.controlGradient(I.X3, Msym3);
+    var healthy = show('gradient control at d = 3 (M = V, symmetric — the case with known structure)', res, false);
+    verdict.className = 'ngverdict ' + (healthy ? 'ok' : 'bad');
+    verdict.textContent = healthy
+      ? 'Refused, all-real, at d = 3 — where refusal is informative: 224 of 672 general ' +
+        'instances certify in this dimension, and the gradient case must not. (At d = 2 the ' +
+        'decoupling lemma forces refusal for every instance, gradient or not, so a d = 2 ' +
+        '"control" would have no teeth — a hostile review caught exactly that, and the ' +
+        'preregistration carries the dated amendment.)'
+      : 'The gradient control CERTIFIED — the pipeline is broken and nothing on this page ' +
+        'should be believed until that is resolved.';
+  });
+  var bBr = $make('button', 'ngbtn', 'Brusselator (1,2) and (1,10), twin beside each');
+  bBr.addEventListener('click', function () {
+    lines.textContent = '';
+    var both = [[q(1), q(2), true], [q(1), q(10), false]];
+    var allHealthy = true;
+    both.forEach(function (t) {
+      var res = BR.certifyInstance(t[0], t[1]);
+      var healthy = (res.status === 'certified') === t[2] && res.twinAgrees;
+      if (!healthy) allHealthy = false;
+      var ln = $make('div', 'ngline');
+      ln.appendChild($make('span', 'ngled' + (healthy ? ' ok' : ' bad')));
+      /* the label is printed from the COMPUTED parameters, never from the expectation flag */
+      ln.appendChild($make('span', null, '(A,B) = (' + String(t[0].n) + ',' + String(t[1].n) +
+        ') — ' + res.status.toUpperCase() + '; exact discriminant twin ' +
+        (res.twinAgrees ? 'AGREES' : 'DISAGREES')));
+      lines.appendChild(ln);
+    });
+    verdict.className = 'ngverdict ' + (allHealthy ? 'ok' : 'bad');
+    verdict.textContent = allHealthy
+      ? 'Both verdicts recomputed, and the elementary exact twin — sign of (B−1−A²)² − 4A² — ' +
+        'agrees with the Sturm kernel on both. (1,2) is on the preregistered grid, where the ' +
+        'twin agreed at all 60 instances; (1,10) is the preregistration’s off-grid ' +
+        'refusal control.'
+      : 'A twin disagreement — the pipeline defect KB-B3 exists to catch. Defect report.';
+  });
+  var bMut = $make('button', 'ngbtn mut', 'break it: corrupt one Jacobian entry');
+  bMut.addEventListener('click', function () {
+    var R = __NG_MODULES['rational.js'];
+    var J = BR.jacobianAtEquilibrium(q(1), q(2));
+    var bad = [[J[0][0], J[0][1]], [R.mul(J[1][0], q(-1)), J[1][1]]];
+    var res = OB.certify(bad, 2);
+    var twinSays = BR.discriminantSign(q(1), q(2)) < 0;
+    var caught = res.certified !== twinSays;
+    lines.textContent = '';
+    var ln = $make('div', 'ngline');
+    /* red when the disagreement is shown; NEUTRAL (never green) when the corruption slipped
+       through — a defect state must not wear the certificate LED */
+    ln.appendChild($make('span', 'ngled' + (caught ? ' bad' : '')));
+    ln.appendChild($make('span', null, 'corrupted Jacobian at (1,2) — kernel says ' +
+      (res.certified ? 'CERTIFIED' : 'REFUSED') + ', twin says ' +
+      (twinSays ? 'CERTIFIED' : 'REFUSED')));
+    lines.appendChild(ln);
+    verdict.className = 'ngverdict bad';
+    verdict.textContent = caught
+      ? 'One entry negated, and the kernel and the twin now DISAGREE — the red the independent ' +
+        'predicate exists to show. The page is red because the mathematics noticed.'
+      : 'The corruption was NOT caught — a defect report about this page.';
+  });
+  row.appendChild(bGold); row.appendChild(bGrad); row.appendChild(bBr); row.appendChild(bMut);
+  panel.appendChild(row); panel.appendChild(verdict);
+  host.appendChild(panel);
+})();
+</script>
+</body>
+</html>

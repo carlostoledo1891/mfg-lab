@@ -1,6 +1,6 @@
 """Certificate battery for mfglab.continuum — the SIN-MFG kernel port.
 
-Layer-A parity with sin-mfg/tests/test-sin.js for the shipped (centered)
+Layer-A parity with research/stock-constraint/tests/test-sin.js for the shipped (centered)
 scheme, plus the structural certificates of the adjoint-matched scheme.
 Doctrine: gates that can go red (mutants included), measured values
 recorded, no fabricated floors.  The cross-language differential against

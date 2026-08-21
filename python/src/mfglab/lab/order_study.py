@@ -6,7 +6,7 @@ whether the number in it is the discretization order at all: if the solver
 stopped iterating before the discretization error was resolved, the table
 measures the STOPPING CRITERION and reports it as a property of the scheme.
 This repository published "|eps| ~ (h+dt)^1.1" and then measured apparent
-slopes from -1.9 to +2.6 for exactly that reason (``mfg-lab/docs/FINDINGS.md``).
+slopes from -1.9 to +2.6 for exactly that reason (``research/mfg-lab/docs/FINDINGS.md``).
 
 Three rules, none of which rests on an invented constant:
 

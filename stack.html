@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!--
-  THE STACK EXPLAINER - site/stack.html, route /stack (PAGES.json kind SITE, exported:false
+  THE STACK EXPLAINER - stack.html, route /stack (PAGES.json kind SITE, exported:false
   until the owner flips it on the publish decision).
 
   WHAT THIS PAGE IS. A prose explainer of the verification stack for a developer or
@@ -190,9 +190,9 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   <div class="topbar-in">
     <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
     <nav class="sitenav" aria-label="Primary">
-      <a href="/technical-reports">Reports</a>
+      <a href="/reports">Reports</a>
       <a href="/stack">Stack</a>
-      <a href="/defects">Errata</a>
+      <a href="/errata">Errata</a>
       <a href="/about">About</a>
     </nav>
   </div>
@@ -363,7 +363,7 @@ function mul(a, b) {
       a normalising constructor, and field operations on reduced pairs. Fourteen lines, no library.</p>
     </div>
     <div class="codeblock">
-      <div class="cbar"><span class="src">site/technical-reports/lane/laneb-poisson/verify.js &middot; lines 15&ndash;28</span>
+      <div class="cbar"><span class="src">research/challenges/lane/laneb-poisson/verify.js &middot; lines 15&ndash;28</span>
         <span class="what">gcd / frac and the field ops</span></div>
       <pre><code>const gcd = (a, b) =&gt; { a = a &lt; 0n ? -a : a; b = b &lt; 0n ? -b : b; while (b) { [a, b] = [b, a % b]; } return a; };
 function frac(n, d = 1n) {
@@ -494,7 +494,7 @@ const feq = (a, b) =&gt; a[0] === b[0] &amp;&amp; a[1] === b[1];
       depicted instance &epsilon; = 1/6. Per candidate point, one function does all the evidentiary work:</p>
     </div>
     <div class="codeblock">
-      <div class="cbar"><span class="src">site/technical-reports/lane/laneb-maxwell/verify.js &middot; lines 352&ndash;370</span>
+      <div class="cbar"><span class="src">research/challenges/lane/laneb-maxwell/verify.js &middot; lines 352&ndash;370</span>
         <span class="what">one candidate &rarr; one certificate, or a refusal</span></div>
       <pre><code>function certifyPoint(cfg, x0) {
   try {
@@ -525,7 +525,7 @@ const feq = (a, b) =&gt; a[0] === b[0] &amp;&amp; a[1] === b[1];
       Then one gate states the claim:</p>
     </div>
     <div class="codeblock">
-      <div class="cbar"><span class="src">site/technical-reports/lane/laneb-maxwell/verify.js &middot; lines 404&ndash;409</span>
+      <div class="cbar"><span class="src">research/challenges/lane/laneb-maxwell/verify.js &middot; lines 404&ndash;409</span>
         <span class="what">the claim gate, and nothing above it</span></div>
       <pre><code>const CLEAN = certifyAll(CFG, CAND, false);
 say(CLEAN.nOk === 24, `Krawczyk certifies existence + local uniqueness in all 24 boxes (got ${CLEAN.nOk})`);
@@ -606,8 +606,8 @@ node dual-client.js --fixture heldout-ccs-es --plant-mutant  # -> "verdict": "RE
       terminal and this page is a finding, not an argument. For what the certificates on this site can
       and cannot prove &mdash; and what is refused &mdash; the standard is stated once, at
       <a href="/certificates">/certificates</a>. The results themselves live under
-      <a href="/technical-reports">/technical-reports</a>, and the defects this toolchain has caught in
-      its own earlier versions are published at <a href="/defects">/defects</a>.</p>
+      <a href="/reports">/reports</a>, and the defects this toolchain has caught in
+      its own earlier versions are published at <a href="/errata">/errata</a>.</p>
     </div>
   </section>
 </div>
@@ -621,11 +621,11 @@ node dual-client.js --fixture heldout-ccs-es --plant-mutant  # -> "verdict": "RE
         broken copy of that program.</p>
       <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
         including by its author &mdash; are recorded with their date and their correction in the
-        <a href="/defects">errata log</a>, never quietly fixed.</p>
+        <a href="/errata">errata log</a>, never quietly fixed.</p>
       <nav class="sitemap" aria-label="Site map">
-    <a href="/technical-reports">Reports</a>
+    <a href="/reports">Reports</a>
     <a href="/stack">Stack</a>
-    <a href="/defects">Errata</a>
+    <a href="/errata">Errata</a>
     <a href="/about">About</a>
     <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
   </nav>

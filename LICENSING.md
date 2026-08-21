@@ -30,11 +30,11 @@ can change your answer.
 | The work | Licence | Stated where | Where it sits today |
 |---|---|---|---|
 | the certification toolkit — interval arithmetic, exact rationals, radii-polynomial / Krawczyk, `Certificate` | **MIT** | root [`LICENSE`](LICENSE) | `eqcert/**` |
-| the computer-assisted proof of a stationary equilibrium — kernels, generator, batteries | **MIT** | root [`LICENSE`](LICENSE) | `mfg-cap/**`, and the page itself at `technical-reports/mfg-cap.html` |
+| the computer-assisted proof of a stationary equilibrium — kernels, generator, batteries | **MIT** | root [`LICENSE`](LICENSE) | `mfg-cap/**`, and the page itself at `research/mfg-cap/mfg-cap.html` |
 | the interactive artifacts and their batteries | **MIT** | root [`LICENSE`](LICENSE) | `mfg-lab/**` |
 | the `mfglab` Python package (`pip install mfg-lab`, `import mfglab`) — kernels, cross-language differentials, batteries | **MIT** | root [`LICENSE`](LICENSE) | `python/**` |
-| the Lab instruments — a convergence study and a failure map you run on **your own** solver, plus the bring-your-own-MFG kernel | **MIT** | root [`LICENSE`](LICENSE) | `lab/**`, with their batteries in `mfg-lab/tests/` |
-| the research note, its kernels, references and batteries | **MIT** | root [`LICENSE`](LICENSE) | `sin-mfg/**`, and the page itself at `technical-reports/stock-constraint.html` |
+| the Lab instruments — a convergence study and a failure map you run on **your own** solver, plus the bring-your-own-MFG kernel | **MIT** | root [`LICENSE`](LICENSE) | `lab/**`, with their batteries in `research/mfg-lab/tests/` |
+| the research note, its kernels, references and batteries | **MIT** | root [`LICENSE`](LICENSE) | `sin-mfg/**`, and the page itself at `research/stock-constraint/stock-constraint.html` |
 | the repository scaffolding — `LICENSE`, `LICENSING.md`, `README.md`, `CITATION.cff`, `Makefile`, `vercel.json`, `.gitignore`, `requirements-dev.txt`, `.github/**` | **MIT** | root [`LICENSE`](LICENSE) | the repository root |
 | **the Enclosure papers — `mfg-congest` and `wardrop-repro`** — as *documents*: prose, figures, tables, layout, CSS | **CC-BY 4.0** | a visible licence paragraph in each page's footer, the page's JSON-LD `license` field, and the CC-BY licence text shipped alongside the papers | wherever each page is published |
 | the verifier each paper embeds and offers for download — `verify_congest.py`, `verify_wardrop.py` | **MIT** | inside the decoded file: SPDX line, copyright notice, full permission-and-warranty text, and the attribution for the parts ported from the certification toolkit | inside the page, and in your downloads folder once you click |
@@ -49,7 +49,7 @@ can change your answer.
 >
 > **`technical-reports/` is a namespace, not a licence.** 34 pages are published under it and
 > they do not share a licence: `mfg-congest` and `wardrop-repro` are the CC-BY 4.0 Enclosure
-> papers, which say so via [`technical-reports/LICENSE.md`](technical-reports/LICENSE.md),
+> papers, which say so via [`LICENSE.md`](LICENSE.md),
 > while `mfg-cap` and `stock-constraint` are MIT under the root `LICENSE` like the rest of the
 > code. This is exactly the case the rule above is built for — open the page and read what it
 > says about itself; the directory it is served from decides nothing.

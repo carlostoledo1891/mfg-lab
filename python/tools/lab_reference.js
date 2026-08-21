@@ -46,13 +46,12 @@ const crypto = require('crypto');
    ENUMERATED rather than counted — see the long note in js_reference.js. This file SHIPS, so
    the export branch is real, and a wrong answer is invisible to every gate that runs here. */
 const ROOT = path.resolve(__dirname, '..', '..');       // python/tools -> the tree root
-/* AMENDED 2026-08-08 (REBUILD_PLAN phase 2): the monorepo candidate is site/mfg-lab, because
-   every page now lives at its route and site/ publishes at the export root. The monorepo
-   path is therefore the export path with `site/` in front of it, which is the first time
-   these two candidates have differed by a prefix instead of by a rename. */
-const MFGLAB_DIR = [path.join(ROOT, 'site', 'mfg-lab'),  /* the monorepo: site/<route> */
-                    path.join(ROOT, 'mfg-lab')]              /* the flat exported tree */
-                   .find(d => fs.existsSync(d)) || path.join(ROOT, 'mfg-lab');
+/* AMENDED AGAIN 2026-08-21 (the structure migration), and this time the branch is DELETED rather
+   than repointed. The two candidates existed because the monorepo and the export spelled this
+   directory differently — research/mfg-lab, then site/mfg-lab, against a flat mfg-lab/ in the
+   export. Source path and published path are the same string now, so there is one spelling and a
+   two-entry list whose second entry can never be chosen would only mislead the next reader. */
+const MFGLAB_DIR = path.join(ROOT, 'research', 'mfg-lab');
 /* M5b, 2026-07-28: the instruments moved to lab/ at the TREE ROOT, so this one needs NO
    two-tree branch — python/tools and lab/ are both root-relative in the monorepo and in the
    export, which is exactly the property MFGLAB_DIR above exists to work around for the two
@@ -60,7 +59,7 @@ const MFGLAB_DIR = [path.join(ROOT, 'site', 'mfg-lab'),  /* the monorepo: site/<
 const LAB = path.resolve(process.env.MFG_LAB_DIR || path.join(ROOT, 'lab'));
 const FIX = path.resolve(process.env.MFG_LAB_FIXTURES ||
                          path.join(MFGLAB_DIR, 'tests', 'lab-fixtures.js'));
-                                    // the fixtures stay in mfg-lab/tests/, which does NOT move
+                                    // the fixtures stay in research/mfg-lab/tests/, which does NOT move
 
 /* role -> the ABSOLUTE path read for it. ONE object, so the sha map, the
    emitted provenance and the requires below cannot name different files. */

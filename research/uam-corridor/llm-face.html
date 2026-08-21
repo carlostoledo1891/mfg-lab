@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  LLM AGENTS ON AN EXACT EQUILIBRIUM FACE - the L1 instrument page. Born 2026-08-15,
+  gated. The artifact is a preregistered measurement protocol: two LLM policies
+  repeatedly choose an operator split in a routing game whose equilibrium set is a
+  positive-dimensional face computed in exact rational arithmetic, with its endpoints,
+  centre and anchors machine-verified as equilibria (the corridor's equilibrium-face claim record pins the
+  symmetric face and both pricing selections; the asymmetric face interval is an exact
+  kernel computation, battery-checked, not claim-pinned), and every landing is scored
+  exactly against three named classical reference points already exact on that face.
+
+  WHY THIS PAGE IS GATED (updated 2026-08-19; the original reason, kept below, was that
+  zero confirmatory sessions had run): the 60-session confirmatory grid COMPLETED
+  2026-08-19 and is scored on this page — ALL THREE PREREGISTERED BETS FALSIFIED, stated
+  in the headline per the registration's own rule. The page stays gated until the owner
+  reads the results and decides reach; until then it is shared person-to-person behind
+  the password.
+
+  ADDED 2026-08-20 - the refusal section. The four-arm ablation that the 2026-08-19
+  post-hoc paragraph called "waiting" RAN on 2026-08-20; that sentence is superseded IN
+  PLACE (replaced, never deleted) and the measurement became a section of its own, with
+  the page re-leded on the refusal wall and the exact face as its second beat. Every
+  number in that section is RECOMPUTED by this page's gate (block F) from the session
+  archives under llm/runs/ and from the ablation's own recorded per-call responses -
+  including a check that rebuilds the frozen kernel's day-5 and day-2 prompts and proves
+  the ablation's control and short arms are those prompts, not prose written for the
+  occasion. Recorded in the ledger as a claim of kind observation, over the refusal
+  profile and the ablation only. The record's identifier is deliberately NOT printed on the
+  page: ledger claim, run and attack ids name records that never ship, so naming one on a
+  surface a reader can reach would point them at something they cannot open
+  (this repository's identifier policy for ledger records).
+
+  GATES, binding on every line here: this page's own literature gate record, held internally (PARTIAL; twelve
+  forbidden sentences - no first/novel/unstudied, the phenomenon is FOLKLORE, the
+  question is occupied and credited, the negative ships only as a documented search) and the corridor unit's literature gate record (never bare "certified": always the mathematical
+  sense, stated with the zero-airworthiness disclaimer where the corridor is named).
+
+  EVERY NUMBER IN THE LIVE SECTION IS RE-DERIVED IN THIS PAGE at load time by the
+  kernel between the __LLMFACE_KERNEL_BEGIN__ markers - an independent BigInt-rational
+  implementation, deliberately sharing no code with the Node kernels.
+  research/uam-corridor/tests/test-llm-page.js extracts that kernel from this file at
+  run time, prints the sha256 of what it read, re-derives every face and anchor value,
+  and compares them against kernel/llm-face.js - plus a red control on a corrupted
+  copy, so the gate is known to notice.
+
+  Chrome (topnav markup, footer markup, :root tokens) is the house chrome, verbatim
+  from graders-red.html / certificate-falsifiers.html.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM agents on an exact equilibrium face — Carlos Toledo</title>
+<meta name="description" content="A preregistered instrument: LLM policies repeatedly choose an operator split in a routing game whose equilibrium set is a mathematically certified equilibrium face (exact-rational, machine-checked; no airworthiness meaning), and every landing is scored in exact rational arithmetic against three named classical selection points. Frozen before any model output; the 60-session grid ran 2026-08-19 and all three preregistered bets were falsified, and in this run's archived records claude-opus-5 returned the API's own refusal stop reason on 704 of its 754 calls, on a monotone daily profile whose trigger a four-arm ablation (n=5/arm) narrows to a conjunction. One game, one prompt family, one key; nothing here is a statement about any model outside these records.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.crumb{display:flex;align-items:center;gap:7px;font-family:var(--data);font-size:11px;color:var(--ink-soft);min-width:0;overflow:hidden;white-space:nowrap}
+.crumb a{color:var(--ink-soft);text-decoration:none}
+.crumb a:hover{color:var(--fp-deep)}
+.crumb .s{opacity:.6}
+.crumb .here{color:var(--ink)}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} .crumb{display:none} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+blockquote{border-left:2px solid var(--grid);padding:4px 0 4px 17px;margin:14px 0;
+  font-size:13.5px;color:var(--ink-soft);max-width:76ch}
+section ul{list-style:none;margin:4px 0 12px;padding:0;border-top:1px solid var(--grid)}
+section ul li{padding:11px 0;border-bottom:1px solid var(--grid);font-size:13.5px;
+  line-height:1.6;color:var(--ink-soft);max-width:80ch}
+section ul li b{color:var(--ink);font-weight:600}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+
+/* live section — dimensionally stable: hover/active change color only, verdict cells
+   are fixed line boxes, status strings reserve their height up front */
+.gatebar{border:1px solid var(--grid);border-left:3px solid var(--warn);background:var(--warn-soft);
+  border-radius:var(--radius-sm);padding:10px 14px;margin:18px 0;font-size:13px;color:var(--ink-soft);max-width:76ch}
+.ctable{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:12.5px}
+.ctable th{font-family:var(--data);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-soft);text-align:left;padding:7px 10px;border-bottom:1px solid var(--grid);font-weight:500}
+.ctable td{padding:8px 10px;border-bottom:1px solid var(--grid);vertical-align:top;color:var(--ink-soft)}
+.ctable td.sub{font-family:var(--data);font-variant-numeric:tabular-nums;max-width:40ch}
+.ctable td.v{font-family:var(--data);white-space:nowrap;min-width:11ch}
+.v .ok::before{content:'●';color:var(--good);margin-right:6px}
+.v .no::before{content:'●';color:var(--bad);margin-right:6px}
+.v .ok{color:var(--good)}
+.v .no{color:var(--bad)}
+.tryrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0 4px}
+.tryrow input{font-family:var(--data);font-size:13px;padding:8px 10px;border:1px solid var(--grid);
+  border-radius:var(--radius-sm);background:var(--card);color:var(--ink);width:min(160px,100%)}
+.tryrow input:focus{outline:none;border-color:var(--accent-deep)}
+.tryrow select{font-family:var(--data);font-size:13px;padding:8px 10px;border:1px solid var(--grid);
+  border-radius:var(--radius-sm);background:var(--card);color:var(--ink)}
+button.press{font-family:var(--data);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 14px;border:1px solid var(--grid);border-radius:var(--radius-sm);background:var(--card);
+  color:var(--ink);cursor:pointer}
+button.press:hover{border-color:var(--accent-deep);color:var(--fp-deep);background:var(--card)}
+.status{font-family:var(--data);font-size:12px;color:var(--ink-soft);min-height:2.9em;
+  margin:8px 0 0;font-variant-numeric:tabular-nums;max-width:76ch}
+.status b{font-weight:600}
+.status .ok{color:var(--good)}
+.status .no{color:var(--bad)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/reports">technical-reports</a><span class="s">/</span><span class="here">llm-face</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+    </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">Methods &middot; preregistered instrument &middot; 15 August 2026 &middot; results 19 August &middot; ablation 20 August</div>
+  <h1>LLM agents on an exact equilibrium face</h1>
+  <p class="lede">By day four of a benign two-corridor routing game,
+    <code>claude-opus-5</code> had stopped answering, and inside a session it never
+    resumed: across the archived confirmatory grid it returned the API&rsquo;s own
+    <code>refusal</code> stop reason &mdash; zero output tokens, empty text &mdash; on
+    <b>704 of its 754 calls</b>, on a monotone daily profile (4/40 on day 1, 31/40 on
+    day 2, 39/40 on day 3, <b>40/40 on every day from four to ten</b>) that
+    <code>claude-sonnet-5</code> and <code>claude-haiku-4-5</code> never showed once. A
+    four-arm ablation run 2026-08-20 isolates the trigger as a <b>conjunction</b>: the
+    frozen kernel&rsquo;s genuine day-5 prompt refuses 5 of 5, while cutting the history
+    to one day, lexically neutralising the market framing, or removing the competitor
+    each returns 0 of 5 &mdash; the refusal is not about the game, it is about the
+    game&rsquo;s <b>history</b> reaching the prompt. That wall was legible only because
+    the instrument beneath it was exact and frozen in advance: a routing game whose
+    equilibrium set is a one-dimensional face computed in exact rational arithmetic
+    &mdash; its endpoints, centre and anchors machine-verified as equilibria &mdash; with
+    three classical selection points already exact on it, so a landing is scored against
+    the mathematics itself rather than against a fitted baseline. The protocol was
+    <b>frozen and preregistered before any model output existed; the 60-session
+    confirmatory grid ran 2026-08-19</b> &mdash; and <b>all three preregistered bets were
+    falsified</b>, reported below as falsified, per the registration&rsquo;s own rule.
+    The same archives carry a positive result this page had buried: from the imposed
+    balanced start, before any day-over-day history exists, opus&rsquo;s day-one answer
+    <i>is</i> the exact equilibrium split in the balanced-start sessions on record &mdash; a reading of the archive that no check on this page recomputes, so it is stated beside the figure that is pinned, and not above it
+    &mdash; 12 of 60 sessions across the grid end on an exact equilibrium
+    (e<sub>S</sub> = 0, e<sub>F</sub> = 0).</p>
+
+  <div class="gatebar"><b>Why this page is gated.</b> The confirmatory grid is complete
+    and scored &mdash; 60 of 60 sessions, all three bets falsified, results below &mdash;
+    and the page stays gated until the owner reads the result and decides reach. (Its
+    original gating reason, that the grid was staged but not yet run, resolved
+    2026-08-19; the page said so plainly then, and says this plainly now.) Shared
+    person-to-person in the meantime.</div>
+
+  <section>
+    <h2>The instrument</h2>
+    <p>Two operators A and B, with fleets Q<sub>A</sub> and Q<sub>B</sub>, each split
+      their aircraft-units daily between two corridors &mdash; MAIN (free-flow 11) and
+      SHORE (free-flow 16), each with congestion cost 2&nbsp;&times;&nbsp;(total units on
+      that corridor, both operators combined). Because congestion is blind to whose
+      aircraft it is, equilibrium pins the corridor <b>totals</b> exactly &mdash;
+      29/4 units on MAIN &mdash; and leaves the operator split free: a one-dimensional
+      face of equilibria &mdash; every point of it an equilibrium by an exact algebraic
+      derivation, with the endpoints, the centre and all three anchors additionally
+      verified pointwise in exact rational arithmetic (the same equilibrium-face claim record;
+      the same instance whose point-uniqueness test is <i>refused</i> with an exact
+      witness, det&nbsp;of the symmetric part&nbsp;&equiv;&nbsp;0).</p>
+    <ul>
+      <li><b>Arm S (symmetric, Q<sub>A</sub>=Q<sub>B</sub>=6).</b> Face
+        [5/4,&nbsp;6] on A&#8209;on&#8209;MAIN, width 19/4. The three reference points
+        coincide at 29/8 = 3.625 &mdash; this arm measures only whether play finds the
+        set.</li>
+      <li><b>Arm A (asymmetric, Q<sub>A</sub>=8, Q<sub>B</sub>=4).</b> Face
+        [13/4,&nbsp;29/4], width 4. The three reference points <b>separate</b>:
+        least&#8209;norm 37/8 = 4.625, proportional 29/6 &asymp; 4.8333, centre
+        21/4 = 5.25 &mdash; this arm can tell selection rules apart.</li>
+    </ul>
+    <p><b>Provenance, scoped exactly.</b> The corridor's equilibrium-face claim record pins the
+      symmetric face [5/4,&nbsp;6] with its endpoints and midpoint verified, the
+      point&#8209;uniqueness refusal, and the two pricing selections 29/8 and 37/8. The
+      asymmetric face interval [13/4,&nbsp;29/4], its centre 21/4 and the proportional
+      point 29/6 are exact computations of the same shipped kernels &mdash;
+      cross&#8209;checked by the unit battery and re&#8209;derived live below &mdash;
+      but are <b>not pinned by that claim record</b>; no value here stands on a record
+      that does not contain it.</p>
+    <p>The reference points are classical objects, cited to their owners, computed here
+      exactly rather than asserted: the vanishing own&#8209;flow&#8209;price
+      (Tikhonov) limit selects the <b>least&#8209;norm</b> point of the face
+      (Mangasarian&nbsp;&amp;&nbsp;Meyer,
+      <a href="https://doi.org/10.1137/0317052">DOI&nbsp;10.1137/0317052</a>), which on
+      this cost structure is algebraically the equal&#8209;difference point &mdash; an
+      identity discharged exactly, and re&#8209;checked live below; the
+      <b>proportional</b> point is the proportionality condition of Bar&#8209;Gera, Boyce
+      &amp; Nie (<a href="https://doi.org/10.1016/j.trb.2011.10.010">DOI&nbsp;10.1016/j.trb.2011.10.010</a>),
+      x<sub>r</sub> = Q<sub>r</sub>&middot;(s*/T) &mdash; an exact
+      reference&#8209;point computation, not a new certificate (the claim record itself
+      excludes the quantal value from what it pins), though it is structurally the fixed
+      point of the quantal dynamic whose float&#8209;probe measurements are this
+      unit&rsquo;s phase&nbsp;two; the <b>centre</b> is the midpoint of the face
+      interval.</p>
+    <div class="caveat"><p><b>Scope of the word &ldquo;certified&rdquo;.</b> Throughout
+      this page it means a <i>mathematically certified equilibrium statement</i> &mdash;
+      exact-rational, machine-checked. It carries <b>no airworthiness,
+      separation-assurance or operational-approval meaning</b>; certification in aviation
+      is FAA/EASA/ANAC&rsquo;s word, not ours. The corridor instance is illustrative:
+      topology and free-flow times follow the published Rio de Janeiro urban-air-mobility
+      concept of operations (Wayback&#8209;pinned document, sha256
+      <code>0d38f35a&hellip;</code>), while congestion coefficients and demand units are
+      this unit&rsquo;s own stylization.</p></div>
+  </section>
+
+  <section>
+    <h2>What is already known, and what this adds</h2>
+    <p>Every neighbouring question is occupied, and the occupants are credited. LLM
+      agents in repeated routing and congestion games are studied ground: Goodyear, Guo
+      &amp; Johari put LLM agents in a dynamic selfish-routing game
+      (<a href="https://arxiv.org/abs/2506.15624">arXiv:2506.15624</a>) &mdash; and chose
+      their networks precisely because the equilibrium is simple, writing that
+      &ldquo;the strong characterizations of static and dynamic equilibria&rdquo; make
+      them ideal targets; both of their variants have a unique aggregate equilibrium, so
+      the continuum case was designed out, not overlooked. LLMTraveler validates LLM
+      route choice against human laboratory data and MNL/RL baselines
+      (<a href="https://doi.org/10.1016/j.trc.2025.105307">DOI&nbsp;10.1016/j.trc.2025.105307</a>).
+      Repeated matrix-game play by LLMs has a flagship study (Akata et&nbsp;al.,
+      <a href="https://doi.org/10.1038/s41562-025-02172-y">DOI&nbsp;10.1038/s41562-025-02172-y</a>),
+      and LLM populations already have mean-field theory with decoding temperature as a
+      control parameter (De&nbsp;Nobili et&nbsp;al.,
+      <a href="https://arxiv.org/abs/2608.02178">arXiv:2608.02178</a>) &mdash; so nothing
+      here treats &ldquo;temperature moves the landing&rdquo; as news.</p>
+    <p>The selection question itself is occupied in the discrete case: Aharon, La&nbsp;Malfa,
+      Wooldridge &amp; Kraus measure which of finitely many focal options LLMs coordinate
+      on, at scale (<a href="https://arxiv.org/abs/2601.22184">arXiv:2601.22184</a>), and
+      DICE names ill-posed equilibrium selection in LLM systems and resolves it
+      <i>prescriptively</i>, by regularising the multiplicity into a unique
+      quantal-response object (<a href="https://arxiv.org/abs/2606.08068">arXiv:2606.08068</a>).
+      A continuum face has no menu, and this instrument is descriptive &mdash; it measures
+      which point arises instead of imposing one. On the solver side, the nearest
+      neighbour is PrimeNash (Liu et&nbsp;al., <i>Nexus</i> 3(1):100107, 2026,
+      <a href="https://doi.org/10.1016/j.ynexs.2025.100107">DOI&nbsp;10.1016/j.ynexs.2025.100107</a>):
+      LLM agents that <i>derive</i> closed-form Nash equilibria with automated
+      equilibrium checks &mdash; there the model is the solver and the check validates
+      the model&rsquo;s answer. This instrument is the inverse arrangement: the
+      equilibrium set is computed and machine-verified <i>before</i> any model plays, and
+      the models are measured against it &mdash; the LLM is the subject, never the
+      solver.</p>
+    <p>That where a learner lands on a face depends on the learner is <b>folklore</b> and
+      is treated as such &mdash; this unit&rsquo;s own programmed bots already exhibit it
+      (memory keeps the start, bounded rationality lands proportional, vanishing pricing
+      lands least-norm). The residue this page claims is narrow: we are not aware of
+      published work that measures LLM-agent selection against an equilibrium set
+      certified in exact rational arithmetic; the located LLM-in-games literature uses
+      games with a unique equilibrium, human laboratory data, or an algorithmically
+      imposed selection target as its reference. <b>That evidence is a documented search,
+      not a proof</b> &mdash; its natural venues (OpenReview, AAMAS, EC) were not covered
+      by the search that supports it, and one paper reporting the distribution of selected
+      points on a non-degenerate equilibrium set would collapse the residue. The
+      preregistration discipline is likewise conformance, not invention: Vaccaro&rsquo;s
+      position paper and template
+      (<a href="https://arxiv.org/abs/2606.11217">arXiv:2606.11217</a>) is the citation.</p>
+  </section>
+
+  <section>
+    <h2>The frozen protocol</h2>
+    <p><b>Status: 60 confirmatory sessions have run and are scored below</b> (grid
+      completed 2026-08-19; until that date this section read &ldquo;staged, not
+      run&rdquo; and the page carried no results, which was then the truth). The
+      registration was frozen and committed before any model output existed. One
+      pilot session ran after the freeze (subagent transport, sampling uncontrolled, the
+      frozen prompts delivered inside a simulation framing outside the frozen request
+      shape &mdash; recorded as such &mdash; labeled PILOT, excluded from confirmatory
+      analysis); it validated parsing on real model output under that envelope &mdash;
+      five of six replies wrapped the JSON in markdown fences, all parsed on first
+      attempt &mdash; and changed nothing in the registration.</p>
+    <ul>
+      <li><b>Design.</b> 2 arms &times; 2 imposed starts (balanced / extreme, shown to
+        the agents as a given day&#8209;0 assignment) &times; 3 models
+        (<code>claude-opus-5</code>, <code>claude-sonnet-5</code>,
+        <code>claude-haiku-4-5</code>, each in its default API configuration) &times;
+        5 replicates = 60 sessions of 10 days each, &asymp;1200 calls, sequential in a
+        registered order, spend-gated with a USD&nbsp;40 list-price threshold past which
+        the runner aborts new calls. No sampling parameters are sent (current models
+        reject them); determinism is not assumed; every raw request and reply is
+        archived with sha256.</li>
+      <li><b>Each day</b> both agents are queried simultaneously with the full public
+        history &mdash; both operators&rsquo; past splits and the exact per-unit cost on
+        each corridor, rendered without rounding &mdash; and reply with
+        <code>{"main": &lt;number&gt;}</code>. One re-ask on an unparseable reply, then
+        the round is INVALID and the agent&rsquo;s last valid choice carries forward;
+        nothing is excluded or re-run.</li>
+      <li><b>Scoring</b> is exact: total error e<sub>S</sub> = |s &minus; 29/4|,
+        projected split x&#770;, face error e<sub>F</sub> = dist(x&#770;, face);
+        &ldquo;on the face band&rdquo; means e<sub>S</sub> &le; 1/8 and
+        e<sub>F</sub> = 0; nearest-anchor classification is an exact comparison, ties
+        reported as ties.</li>
+      <li><b>Three registered bets</b>, each stated where it can lose: <b>P1</b> &mdash;
+        the two 5-family models end on the face band in &ge;3 of 5 replicates per cell;
+        <b>P2</b> &mdash; landings are START-DEPENDENT (|median x&#770;(balanced) &minus;
+        median x&#770;(extreme)| &ge; 1/2; a gap &le; 1/8 reads START-INDEPENDENT, and
+        the band between the two thresholds reads INCONCLUSIVE rather than falsified)
+        for all three models; <b>P3</b> &mdash; among on-face replicates of the
+        asymmetric arm, the modal nearest anchor is the <b>proportional</b> point 29/6
+        (fewer than two qualifying replicates in a cell: NOT EVALUABLE, a named outcome).
+        Falsified predictions will be reported as falsified, in the headline, following
+        this unit&rsquo;s own precedent &mdash; the phase-two bot registration was partly
+        falsified by its first run and says so.</li>
+      <li><b>Prompt freeze is gated, not promised:</b> the three prompt templates are
+        sha256-pinned in the registration (system
+        <code>3e2c9657&hellip;</code>, user <code>9d8335ae&hellip;</code>, retry
+        <code>60d20ed8&hellip;</code>), and the unit&rsquo;s battery recomputes the
+        hashes from the shipped kernel and fails on any drift. The agents are told the
+        full cost model and history; they are never told anything about equilibria,
+        faces, or reference points &mdash; a check enforces that the prompts cannot
+        mention them.</li>
+    </ul>
+    <p>The system prompt, verbatim (placeholders per role):</p>
+    <blockquote>You manage the daily fleet assignment for Operator {ROLE}, one of two
+      air-taxi operators sharing two corridors between the same origin and destination.
+      Each day you choose how many of your {Q} aircraft-units fly the MAIN corridor; the
+      rest fly the SHORE corridor. The other operator (Operator {OTHER}) independently
+      assigns its {QO} units the same way, at the same time, without seeing your choice
+      for the day. That day, travel cost per unit on MAIN is 11 + 2 x (total units on
+      MAIN, both operators combined), and travel cost per unit on SHORE is 16 + 2 x
+      (total units on SHORE, both operators combined). You want your own total travel
+      cost that day to be as low as possible. Respond with only a JSON object of the
+      form {"main": &lt;number&gt;} - the number of your units to fly MAIN today, between
+      0 and {Q}. Fractional numbers are allowed. No other text.</blockquote>
+  </section>
+
+  <section id="results">
+    <h2>Results &mdash; the three bets, falsifications first</h2>
+    <p><b>P1 &mdash; FALSIFIED. P2 &mdash; FALSIFIED. P3 &mdash; FALSIFIED.</b> Scored
+      2026-08-19 over the complete 60-session grid by
+      <code>llm/score-bets.js</code>, which implements the registration&rsquo;s &sect;6/&sect;7
+      rules and nothing else in exact rational arithmetic, and refuses to score a partial
+      grid. Every number below is recomputed from the archived session records by this
+      page&rsquo;s own battery on every run of <code>make check</code> &mdash; nothing here is a
+      remembered value.</p>
+    <p><b>P1 (face-finding: every opus/sonnet cell ends &ge;3 of 5 replicates on the face
+      band) &mdash; FALSIFIED.</b> <code>claude-opus-5</code> from balanced starts:
+      <b>5/5 on-face in both arms</b>, every one an exact equilibrium. The same model
+      from extreme starts: 1/5 and 2/5. <code>claude-sonnet-5</code>: 0&ndash;1 of 5 in
+      every cell. <code>claude-haiku-4-5</code> (reported, unpredicted): 0&ndash;1 of 5.
+      One prediction, eight cells, six failures.</p>
+    <p><b>P2 (start dependence, the registration&rsquo;s riskiest bet: D = |median
+      x&#770;(balanced) &minus; median x&#770;(extreme)| &ge; 1/2 for all three models)
+      &mdash; FALSIFIED, and the miss is the most informative number in the experiment.</b>
+      <code>claude-opus-5</code> is START-DEPENDENT exactly as predicted (D = 29/32 on
+      arm S, 33/64 on arm A). But <code>claude-sonnet-5</code> is START-INDEPENDENT on
+      both arms &mdash; D = 198183/16000000 &asymp; 0.0124 on S, and <b>D = 0 exactly on
+      A: its median projected split lands on 37/8, the least-norm point, from both the
+      balanced and the extreme start</b>. <code>claude-haiku-4-5</code>: D = 0 on S,
+      D = 5/16 on A (INCONCLUSIVE, the named middle band).</p>
+    <p><b>P3 (selection on the asymmetric arm: modal nearest anchor among on-face
+      replicates is proportional 29/6) &mdash; FALSIFIED where evaluable.</b> Only
+      <code>claude-opus-5</code> produced &ge;2 qualifying replicates: modal anchor
+      <b>least-norm (37/8)</b> from balanced starts (5 of 5), <b>centre (21/4)</b> from
+      extreme starts (2 qualifiers). The proportional point was never modal anywhere.
+      All four remaining cells: NOT EVALUABLE, the registered outcome for &lt;2
+      qualifiers.</p>
+    <table>
+      <thead><tr><th>cell (model &middot; arm &middot; start)</th><th>on-face</th><th>P1</th></tr></thead>
+      <tbody>
+        <tr><td>opus &middot; S &middot; SB</td><td>5/5</td><td>pass</td></tr>
+        <tr><td>opus &middot; S &middot; SX</td><td>1/5</td><td><b>fail</b></td></tr>
+        <tr><td>opus &middot; A &middot; SB</td><td>5/5</td><td>pass</td></tr>
+        <tr><td>opus &middot; A &middot; SX</td><td>2/5</td><td><b>fail</b></td></tr>
+        <tr><td>sonnet &middot; S &middot; SB</td><td>1/5</td><td><b>fail</b></td></tr>
+        <tr><td>sonnet &middot; S &middot; SX</td><td>1/5</td><td><b>fail</b></td></tr>
+        <tr><td>sonnet &middot; A &middot; SB</td><td>0/5</td><td><b>fail</b></td></tr>
+        <tr><td>sonnet &middot; A &middot; SX</td><td>0/5</td><td><b>fail</b></td></tr>
+        <tr><td>haiku &middot; S &middot; SB</td><td>1/5</td><td>reported</td></tr>
+        <tr><td>haiku &middot; S &middot; SX</td><td>0/5</td><td>reported</td></tr>
+        <tr><td>haiku &middot; A &middot; SB</td><td>0/5</td><td>reported</td></tr>
+        <tr><td>haiku &middot; A &middot; SX</td><td>1/5</td><td>reported</td></tr>
+      </tbody>
+    </table>
+    <p><b>Reported measures</b> (registered, no prediction attached): invalid rounds
+      &mdash; <code>claude-opus-5</code> <b>350 total, 17.5 per session</b>;
+      <code>claude-sonnet-5</code> 1; <code>claude-haiku-4-5</code> 0.
+      <b>CORRECTED 2026-08-19, same day, after reading the raw archives</b> (an earlier
+      revision of this paragraph said opus&rsquo;s first replies were format misses that
+      the one-retry rule recovered &mdash; that was written from the runner&rsquo;s
+      progress lines and it is wrong): the archived records show opus&rsquo;s invalid
+      rounds are <b>API-level refusals</b> &mdash; stop reason <code>refusal</code>,
+      zero output tokens, empty text &mdash; on <b>704 of its 754 calls</b>, with a
+      monotone daily profile: 4/40 on day 1, 31/40 on day 2, 39/40 on day 3,
+      <b>40/40 from day 4 onward</b>. Retries recovered 4 of 354. Under the registered
+      carry-forward rule this froze each opus session on its early-day play &mdash; in
+      15 of 20 sessions the final <i>is</i> the day-1 state. Sonnet&rsquo;s failures are
+      a different species: 20 thinking-budget overruns at <code>max_tokens</code>, 18
+      recovered by the retry. Haiku: 400 of 400 calls clean. Exact equilibria
+      (e<sub>S</sub> = 0, e<sub>F</sub> = 0, boxes exact): <b>12 of 60 sessions</b> &mdash;
+      opus&rsquo;s ten balanced-start sessions, one opus extreme-start session, and one
+      haiku session. Probe record: <code>research/probes/llm-invalid/</code>.</p>
+    <p><b>Execution record.</b> Three invocations of the registered command
+      (stamps <code>2026-08-19-03-44-Z</code>, <code>14-23-Z</code>,
+      <code>16-53-Z</code>): the first ended at 22 sessions when the API key was rotated
+      mid-run (every abort carries its http 401 in its session record), the second lost
+      9 sessions to a local network window (&ldquo;fetch failed&rdquo;, likewise
+      recorded), the third completed the grid with zero aborts. Completed sessions are
+      never re-run &mdash; resume skips on archived finals. List-price spend across all
+      three: <b>USD 19.57</b> against the registered USD 40 cap. PREREG &sect;12
+      amendments 3 and 4 record both partial invocations and this completion.</p>
+    <p class="posthoc"><b>Labeled POST-HOC</b> (interpretation beyond the registered
+      measures, per &sect;7&rsquo;s own rule; rewritten 2026-08-19 after the archive
+      probe corrected the opus mechanism &mdash; the earlier revision called opus an
+      &ldquo;anchored exact solver&rdquo; across the session, which the raw records do
+      not support): three distinct behaviours. <code>claude-opus-5</code> is a
+      <i>one-shot exact solver behind a refusal wall</i> &mdash; its <b>first,
+      history-free reply</b> from a balanced start is the exact equilibrium split, an
+      arguably sharper capability display than convergence would have been; everything
+      after day 1 was refused by the API and the carry-forward rule froze the state, so
+      its measured &ldquo;start dependence&rdquo; is day-1-choice dependence.
+      <code>claude-sonnet-5</code> shows the opposite signature: it plays every round,
+      never satisfies the face band&rsquo;s total-error tolerance, yet its projected
+      split converges to the least-norm point from every start &mdash; an <i>intrinsic
+      selection principle</i> with imprecise totals. <code>claude-haiku-4-5</code> plays
+      every round cleanly and stays off-face with no stable signature. Why opus refuses
+      a benign routing game once multi-day interaction history appears was described
+      here, until 2026-08-20, as &ldquo;an open question with a cheap registered-style
+      ablation waiting (see the probe record); no mechanism is asserted here&rdquo;. That
+      ablation ran on 2026-08-20; its four arms are reported in the next section, which
+      narrows the trigger to a conjunction of ingredients and still asserts no mechanism
+      beyond the measured contrast. The superseded sentence is kept above rather than
+      deleted. These sentences are interpretation, not registered
+      results.</p>
+  </section>
+
+  <section id="refusal">
+    <h2>The refusal wall &mdash; measured, then ablated</h2>
+    <p>The most transferable measurement on this page is not about equilibria. It is the
+      thing that made opus&rsquo;s finals what they are: a monotonically escalating
+      withdrawal from a benign task, unannounced in any reply, visible only because the
+      grid was preregistered and every raw request and reply was archived with its
+      sha256. Every number in this section is <b>recomputed</b> from those archives, and
+      from the ablation&rsquo;s recorded per-call responses, by this page&rsquo;s own
+      gate on every run of <code>make check</code> &mdash; nothing here is transcribed
+      from a note.</p>
+    <table class="ctable">
+      <thead><tr><th>model</th><th>calls</th><th>clean parses</th><th>API refusals</th><th><code>max_tokens</code> overruns</th></tr></thead>
+      <tbody>
+        <tr><td class="sub">claude-opus-5</td><td class="v">754</td><td class="v">50</td><td class="v"><b>704</b></td><td class="v">0</td></tr>
+        <tr><td class="sub">claude-sonnet-5</td><td class="v">419</td><td class="v">399</td><td class="v">0</td><td class="v">20</td></tr>
+        <tr><td class="sub">claude-haiku-4-5</td><td class="v">400</td><td class="v">400</td><td class="v">0</td><td class="v">0</td></tr>
+      </tbody>
+    </table>
+    <p>1,573 archived calls, from the 60 sessions that hold a final. &ldquo;API
+      refusal&rdquo; means exactly one thing here: stop reason <code>refusal</code>, zero
+      output tokens, empty text, as recorded in the archive &mdash; opus&rsquo;s 704 split
+      354 collect calls and 350 re-asks. Its per-day profile in the collect phase (40
+      calls a day across its 20 sessions) is monotone to certainty: <b>4/40 day 1
+      &middot; 31/40 day 2 &middot; 39/40 day 3 &middot; 40/40 on every one of days
+      4&ndash;10</b>. The registered single re-ask recovered 4 of 354 refused collects;
+      under the registered carry-forward rule the remainder froze each opus session on
+      its early-day play, which is why its finals are early-day choices rather than
+      end-of-session ones. Sonnet&rsquo;s 20
+      failures are a different species &mdash; thinking-budget overruns at
+      <code>max_tokens</code>, 18 recovered by the same re-ask &mdash; and haiku produced
+      400 clean parses out of 400 calls.</p>
+    <p>Where the re-ask worked is itself part of the profile. All <b>4</b> of opus&rsquo;s
+      day-1 refusals were recovered by the registered single re-ask &mdash; and those four
+      are <b>every</b> recovery it ever had: from day 2 onward the re-ask was refused too,
+      350 times out of 350. One of the four fell in a balanced-start session, and the
+      re-ask came back with the same exact value the other nineteen day-one answers gave,
+      which is why the day-one capability result below survives the refusal that
+      interrupted it.</p>
+    <p><b>The obvious alternative, tested inside the archive.</b> An escalation over ten
+      simulated days could be an account-level or clock-level effect rather than anything
+      about the prompts: the twenty opus sessions ran back to back, so a later day index
+      is also a later wall-clock moment. It is not that. Ordered by their recorded start
+      stamps (03:44:20Z through 04:03:42Z on 2026-08-19, nineteen minutes end to end),
+      day-1 refusals are <b>3 of 20 across the ten earliest sessions and 1 of 20 across
+      the ten latest</b> &mdash; every new session&rsquo;s day-1 call was answered normally seconds
+      after the previous session had closed on an unbroken run of refusals. Whatever
+      escalates within a session resets when the history does. This control is a
+      recomputation over the same archives, not a second experiment.</p>
+    <p><b>The ablation.</b> Four arms &times; five single-turn <code>claude-opus-5</code>
+      calls, <code>max_tokens</code> 2000, run 2026-08-20 (recorded stamp
+      <code>2026-08-20T00:36:57.692Z</code>) with an owner-authorised key at a list-price
+      cost near USD&nbsp;1. Each arm is built from the frozen kernel&rsquo;s own prompt
+      builder rather than from prose written for the occasion: the control is the
+      kernel&rsquo;s genuine day-5 collect prompt, its four days of history scripted with
+      valid play; each treatment removes exactly one ingredient. Script and raw per-call
+      record ship in the probe directory
+      (<code>research/probes/llm-invalid/ablate.js</code>,
+      <code>research/probes/llm-invalid/ablate-results.json</code>), and the control
+      arm&rsquo;s authenticity is checked mechanically &mdash; the gate rebuilds the
+      day-5 and day-2 prompts from the kernel and compares their lengths against the
+      lengths the run recorded.</p>
+    <table class="ctable">
+      <thead><tr><th>arm</th><th>change vs control</th><th>prompt chars</th><th>refusals</th></tr></thead>
+      <tbody>
+        <tr><td class="sub">control</td><td>none &mdash; the kernel&rsquo;s real day-5 prompt, 4 days of history</td><td class="v">1550</td><td class="v"><b>5 / 5</b></td></tr>
+        <tr><td class="sub">short</td><td>history cut to one day (the kernel&rsquo;s real day-2 prompt); framing intact</td><td class="v">1178</td><td class="v">0 / 5</td></tr>
+        <tr><td class="sub">abstract</td><td>market framing lexically neutralised (players, options, points); history intact</td><td class="v">1397</td><td class="v">0 / 5</td></tr>
+        <tr><td class="sub">single</td><td>competitor removed; history and framing otherwise intact</td><td class="v">1104</td><td class="v">0 / 5</td></tr>
+      </tbody>
+    </table>
+    <p>The refusal reproduces in every one of the five control calls and disappears under
+      <i>each</i> single-ingredient removal. What these twenty calls measure is therefore
+      a <b>conjunction</b> &mdash; multi-day interleaved choice history, two named
+      competitors, and a market framing, together &mdash; and not any one of the three on
+      its own. Neither length nor topic survives as an explanation by itself: the
+      <code>abstract</code> arm is nearly as long as the control and carries the same
+      history, and the <code>short</code> arm keeps every word of the market framing.
+      The practical form of that, for anyone running this model as a repeated-market
+      agent: <b>the refusal is not about the game, it is about the game&rsquo;s history
+      reaching the prompt</b> &mdash; a prompt that is answered on day one can become
+      unanswerable by day five without anything in the task changing.</p>
+    <div class="caveat">
+      <p><b>What these numbers are not.</b> <b>The stop reason is the API&rsquo;s own
+        report</b>, repeated here as recorded; no interpretation of any internal
+        mechanism is made, and none is possible from these records. The probe
+        record&rsquo;s own reading &mdash; that a repeated-market shape with two named
+        competitors resembles something coordination-adjacent &mdash; is labelled
+        INFERRED there and stays INFERRED here.</p>
+      <p><b>The transforms are crude, and one is cruder than its table row suggests.</b>
+        Both rewritten arms are regular-expression edits of the frozen prompt, not
+        hand-authored minimal pairs. Rebuilding them from the kernel for this section
+        shows the <code>single</code> arm&rsquo;s sentence-level deletion also damaged
+        the rendered history lines (they read
+        <code>you flew 3.5 on MAIN (2.5 on MAIN.</code>), so that arm removed the
+        competitor <i>and</i> degraded the text at once &mdash; its 0/5 is the weakest of
+        the three removals. The <code>abstract</code> arm rewrites many tokens at once
+        and leaves debris of its own. The <code>short</code> arm is the clean one: an
+        unedited prompt from the same frozen kernel.</p>
+      <p><b>n = 5 per arm, one day, one game, one prompt family.</b> Three arms at 0 of 5
+        are consistent with any true refusal rate up to roughly 45% at 95% confidence, so
+        &ldquo;vanishes&rdquo; means &ldquo;was not observed in five calls&rdquo;. The
+        profile itself is 20 opus sessions run on one day (2026-08-19, default API
+        configuration, the API version header pinned at <code>2023-06-01</code>,
+        <code>max_tokens</code> 8000);
+        whether it is stable across days, keys, accounts or model snapshots is
+        unmeasured. Nothing here is a statement about any model outside these records, or
+        about any vendor&rsquo;s policy or intent.</p>
+      <p><b>No occupancy search has been run on refusal behaviour.</b> The gate binding
+        this page, FINDINGS_LIT_LLMFACE, searched the LLM-in-games and
+        equilibrium-selection literature &mdash; not the refusal or over-refusal
+        literature, which is a field of its own with its own benchmarks. So nothing in
+        this section carries any priority, occupancy or unoccupancy claim; it is a
+        measurement of these records, reported because the records exist.</p>
+    </div>
+    <p>Recorded in the ledger as a claim of kind
+      <i>observation</i> &mdash; the kind that may trade its falsifier for a written
+      account of how it could be misread. This one ships both: that account, and a
+      falsifier which re-derives every number in this section from the records and goes
+      red on any drift between them and this page. The teeth are stated where they stop
+      &mdash; it cannot re-call the API, so it can show that these records no longer say
+      what the claim says they say; it can never show whether the model refuses today.
+      The claim pins the sha256 of the probe records and a digest of the session archive
+      it was recomputed from, and it is deliberately separate from
+      the equilibrium-face claim record: the equilibrium mathematics on this page stands on that
+      record and gains nothing from this one.</p>
+  </section>
+
+  <section>
+    <h2>The face and its anchors, re-derived live in this page</h2>
+    <p>Everything below is computed at load time by this page&rsquo;s own kernel &mdash;
+      an independent BigInt-rational implementation sharing no code with the Node
+      kernels &mdash; and the page&rsquo;s gate extracts that kernel and compares every
+      face and anchor value against the shipped one, both directions. Two of the rows
+      are <b>must-fail</b> controls: each presents a deliberately corrupted or
+      out-of-set reference that has to be <i>rejected</i> for its row to light green
+      (those rows read &ldquo;rejected&rdquo;, not &ldquo;exact&rdquo;).</p>
+    <table class="ctable" id="derivation-table" aria-label="Live derivation results">
+      <thead><tr><th>check</th><th>value</th><th>verdict</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p style="margin-top:14px"><b>Test a landing</b> &mdash; type a joint split
+      (A&#8209;on&#8209;MAIN, B&#8209;on&#8209;MAIN) and the page scores it exactly, the
+      same computation the experiment will apply to every LLM landing:</p>
+    <div class="tryrow">
+      <select id="try-arm" aria-label="arm">
+        <option value="A" selected>arm A (8, 4)</option>
+        <option value="S">arm S (6, 6)</option>
+      </select>
+      <input id="try-a" inputmode="decimal" placeholder="A on MAIN, e.g. 4.83" aria-label="A on MAIN">
+      <input id="try-b" inputmode="decimal" placeholder="B on MAIN, e.g. 2.42" aria-label="B on MAIN">
+      <button class="press" id="try-go">score exactly</button>
+    </div>
+    <p class="status" id="try-status">enter a split and press the button &mdash; values are
+      parsed from their decimal literals into exact rationals, never through floating
+      point.</p>
+  </section>
+
+  <div class="foot">
+    <p>Instrument: research unit <code>uam-corridor</code>, phase three. Registration
+      frozen 2026&#8209;08&#8209;14 with prompts sha256&#8209;pinned; the unit battery
+      (44 checks) validates the exact scorer, the parse grammar, both control
+      directions, the freeze, and the spend gate; this page&rsquo;s own gate extracts
+      the page kernel from these bytes and re-derives the face, the anchors, the scorer
+      verdicts and the prompt-hash pins against the shipped kernel. Standing equilibrium
+      evidence: the corridor's equilibrium-face claim record, rung <i>conjectured</i> &mdash; its
+      falsifier batteries are mutation-red-verified, and this page inherits that rung
+      and adds no claim. (Until 2026&#8209;08&#8209;19 this sentence also noted the
+      claim&rsquo;s run arrays were empty; the 60 confirmatory session records under
+      <code>llm/runs/</code> now exist as measurements about LLM policies &mdash; they
+      are observations recorded under the registration, and any claim minted from them
+      is future work that will cite it.) <b>2026-08-20:</b> that future work is on
+      disk &mdash; a claim of kind <i>observation</i>, over the refusal
+      profile and the four-arm ablation only, pinning the sha256 of the probe records
+      and a digest of the session archive; it cites this registration and adds nothing
+      to the equilibrium mathematics, which still stands on that equilibrium-face claim record
+      and on nothing else. Occupancy gates: FINDINGS_LIT_LLMFACE
+      (PARTIAL) and FINDINGS_LIT_UAM (PARTIAL) &mdash; their forbidden-sentence lists
+      bind this page. External identifiers above verified 2026&#8209;08&#8209;15 at
+      source or by registry route; the results section&rsquo;s numbers are recomputed
+      from the session archives by this page&rsquo;s battery on every run.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/errata">errata log</a>, never quietly fixed.</p>
+    </div>
+    <nav class="sitemap" aria-label="Site map">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+      <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+    </nav>
+    <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+      programs MIT</p>
+  </div>
+</footer>
+
+<script>
+/*__LLMFACE_KERNEL_BEGIN__*/
+/* The llm-face page kernel: exact rationals over BigInt, the face derivation, the
+   pointwise equilibrium verifier, the three anchors, and the landing scorer. An
+   INDEPENDENT implementation, deliberately sharing no code with kernel/uam-net.js,
+   kernel/sweep.js or kernel/llm-face.js. Extracted and re-verified by
+   research/uam-corridor/tests/test-llm-page.js (sha256 of this block printed there). */
+'use strict';
+const LLF = (() => {
+  /* ---- exact rationals ---- */
+  const gcd = (a, b) => { a = a < 0n ? -a : a; b = b < 0n ? -b : b;
+    while (b) { const t = a % b; a = b; b = t; } return a; };
+  const mk = (n, d) => {
+    if (d === 0n) throw new Error('zero denominator');
+    if (d < 0n) { n = -n; d = -d; }
+    const g = gcd(n, d) || 1n;
+    return { n: n / g, d: d / g };
+  };
+  const I = n => mk(BigInt(n), 1n);
+  const add = (x, y) => mk(x.n * y.d + y.n * x.d, x.d * y.d);
+  const sub = (x, y) => mk(x.n * y.d - y.n * x.d, x.d * y.d);
+  const mul = (x, y) => mk(x.n * y.n, x.d * y.d);
+  const dvd = (x, y) => mk(x.n * y.d, x.d * y.n);
+  const cmp = (x, y) => { const l = x.n * y.d, r = y.n * x.d; return l < r ? -1 : l > r ? 1 : 0; };
+  const absr = x => x.n < 0n ? mk(-x.n, x.d) : x;
+  const str = x => x.d === 1n ? x.n.toString() : x.n + '/' + x.d;
+  const flt = x => Number(x.n) / Number(x.d);
+
+  /* decimal literal -> exact rational (never through float) */
+  const fromDec = t => {
+    const m = /^([+-]?)(\d*)(?:\.(\d+))?$/.exec(String(t).trim());
+    if (!m || (m[2] === '' && !m[3])) return null;
+    const sgn = m[1] === '-' ? -1n : 1n;
+    return mk(sgn * BigInt((m[2] || '0') + (m[3] || '')), 10n ** BigInt((m[3] || '').length));
+  };
+
+  /* ---- the game: MAIN a=11, SHORE a=16, congestion 2 per total unit, g=0 ---- */
+  const AM = I(11), AS = I(16), B = I(2);
+
+  /* the face for demands (QA, QB): equilibrium total on MAIN and the split interval */
+  function derive(QAi, QBi) {
+    const QA = I(QAi), QB = I(QBi), T = add(QA, QB);
+    // interior aggregate split: AM + B*s = AS + B*(T - s)  =>  s = ((AS-AM) + B*T) / (2B)
+    const sStar = dvd(add(sub(AS, AM), mul(B, T)), mul(I(2), B));
+    const lo = cmp(sub(sStar, QB), I(0)) > 0 ? sub(sStar, QB) : I(0);
+    const hi = cmp(QA, sStar) < 0 ? QA : sStar;
+    const width = sub(hi, lo);
+    // anchors: least-norm == equal-difference (identity checked by the caller),
+    // proportional == QA*(sStar/T), centre == midpoint
+    const leastNorm = add(dvd(sStar, I(2)), dvd(sub(QA, QB), I(4)));
+    const proportional = mul(QA, dvd(sStar, T));
+    const centre = dvd(add(lo, hi), I(2));
+    return { QA, QB, T, sStar, lo, hi, width, leastNorm, proportional, centre };
+  }
+
+  /* pointwise equilibrium verification: totals pinned, box respected, costs equal */
+  function isEquilibrium(fd, a, b) {
+    const s = add(a, b);
+    const inBox = cmp(a, I(0)) >= 0 && cmp(a, fd.QA) <= 0 && cmp(b, I(0)) >= 0 && cmp(b, fd.QB) <= 0;
+    const totalPinned = cmp(s, fd.sStar) === 0;
+    const cM = add(AM, mul(B, s));
+    const cS = add(AS, mul(B, sub(fd.T, s)));
+    const costsEqual = cmp(cM, cS) === 0;
+    return inBox && totalPinned && costsEqual;
+  }
+
+  /* the landing scorer (the experiment's exact metric, re-implemented) */
+  function scoreLanding(fd, a, b) {
+    const s = add(a, b);
+    const eS = absr(sub(s, fd.sStar));
+    const xhat = add(a, dvd(sub(fd.sStar, s), I(2)));
+    const eF = cmp(xhat, fd.lo) < 0 ? sub(fd.lo, xhat) : cmp(xhat, fd.hi) > 0 ? sub(xhat, fd.hi) : I(0);
+    const band = cmp(eS, mk(1n, 8n)) <= 0 && cmp(eF, I(0)) === 0;
+    const anchors = [['least-norm', fd.leastNorm], ['proportional', fd.proportional], ['centre', fd.centre]];
+    const ds = anchors.map(([k, v]) => [k, absr(sub(xhat, v))]).sort((x, y) => cmp(x[1], y[1]));
+    const nearest = cmp(ds[0][1], ds[1][1]) === 0 ? 'TIE' : ds[0][0];
+    return { eS, xhat, eF, band, nearest, exact: isEquilibrium(fd, a, b) };
+  }
+
+  /* the self-test the page renders: pinned expectations + must-fail controls */
+  function selfTest() {
+    const rows = [];
+    const row = (name, val, ok) => rows.push([name, val, !!ok]);
+    for (const [label, QA, QB, pins] of [
+      ['arm S', 6, 6, { sStar: '29/4', lo: '5/4', hi: '6', ln: '29/8', pr: '29/8', ce: '29/8' }],
+      ['arm A', 8, 4, { sStar: '29/4', lo: '13/4', hi: '29/4', ln: '37/8', pr: '29/6', ce: '21/4' }],
+    ]) {
+      const fd = derive(QA, QB);
+      row(label + ': equilibrium total on MAIN re-derived', str(fd.sStar), str(fd.sStar) === pins.sStar);
+      row(label + ': face interval re-derived', '[' + str(fd.lo) + ', ' + str(fd.hi) + ']',
+        str(fd.lo) === pins.lo && str(fd.hi) === pins.hi);
+      row(label + ': anchors re-derived (least-norm / proportional / centre)',
+        str(fd.leastNorm) + ' / ' + str(fd.proportional) + ' / ' + str(fd.centre),
+        str(fd.leastNorm) === pins.ln && str(fd.proportional) === pins.pr && str(fd.centre) === pins.ce);
+      const endsOk = isEquilibrium(fd, fd.lo, sub(fd.sStar, fd.lo)) &&
+                     isEquilibrium(fd, fd.hi, sub(fd.sStar, fd.hi)) &&
+                     isEquilibrium(fd, fd.centre, sub(fd.sStar, fd.centre));
+      row(label + ': both face endpoints and the centre verify as equilibria, exactly',
+        'residuals identically 0', endsOk);
+      const anchorsIn = [fd.leastNorm, fd.proportional, fd.centre].every(v =>
+        cmp(v, fd.lo) >= 0 && cmp(v, fd.hi) <= 0 &&
+        isEquilibrium(fd, v, sub(fd.sStar, v)));
+      row(label + ': all three anchors lie on the face and are equilibria', 'exact membership', anchorsIn);
+    }
+    const fdA = derive(8, 4);
+    row('identity: least-norm == equal-difference point (s*/2 + (QA-QB)/4), arm A',
+      str(fdA.leastNorm) + ' == 37/8', str(fdA.leastNorm) === '37/8');
+    row('separation, arm A: the three anchors are pairwise distinct',
+      '37/8 vs 29/6 vs 21/4',
+      cmp(fdA.leastNorm, fdA.proportional) !== 0 && cmp(fdA.proportional, fdA.centre) !== 0 &&
+      cmp(fdA.leastNorm, fdA.centre) !== 0);
+    // must-fail controls: a corrupted reference has to be REJECTED for these to be ok
+    const fdS = derive(6, 6);
+    const offTotal = isEquilibrium(fdS, mk(31n, 8n), mk(31n, 8n));   // total 31/4 != 29/4
+    row('must-fail: a point off the equilibrium total is rejected', '(31/8, 31/8) -> not an equilibrium', !offTotal);
+    const hiEndpoint = isEquilibrium(fdA, mk(29n, 4n), I(0));        // (29/4, 0): the genuine hi endpoint
+    const offBox = isEquilibrium(fdA, mk(31n, 4n), sub(fdA.sStar, mk(31n, 4n))); // forces b = -1/2
+    row('must-fail: a split outside the box is rejected (and the true endpoint accepted)',
+      '(29/4, 0) accepted; (31/4, -1/2) rejected', hiEndpoint && !offBox);
+    const sc = scoreLanding(fdS, mk(341666667n, 100000000n), mk(341666667n, 100000000n));
+    row('scorer separates the two errors on the pilot landing',
+      'xhat ' + str(sc.xhat) + ' (eF 0) but eS ' + str(sc.eS) + ' > 1/8',
+      str(sc.xhat) === '29/8' && cmp(sc.eF, I(0)) === 0 && !sc.band && !sc.exact);
+    return rows;
+  }
+
+  return { mk, I, add, sub, mul, dvd, cmp, absr, str, flt, fromDec, derive, isEquilibrium, scoreLanding, selfTest };
+})();
+/*__LLMFACE_KERNEL_END__*/
+
+/* ---- page wiring (outside the extracted kernel) ---- */
+(function () {
+  const tbody = document.querySelector('#derivation-table tbody');
+  for (const [name, val, ok] of LLF.selfTest()) {
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td'); td1.textContent = name;
+    const td2 = document.createElement('td'); td2.className = 'sub'; td2.textContent = val;
+    const td3 = document.createElement('td'); td3.className = 'v';
+    const s = document.createElement('span'); s.className = ok ? 'ok' : 'no';
+    s.textContent = ok ? (/must-fail/.test(name) ? 'rejected' : 'exact') : 'FAILED';
+    td3.appendChild(s);
+    tr.append(td1, td2, td3);
+    tbody.appendChild(tr);
+  }
+  const status = document.getElementById('try-status');
+  document.getElementById('try-go').addEventListener('click', () => {
+    const armSel = document.getElementById('try-arm').value;
+    const fd = armSel === 'S' ? LLF.derive(6, 6) : LLF.derive(8, 4);
+    const a = LLF.fromDec(document.getElementById('try-a').value);
+    const b = LLF.fromDec(document.getElementById('try-b').value);
+    if (!a || !b) { status.innerHTML = '<span class="no">could not parse</span> — enter plain decimals, e.g. 4.83 and 2.42.'; return; }
+    if (LLF.cmp(a, LLF.I(0)) < 0 || LLF.cmp(a, fd.QA) > 0 || LLF.cmp(b, LLF.I(0)) < 0 || LLF.cmp(b, fd.QB) > 0) {
+      status.innerHTML = '<span class="no">out of the box</span> — A in [0, ' + LLF.str(fd.QA) + '], B in [0, ' + LLF.str(fd.QB) + '].';
+      return;
+    }
+    const r = LLF.scoreLanding(fd, a, b);
+    status.innerHTML = 'e<sub>S</sub> = <b>' + LLF.str(r.eS) + '</b> · x&#770; = <b>' + LLF.str(r.xhat) +
+      '</b> · e<sub>F</sub> = <b>' + LLF.str(r.eF) + '</b> · ' +
+      (r.exact ? '<span class="ok">exact equilibrium</span>' :
+       r.band ? '<span class="ok">on the face band</span> (not exact)' :
+       '<span class="no">off the face band</span>') +
+      ' · nearest anchor: <b>' + r.nearest + '</b>';
+  });
+})();
+</script>
+</body>
+</html>

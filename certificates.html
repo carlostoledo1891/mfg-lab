@@ -4,7 +4,7 @@
 <!--
   CERTIFICATES — the evidence vocabulary and the per-module certificate standard.
 
-  EXTRACTED 2026-07-30 from site/mfg-lab/index.html route /certificates (module `me`,
+  EXTRACTED 2026-07-30 from research/mfg-lab/mfg-lab.html route /certificates (module `me`,
   div pgCert, lines 1452-1691) as part of the lab dissolution. Owner directive: /certificates
   and /method become SITE-LEVEL pages, because they are cross-cutting -- they belong to no
   single result, so they belong to the site rather than to any one paper. /method WAS BUILT,
@@ -559,8 +559,8 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
      asserts "every copy is byte-identical to its source" — an export that differs from
      what is committed is exactly the drift that gate exists to catch, so the tag lives in
      the source or it does not exist.
-     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
-     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     DELIBERATELY ABSENT from research/mfg-congest/mfg-congest.html and
+     research/wardrop-repro/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
      as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
      external fetches". A paper that phones home when a referee opens it offline costs
      more trust than a pageview is worth, and mfg-congest additionally carries an
@@ -572,9 +572,9 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   <div class="topbar-in">
     <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
     <nav class="sitenav" aria-label="Primary">
-      <a href="/technical-reports">Reports</a>
+      <a href="/reports">Reports</a>
       <a href="/stack">Stack</a>
-      <a href="/defects">Errata</a>
+      <a href="/errata">Errata</a>
       <a href="/about">About</a>
     </nav>
   </div>
@@ -736,7 +736,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     realized price reaches machine level (~1e−13) at convergence. The iteration is Anderson-1 acceleration on the pre-damped
     price map — plain Picard two-cycles here (raise price → fleet retreats → formula lowers price: negative feedback with
     gain above one), fictitious play converges but with a Cesàro tail, and the damped-secant combination reaches 1e−9
-    over most of the slider box. The dedicated battery (mfg-lab/tests/test-mpr.js · 26 checks, inside <b>make check</b>)
+    over most of the slider box. The dedicated battery (research/mfg-lab/tests/test-mpr.js · 26 checks, inside <b>make check</b>)
     extracts this kernel from the page at run time and re-sweeps the 16 slider corners on every run: it converges on 12 corners
     (worst clearing residual 9.0e−10, 37–180 iterations); the other four hit the 200-iteration cap with residuals
     between 8.6e−9 and 1.1e−7 — cap-limited slow tails still short of the 1e−9 tolerance, not hard stalls — and the
@@ -808,7 +808,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     feasibility by repair; on large networks the projection's active-set cost grows with the boundary, the flow's
     per-stage solve stays one weighted Laplacian.</p>
     <p><b>Colophon.</b> The laboratory that applies this standard is one HTML file, no libraries, no precomputed
-    data. See <a href="/mfg-lab">the lab</a> and the <a href="/defects#lab-log">failure log</a>.</p>
+    data. See <a href="/research/mfg-lab/mfg-lab">the lab</a> and the <a href="/errata#lab-log">failure log</a>.</p>
   </div>
 </div>
 
@@ -819,9 +819,9 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
         Certificates over tolerances; a falsifier behind every claim; a green run is evidence precisely
         because a broken one is built to go red. <a href="/contact">Get in touch</a>.</p>
       <nav class="sitemap" aria-label="Site map">
-    <a href="/technical-reports">Reports</a>
+    <a href="/reports">Reports</a>
     <a href="/stack">Stack</a>
-    <a href="/defects">Errata</a>
+    <a href="/errata">Errata</a>
     <a href="/about">About</a>
     <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
   </nav>

@@ -1,5 +1,5 @@
 """fixtures.py — the kernels the Lab batteries study. Python twin of
-``mfg-lab/tests/lab-fixtures.js``.
+``research/mfg-lab/tests/lab-fixtures.js``.
 
 These ship inside the package rather than beside the tests because the
 cross-language differential needs the two languages to study the SAME problems,

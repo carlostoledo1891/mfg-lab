@@ -3,7 +3,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /x/
 
 # Answer engines are explicitly welcome. This site's whole thesis is that a claim
 # should be checkable at its source, so being read, quoted and checked by a model
@@ -11,61 +10,52 @@ Disallow: /x/
 # running the verifier that ships beside it.
 User-agent: GPTBot
 Allow: /
-Disallow: /x/
 
 User-agent: OAI-SearchBot
 Allow: /
-Disallow: /x/
 
 User-agent: ChatGPT-User
 Allow: /
-Disallow: /x/
 
 User-agent: ClaudeBot
 Allow: /
-Disallow: /x/
 
 User-agent: Claude-Web
 Allow: /
-Disallow: /x/
 
 User-agent: anthropic-ai
 Allow: /
-Disallow: /x/
 
 User-agent: PerplexityBot
 Allow: /
-Disallow: /x/
 
 User-agent: Google-Extended
 Allow: /
-Disallow: /x/
 
 User-agent: Applebot-Extended
 Allow: /
-Disallow: /x/
 
 User-agent: CCBot
 Allow: /
-Disallow: /x/
 
 Sitemap: https://mfg-lab.vercel.app/sitemap.xml
 
-# THE UNLISTED TIER (2026-08-20). Pages under /x/ are served for people who were
-# handed the link. They are not part of the indexed, model-readable site: every
-# agent above is asked not to crawl them, and the pages carry noindex. This is a
-# request, not a wall — robots rules are advisory by design.
-User-agent: CCBot
-Disallow: /x/
-
-User-agent: Google-Extended
-Disallow: /x/
-
-User-agent: Applebot-Extended
-Disallow: /x/
-
-User-agent: Bytespider
-Disallow: /x/
-
-User-agent: meta-externalagent
-Disallow: /x/
+# THE UNLISTED TIER — AND WHY IT IS NOT NAMED HERE (rewritten 2026-08-21).
+#
+# Until today unlisted pages were served under one prefix, /x/, and every agent below was asked
+# not to crawl it. The structure migration retired that prefix: a page is born at its final path
+# and never moves, and being unlisted is a WORD on its registry row rather than a place it is kept.
+#
+# So this file could only ask for the same protection by DISALLOWING THIRTY-EIGHT INDIVIDUAL URLS
+# — which means publishing, in the one file every crawler fetches first, exactly the list the tier
+# exists not to publish. A robots rule is advisory; the URL it names is not. That trade is a loss,
+# and it is refused.
+#
+# WHAT PROTECTS AN UNLISTED PAGE NOW, all three checkable:
+#   1. the page's own `noindex` meta, in its bytes — the authoritative signal, which every crawler
+#      honours and which no robots rule can override;
+#   2. absence from sitemap.xml — asserted exactly, in both directions, by tools/check-discoverable.js;
+#   3. absence from /reports and from every listed page's links — asserted by tools/check-pages.js A6.
+#
+# Stated plainly, as the 2026-08-20 version of this note was: none of this is a wall. An unlisted
+# page is readable by anyone holding the link. It is asked not to be indexed, not hidden.

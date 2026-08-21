@@ -4,7 +4,7 @@
 <!--
   ABOUT — who wrote these notes, and the address. Rewritten 2026-08-03.
 
-  This page and site/contact.html said the same things twice, and both were written to
+  This page and contact.html said the same things twice, and both were written to
   convert a reader rather than to inform one. They are now one page, and the selling is
   gone: no services table, no role wish-list, no button. A researcher landing here from a
   forum should not be able to tell whether the author is looking for work.
@@ -21,7 +21,7 @@
   produces it. This page links to those pages instead.
 
   Chrome (topnav markup, footer markup, :root tokens, theme script) is the seed's, verbatim:
-  site/technical-reports/erdos290.html. Self-contained — no external CSS, JS, fonts or
+  research/challenges/erdos290.html. Self-contained — no external CSS, JS, fonts or
   images, and no network request of any kind.
 
   REVISED 2026-08-04. (1) The verification lane joined the notes table and the intro — the
@@ -37,7 +37,7 @@
   hand-kept list of six notes is the same defect one type up: a second copy of the reports
   page, with nothing pinning it, that goes stale the day a seventh note ships. It is replaced
   by a sentence describing the RANGE of the work and a link to the list that is kept current.
-  Measured before removing: five of the six were already on /technical-reports, so the table
+  Measured before removing: five of the six were already on /reports, so the table
   was carrying almost nothing the link does not.
   (2) THE ERRATA PARAGRAPH WAS STALE BY TWO CASES. It named the 4 August re-attribution as
   "the newest entry"; the log has carried Case Five (5 Aug) and Case Six (6 Aug) since. It now
@@ -46,7 +46,7 @@
   a record is not edited to match what happened next.
 
   REVISED 2026-08-13 (evening): the "How these pages are made" paragraph gained one sentence —
-  a link to /technical-reports/how-this-shop-runs, the methodology essay born that day, which is
+  a link to /research/methods/how-this-shop-runs, the methodology essay born that day, which is
   that paragraph at full length. The paragraph stays; the essay is where it goes deeper, and
   this page keeps only the summary, per this page's own one-copy rule.
 -->
@@ -151,8 +151,8 @@ section ul li b{color:var(--ink);font-weight:600}
      asserts "every copy is byte-identical to its source" — an export that differs from
      what is committed is exactly the drift that gate exists to catch, so the tag lives in
      the source or it does not exist.
-     DELIBERATELY ABSENT from site/technical-reports/mfg-congest.html and
-     site/technical-reports/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     DELIBERATELY ABSENT from research/mfg-congest/mfg-congest.html and
+     research/wardrop-repro/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
      as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
      external fetches". A paper that phones home when a referee opens it offline costs
      more trust than a pageview is worth, and mfg-congest additionally carries an
@@ -165,9 +165,9 @@ section ul li b{color:var(--ink);font-weight:600}
   <div class="topbar-in">
     <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
     <nav class="sitenav" aria-label="Primary">
-      <a href="/technical-reports">Reports</a>
+      <a href="/reports">Reports</a>
       <a href="/stack">Stack</a>
-      <a href="/defects">Errata</a>
+      <a href="/errata">Errata</a>
       <a href="/about">About</a>
     </nav>
     </div>
@@ -196,10 +196,10 @@ section ul li b{color:var(--ink);font-weight:600}
       the method: when a frontier paper ships a machine-checkable claim, an independent
       re-verification here typically exists within days &mdash; the Maxwell counterexample paper
       appeared on 29 July 2026 and its 24 equilibria were certified here on 4 August. Six of the
-      notes on the <a href="/technical-reports">reports page</a> run from independent
+      notes on the <a href="/reports">reports page</a> run from independent
       re-verification of AI-claimed results to certified reproductions of published papers to
       measuring whether a benchmark&rsquo;s own tests can tell a right answer from a wrong one.
-      <b>That list lives on the <a href="/technical-reports">reports page</a> and is kept current
+      <b>That list lives on the <a href="/reports">reports page</a> and is kept current
       there</b> &mdash; a second copy here would be a second thing to update, and the one that
       went stale would be this one.</p>
   </section>
@@ -217,7 +217,7 @@ section ul li b{color:var(--ink);font-weight:600}
       kernel first and has to reject it, and the count of falsifiers that fired is printed with the
       result.</p>
     <p><b>Errors are recorded, with their date, in a public log</b> &mdash; the
-      <a href="/defects">errata</a> &mdash; and never quietly fixed. Nearly all of the entries there
+      <a href="/errata">errata</a> &mdash; and never quietly fixed. Nearly all of the entries there
       were found by me, after publishing, which is the part that makes the log worth reading: a
       fabricated error floor that had to be retracted twice, and a modulus written into a kernel from
       memory as a prime that turned out to be composite, so a fingerprint check went on printing
@@ -273,7 +273,7 @@ section ul li b{color:var(--ink);font-weight:600}
       precedes publication. The output rate is a consequence of that arrangement, and saying so
       seems better than letting a reader wonder. The full statement of the method &mdash; the
       checks, the agents, and the failure modes it guards against &mdash; is a page of its own:
-      <a href="/technical-reports/how-this-shop-runs">how this shop runs</a>.</p>
+      <a href="/research/methods/how-this-shop-runs">how this shop runs</a>.</p>
     <div class="caveat">
       <p>These notes are self-published and <b>not peer-reviewed</b>. The code and the checks on it
         share one author, so they rule out slips but not a shared misconception; an independent
@@ -311,7 +311,7 @@ section ul li b{color:var(--ink);font-weight:600}
 
   </section>
 
-  <div class="foot">site/about.html &middot; rewritten 2026-08-03, revised 2026-08-04 and 2026-08-13 &middot;
+  <div class="foot">about.html &middot; rewritten 2026-08-03, revised 2026-08-04 and 2026-08-13 &middot;
     merged with the former contact page &middot; no external fonts, scripts, stylesheets or
     images; the one script is same-origin, cookieless page counting &middot; text
     CC&#8209;BY 4.0</div>
@@ -326,12 +326,12 @@ section ul li b{color:var(--ink);font-weight:600}
         broken copy of that program.</p>
       <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
         including by its author &mdash; are recorded with their date and their correction in the
-        <a href="/defects">errata log</a>, never quietly fixed.</p>
+        <a href="/errata">errata log</a>, never quietly fixed.</p>
     </div>
     <nav class="sitemap" aria-label="Site map">
-      <a href="/technical-reports">Reports</a>
+      <a href="/reports">Reports</a>
       <a href="/stack">Stack</a>
-      <a href="/defects">Errata</a>
+      <a href="/errata">Errata</a>
       <a href="/about">About</a>
       <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
     </nav>

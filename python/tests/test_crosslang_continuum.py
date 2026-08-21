@@ -38,17 +38,17 @@ HERE = Path(__file__).resolve().parent
 #
 # AND THE TRACK NAME IS NOW A TWO-TREE QUESTION, which is a PRE-EXISTING defect this edit
 # surfaced rather than caused. This file SHIPS (build-public.js ALLOW), and the export is flat:
-# the note ships as sin-mfg/tools/sin_reference.js there, not research/stock-constraint/. Since
+# the note ships as research/stock-constraint/tools/sin_reference.js there, not research/stock-constraint/. Since
 # M7a named the private track literally, the exported copy has been pointing at a path that
 # does not exist in the tree it runs in — invisible here, because the monorepo branch is the
 # one every local gate takes. Both trees are enumerated now, nearest-existing wins, and the
 # is_file() guard below still fails LOUD rather than silently skipping if neither is there.
 _ROOT = HERE.parents[1]
 RUNNER = next(
-    (p for p in (_ROOT / "site" / "sin-mfg" / "tools" / "sin_reference.js",  # monorepo (phase 2: path == route)
+    (p for p in (_ROOT / "research" / "stock-constraint" / "tools" / "sin_reference.js",  # monorepo (phase 2: path == route)
                  _ROOT / "sin-mfg" / "tools" / "sin_reference.js")                        # export
      if p.is_file()),
-    _ROOT / "site" / "sin-mfg" / "tools" / "sin_reference.js",
+    _ROOT / "research" / "stock-constraint" / "tools" / "sin_reference.js",
 )
 NODE = shutil.which("node")
 

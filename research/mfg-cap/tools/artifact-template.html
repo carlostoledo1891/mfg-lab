@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- This is a TEMPLATE, not a page. It shipped indexable carrying the real report's
+     <title>, competing with it in search, and check-discoverable could not see it because
+     that gate iterates routed pages only. Added 2026-08-21. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A computer-assisted proof of a mean-field game equilibrium, running live in the page: interval arithmetic, a radii polynomial, and certified enclosures — including a certified multiplicity result where uniqueness theory is silent.">
+<meta name="author" content="Carlos Toledo">
+<title>mfg-cap — a computer-assisted proof of a mean-field game equilibrium, running in your browser</title>
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px; --section-top:46px;
+    --card-pad:18px; --card-gap:14px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  .mono,.status,.eyebrow,.ro .v,.ro .k,table.mono td,table.mono th{
+    font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:var(--text-body);line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;}
+  body{padding-top:var(--nav-h)}
+  .wrap{max-width:var(--nav-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 70px}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);
+    letter-spacing:-.025em;line-height:1.1;margin:8px 0 12px;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:78ch;margin-bottom:8px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.012em;
+    margin:0 0 10px;text-wrap:balance}
+  h2 .tag,.card h2 .tag,h3.sec .tag{font-family:var(--data);font-size:var(--text-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  h3.sec{font-family:var(--ui);font-size:14.5px;font-weight:600;letter-spacing:-.012em;
+    margin:30px 0 12px;padding-top:16px;border-top:1px solid var(--grid)}
+  .card{position:relative;background:var(--card);border:1px solid var(--grid);box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+    border-radius:var(--radius);padding:18px;margin:0 0 18px;width:100%;min-width:0}
+  .eqs{padding:13px 16px;border-top:1px solid var(--grid);border-bottom:1px solid var(--grid);
+    margin:16px 0 20px;overflow-x:auto}
+  .eq{font-size:15px;white-space:nowrap;line-height:1.9}
+  .eq .u{color:var(--hjb);font-weight:600} .eq .m{color:var(--fp);font-weight:600}
+  .eq .dir{font-family:var(--data);font-size:10px;letter-spacing:.11em;
+    text-transform:uppercase;margin-left:14px;color:var(--ink-soft)}
+  .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 20px;margin-bottom:16px}
+  .ctl{display:flex;flex-direction:column;gap:3px;min-width:124px}
+  .ctl label{font-family:var(--data);font-size:10.5px;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .ctl label b{color:var(--ink);font-weight:500}
+  .ctl input[type=range]{width:124px;accent-color:var(--ink)}
+  .btns{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+  @media(max-width:640px){.btns{margin-left:0}}
+  button.main{font-family:var(--data);font-size:12.5px;letter-spacing:.05em;padding:9px 18px;
+    border:1px solid var(--fp-deep);background:var(--fp-deep);color:var(--paper);cursor:pointer;border-radius:var(--radius)}
+  button.ghost{font-family:var(--data);font-size:12.5px;letter-spacing:.05em;padding:9px 16px;
+    border:1px solid var(--grid);background:transparent;color:var(--ink);cursor:pointer;border-radius:var(--radius-sm)}
+  button.main:hover,button.ghost:hover{border-color:var(--accent)}
+  .status{font-family:var(--data);font-size:12px;line-height:1.55;color:var(--ink-soft);
+    min-height:3.2em;margin-bottom:12px}
+  .readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px 18px}
+  .ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-soft)}
+  .ro .v{font-family:var(--data);font-size:17px;line-height:1.35;color:var(--ink);position:relative;padding-left:14px}
+  .ro .v.small{font-size:13.5px}
+  .ro .v::before{content:'';position:absolute;left:0;top:.52em;width:7px;height:7px;
+    border:1px solid var(--grid);background:transparent}
+  .ro .v.ok::before{background:var(--good);border-color:var(--good)}
+  .ro .v.bad::before{background:var(--bad);border-color:var(--bad)}
+  .note{font-size:var(--text-small);line-height:1.65;color:var(--ink-soft);margin-top:12px;max-width:100%}
+  .note b{color:var(--ink);font-weight:600}
+  canvas{display:block;width:100%;background:var(--card)}
+  #cvSol{aspect-ratio:2.4} #cvPoly{aspect-ratio:2.6} #cvBif{aspect-ratio:2.2}
+  canvas[style*='height']{aspect-ratio:auto}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--card-gap)}
+  .grid2 > *{min-width:0}
+    .caveat{border-left:2px solid var(--warn);padding:3px 0 3px 15px;margin:0 0 16px;max-width:100%}
+  .caveat p{font-size:13.4px;line-height:1.62;color:var(--ink-soft);margin-bottom:9px}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat p b{color:var(--ink);font-weight:600}
+
+  /* PROOF-STATUS BADGES — the shared vocabulary, adopted verbatim from the design seed.
+     One design system, one colour->strength mapping. Declared in full even where this page
+     uses only two of the words: a page that omits a shared class forces its next author to
+     invent a colour, which is exactly how a design system dies. `proved` and `prospective`
+     borrow LADDER words and are DEPRECATED — kept so pages that already carry them resolve;
+     nothing here may predicate either of its own result. */
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.07em;text-transform:uppercase;padding:1px 5px;border-radius:var(--radius-sm);border:1px solid transparent;vertical-align:middle;white-space:nowrap;line-height:1.35;font-weight:500}
+  .badge.proved{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}        /* DEPRECATED — ladder word */
+  .badge.prospective{color:var(--paper);background:var(--amber);border-color:var(--amber)}  /* DEPRECATED — ladder-adjacent */
+  .badge.standard{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  /* the report spine: what a certificate RECORD says, never what a ladder derived */
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.notrun{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.unsigned{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+  /* the index: a record EXISTS (good) and a derived rung (rung) */
+  .badge.good{color:var(--paper);background:var(--good);border-color:var(--good)}
+  .badge.rung{color:var(--paper);background:var(--fp);border-color:var(--fp)}
+
+  .foot{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);line-height:1.8;
+    margin-top:34px;padding-top:15px;border-top:1px solid var(--grid)}
+  .foot a{color:var(--accent-deep)}
+
+  /* ── shared chrome: sticky top bar + footer (added by the design-alignment pass) ── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap;flex:none}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  /* BREADCRUMB — technical reports only. A report sits UNDER /reports and the crumb says so in the URL's own
+     shape; the site pages are siblings and carry none. */
+  .crumb{display:flex;align-items:center;gap:7px;font-family:var(--data);font-size:12px;
+    color:var(--ink-soft);min-width:0}
+  .crumb a{color:var(--ink-soft);text-decoration:none}
+  .crumb a:hover{color:var(--fp-deep)}
+  .crumb .s{opacity:.55}
+  .crumb .here{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* SHARED SITE CHROME — the same four links, markup and CSS as every other page. */
+  .sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover{color:var(--fp-deep)}
+  @media(max-width:860px){ .crumb{display:none} }
+  @media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+  /* NARROW SCREENS: the bar SCROLLS, it does not truncate and it does not drop links.
+     Measured during the 2026-07-30 rename: with the label spelled "Technical Reports" the four
+     links plus the brand pushed the document to 460px at 390px wide -- caught by the reports
+     battery, which is exactly what it was built for. The label was then shortened to "Reports"
+     (the path and the page title carry the full term), so the bar fits again and this rule is now
+     DEFENSIVE rather than load-bearing: it keeps the next longer label from overflowing instead of
+     silently dropping a link. Hiding links would make the nav lie about
+     the site's shape on the device most readers use; scrolling keeps all four reachable and keeps
+     the overflow inside the bar instead of dragging <body class="instrument">. min-width:0 is required: a flex item
+     will not shrink below its content without it, so overflow-x would never engage. */
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  .brand:hover{color:var(--fp-deep)}
+  .mainnav{display:flex;align-items:center;gap:1px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .mainnav::-webkit-scrollbar{display:none}
+  .topnav{position:relative;background:transparent;border:0;white-space:nowrap;font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink-soft);padding:8px 11px;border-radius:7px;text-decoration:none;cursor:pointer;transition:color .14s,background .14s}
+  .topnav:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .navdrop{position:relative}
+  .navtrig{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;cursor:pointer;font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink-soft);padding:8px 11px;border-radius:7px;transition:color .14s,background .14s}
+  .navtrig:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .navtrig .caret{font-size:9px;color:var(--ink-soft);transition:transform .15s}
+  .navdrop:hover .navtrig .caret,.navdrop:focus-within .navtrig .caret{transform:rotate(180deg)}
+  .navmenu{position:absolute;top:calc(100% + 6px);left:0;min-width:216px;background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);box-shadow:0 10px 30px rgba(16,24,40,.13),0 2px 6px rgba(16,24,40,.06);padding:6px;display:none;flex-direction:column;z-index:70}
+  .navdrop:hover .navmenu,.navdrop:focus-within .navmenu{display:flex}
+  .navmenu a{display:block;text-align:left;text-decoration:none;font-family:var(--ui);font-size:13.5px;font-weight:500;color:var(--ink);padding:8px 10px;border-radius:7px;white-space:nowrap;transition:background .12s,color .12s}
+  .navmenu a:hover{background:color-mix(in srgb,var(--fp) 8%,transparent);color:var(--fp-deep)}
+  .navmenu-sep{height:1px;background:var(--grid);margin:6px 4px}
+  .cta{flex:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-weight:600;font-size:13.5px;color:var(--paper);background:var(--fp-deep);border:1px solid var(--fp-deep);border-radius:var(--radius);padding:8px 15px;text-decoration:none;white-space:nowrap;transition:background .14s,box-shadow .16s}
+  .cta:hover{background:var(--fp);box-shadow:0 2px 8px rgba(14,124,123,.22)}
+  @media(max-width:1080px){.brand .sub{display:none}}
+  @media(max-width:720px){.topbar-in{gap:12px;padding:0 14px}.brand span.wordmark{display:none}.navmenu{position:static;box-shadow:none;border:0;padding:0 0 0 10px;min-width:0}.cta{padding:8px 12px}}
+  /* ── site footer — seed stack (cred + sitemap + base), per research/_engine/paper.html ── */
+  .sitefoot{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-cred{max-width:var(--read-max);width:100%;margin:0 auto;padding:26px 20px 4px}
+  .foot-cred-in{font-size:13px;line-height:1.64;color:var(--ink-soft)}
+  .foot-cred-in p{margin:0 0 9px} .foot-cred-in p:last-child{margin:0}
+  .foot-cred-in b{color:var(--ink);font-weight:600}
+  .foot-cred-in a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+  .foot-cred-in a:hover{text-decoration:underline}
+  .foot-base{max-width:var(--read-max);margin:0 auto;padding:16px 20px 44px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:var(--data);font-size:11px;line-height:1.5;color:var(--ink-soft)}
+  .foot-base a{color:var(--ink-soft)}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+
+  </style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/mfg-congest.html and
+     research/wardrop-repro/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/reports">technical-reports</a><span class="s">/</span><span class="here">mfg-cap</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">mfg-cap · validated numerics · every bound computed in interval arithmetic, live</div>
+  <h1>A mean-field game equilibrium, <span style="color:var(--amber)">enclosed</span> in your browser.</h1>
+  <p class="lede">This page does not solve the equations and show you the answer. It solves them, then
+  <b>proves</b> the answer: a radii-polynomial contraction argument in the weighted algebra
+  <b>&ell;&sup1;<sub>&nu;</sub></b> (&nu;&nbsp;&gt;&nbsp;1, analytic tail), every inequality evaluated in
+  outward-rounded interval arithmetic, returning either a refusal or an explicit ball that contains an
+  exact classical solution. When the coupling is monotone (<code>c&nbsp;&gt;&nbsp;0</code>), that ball carries
+  <b>local uniqueness</b> in the even subspace the enclosure is built in. When <code>c&nbsp;&lt;&nbsp;0</code>,
+  anti-monotone coupling admits a circle of translates &mdash; the page still encloses a solution, and it
+  does <b>not</b> claim uniqueness there. Move any control and the proof is redone from scratch.</p>
+
+  <div class="eqs">
+    <div class="eq">−σ <span class="u">u</span>″ + ½(<span class="u">u</span>′)² + ρ = c·<span class="m">m</span> + V(x)<span class="dir">HJB · the value</span></div>
+    <div class="eq">−σ <span class="m">m</span>″ − (<span class="m">m</span> <span class="u">u</span>′)′ = 0<span class="dir">Fokker–Planck · the crowd</span></div>
+    <div class="eq">∫<span class="m">m</span> = 1 &nbsp;·&nbsp; ∫<span class="u">u</span> = 0 &nbsp;·&nbsp; <span class="m">m</span> &gt; 0<span class="dir">normalisation · certified, not assumed</span></div>
+  </div>
+
+  <div class="card">
+    <h2>The proof <span class="tag">recomputed on every change</span></h2>
+    <div class="controls">
+      <div class="ctl"><label>viscosity σ = <b id="vSig"></b></label>
+        <input type="range" id="sig" min="0.15" max="1.2" step="0.05" value="0.5"></div>
+      <div class="ctl"><label>coupling c = <b id="vC"></b></label>
+        <input type="range" id="cc" min="-14" max="4" step="0.25" value="1"></div>
+      <div class="ctl"><label>potential A = <b id="vA"></b></label>
+        <input type="range" id="aa" min="0" max="3" step="0.1" value="1"></div>
+      <div class="ctl"><label>Fourier modes N = <b id="vN"></b></label>
+        <input type="range" id="nn" min="6" max="32" step="2" value="16"></div>
+      <div class="btns">
+        <button class="ghost" id="bMono">monotone preset</button>
+        <button class="ghost" id="bStiff">push σ down until it fails</button>
+      </div>
+    </div>
+    <div class="status" id="st"></div>
+    <div class="readouts">
+      <div class="ro"><div class="k">verdict</div><div class="v" id="roV">—</div></div>
+      <div class="ro"><div class="k">enclosure radius r</div><div class="v" id="roR">—</div></div>
+      <div class="ro"><div class="k">ergodic constant ρ</div><div class="v small" id="roRho">—</div></div>
+      <div class="ro"><div class="k">certified min m</div><div class="v" id="roM">—</div></div>
+      <div class="ro"><div class="k">Y₀ (defect)</div><div class="v small" id="roY">—</div></div>
+      <div class="ro"><div class="k">Z₁ (contraction)</div><div class="v small" id="roZ1">—</div></div>
+    </div>
+    <div class="note">The verdict is gated on the <b>whole</b> argument, not on the residual: the Newton residual
+    being small is what suggests a solution is near, and proves nothing. What proves it is
+    <b>Z₁ &lt; 1</b> (the approximate inverse really is one) together with a radius at which the radii polynomial
+    is <b>strictly negative</b> — verified in interval arithmetic, not in floating point. Positivity of the density
+    is certified over the entire ball, never assumed.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>The enclosed solution <span class="tag">value and density</span></h2>
+      <canvas id="cvSol"></canvas>
+      <div class="note">Oxblood: the value function u. Teal: the population density m. The enclosure radius is far
+      below a pixel at these settings — which is the honest situation, and the reason the radius is printed as a
+      number rather than drawn as a band.</div>
+    </div>
+    <div class="card">
+      <h2>The radii polynomial <span class="tag">p(r) &lt; 0 is the proof</span></h2>
+      <canvas id="cvPoly"></canvas>
+      <div class="note">p(r) = ½Z₂r² − (1−Z₁)r + Y₀. Where the curve dips below zero, the map is a contraction on
+      that ball. Amber marks the reported radius. If the curve never crosses, there is no proof — and the page
+      says so instead of showing you a solution.</div>
+    </div>
+  </div>
+
+  <h3 class="sec">Where uniqueness theory is silent — and the machine is not</h3>
+  <p class="lede">For c &gt; 0 the coupling is increasing: Lasry–Lions monotonicity applies and the solution is
+  unique, classically. For <b>c &lt; 0</b> it does not apply at all. Past c* = −σ²(2π)² a branch bifurcates from
+  the constant state, and there are <b>at least three</b> solutions at the same parameters. Certifying two of them
+  in <b>disjoint</b> balls is a proof of non-uniqueness — a statement about the equations, not about a solver.</p>
+  <div class="card">
+    <h2>Multiplicity, by disjoint enclosure <span class="tag">two solutions at identical parameters</span></h2>
+    <div class="controls">
+      <div class="ctl"><label>coupling c = <b id="vBc"></b></label>
+        <input type="range" id="bc" min="-24" max="-10" step="0.5" value="-12"></div>
+      <div class="btns"><button class="main" id="bRun">certify both branches</button></div>
+    </div>
+    <div class="status" id="stB"></div>
+    <canvas id="cvBif"></canvas>
+    <div class="note">The curve is the bifurcation diagram: amplitude of the non-constant branch against c, with the
+    constant state along zero. Dots are points where <b>both</b> solutions have been certified and their balls shown
+    disjoint. At the bifurcation point itself the linearisation is singular, so no enclosure can exist and the proof
+    <b>refuses</b> — a verifier that succeeded there would be broken.</div>
+  </div>
+
+  <h3 class="sec">What this does not show</h3>
+  <div class="caveat">
+    <p><b>&ldquo;Proved&rdquo; in the mathematician&rsquo;s sense &mdash; never here.</b> Rung&nbsp;5 of this project&rsquo;s
+    evidence ladder requires a proof document with a named human reviewer, a date and a signature; there is <b>no agent
+    path to it</b>, and none is asserted anywhere in this file. Rung&nbsp;4, <i>certified</i>, requires a ledger
+    certificate record, and the ledger holds <b>no record for this system at all</b> &mdash; every claim and certificate
+    on file is about the congestion game, at other parameters. Both ladder words are therefore deliberately absent here
+    as a <i>status</i>; the compound noun <i>computer-assisted proof</i> and the verbs <i>prove</i> and <i>certify</i> still
+    appear below for the <i>mechanism</i> &mdash; a contraction argument, a certificate &mdash; which is the product and is
+    not a status. What this page carries is a <b>computer-assisted proof</b>: a machine-checked enclosure, backed
+    by a mutation-tested battery (<span class="mono">tests/test-cap.js</span> &mdash; 17 checks and 6 falsifiers; revert
+    a check and it goes red). That is what it claims and all it claims.</p>
+    <p><b>This is not a new existence or uniqueness theorem.</b> For c &gt; 0 both are classical (Lasry–Lions).
+    The contribution is the <b>enclosure</b> — an explicit, machine-checked ball with a certified ergodic constant
+    and a certified positive density — and the multiplicity result in the regime where the classical theory makes
+    no claim.</p>
+    <p><span class="badge standard">standard</span> <b>The machinery is standard and the citations are owed.</b> Newton–Kantorovich in radii-polynomial form is
+    the van den Berg–Lessard framework; the nearest computer-assisted proof on the reduced equation is Ayala,
+    García-Azpeitia &amp; Lessard on gap solitons in Bose–Einstein condensates (2026). The Hopf–Cole reduction of
+    this MFG system is textbook (Cirant 2015; Cirant–Verzini 2017; Ullmo–Swiecicki–Gobron 2019) and is used here
+    only as an independent cross-check, never as the route of proof.</p>
+    <p><span class="badge open">open</span> <b>The open item, stated first rather than last:</b> every instance certified here has a quadratic
+    Hamiltonian, for which a scalar reduction exists. Until a non-quadratic Hamiltonian, two populations, or
+    congestion is certified, the <b>system</b> method has not been shown to do anything the scalar method could not.</p>
+    <p><b>The conjecture that motivated this was mis-posed, and that is part of the result.</b> The idea was that
+    monotonicity would supply the inverse bound coercivity supplies elsewhere. In fact a computation needs neither:
+    it needs an approximate inverse whose defect is small, obtained by construction. That is exactly why this page
+    can certify solutions in the anti-monotone regime.</p>
+  </div>
+
+  <div class="foot">
+    Companion artifacts, same certificate standard: the <a href="/">MFG&nbsp;Lab</a>
+    and the <a href="/research/stock-constraint/stock-constraint">SIN-MFG note</a>.<br>
+    mfg-cap · MIT licensed · no libraries, no build step, no precomputed data — the proof above runs here.<br>
+    The page is <b>generated from the kernels</b>, and a gate asserts the copies are byte-identical, so what runs
+    in this browser is what <span class="mono">make check</span> runs headlessly:
+    17 checks and 6 falsifiers, including the parity bug that once made the Fourier residual machine-zero at a
+    point that did not solve the PDE.
+  </div>
+</div>
+
+<script>
+'use strict';
+/*@@KERNELS@@*/
+
+const $ = id => document.getElementById(id);
+const CSS = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const fmtE = v => {
+  if (!isFinite(v)) return '—';
+  if (v === 0) return '0';
+  const e = Math.floor(Math.log10(Math.abs(v)));
+  return (v / Math.pow(10, e)).toFixed(2) + 'e' + (e >= 0 ? '+' : '') + e;
+};
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+function sizeCanvas(cv, h) {
+  const w = cv.clientWidth | 0;
+  if (!w) return null;
+  cv.setAttribute('width', Math.round(w * DPR));
+  cv.setAttribute('height', Math.round(h * DPR));
+  cv.style.height = h + 'px';
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  return { ctx, w, h };
+}
+
+/* ---------------- panel 1: solve + prove ---------------- */
+let LAST = null;
+function run() {
+  const sigma = +$('sig').value, c = +$('cc').value, A = +$('aa').value, N = +$('nn').value;
+  $('vSig').textContent = sigma.toFixed(2); $('vC').textContent = c.toFixed(2);
+  $('vA').textContent = A.toFixed(1); $('vN').textContent = N;
+  const P = MFG.makeProblem({ sigma, c, A, N });
+  const s = MFG.solve(P);
+  const r = VAL.validate(s.x, P, { nu: 1.05 });
+  const rho = MFG.unpack(s.x, N).rho;
+  const set = (id, v, cls) => { const e = $(id); e.textContent = v; e.className = 'v' + (cls ? ' ' + cls : '') + (String(v).length > 12 ? ' small' : ''); };
+  if (r.ok) {
+    const pos = VAL.certifyPositivity(s.x, P, r.r);
+    set('roV', 'ENCLOSED', 'ok');
+    set('roR', fmtE(r.r), 'ok');
+    set('roRho', rho.toFixed(9), 'ok');
+    set('roM', pos.positive ? pos.minM.toFixed(6) : fmtE(pos.minM), pos.positive ? 'ok' : 'bad');
+    set('roY', fmtE(r.Y0), 'ok'); set('roZ1', r.Z1.toFixed(5), 'ok');
+    $('st').textContent = 'ENCLOSED — an exact solution exists within ' + fmtE(r.r) +
+      ' of the computed one in the weighted norm, and it is the only solution in that ball. ' +
+      'The ergodic constant is enclosed as ρ = ' + rho.toFixed(9) + ' ± ' + fmtE(r.r) + '. ' +
+      (pos.positive ? ('Density certified positive over the whole ball, min m ≥ ' + pos.minM.toFixed(6) + '.')
+                    : 'Positivity NOT certified — the ball is too wide to exclude m ≤ 0.') +
+      (c < 0 ? ' Coupling is anti-monotone (c < 0): no uniqueness theorem applies here.' : '');
+    LAST = { s, P, r, N, rho };
+  } else {
+    set('roV', 'REFUSED', 'bad');
+    set('roR', '—'); set('roRho', rho.toFixed(9)); set('roM', '—');
+    set('roY', r.Y0 !== undefined ? fmtE(r.Y0) : '—');
+    set('roZ1', r.Z1 !== undefined ? r.Z1.toFixed(5) : '—', r.Z1 >= 1 ? 'bad' : '');
+    $('st').textContent = 'NO PROOF — ' + r.why + '. The solver may still have produced a good-looking picture; ' +
+      'it is not certified, so nothing is claimed. Raise N, or raise σ.';
+    LAST = { s, P, r, N, rho };
+  }
+  drawSol(); drawPoly();
+}
+
+function drawSol() {
+  const g = sizeCanvas($('cvSol'), Math.max(190, Math.round($('cvSol').clientWidth / 2.4)));
+  if (!g || !LAST) return;
+  const { ctx, w, h } = g;
+  ctx.clearRect(0, 0, w, h); ctx.fillStyle = CSS('--card'); ctx.fillRect(0, 0, w, h);
+  const gr = MFG.evalOnGrid(LAST.s.x, LAST.P, 400);
+  const pad = 30;
+  const draw = (ys, col) => {
+    let lo = Math.min.apply(null, ys), hi = Math.max.apply(null, ys);
+    if (hi - lo < 1e-12) { lo -= 1; hi += 1; }
+    ctx.beginPath(); ctx.strokeStyle = col; ctx.lineWidth = 1.8;
+    ys.forEach((v, i) => {
+      const x = pad + i * (w - 2 * pad) / (ys.length - 1);
+      const y = h - pad - (v - lo) / (hi - lo) * (h - 2 * pad);
+      i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    });
+    ctx.stroke();
+  };
+  ctx.strokeStyle = CSS('--grid'); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
+  draw(gr.us, CSS('--hjb')); draw(gr.ms, CSS('--fp'));
+  ctx.font = '500 10px ' + CSS('--data'); ctx.fillStyle = CSS('--hjb');
+  ctx.fillText('u  (value)', pad, 15); ctx.fillStyle = CSS('--fp');
+  ctx.fillText('m  (density)', pad + 74, 15);
+}
+
+function drawPoly() {
+  const g = sizeCanvas($('cvPoly'), Math.max(180, Math.round($('cvPoly').clientWidth / 2.6)));
+  if (!g || !LAST) return;
+  const { ctx, w, h } = g;
+  ctx.clearRect(0, 0, w, h); ctx.fillStyle = CSS('--card'); ctx.fillRect(0, 0, w, h);
+  const r = LAST.r;
+  if (r.Z1 === undefined) return;
+  const Z1 = r.Z1, Z2 = r.Z2, Y0 = r.Y0;
+  const rmax = r.ok ? Math.max(r.rMax * 1.25, r.r * 10) : (1 - Z1) / Math.max(Z2, 1e-30) * 2 + 1e-12;
+  const pad = 30, M = 300;
+  const p = rr => 0.5 * Z2 * rr * rr - (1 - Z1) * rr + Y0;
+  const ys = []; for (let i = 0; i <= M; i++) ys.push(p(rmax * i / M));
+  let lo = Math.min.apply(null, ys), hi = Math.max.apply(null, ys);
+  if (hi - lo < 1e-30) { lo -= 1; hi += 1; }
+  const Y = v => h - pad - (v - lo) / (hi - lo) * (h - 2 * pad);
+  ctx.strokeStyle = CSS('--grid'); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad, Y(0)); ctx.lineTo(w - pad, Y(0)); ctx.stroke();
+  ctx.beginPath(); ctx.strokeStyle = r.ok ? CSS('--fp') : CSS('--bad'); ctx.lineWidth = 1.9;
+  ys.forEach((v, i) => {
+    const x = pad + i * (w - 2 * pad) / M;
+    i ? ctx.lineTo(x, Y(v)) : ctx.moveTo(x, Y(v));
+  });
+  ctx.stroke();
+  if (r.ok) {
+    const x = pad + (r.r / rmax) * (w - 2 * pad);
+    ctx.strokeStyle = CSS('--amber'); ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(x, pad * 0.5); ctx.lineTo(x, h - pad); ctx.stroke();
+  }
+  ctx.font = '500 10px ' + CSS('--data'); ctx.fillStyle = CSS('--ink-soft');
+  ctx.fillText(r.ok ? 'p(r) < 0 on an interval ⇒ contraction ⇒ proof'
+                    : 'p(r) never negative ⇒ no contraction ⇒ no proof', pad, 15);
+}
+
+/* ---------------- panel 2: certified multiplicity ---------------- */
+const BIF = [];
+function runBif() {
+  const sigma = 0.5, N = 20, nu = 1.02;
+  const cT = +$('bc').value;
+  $('vBc').textContent = cT.toFixed(1);
+  const mk = c => MFG.makeProblem({ sigma, c, A: 0, N });
+  const c0 = -10.5;
+  const seed = new Float64Array(2 * N + 1); seed[0] = c0; seed[1] = -sigma * 0.35; seed[N + 1] = 0.35;
+  const st0 = MFG.solve(mk(c0), { x0: seed, maxIter: 200 });
+  const br = MFG.continueBranch(mk, c0, cT, 32, st0.x);
+  if (!br.ok) { $('stB').textContent = 'branch lost before c = ' + cT; return; }
+  const P = mk(cT);
+  const rb = VAL.validate(br.x, P, { nu });
+  const triv = new Float64Array(2 * N + 1); triv[0] = cT;
+  const rt = VAL.validate(triv, P, { nu });
+  const un = MFG.unpack(br.x, N);
+  let sep = Math.abs(cT - br.x[0]);
+  for (let k = 1; k <= N; k++) {
+    sep += 2 * Math.pow(nu, k) * Math.abs(2 * Math.PI * k * un.a[k]);
+    sep += 2 * Math.pow(nu, k) * Math.abs(un.b[k]);
+  }
+  if (rb.ok && rt.ok && sep > rb.r + rt.r) {
+    const pos = VAL.certifyPositivity(br.x, P, rb.r);
+    $('stB').textContent = 'TWO DISJOINT ENCLOSURES at c = ' + cT.toFixed(1) +
+      ' — the constant state is enclosed with radius ' + fmtE(rt.r) +
+      ', the non-constant branch with radius ' + fmtE(rb.r) +
+      ', and their centres are ' + sep.toFixed(3) + ' apart in the same norm. Disjoint balls ⇒ at least two ' +
+      'distinct solutions. Branch density certified ' + (pos.positive ? ('positive, min m ≥ ' + pos.minM.toExponential(2)) : 'NOT positive') + '.';
+    if (!BIF.some(b => Math.abs(b.c - cT) < 1e-9)) BIF.push({ c: cT, a1: un.a[1] });
+  } else {
+    $('stB').textContent = 'NOT ENCLOSED at c = ' + cT.toFixed(1) + ' — ' +
+      (!rb.ok ? 'branch: ' + rb.why : !rt.ok ? 'constant state: ' + rt.why : 'the balls are not disjoint');
+  }
+  drawBif();
+}
+function drawBif() {
+  const g = sizeCanvas($('cvBif'), Math.max(200, Math.round($('cvBif').clientWidth / 2.2)));
+  if (!g) return;
+  const { ctx, w, h } = g;
+  ctx.clearRect(0, 0, w, h); ctx.fillStyle = CSS('--card'); ctx.fillRect(0, 0, w, h);
+  const cLo = -24, cHi = -9, aHi = 1.2, pad = 34;
+  const X = c => pad + (c - cLo) / (cHi - cLo) * (w - 2 * pad);
+  const Y = a => h - pad - (a + aHi) / (2 * aHi) * (h - 2 * pad);
+  ctx.strokeStyle = CSS('--grid'); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad, Y(0)); ctx.lineTo(w - pad, Y(0)); ctx.stroke();
+  const cStar = -0.25 * (2 * Math.PI) * (2 * Math.PI);
+  ctx.strokeStyle = CSS('--amber'); ctx.setLineDash([3, 3]);
+  ctx.beginPath(); ctx.moveTo(X(cStar), pad * 0.4); ctx.lineTo(X(cStar), h - pad); ctx.stroke();
+  ctx.setLineDash([]);
+  /* the two symmetric branches, amplitude ~ sqrt(c* - c) */
+  for (const sgn of [1, -1]) {
+    ctx.beginPath(); ctx.strokeStyle = CSS('--fp'); ctx.lineWidth = 1.7;
+    let first = true;
+    for (let c = cStar; c >= cLo; c -= 0.1) {
+      const a = sgn * 0.2265 * Math.sqrt(Math.max(0, cStar - c));
+      const x = X(c), y = Y(a);
+      first ? (ctx.moveTo(x, y), first = false) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  ctx.beginPath(); ctx.strokeStyle = CSS('--hjb'); ctx.lineWidth = 1.7;
+  ctx.moveTo(X(cHi), Y(0)); ctx.lineTo(X(cLo), Y(0)); ctx.stroke();
+  for (const b of BIF) {
+    for (const s of [1, -1]) {
+      ctx.beginPath(); ctx.fillStyle = CSS('--amber');
+      ctx.arc(X(b.c), Y(s * Math.abs(b.a1)), 4, 0, 6.2832); ctx.fill();
+    }
+    ctx.beginPath(); ctx.fillStyle = CSS('--amber'); ctx.arc(X(b.c), Y(0), 4, 0, 6.2832); ctx.fill();
+  }
+  ctx.font = '500 10px ' + CSS('--data'); ctx.fillStyle = CSS('--ink-soft');
+  ctx.fillText('c* = −σ²(2π)² = ' + cStar.toFixed(3), X(cStar) + 6, pad * 0.4 + 10);
+  ctx.fillText('branch amplitude a₁', pad, 14);
+  ctx.fillText('coupling c', w - pad - 62, h - 10);
+}
+
+/* Panel 1 recomputes the whole proof on every change. Coalesce with rAF so a
+   drag fires at most one recompute per frame instead of one per input event —
+   the proof solve is expensive and per-tick recompute janks. run() reads the
+   live slider values, so coalescing to the latest is exact. */
+let _runQueued = false;
+function runCoalesced() {
+  if (_runQueued) return;
+  _runQueued = true;
+  requestAnimationFrame(() => { _runQueued = false; run(); });
+}
+['sig', 'cc', 'aa', 'nn'].forEach(id => $(id).addEventListener('input', runCoalesced));
+$('bMono').addEventListener('click', () => {
+  $('sig').value = 0.5; $('cc').value = 1; $('aa').value = 1; $('nn').value = 16; run();
+});
+$('bStiff').addEventListener('click', () => {
+  $('cc').value = 3; $('aa').value = 3; $('nn').value = 8;
+  let s = 0.5;
+  for (let i = 0; i < 12; i++) {
+    $('sig').value = s; run();
+    if (LAST && !LAST.r.ok) break;
+    s = Math.max(0.15, s - 0.05);
+    $('sig').value = s;
+  }
+  run();
+});
+$('bRun').addEventListener('click', runBif);
+let rt2 = null;
+window.addEventListener('resize', () => { clearTimeout(rt2); rt2 = setTimeout(() => { drawSol(); drawPoly(); drawBif(); }, 150); });
+run();
+$('vBc').textContent = (+$('bc').value).toFixed(1);
+$('bc').addEventListener('input', () => { $('vBc').textContent = (+$('bc').value).toFixed(1); });
+drawBif();
+</script>
+<footer class="sitefoot">
+  <div class="foot-cred">
+    <div class="foot-cred-in">
+      <p><b>Carlos Toledo</b> builds computer-assisted proofs for mean-field games and network equilibria.
+      Where a paper reports a converged iterate, these notes return a certificate &mdash; an exact-rational or interval
+      <i>enclosure</i> of the equilibrium, with its location and local uniqueness certified, or an explicit refusal where the
+      instance is degenerate. Certificates over tolerances; a falsifier behind every claim; a green run is evidence
+      precisely because a broken one is built to go red. If you work on MFG numerics, validated computation, or want a
+      paper's results turned into a certified interactive bench &mdash; <a href="/contact">get in touch</a>.</p>
+      <p><b>Carlos&nbsp;Toledo</b> &middot; this page and the kernels it runs are MIT
+      licensed, on the open-source <a href="https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert" target="_blank" rel="noopener"><span style="font-family:var(--data)">eqcert</span></a>
+      certification kernel &middot; 2026</p>
+    </div>
+  </div>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/errata">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">
+    <span>MIT licensed &middot; Carlos Toledo &middot; <a href="/contact">Contact</a></span>
+    <span>In the style of the monotonicity school &mdash; "in the style of" is not a claim of reproduction.</span>
+  </div>
+</footer>
+
+</body>
+</html>

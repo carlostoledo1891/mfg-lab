@@ -4,104 +4,403 @@
  "rewrites": [],
  "redirects": [
   {
-   "source": "/technical-reports/cap-for-mfg",
-   "destination": "/x/cap-for-mfg",
+   "source": "/defects",
+   "destination": "/errata",
    "permanent": true
   },
   {
-   "source": "/technical-reports/catalogue",
-   "destination": "/x/catalogue",
+   "source": "/mfg-lab",
+   "destination": "/research/mfg-lab/mfg-lab",
    "permanent": true
   },
   {
-   "source": "/technical-reports/certified-multiplicity",
-   "destination": "/x/certified-multiplicity",
+   "source": "/sin-mfg/water-value",
+   "destination": "/research/stock-constraint/water-value",
    "permanent": true
   },
   {
-   "source": "/technical-reports/certified-price-formation",
-   "destination": "/x/certified-price-formation",
+   "source": "/technical-reports",
+   "destination": "/reports",
    "permanent": true
   },
   {
-   "source": "/technical-reports/circuit-path-truncation",
-   "destination": "/x/circuit-path-truncation",
+   "source": "/technical-reports/ai-verify",
+   "destination": "/research/ai-verify/ai-verify",
    "permanent": true
   },
   {
-   "source": "/technical-reports/degree-sensitivity",
-   "destination": "/x/degree-sensitivity",
+   "source": "/technical-reports/alien-science",
+   "destination": "/research/alien-science/alien-science",
    "permanent": true
   },
   {
-   "source": "/technical-reports/edge-of-chaos",
-   "destination": "/x/edge-of-chaos",
+   "source": "/technical-reports/attention-geometry",
+   "destination": "/research/ml/attention-geometry",
    "permanent": true
   },
   {
-   "source": "/technical-reports/equilibrium-geometry",
-   "destination": "/x/equilibrium-geometry",
+   "source": "/technical-reports/certificate-falsifiers",
+   "destination": "/research/methods/certificate-falsifiers",
    "permanent": true
   },
   {
-   "source": "/technical-reports/geometry-approaches",
-   "destination": "/x/geometry-approaches",
+   "source": "/technical-reports/emergent-geometry",
+   "destination": "/research/emergent-geometry/emergent-geometry",
    "permanent": true
   },
   {
-   "source": "/technical-reports/interval-transcendentals",
-   "destination": "/x/interval-transcendentals",
+   "source": "/technical-reports/erdos290",
+   "destination": "/research/challenges/erdos290",
    "permanent": true
   },
   {
-   "source": "/technical-reports/refusal-as-output",
-   "destination": "/x/refusal-as-output",
+   "source": "/technical-reports/evidence-first-bench",
+   "destination": "/research/evidence-first-bench/evidence-first-bench",
    "permanent": true
   },
   {
-   "source": "/technical-reports/refusal-taxonomy",
-   "destination": "/x/refusal-taxonomy",
+   "source": "/technical-reports/faithfulness-ceiling",
+   "destination": "/research/faithfulness-ceiling/faithfulness-ceiling",
    "permanent": true
   },
   {
-   "source": "/technical-reports/seaport-uniqueness",
-   "destination": "/x/seaport-uniqueness",
+   "source": "/technical-reports/how-this-shop-runs",
+   "destination": "/research/methods/how-this-shop-runs",
    "permanent": true
   },
   {
-   "source": "/technical-reports/cobb-douglas-bracket",
-   "destination": "/x/cobb-douglas-bracket",
+   "source": "/technical-reports/mfg-cap",
+   "destination": "/research/mfg-cap/mfg-cap",
    "permanent": true
   },
   {
-   "source": "/technical-reports/huggett-rational",
-   "destination": "/x/huggett-rational",
+   "source": "/technical-reports/mfg-congest",
+   "destination": "/research/mfg-congest/mfg-congest",
    "permanent": true
   },
   {
-   "source": "/technical-reports/rational-attention",
-   "destination": "/x/rational-attention",
+   "source": "/technical-reports/no-gradient-certificate",
+   "destination": "/research/emergent-geometry/no-gradient-certificate",
    "permanent": true
   },
   {
-   "source": "/program",
-   "destination": "/x/program",
+   "source": "/technical-reports/price-saturation",
+   "destination": "/research/price-saturation/price-saturation",
    "permanent": true
   },
   {
-   "source": "/mfg-lab/mfg-lab",
-   "destination": "/mfg-lab",
+   "source": "/technical-reports/stock-constraint",
+   "destination": "/research/stock-constraint/stock-constraint",
    "permanent": true
   },
   {
-   "source": "/(.*)",
-   "has": [
-    {
-     "type": "host",
-     "value": "mfg-lab.vercel.app"
-    }
-   ],
-   "destination": "https://www.carlostoledo.co/$1",
+   "source": "/technical-reports/ten-proofs-audit",
+   "destination": "/research/challenges/ten-proofs-audit",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/uam-corridor",
+   "destination": "/research/uam-corridor/uam-corridor",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/uniqueness-certificate",
+   "destination": "/research/uniqcert/uniqueness-certificate",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verification-lane",
+   "destination": "/research/challenges/verification-lane",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verifier-audit",
+   "destination": "/research/evidence-first-bench/verifier-audit",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verify-korenblum",
+   "destination": "/research/challenges/verify-korenblum",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verify-lemniscate",
+   "destination": "/research/challenges/verify-lemniscate",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verify-mathieu",
+   "destination": "/research/challenges/verify-mathieu",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verify-maxwell",
+   "destination": "/research/challenges/verify-maxwell",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verify-poisson",
+   "destination": "/research/challenges/verify-poisson",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/verify-ranteng",
+   "destination": "/research/challenges/verify-ranteng",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/wardrop-repro",
+   "destination": "/research/wardrop-repro/wardrop-repro",
+   "permanent": true
+  },
+  {
+   "source": "/x/adjoint-transformer",
+   "destination": "/research/probes/adjoint-transformer",
+   "permanent": true
+  },
+  {
+   "source": "/x/adversarial-corpus",
+   "destination": "/research/probes/adversarial-corpus",
+   "permanent": true
+  },
+  {
+   "source": "/x/alien-science-rerun",
+   "destination": "/research/alien-science/alien-science-rerun",
+   "permanent": true
+  },
+  {
+   "source": "/x/apery-obstruction",
+   "destination": "/research/challenges/apery-obstruction",
+   "permanent": true
+  },
+  {
+   "source": "/x/attention-bifurcation",
+   "destination": "/research/probes/attention-bifurcation",
+   "permanent": true
+  },
+  {
+   "source": "/x/cap-for-mfg",
+   "destination": "/research/mfg-cap/cap-for-mfg",
+   "permanent": true
+  },
+  {
+   "source": "/x/catalogue",
+   "destination": "/catalogue",
+   "permanent": true
+  },
+  {
+   "source": "/x/certified-multiplicity",
+   "destination": "/research/uniqcert/certified-multiplicity",
+   "permanent": true
+  },
+  {
+   "source": "/x/certified-price-formation",
+   "destination": "/research/stock-constraint/certified-price-formation",
+   "permanent": true
+  },
+  {
+   "source": "/x/circuit-path-truncation",
+   "destination": "/research/probes/circuit-path-truncation",
+   "permanent": true
+  },
+  {
+   "source": "/x/cobb-douglas-bracket",
+   "destination": "/research/probes/cobb-douglas-bracket",
+   "permanent": true
+  },
+  {
+   "source": "/x/constrained-transport",
+   "destination": "/research/stock-constraint/constrained-transport",
+   "permanent": true
+  },
+  {
+   "source": "/x/degree-sensitivity",
+   "destination": "/research/challenges/degree-sensitivity",
+   "permanent": true
+  },
+  {
+   "source": "/x/edge-of-chaos",
+   "destination": "/research/probes/edge-of-chaos",
+   "permanent": true
+  },
+  {
+   "source": "/x/equilibrium-geometry",
+   "destination": "/research/emergent-geometry/equilibrium-geometry",
+   "permanent": true
+  },
+  {
+   "source": "/x/erdos106-check",
+   "destination": "/research/challenges/erdos106-check",
+   "permanent": true
+  },
+  {
+   "source": "/x/evidence-first-benchmark",
+   "destination": "/research/evidence-first-bench/evidence-first-benchmark",
+   "permanent": true
+  },
+  {
+   "source": "/x/faithfulness-ceiling",
+   "destination": "/research/faithfulness-ceiling/faithfulness-ceiling-prospectus",
+   "permanent": true
+  },
+  {
+   "source": "/x/gate-audit",
+   "destination": "/research/vacuous-green/gate-audit",
+   "permanent": true
+  },
+  {
+   "source": "/x/geometry-approaches",
+   "destination": "/research/geometry/geometry-approaches",
+   "permanent": true
+  },
+  {
+   "source": "/x/huggett-rational",
+   "destination": "/research/probes/huggett-rational",
+   "permanent": true
+  },
+  {
+   "source": "/x/interval-transcendentals",
+   "destination": "/research/probes/interval-transcendentals",
+   "permanent": true
+  },
+  {
+   "source": "/x/llm-face",
+   "destination": "/research/uam-corridor/llm-face",
+   "permanent": true
+  },
+  {
+   "source": "/x/mf-jepa",
+   "destination": "/research/probes/mf-jepa",
+   "permanent": true
+  },
+  {
+   "source": "/x/opening",
+   "destination": "/research/ai-verify/opening",
+   "permanent": true
+  },
+  {
+   "source": "/x/program",
+   "destination": "/program",
+   "permanent": true
+  },
+  {
+   "source": "/x/rational-attention",
+   "destination": "/research/probes/rational-attention",
+   "permanent": true
+  },
+  {
+   "source": "/x/refusal-as-output",
+   "destination": "/research/refusal-value/refusal-as-output",
+   "permanent": true
+  },
+  {
+   "source": "/x/refusal-taxonomy",
+   "destination": "/research/refusal-value/refusal-taxonomy",
+   "permanent": true
+  },
+  {
+   "source": "/x/refusal-value",
+   "destination": "/research/refusal-value/refusal-value",
+   "permanent": true
+  },
+  {
+   "source": "/x/rotor-trajectory",
+   "destination": "/research/probes/rotor-trajectory",
+   "permanent": true
+  },
+  {
+   "source": "/x/seaport-uniqueness",
+   "destination": "/research/uniqcert/seaport-uniqueness",
+   "permanent": true
+  },
+  {
+   "source": "/x/sheaf-consensus",
+   "destination": "/research/probes/sheaf-consensus",
+   "permanent": true
+  },
+  {
+   "source": "/x/signature-truncation",
+   "destination": "/research/probes/signature-truncation",
+   "permanent": true
+  },
+  {
+   "source": "/x/tropical-relu",
+   "destination": "/research/probes/tropical-relu",
+   "permanent": true
+  },
+  {
+   "source": "/x/vacuous-green",
+   "destination": "/research/vacuous-green/vacuous-green",
+   "permanent": true
+  },
+  {
+   "source": "/x/w2-latent-loss",
+   "destination": "/research/probes/w2-latent-loss",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/alien-science/:path*",
+   "destination": "/research/alien-science/alien-science/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/attention-geometry/:path*",
+   "destination": "/research/ml/attention-geometry/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/erdos290/:path*",
+   "destination": "/research/challenges/erdos290/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/lane/:path*",
+   "destination": "/research/challenges/lane/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/bench/:path*",
+   "destination": "/research/evidence-first-bench/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/mfg-lab/docs/:path*",
+   "destination": "/research/mfg-lab/docs/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/mfg-lab/tests/:path*",
+   "destination": "/research/mfg-lab/tests/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/mfg-cap/docs/:path*",
+   "destination": "/research/mfg-cap/docs/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/mfg-cap/tests/:path*",
+   "destination": "/research/mfg-cap/tests/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/mfg-cap/tools/:path*",
+   "destination": "/research/mfg-cap/tools/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/sin-mfg/docs/:path*",
+   "destination": "/research/stock-constraint/docs/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/sin-mfg/tests/:path*",
+   "destination": "/research/stock-constraint/tests/:path*",
+   "permanent": true
+  },
+  {
+   "source": "/sin-mfg/tools/:path*",
+   "destination": "/research/stock-constraint/tools/:path*",
    "permanent": true
   },
   {
@@ -121,59 +420,75 @@
   },
   {
    "source": "/mfg-cap",
-   "destination": "/technical-reports/mfg-cap",
+   "destination": "/research/mfg-cap/mfg-cap",
    "permanent": true
   },
   {
    "source": "/sin-mfg",
-   "destination": "/technical-reports/stock-constraint",
+   "destination": "/research/stock-constraint/stock-constraint",
    "permanent": true
   },
   {
    "source": "/enclosure/wardrop-repro",
-   "destination": "/technical-reports/wardrop-repro",
+   "destination": "/research/wardrop-repro/wardrop-repro",
    "permanent": true
   },
   {
    "source": "/enclosure/mfg-congest",
-   "destination": "/technical-reports/mfg-congest",
+   "destination": "/research/mfg-congest/mfg-congest",
    "permanent": true
   },
   {
    "source": "/papers",
-   "destination": "/technical-reports",
+   "destination": "/reports",
    "permanent": true
   },
   {
    "source": "/papers/mfg-congest",
-   "destination": "/technical-reports/mfg-congest",
+   "destination": "/research/mfg-congest/mfg-congest",
    "permanent": true
   },
   {
    "source": "/papers/wardrop-repro",
-   "destination": "/technical-reports/wardrop-repro",
+   "destination": "/research/wardrop-repro/wardrop-repro",
    "permanent": true
   },
   {
    "source": "/papers/mfg-cap",
-   "destination": "/technical-reports/mfg-cap",
+   "destination": "/research/mfg-cap/mfg-cap",
    "permanent": true
   },
   {
    "source": "/papers/stock-constraint",
-   "destination": "/technical-reports/stock-constraint",
+   "destination": "/research/stock-constraint/stock-constraint",
+   "permanent": true
+  },
+  {
+   "source": "/mfg-lab/mfg-lab",
+   "destination": "/research/mfg-lab/mfg-lab",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports.html",
+   "destination": "/reports",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/LICENSE.md",
+   "destination": "/LICENSE.md",
+   "permanent": true
+  },
+  {
+   "source": "/(.*)",
+   "has": [
+    {
+     "type": "host",
+     "value": "mfg-lab.vercel.app"
+    }
+   ],
+   "destination": "https://www.carlostoledo.co/$1",
    "permanent": true
   }
  ],
- "headers": [
-  {
-   "source": "/x/(.*)",
-   "headers": [
-    {
-     "key": "X-Robots-Tag",
-     "value": "noindex, nofollow, noarchive"
-    }
-   ]
-  }
- ]
+ "headers": []
 }

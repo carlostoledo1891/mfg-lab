@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  DEFECTS — the failure record. Three cases in this project's own failure record,
+  each with its witness, its fix, and the control that now catches it.
+
+  BUILT 2026-07-30. Rewritten 2026-07-31 for UI/UX: dropped the unused instrument
+  stylesheet fork (tabs, canvases, lab chrome this page never used), aligned shared
+  site chrome with about/contact, added scannable case cards + jump TOC, removed
+  mailto (lives on /contact only). Not in the primary nav — linked from homepage,
+  About, and the work strip. Noindex until the owner flips it.
+
+  EVERY NUMBER ON THIS PAGE IS DERIVED FROM A COMMITTED RUN. The witness triple, the
+  84/2520 and 0/2520 incidences, the 1615/1615 bounded re-run and the 59250-window full
+  re-run are all measured. No figure here is remembered.
+
+  TOKEN-SCANNED: names no private project, mission, ledger record or internal path.
+
+  REVISED 2026-08-04. (1) Reframed the lede: this page leads with what the record IS —
+  dated, public, errors found in our own shipped work, none reported by a reader first —
+  before the verifier essay. (2) Every case now carries its date. (3) Case 4 added: the
+  alien-science figure re-attribution (right numbers, wrong method's name, live 3 days,
+  corrected at page + fixture + both clients + gate; public commit c22d531). (4) The
+  "not in the primary nav" line above and in the meta strip went stale when Errata
+  joined the topbar on every page; the rendered line is corrected, this comment kept
+  as the record of what was true at build time.
+
+  REVISED 2026-08-05. Case 5 added: five stages of the congestion-cap certificate
+  chain are silent under single-stage corruption (found by this shop's own
+  preregistered perturbation run, faithfulness-ceiling golden of 2026-08-05).
+  Status OPEN — reported before fixed; the entry says so. og:title carried
+  "three ways" since case 4 landed; replaced with a count-free title.
+
+  REVISED 2026-08-06. Case 6 added, and Case 5's status corrected from FIXED to
+  "fix did not hold". The P2 hardening below was real against verifier sha256
+  5fd01be3…; a later commit that ported the odd Fourier block into both Python
+  verifiers — strengthening a DIFFERENT claim, and doing it correctly — regenerated
+  that verifier to c886a856… and the verdict-tuple hardening did not survive the
+  regeneration. Re-measured 2026-08-06 in the monorepo and again in a tree holding
+  only the enclosure library and the harness: 9/14 flips, five silent stages
+  [7,8,9,10,12], identical in both. Neither committed golden's recorded verifier
+  digest matches the verifier now on disk. Case 5's prior FIXED text is NOT edited —
+  it was true of the verifier it named — and this entry supersedes its status.
+  Found because the harness was run by hand; no gate runs it, which is Case 6.
+
+  REVISED 2026-08-05, later the same session. The P2 hardening landed: witnesses
+  joined the acceptance conjunction, the verdict line carries a full-state digest,
+  the cert was refrozen (bounds digit-for-digit + crosslang green first), and the
+  re-run golden measures 14/14 flips, zero silent. Case 5 updated OPEN -> FIXED
+  with its control. A hostile read the same day caught: the scope section still
+  counting four cases; Case 5's Z2 mechanism compressed into a false "contraction
+  bound below 1" clause (Z2 is a Lipschitz bound near 63); "a checker rejects
+  every proper prefix" (truncated prefixes exit 0 and emit no verdict — nothing
+  is rejected); and the harness's cert pin being a transcribed constant that
+  could not go red (now read from the record at run time). All fixed below.
+
+  REVISED 2026-08-05, naming unified (item A4 of the 2026-08-05 external review of this site). A reader met three
+  different words for this page: the nav said "Errata", the route says /errata, and
+  the eyebrow said "the failure record". THE CHOICE WAS MADE BY COUNTING, not by taste.
+  "Errata" is the visible name in 146 places already — 136 nav and sitemap links across
+  30+ files, plus 10 uses in body prose — while "Defects" survived only in this page's
+  own <title>, its og:title, its filename and its URL slug. So the destination was
+  changed to agree with everything that points at it, not the other way round.
+
+  TWO THINGS DELIBERATELY NOT CHANGED, and the reasons are constraints, not preferences.
+  (1) THE ROUTE STAYS /defects. Every one of those 136 links is an href="/errata", and
+  they live in files including research/mfg-congest/mfg-congest.html, whose bytes are bound by
+  a ratified sha256 in its IP clearance record — editing them expires an owner-ratified hash
+  (C33) to change a URL slug. An application draft also cites the live
+  /errata URL in six places. A slug is the least-read of the three names; the two a
+  reader actually sees now agree.
+  (2) THE H1 STAYS "When the verifier agreed with me." It is the page's headline, not
+  its name — the eyebrow above it carries the name. Those are different jobs.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Errata — Carlos Toledo</title>
+<meta name="description" content="A dated public record of errors caught in this site's own shipped work: a gate that checked presence instead of position, a contraction argument that certified uniqueness it had not established, a false tail identity that put a wrong constant on a live page, source figures re-attributed on a live page, and five certificate-chain stages whose corruption the checker's verdict could not see — none reported by a reader first.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.carlostoledo.co/errata">
+<meta property="og:site_name" content="Carlos Toledo">
+<meta property="og:url" content="https://www.carlostoledo.co/errata">
+<meta property="og:title" content="Errata — when the verifier agreed with me">
+<meta property="og:description" content="A broken verifier does not crash — it agrees with you. Five dated cases in the measuring apparatus, each fixed with a control that now goes red — the fifth the same day it was reported.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.carlostoledo.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.carlostoledo.co/og.png">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px; --section-top:46px;
+    --card-pad:18px; --card-gap:14px; --radius:10px; --radius-sm:3px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.mono,table.mono td,table.mono th,.jump a,.meta{
+    font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+  .mono{font-family:var(--data);font-size:12.3px}
+
+  /* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in,.topbar .wrap{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+    font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{font-family:var(--data);font-size:12px;color:var(--ink-soft);font-weight:500;margin:0;max-width:none;letter-spacing:0}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .sitenav,.nav{gap:14px} .sitenav a,.nav a{font-size:10.5px;letter-spacing:.05em} }
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  @media(max-width:430px){ .brand .sub{display:none} }
+  /* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+
+  .hero{padding:0}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.028em;
+    line-height:1.08;margin:12px 0 0;max-width:22ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:66ch;margin-top:17px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .meta{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);margin-top:14px;line-height:1.5}
+
+  .jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+  .jump a{font-family:var(--data);font-size:10px;letter-spacing:.04em;text-decoration:none;font-weight:500;
+    border:1px solid var(--grid);border-radius:var(--radius-sm);padding:2px 7px;color:var(--ink);background:var(--grid)}
+  .jump a:hover{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+
+  .cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--card-gap);margin-top:28px}
+  .case{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--grid);
+    border-radius:var(--radius);padding:16px 18px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+    transition:border-color .14s,box-shadow .16s}
+  .case:hover{border-color:color-mix(in srgb,var(--ink-soft) 45%,var(--grid));
+    box-shadow:0 4px 12px rgba(16,24,40,.08),0 1px 2px rgba(16,24,40,.04)}
+  .case .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-soft);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .case .t{font-family:var(--ui);font-size:15.5px;font-weight:600;letter-spacing:-.012em;
+    color:var(--ink);margin:7px 0 6px;line-height:1.25}
+  .case .d{font-size:13.5px;line-height:1.55;color:var(--ink-soft)}
+  .case .d b{color:var(--ink);font-weight:600}
+  
+
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.07em;
+    text-transform:uppercase;padding:1px 5px;border-radius:var(--radius-sm);border:1px solid transparent;
+    white-space:nowrap;line-height:1.35;font-weight:500}
+  .badge.fixed{color:var(--paper);background:var(--good);border-color:var(--good)}
+  .badge.caught{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.scope{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+    .badge.regressed{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+
+  section{padding:var(--section-top) 0 0}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.018em;margin-bottom:8px;text-wrap:balance}
+  h2 .tag,.card h2 .tag,h3.sec .tag{font-family:var(--data);font-size:var(--text-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  .sub{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:76ch;margin-bottom:18px}
+  .sub b{color:var(--ink);font-weight:600}
+
+  .card{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:20px 22px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);margin:0 0 14px;width:100%;min-width:0}
+  .card p{font-size:14px;line-height:1.66;color:var(--ink-soft);margin:0 0 13px;max-width:100%}
+  .card p:last-child{margin-bottom:0}
+  .card p b{color:var(--ink);font-weight:600}
+  .card .note{font-size:13px;line-height:1.62;color:var(--ink-soft);margin:14px 0 0;padding-top:13px;
+    border-top:1px solid var(--grid)}
+  .card .note b{color:var(--ink);font-weight:600}
+  .card .note i{color:var(--ink)}
+
+  h3{font-family:var(--ui);font-size:14.5px;font-weight:600;letter-spacing:-.01em;
+    margin:22px 0 10px;color:var(--ink)}
+  .card > h3:first-child{margin-top:0}
+
+  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:8px 0 14px}
+  table.mono{border-collapse:collapse;width:100%;font-family:var(--data);font-size:11.5px;margin:0;
+    min-width:min(520px,100%)}
+  table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--grid);
+    padding:7px 10px 7px 0;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  table.mono td{padding:7px 12px 7px 0;border-bottom:1px solid var(--grid);color:var(--ink);
+    vertical-align:top;line-height:1.5}
+  table.mono td:first-child{color:var(--ink-soft)}
+  table.mono td b{color:var(--ink);font-weight:600}
+  table.rules td:first-child{color:var(--ink);font-family:var(--body);font-size:13.5px;font-weight:600;
+    width:34%}
+
+  .caveat{border-left:2px solid var(--warn);padding:3px 0 3px 15px;margin:0 0 14px;max-width:100%}
+  .caveat p{font-size:13.8px;line-height:1.64;color:var(--ink-soft);margin:0 0 9px}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat p b{color:var(--ink);font-weight:600}
+
+  .next{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:8px}
+  .next a{font-family:var(--data);font-size:12.5px;text-decoration:none;color:var(--fp-deep)}
+  .next a:hover{text-decoration:underline}
+
+  /* Laboratory failure log (merged from mfg-lab #/verification) */
+  .log{max-width:100%;margin-top:8px}
+  .lg{padding:17px 0;border-top:1px solid var(--grid)}
+  .lg:first-child{border-top:0;padding-top:0}
+  .lg h3{font-family:var(--ui);font-size:14.5px;font-weight:600;margin-bottom:9px;letter-spacing:-.008em}
+  .lg dl{display:grid;grid-template-columns:auto 1fr;gap:5px 13px;font-size:13.2px;line-height:1.58}
+  .lg dt{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-soft);padding-top:2px}
+  .lg dd{color:var(--ink-soft);text-wrap:pretty}
+  .lg dd b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){.lg dl{grid-template-columns:1fr}.lg dt{padding-top:8px}}
+
+  footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{max-width:var(--read-max);padding:22px 20px 36px}
+  .cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:72ch}
+  .cred b{color:var(--ink);font-weight:600}
+  .cred a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+  .cred a:hover{text-decoration:underline}
+    .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;line-height:1.5;color:var(--ink-soft);margin-top:16px}
+
+  </style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/mfg-congest.html and
+     research/wardrop-repro/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Errata</div>
+    <h1>When the verifier agreed with me.</h1>
+    <p class="lede">This is the <b>dated record of errors found in this site&rsquo;s own shipped
+      work</b> &mdash; most after publication, none reported by a reader first. It exists because a
+      verifier is a <b>claim about a claim</b>, and its failure mode is not a crash &mdash; it
+      <b>agrees with you</b>. The only evidence that one works is a record of it going red on
+      something that was actually wrong. Below: six shipping cases &mdash; three found while the
+      work they concern was live on a public page, the fifth fixed the same day it was reported,
+      and <b>the sixth still open</b>, because the fix it records was silently un-done by a later,
+      unrelated improvement &mdash; then eight failures that were <b>live in the Laboratory</b>
+      behind a green suite. A page that publishes only successes is a brochure.</p>
+    <p class="meta">Measured numbers only &middot; every case dated &middot; linked from every page
+      &mdash; hiding the log would be the defect</p>
+    <nav class="jump" aria-label="On this page">
+      <a href="#case-1">Case 1 &middot; presence &ne; position</a>
+      <a href="#case-2">Case 2 &middot; uniqueness without contraction</a>
+      <a href="#erdos290">Case 3 &middot; a check that cannot go red</a>
+      <a href="#case-4">Case 4 &middot; right numbers, wrong name</a>
+      <a href="#case-5">Case 5 &middot; five silent stages</a>
+      <a href="#case-6">Case 6 &middot; a fix that did not survive</a>
+      <a href="#lab-log">Laboratory log &middot; 8</a>
+      <a href="#method">Five rules</a>
+      <a href="#scope">What this does not claim</a>
+    </nav>
+  </div>
+
+  <div class="cases">
+    <a class="case" href="#case-1">
+      <span class="k">Case 01 <span class="badge fixed">fixed</span> <span class="badge caught">gate now red</span></span>
+      <span class="t">The gate checked presence, not position</span>
+      <span class="d">Pinned an AI-verify scoreboard with a self-consistency check on JSON.
+        Three meaning-changing mutations still exited <b>0</b>.</span>
+    </a>
+    <a class="case" href="#case-2">
+      <span class="k">Case 02 <span class="badge fixed">fixed</span> <span class="badge scope">no live blast</span></span>
+      <span class="t">Certified uniqueness it had not established</span>
+      <span class="d">Radii-polynomial <code class="mono">p(r)&nbsp;&lt;&nbsp;0</code> bought a self-map;
+        contraction is a <b>second</b> condition. A thin tangency band returned <code class="mono">ok</code>
+        with &kappa;&nbsp;&ge;&nbsp;1.</span>
+    </a>
+    <a class="case" href="#erdos290">
+      <span class="k">Case 03 <span class="badge fixed">fixed</span> <span class="badge caught">wrong number, published</span></span>
+      <span class="t">A false tail identity survived a green suite</span>
+      <span class="d">&mdash; the only check on the value could not go red &mdash; and put a constant
+        wrong from the sixth decimal on a live page.</span>
+    </a>
+    <a class="case" href="#case-4">
+      <span class="k">Case 04 <span class="badge fixed">fixed</span> <span class="badge caught">wrong label, published</span></span>
+      <span class="t">Right numbers, attributed to the wrong method</span>
+      <span class="d">Source figures <b>0.94 / 0.47</b> shipped under another idea&rsquo;s name on a
+        live page, its fixture and both clients &mdash; and the pack&rsquo;s own gate pinned the
+        mislabel as truth.</span>
+    </a>
+    <a class="case" href="#case-5">
+      <span class="k">Case 05 <span class="badge regressed">fix did not hold</span> <span class="badge caught">found by own instrument</span></span>
+      <span class="t">Five certificate stages its verdict could not see</span>
+      <span class="d">The preregistered prediction was <b>14/14</b> flips; the run measured
+        <b>9/14</b> &mdash; five stages of a certified chain invisible to its own verdict. Two
+        registered, one same-species, two unpredicted. Hardened same day to <b>14/14</b> &mdash;
+        <b>and the hardening did not survive a later, unrelated change. See Case 06.</b></span>
+    </a>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="#case-6">
+      <span class="k">Case 06 <span class="badge regressed">open</span> <span class="badge caught">found by own instrument</span></span>
+      <span class="t">A fix that an unrelated improvement silently un-did</span>
+      <span class="d">Case 05's hardening was real against one verifier. A later commit that
+        strengthened a <i>different</i> thing regenerated that verifier, and the hardening went with
+        it: measured today, <b>9/14</b> flips and five silent stages again. Nothing noticed, because
+        the only instrument that measures it runs in no gating target.</span>
+    </a>
+  </div>
+
+  <section>
+    <h2>Why this page exists</h2>
+    <p class="sub">I build validated-numerics software: interval arithmetic and contraction arguments
+      that turn a floating-point computation into a statement about the true solution. A green suite
+      is evidence only if a deliberately broken copy has been shown to fail. These failures are
+      the public proof that the discipline can catch itself &mdash; and that it did not, until someone
+      looked.</p>
+  </section>
+
+  <section id="case-1">
+    <h2>Case One <span class="tag" style="color:var(--bad)">was fake</span></h2>
+    <p class="sub">27 July 2026 &middot; the gate that checked presence, not position. Lives on the
+      <a href="/research/ai-verify/ai-verify">AI-verify</a> scoreboard: eight blind model attempts,
+      headline <b>&ldquo;5 of 8 said NO&rdquo;</b>.</p>
+
+    <div class="card">
+      <p>An artifact page showed a table: eight model attempts at a hard mathematical bound, each
+        row with an estimate, a verdict and a quotation, and below it a scoreboard. A table like that
+        can be quietly edited to tell a nicer story, so I wrote a gate to pin it. The gate passed,
+        and I believed it.</p>
+
+      <h3>What it actually did</h3>
+      <p>It asserted that each pinned field was <b>byte-present somewhere in the file</b>, then
+        recomputed the scoreboard from the data file&rsquo;s own rows and compared it to the data
+        file&rsquo;s own counts. <b>The artifact&rsquo;s rows never entered the arithmetic.</b> A
+        self-consistency check on a JSON file, wearing the costume of a check on the published page.</p>
+
+      <div class="twrap">
+        <table class="mono">
+          <thead><tr><th style="width:46%">Mutation that changed the meaning</th><th>Why a presence check cannot see it</th></tr></thead>
+          <tbody>
+            <tr><td>An estimate changed to a value that appears in another row (0.573 &rarr; 0.588)</td>
+                <td>The number is still &ldquo;present&rdquo; in the file, so presence cannot detect that it moved</td></tr>
+            <tr><td>A <span class="mono">says NO</span> row flipped to <span class="mono">says yes</span></td>
+                <td>The table then shows <b>four</b> NOs while the scoreboard still reads <b>&ldquo;5 of 8 said NO&rdquo;</b> &mdash; the headline story silently changed and nothing objected</td></tr>
+            <tr><td>Two quotations swapped between rows attributed to different models</td>
+                <td>Misattribution of a direct quote, invisible to any per-field check</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>All three passed <span class="mono">exit 0</span>.</p>
+
+      <h3>How it was found</h3>
+      <p>Not by the suite &mdash; by an adversarial review that returned <b>DO NOT SHIP</b>. I
+        reproduced the defect myself before acting on the report: wrote the mutations, ran them,
+        watched all three pass.</p>
+
+      <h3>The fix</h3>
+      <p><b>Presence is not position.</b> The gate now parses the table body into ordered
+        <b>row tuples</b>, compares them <b>positionally</b>, and recomputes the scoreboard
+        <b>from the rendered cells</b> rather than from the data file. All three mutations now go red
+        &mdash; the verdict flip fires twice, once on the positional mismatch and once on the
+        recomputed count.</p>
+
+      <p class="note">The line I put in the commit, because it is the general lesson:
+        <i>&ldquo;I put the previous gate&rsquo;s self-description into a commit message without
+        verifying its semantics. That sentence was false. An agent&rsquo;s account of its own gate is
+        a claim, not a test result.&rdquo;</i></p>
+    </div>
+  </section>
+
+  <section id="case-2">
+    <h2>Case Two <span class="tag" style="color:var(--bad)">unsound</span></h2>
+    <p class="sub">30 July 2026 &middot; certifying uniqueness the radii polynomial had not
+      established. Core of <span class="mono">eqcert</span> &mdash; the shared interval library
+      behind the reports.</p>
+
+    <div class="card">
+      <p>The core of the library is the radii polynomial. Given a defect bound
+        <span class="mono">Y0</span> and derivative bounds <span class="mono">Z1</span>,
+        <span class="mono">Z2</span> for a map <span class="mono">T</span>, it returns a radius
+        <span class="mono">r</span> such that <span class="mono">T</span> has a <b>unique</b> fixed
+        point in the ball <span class="mono">B_r</span>. The condition it checked was</p>
+
+      <div class="twrap">
+        <table class="mono">
+          <tbody>
+            <tr><td class="mono">p(r) = &frac12;&middot;Z2&middot;r&sup2; &minus; (1 &minus; Z1)&middot;r + Y0 &lt; 0</td>
+                <td>Verified in outward-rounded interval arithmetic; on success it returned <span class="mono">ok</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>The defect</h3>
+      <p><span class="mono">p(r) &lt; 0</span> buys the <b>self-map</b> property:
+        <span class="mono">T</span> maps <span class="mono">B_r</span> into itself.
+        <b>Contraction is a different condition</b> &mdash;
+        <span class="mono">&kappa; = Z1 + Z2&middot;r &lt; 1</span> &mdash; and it does not follow.
+        The two part company at the vertex of <span class="mono">p</span>, at
+        <span class="mono">r = (1&minus;Z1)/Z2</span>, where <span class="mono">&kappa; = 1</span>
+        exactly. The search starts at the smaller root, below the vertex, and multiplies by 1.05 per
+        step &mdash; so near tangency, with the roots pinched together and the enclosure of
+        <span class="mono">p</span> straddling zero for several steps, <b>one step can carry
+        <span class="mono">r</span> past the vertex</b> while still landing below the larger root,
+        where <span class="mono">p(r) &lt; 0</span> verifies happily.</p>
+
+      <p>At such a radius <span class="mono">T</span> is a self-map but not a contraction. Existence
+        survives by Brouwer. <b>Uniqueness does not</b> &mdash; and uniqueness in the ball is exactly
+        what the certificate claimed.</p>
+
+      <h3>The witness</h3>
+      <div class="twrap">
+        <table class="mono">
+          <tbody>
+            <tr><td class="mono" style="width:52%">Y0 = 4.895599500000001e-13&emsp;Z1 = 0.01&emsp;Z2 = 1e12</td><td>The input triple</td></tr>
+            <tr><td class="mono">vertex = (1&minus;Z1)/Z2 = 9.9e-13</td><td>Above this, &kappa; &ge; 1</td></tr>
+            <tr><td class="mono">returned r = 1.006628123722553e-12</td><td><b>Past the vertex</b></td></tr>
+            <tr><td class="mono">larger root = 1.021306548835664e-12</td><td>So r &lt; root and <b>p(r) &lt; 0 holds</b></td></tr>
+            <tr><td class="mono">&kappa; = Z1 + Z2&middot;r = 1.0166281237225536</td><td><b>&ge; 1 &mdash; uniqueness does not follow</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Incidence &mdash; why an ordinary sweep misses it</h3>
+      <div class="twrap">
+        <table class="mono">
+          <thead><tr><th style="width:60%">Sweep</th><th>Cases returning <span class="mono">ok</span> with &kappa; &ge; 1</th></tr></thead>
+          <tbody>
+            <tr><td>2520 triples on a log-spaced grid &mdash; the obvious sweep</td><td class="mono"><b>0</b></td></tr>
+            <tr><td>2520 triples driven deliberately toward tangency</td><td class="mono"><b>84</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>This is the transferable part. The defect lives in a thin region of parameter space and a
+        uniform sweep of identical size finds none of it. Finding it required asking
+        <i>where is this argument closest to failing</i> and going there on purpose.</p>
+
+      <h3>Why it survived</h3>
+      <p>A <b>copy</b> of this routine elsewhere in the tree already had the guard, added the previous
+        day. The <b>owner</b> &mdash; the file every other consumer imports &mdash; did not. Two
+        implementations of the same mathematics disagreed about whether a certificate was sound, and
+        nothing could see it, because the duplication gate fingerprints the arithmetic primitives and
+        not the contraction argument built on them.</p>
+
+      <p>And the file&rsquo;s own documentation asserted the defect <b>as a theorem</b>. Until the fix
+        it read: <span class="mono">&ldquo;the map is a contraction of B_r into itself whenever
+        p(r) &lt; 0&rdquo;</span> &mdash; one condition where there are two. The code then implemented
+        its own documentation faithfully. Both are corrected, and the docstring now records that it
+        used to state one.</p>
+
+      <h3>The fix, and the two controls</h3>
+      <div class="twrap">
+        <table class="mono">
+          <thead><tr><th style="width:22%">Control</th><th>What it asserts</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">R8 &middot; red</td>
+                <td>The witness above is <b>REFUSED</b>, <i>for the stated reason</i>, with &kappa; &ge; 1,
+                <b>and</b> with <span class="mono">p(r) &lt; 0</span> genuinely holding past the vertex
+                &mdash; all four, so a later edit cannot make it pass for the wrong reason</td></tr>
+            <tr><td class="mono">R9 &middot; green</td>
+                <td>Both shipping certifiers&rsquo; real operating points still certify, with
+                &kappa; &lt; 1 &mdash; because a guard that refuses everything is not a guard either</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Blast radius: none</h3>
+      <p>A loaded trap, not a live wound &mdash; the shipping certifiers run about twelve orders of
+        magnitude from tangency, so no existing certificate was exposed. Verified three ways rather
+        than asserted: <span class="mono">R9</span> pins both real operating triples and both still
+        certify; a bounded re-run certified <b>1615 / 1615</b> windows with the covering check passed
+        and five red controls all firing; and the full re-run &mdash; <b>59,250 windows</b> &mdash;
+        had <b>every claim field asserted programmatically identical</b> to the pre-fix run before
+        the record was rewritten. The guard fires on no window.</p>
+
+      <p class="note">A change to the library stales a certificate whether or not the numbers move,
+        because a certificate is bound to bytes &mdash; so it was re-produced in full, not re-labelled.
+        That re-run also closed a related gap: the record hashed five components but not the three
+        library files it depends on, so an edit to the library could have changed what the record
+        <i>meant</i> while every hash it stated stayed identical. Those three are hashed now.</p>
+    </div>
+  </section>
+
+  <section id="erdos290">
+    <h2>Case Three <span class="tag" style="color:var(--bad)">wrong number, published</span></h2>
+    <p class="sub">3 August 2026 &middot; three defects in the Erd&#337;s&nbsp;#290 note
+      (<a href="/research/challenges/erdos290">the note</a>), all found before it was submitted
+      anywhere, two of them after it was already live.</p>
+
+    <div class="card">
+      <p><b>1. A constant wrong from the sixth decimal, live on this site.</b>
+        <span class="mono">kernel.js</span> computed the tail weight of the conditional value as
+        <span class="mono">log&nbsp;2&nbsp;&minus;&nbsp;&Sigma;<sub>m&le;2N</sub>(&minus;1)<sup>m+1</sup>/m</span>.
+        That identity is false. Since
+        <span class="mono">1/(2l(2l+1))&nbsp;=&nbsp;1/(2l)&nbsp;&minus;&nbsp;1/(2l+1)</span> the sum
+        telescopes to <span class="mono">1&nbsp;&minus;&nbsp;log&nbsp;2&nbsp;=&nbsp;0.30685</span>,
+        never to <span class="mono">log&nbsp;2</span>; the correct form is
+        <span class="mono">&Sigma;<sub>m&le;2N+1</sub>(&minus;1)<sup>m+1</sup>/m&nbsp;&minus;&nbsp;log&nbsp;2</span>.</p>
+      <div class="twrap">
+        <table class="mono">
+          <tbody>
+            <tr><td class="mono">published</td><td>1/(1+c) = 0.546228299769896895896283414314783&hellip;</td></tr>
+            <tr><td class="mono">correct</td><td>1/(1+c) = 0.546229310400104587412660585438363&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><b>Why nothing caught it.</b> The only check on that value asserted it lies inside the
+        unconditional bracket [0.82911,&nbsp;0.83323]. The wrong value is 0.83073. The right value
+        is 0.83073. Both pass. The check ran on every invocation, printed <span class="mono">ok</span>,
+        and could not have rejected any value the bug was capable of producing &mdash; while
+        <span class="mono">make verify</span> reported ALL GATES GREEN throughout.
+        <b>A check that cannot go red is not a check.</b> Two that can now cover it: the value must
+        not depend on the cutoff N (the old code returns <i>disjoint</i> enclosures at N&nbsp;=&nbsp;120
+        and N&nbsp;=&nbsp;200), and a hardcoded anchor that T(0) encloses 1&nbsp;&minus;&nbsp;log&nbsp;2,
+        deliberately not compared against the kernel&rsquo;s own log&nbsp;2 &mdash; which would have
+        tested the two halves of one mistake against each other.</p>
+
+      <p><b>2. The same wrong constant survived the fix, in a figure.</b> The correction replaced the
+        34-digit decimal everywhere it appeared. The page&rsquo;s chart JS holds a <i>truncated</i>
+        16-digit copy (<span class="mono">var COND = &hellip;</span>), which did not match, so the
+        retracted value kept drawing the dashed conditional line and feeding the figure&rsquo;s own
+        on-load soundness check &mdash; both green, because the wrong value also sits inside the
+        bracket. <span class="mono">narrowing.js</span> now asserts the page literal equals the
+        generated one, and that assertion was mutation-tested against exactly the value that shipped.</p>
+
+      <p><b>3. An endpoint rounded the wrong way.</b> 1/(1+c)&rsquo;s upper bound was written
+        &hellip;448 for a true &hellip;4480174&hellip; &mdash; rounded <i>inward</i>, in the same
+        paragraph claiming no floating point enters any inequality. It is &hellip;449. Every decimal
+        in the note is now printed by the program under an explicit floor/ceil and transcribed,
+        never re-derived by hand.</p>
+
+      <p><b>Also, and it broke nothing.</b> A guard added the same day refused odd <span class="mono">l</span>
+        rather than returning the correct value for it, and sat inside eager construction, so it fired
+        at every odd degree whatever survived. The shipped programs could not regenerate the data file
+        shipped beside them. No published number was affected &mdash; the regenerated file is
+        byte-identical &mdash; but a referee running the attachments would have got a wider interval
+        than the one published, which in a submission is the same thing as being wrong.</p>
+
+      <p class="sub">All three were found by an adversarial pass whose brief was <i>re-derive every
+        number independently and do not trust the file</i>. Three other checks in the same pass
+        &ldquo;confirmed&rdquo; the wrong constant &mdash; correctly, because they verified it had been
+        <i>transcribed</i> faithfully from the program that computed it. Agreement between checks that
+        share a source is not evidence.</p>
+    </div>
+  </section>
+
+  <section id="case-4">
+    <h2>Case Four <span class="tag" style="color:var(--bad)">wrong attribution, published</span></h2>
+    <p class="sub">4 August 2026 &middot; on the
+      <a href="/research/alien-science/alien-science">alien-science evaluation note</a>, live since
+      1 August: every number correct as reported, two of them printed under the wrong
+      method&rsquo;s name &mdash; on the page, in its machine-readable fixture, and in both
+      runnable clients. Caught on a direct re-read of the source figure, before any reader
+      reported it.</p>
+
+    <div class="card">
+      <p><b>What was wrong.</b> The note evaluates ideas from Anthropic&rsquo;s published
+        automated-alignment study, and its comparison table attributed the study&rsquo;s held-out
+        transfer figures &mdash; <span class="mono">math 0.94 &middot; code 0.47</span> &mdash; to
+        the method the note certifies a fragment of (CCS&nbsp;+&nbsp;Evolution Strategy
+        Refinement). Read directly, the source&rsquo;s fig.&nbsp;8 says those figures belong to a
+        <b>different method</b>, CCS&nbsp;+&nbsp;Self-Distill &mdash; and reports <b>no held-out
+        figures at all</b> for the method they were printed under. A second cell reported
+        <span class="mono">0.94 (math)</span> where the source&rsquo;s figure for that method is
+        <span class="mono">0.93</span>, on chat. A sidebar additionally called the study&rsquo;s
+        future-work recommendation a &ldquo;verbatim invite&rdquo;, which it is not.</p>
+
+      <h3>Where it shipped</h3>
+      <p>Not only prose. The same attribution sat in the fixture and in both clients &mdash; Node
+        and Python &mdash; of the page&rsquo;s downloadable repro pack, so anyone re-running the
+        pack printed the mislabel in their own terminal. <b>And the pack&rsquo;s own battery
+        pinned it as truth:</b> the check covering that fixture asserted the mis-attributed
+        <span class="mono">0.94</span> was present. A gate can be worse than absent &mdash; this
+        one enforced the error. The page had been live for three days.</p>
+
+      <h3>Why nothing caught it</h3>
+      <p>Citation verification had confirmed every figure <i>as reported at source</i> &mdash;
+        and every value was. The defect was the attribution, and a value check cannot see a
+        label. Each internal copy agreed with the others because each inherited the same first
+        transcription, and one hostile re-read passed for the same reason: the reader checked
+        the copies against the doctrine rather than against the figure. Case Three&rsquo;s
+        closing line, again: <b>agreement between checks that share a source is not
+        evidence.</b></p>
+
+      <h3>The fix, and the control</h3>
+      <p>Corrected at every surface in one pass, each with a dated note: the page table
+        re-attributed, the &ldquo;verbatim invite&rdquo; relabeled to what the source actually
+        says, the fixture and both clients now carrying <span class="mono">0.93 (chat)</span>
+        and <b>no held-out fields</b> for the method that has none, and the goldens regenerated.
+        The battery&rsquo;s check now asserts the fixture carries chat
+        <span class="mono">0.93</span> and that the held-out fields are <b>absent</b> &mdash;
+        re-introducing <span class="mono">0.94/0.47</span> under that method turns it red.
+        Public commit <span class="mono">c22d531</span> in the site&rsquo;s source repository.</p>
+
+      <p class="note">Found by re-reading one source figure before sending the note to the
+        people it is addressed to &mdash; so the correction landed before any recipient ran the
+        pack. The transferable part: <b>a number can be verbatim-correct and still say something
+        false. Attribution is part of the claim, and a check that verifies values verifies only
+        half of it.</b></p>
+    </div>
+  </section>
+
+  <section id="case-5">
+    <h2>Case Five <span class="tag" style="color:var(--bad)">five stages silent &mdash; fixed same day</span></h2>
+    <p class="sub">5 August 2026 &middot; the certified congestion-cap chain behind the
+      <a href="/research/ai-verify/ai-verify">AI-verify report</a>, whose standalone verifier that
+      page publishes: corruption at <b>five of its fourteen stages</b> left the checker&rsquo;s
+      verdict unchanged. Found by this shop&rsquo;s own preregistered perturbation run
+      (<a href="/research/faithfulness-ceiling/faithfulness-ceiling">the write-up</a>), recorded here the day
+      it was measured &mdash; and hardened the same day, with the control below.</p>
+
+    <div class="card">
+      <p><b>What ran.</b> Two perturbation families from the chain-of-thought faithfulness
+        literature &mdash; truncate the chain after each stage and demand the verdict; corrupt one
+        stage and let everything downstream recompute &mdash; reconstructed from the papers&rsquo;
+        text and aimed at my own certificate chain, with every prediction committed to a dated
+        preregistration <b>before the harness existed</b>. The response variable is observable and
+        deterministic: the checker&rsquo;s verdict tuple &mdash; exit code, verdict line, printed
+        bound. Truncation landed at its pre-computed ceiling exactly, registered in advance as a
+        control, not a finding &mdash; a truncated chain emits <b>no verdict at all</b> (it exits 0
+        and says nothing), which the preregistration fixed in advance as a different answer.</p>
+
+      <h3>What the corruption sweep found</h3>
+      <p>One deterministic minimal semantic mutation per stage, exhaustive over all fourteen, each
+        paired with a clean control that had to reproduce the reference tuple (it did, 14/14).
+        <b>The preregistration&rsquo;s headline prediction &mdash; all fourteen flip &mdash; was
+        falsified: nine moved the tuple, five did not</b>: the contraction bound Z1, the Lipschitz
+        bound Z2, the radii acceptance cap, the branch-wall grid, and the pointwise witnesses. Two
+        of the five were the preregistration&rsquo;s registered exception sites; one fell at a
+        mechanism it had named without registering a site; two were genuinely unpredicted. The
+        mechanisms, measured rather than argued: the acceptance conjunction never read the witness
+        flag (diagnostic weight, not load-bearing); doubling the acceptance cap changed nothing
+        when the certified radius sat <b>ten orders of magnitude</b> below it; an inflated
+        contraction bound Z1 still sat below 1 inside certified headroom; an extra 1e&minus;2 on
+        the Lipschitz bound Z2 (&asymp;&nbsp;63) was invisible at the scale the closure cares
+        about; and a grid corrupted from 4096 down to 16 was <b>repaired by the wall&rsquo;s own
+        adaptive refinement</b> &mdash; downstream machinery absorbing an upstream corruption, in
+        a chain whose whole advertisement is that corruption anywhere flips it.</p>
+
+      <h3>Both directions, honestly</h3>
+      <p>None of the five was an unsound acceptance: each silent mutation pushes a bound in the
+        conservative direction or is repaired to a correct value downstream, and no mutation
+        produced a <b>wrong printed bound</b> beside a passing verdict. Two limits of that
+        sentence, stated rather than blurred: under the exact-tuple predicate the registered
+        unsound branch is unfalsifiable for the <i>printed</i> bound (it is the tuple&rsquo;s own
+        third element), and the mutated Z1/Z2 values &mdash; certified bounds that did move while
+        the tuple held &mdash; were not recorded by the harness. What the five measured is
+        <b>observability</b>: the verdict tuple was not a sufficient statistic for the
+        chain&rsquo;s integrity, and an auditor watching only the checker&rsquo;s verdict would
+        have missed corruption at five of fourteen stages &mdash; measured dead weight at one,
+        measured parameter slack at four.</p>
+
+      <h3>The fix, and the control</h3>
+      <p>Landed the same day, in the same push as this entry. The pointwise witnesses joined the
+        acceptance conjunction (each &lt;&nbsp;1e&minus;8 &mdash; documented six orders above the
+        clean measurements and six below the smallest injected corruption; a strengthening,
+        nothing loosened), and the verdict line now carries a <b>sha256 digest of the full
+        certified state</b> &mdash; every bound, wall grid, witness, falsifier verdict and
+        acceptance parameter &mdash; so a conservative corruption that honestly still closes stays
+        <span class="mono">VERIFIED</span> but is visible in the tuple. The certificate record was
+        re-frozen against the hardened verifier with every bound reproduced digit-for-digit and
+        the cross-language gate green <i>first</i>. <b>The control:</b> the re-run golden measures
+        <b>14/14 tuple flips, zero silent stages</b>, all harness controls green. One more defect,
+        found by the same day&rsquo;s hostile read and fixed with it: the harness had compared the
+        verifier&rsquo;s sha256 against a <i>transcribed constant</i> &mdash; a pin-match that
+        could not go red on a re-freeze, this page&rsquo;s Case One species inside the instrument
+        that found Case Five &mdash; and it now reads the certificate record itself at run time.</p>
+
+      <p class="note">Reported the day it was measured, fixed the same day, and both halves are
+        dated here because the order matters: the entry was written <i>before</i> the fix existed,
+        and the fix did not quietly rewrite it. What the five stages measured &mdash; dead weight
+        at one, parameter slack at four &mdash; is stated in the
+        <a href="/research/faithfulness-ceiling/faithfulness-ceiling">write-up</a> exactly as it was
+        measured.</p>
+    </div>
+  </section>
+
+  <section id="case-6">
+    <h2>Case Six <span class="tag" style="color:var(--bad)">still open</span></h2>
+    <p class="sub">6 August 2026 &middot; the fix above was real, and an unrelated improvement
+      silently un-did it. Found by running the instrument by hand, because no gate runs it.</p>
+
+    <div class="ro">
+      <p>Case Five closed on 5 August: the hardened verifier took the silent stages from five to
+        zero, and the re-run golden measured <b>14/14</b> tuple flips. That was true of the verifier
+        it named, sha256 <code>5fd01be3&hellip;</code>.</p>
+
+      <p>Later the same day a different commit ported the odd Fourier block into both Python
+        verifiers, so that the certificate stopped disclaiming half its own theorem. That change is
+        correct and it strengthened the result. It also <b>regenerated the verifier</b>, to sha256
+        <code>c886a856&hellip;</code>, and the verdict-tuple hardening did not survive the
+        regeneration.</p>
+
+      <p>Re-measured on 6 August, twice: in the full repository, and again in a tree containing
+        nothing but the enclosure library and the harness. Both runs agree, and both reproduce the
+        <i>pre</i>-hardening result &mdash; <b>9 of 14 flips, five silent stages [7,&nbsp;8,&nbsp;9,&nbsp;10,&nbsp;12]</b>.
+        Neither committed golden's recorded verifier digest matches the verifier now on disk:
+        <code>67822a77&hellip;</code> and <code>5fd01be3&hellip;</code> against
+        <code>c886a856&hellip;</code>.</p>
+
+      <p class="note">Why nothing caught it, and this is the actual defect. The harness that measures
+        this is named as the write-up's gate, and it is a prerequisite of no build target &mdash; so
+        the ritual never runs it, and a verifier can be regenerated twice without anything comparing
+        the new one against the numbers a page still prints. Two unrelated fixes can each be right
+        and still cancel, and the only thing that would notice is a gate. <b>A fix is not durable
+        until something can tell you it broke.</b></p>
+
+      <p class="note">Kept honest in both directions: Case Five's text above is not edited &mdash; it
+        recorded what was true when it was written &mdash; and the write-up's numbers stay as
+        measured. What changed is a <i>status</i>, which is a claim about the present tense, and it
+        now says the fix did not hold.</p>
+
+      <p class="note"><b>Dated note, 2026-08-20.</b> The clauses above saying no gate runs the
+        harness were true on 6 August and are the record of that day. Since then a pin check joined the build ritual: it compares the verifier
+        on disk against the certificate record&rsquo;s own pin, so a verifier regenerated out from
+        under a published number now goes red instead of quiet. The latest committed golden
+        (<code>golden-run-2026-08-09.json</code>) matches the verifier on disk and reproduces
+        9 of 14 &mdash; the measurement stands; the hardening remains un-restored, and this case
+        stays open until it is.</p>
+    </div>
+  </section>
+
+  <section id="method">
+    <h2>The method, in five rules</h2>
+    <p class="sub">The transferable part &mdash; what the cases cost, written so the next failure
+      is cheaper.</p>
+    <div class="card">
+      <div class="twrap">
+        <table class="mono rules">
+          <tbody>
+            <tr><td>A gate that cannot go red is not a gate</td>
+                <td>Every check ships with a deliberate mutation proving it fires, proved in both directions &mdash; patched must fail <i>and</i> clean must pass</td></tr>
+            <tr><td>Presence is not position</td>
+                <td>Pinning that a value exists somewhere is not pinning that it is in the right place; compare structure, positionally</td></tr>
+            <tr><td>Measure, don&rsquo;t remember</td>
+                <td>Every number in a document is derived at run time or carries the command that derives it; remembered figures drift, and they drift flatteringly</td></tr>
+            <tr><td>Sweep toward the edge</td>
+                <td>Uniform sweeps find uniform bugs; ask where the argument is closest to failing and go there</td></tr>
+            <tr><td>An account of a check is not a result from it</td>
+                <td>Including my own &mdash; especially my own</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="lab-log">
+    <h2>Laboratory failure log <span class="tag">merged from the notebook</span></h2>
+    <p class="sub">These are not hypothetical failure modes. They were <b>live in the Laboratory
+      artifact</b> &mdash; several of them behind a green test suite &mdash; and each now ends in a
+      check that runs on every commit. The certificates on the other pages are worth reading because
+      this list exists and is not curated.</p>
+    <div class="log">
+      <div class="lg">
+        <h3>The test harness validated a stale file for an entire session</h3>
+        <dl>
+          <dt>claimed</dt><dd>Every run green after every edit.</dd>
+          <dt>wrong</dt><dd>The harness read a <b>hardcoded path</b> instead of extracting the script from the artifact
+          under test. Every green run after an edit was reading an unpatched file; three new checks that reported
+          failures were <b>correct, and the suite was wrong</b>.</dd>
+          <dt>caught by</dt><dd>Disbelieving three simultaneous &ldquo;failures&rdquo; that all pointed the same way.</dd>
+          <dt>pinned by</dt><dd>Every battery now <b>extracts the kernel from the artifact at run time</b> and prints
+          the path and sha256 it read. A hardcoded-path harness is a fake certificate for the suite itself.</dd>
+        </dl>
+      </div>
+      <div class="lg">
+        <h3>A green suite proves nothing until it has been made to go red</h3>
+        <dl>
+          <dt>claimed</dt><dd>A mass-conservation certificate, checked and passing.</dd>
+          <dt>wrong</dt><dd>The first deliberate mutation test passed <b>all three mutants</b>. At rest the terminal row
+          equals the maximum over time slices, so a terminal-only implementation and a max-over-all-slices
+          implementation are indistinguishable &mdash; <b>exactly where it was being sampled</b>.</dd>
+          <dt>caught by</dt><dd>Sampling mid-iteration instead of at rest: the two disagree on roughly 19 of 400 frames.</dd>
+          <dt>pinned by</dt><dd>The check now asserts <b>semantics, not magnitude</b>, at every frame of the solve.
+          Every fix since is mutation-tested: revert it, confirm the battery fails.</dd>
+        </dl>
+      </div>
+      <div class="lg">
+        <h3>A published error floor was fabricated &mdash; and retracted twice</h3>
+        <dl>
+          <dt>claimed</dt><dd>That the exploitability &epsilon; bottoms out at a discretization-induced floor of order h+&Delta;t,
+          with a hardcoded gate at 1e&minus;4 styling the readout as passing.</dd>
+          <dt>wrong</dt><dd>Measured on the extracted kernel, &epsilon; is <b>iteration-limited</b>, roughly linear in the
+          residual. The claimed bound was about nine orders of magnitude too large &mdash; <b>vacuous</b> &mdash; and the ratio
+          spans a factor of 2400 across the parameter box, so no calibrated constant was defensible either.</dd>
+          <dt>caught by</dt><dd>Trying to measure the floor in order to cite it.</dd>
+          <dt>pinned by</dt><dd>&epsilon; is now reported <b>beside the residual that limits it</b>, with no floor claimed.
+          The first retraction missed three surviving copies of the sentence elsewhere in the file, so the battery
+          now reads the page text and asserts the phrases are <b>absent</b>.</dd>
+        </dl>
+      </div>
+      <div class="lg">
+        <h3>A prose range that was remembered rather than measured</h3>
+        <dl>
+          <dt>claimed</dt><dd>That the price-formation iteration reaches 1e&minus;9 in roughly 50 to 160 iterations across
+          the whole slider box.</dd>
+          <dt>wrong</dt><dd>A 16-corner sweep measured <b>32&ndash;78</b> iterations &mdash; and found that <b>4 of the 16 corners
+          do not converge at all</b>, stalling at the cap. The original range was plausible and unmeasured. The ad-hoc
+          figures then failed the same test: the committed battery re-measured the box at <b>37&ndash;180</b> iterations and
+          found the four capped corners at residuals 8.6e&minus;9&ndash;1.1e&minus;7 &mdash; slow tails just short of tolerance, not the hard
+          stall the sweep had recorded. A sweep run once is a remembered number the day after.</dd>
+          <dt>caught by</dt><dd>Treating the sentence as a claim and sweeping it &mdash; then registering the sweep as a
+          committed battery that re-measures the range on every run.</dd>
+          <dt>pinned by</dt><dd>The measured range and the non-convergence are both on the page, regression checks
+          fail if a superseded range returns, and <span class="mono">test-mpr.js</span> re-derives the range from the page and the kernel on
+          every run. <b>Any prose range is a claim; sweep it or delete it.</b></dd>
+        </dl>
+      </div>
+      <div class="lg">
+        <h3>A prime written from memory was composite</h3>
+        <dl>
+          <dt>claimed</dt><dd>A modulus used for fingerprinting certificates, written into a kernel as a known prime.</dd>
+          <dt>wrong</dt><dd>It was <b>composite</b>. A composite modulus has no guaranteed inverses and no
+          Schwartz&ndash;Zippel bound, so the fingerprint would have gone on printing agreement while <b>silently ceasing to
+          be evidence</b>.</dd>
+          <dt>caught by</dt><dd>A check that primality-<i>tests</i> every modulus, on its first run.</dd>
+          <dt>pinned by</dt><dd>That check. <b>Test constants; do not name them.</b> A number written down looks like a
+          fact.</dd>
+        </dl>
+      </div>
+      <div class="lg">
+        <h3>A gate that repaired the very thing it was checking</h3>
+        <dl>
+          <dt>claimed</dt><dd>A freshness gate proving a generated artifact matched its source.</dd>
+          <dt>wrong</dt><dd>The gate imported its own builder, and the builder wrote the artifact on import &mdash; so
+          <b>running the gate silently fixed the staleness it existed to detect</b>, and the next run passed honestly.</dd>
+          <dt>caught by</dt><dd>Asking what input could make the check fail, and finding the answer was &ldquo;none&rdquo;.</dd>
+          <dt>pinned by</dt><dd>Import-guarding the builder, then mutation-testing the gate in both directions. This is
+          worse than a weak certificate: it <b>disables</b> a gate rather than weakening a claim.</dd>
+        </dl>
+      </div>
+      <div class="lg">
+        <h3>Counting what is green instead of what can go red</h3>
+        <dl>
+          <dt>claimed</dt><dd>Eight checks, all passing, on a conserved-quantity result.</dd>
+          <dt>wrong</dt><dd>Three of the eight were <b>algebraic tautologies</b> that would pass on white noise. One
+          check was doing the entire falsification job. A suite with one load-bearing check and four tautologies is
+          <b>indistinguishable at a glance</b> from a suite with five load-bearing checks &mdash; both print all-PASS.</dd>
+          <dt>caught by</dt><dd>Auditing each check with one question: <i>what input would make this fail?</i></dd>
+          <dt>pinned by</dt><dd>Batteries now report how many checks are <b>falsifiable</b> versus
+          consistency-only, and ship explicit falsifiers that must each turn their own target red.</dd>
+        </dl>
+      </div>
+      <div class="lg">
+        <h3>Claiming a result that was already inside the paper being reproduced</h3>
+        <dl>
+          <dt>claimed</dt><dd>That a pathwise conserved quantity in the common-noise model was a finding of ours &mdash;
+          characterized, certified, mutation-tested, and written into an outreach draft addressed to a co-author.</dd>
+          <dt>wrong</dt><dd>It <b>is that paper&rsquo;s own &sect;3.1 balance condition</b>. The numerics were right; the framing
+          was not, and it survived three sessions and several documents.</dd>
+          <dt>caught by</dt><dd>Finally reading the source paper &mdash; one fetch, at any point, would have ended it.</dd>
+          <dt>pinned by</dt><dd>A rule with teeth: <b>before writing &ldquo;we found X&rdquo; about a reproduced model, check
+          whether X is in the model.</b> The literature pass now runs before the first line of prose, and it has
+          killed ten candidate results so far.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="scope">
+    <h2>What this page does not claim</h2>
+    <div class="caveat">
+      <p><b>Cases One, Two and Five produced no wrong published number; Cases Three and Four
+        reached live pages.</b> Case One&rsquo;s mutations were mine, written to test the gate;
+        Case Two was unreachable in the regime that shipped; Case Three put a constant wrong from
+        the sixth decimal on a live page; Case Four put correct values under the wrong
+        method&rsquo;s name on a live page and in its repro pack for three days; Case Five&rsquo;s
+        five blind stages were live in a published, certified chain &mdash; and no wrong bound was
+        ever accepted there: the defect was observability, not soundness. Each section above says
+        so in its first line. If any other case had corrupted a result it would say so here, which
+        is the only reason this section is worth reading.</p>
+      <p><b>Six cases found is not a bound on defects present.</b> There is no claim that the
+        apparatus is now correct &mdash; only that it is now wrong in ways not yet found, that five
+        of these carry controls, and that the sixth is open precisely because its control did not
+        survive a later change.</p>
+      <p><b>Nothing here is a new theorem.</b> The mathematics is standard: the Banach fixed-point
+        argument in the van&nbsp;den&nbsp;Berg&ndash;Lessard radii-polynomial formulation, and
+        Krawczyk&ndash;Moore for the interval Newton step. The contribution is the engineering discipline
+        around it &mdash; and the honest failure record of that discipline, kept on this page.</p>
+      <p>The working repository is private, so the commit references behind Cases One to Three are
+        internal; Case Four&rsquo;s correction is public, commit <span class="mono">c22d531</span>
+        in the site&rsquo;s source repository. The figures above are measured. The library in Case
+        Two, <span class="mono">eqcert</span>, is MIT.
+        One further note, recorded because it is the same defect class: the first draft of the
+        <span class="mono">R9</span> control named a private ledger record id in a file that ships
+        publicly, and the export token scan caught it before it left the tree.</p>
+    </div>
+
+    <div class="next">
+      <a href="/research/mfg-lab/mfg-lab">Open the Laboratory &rarr;</a>
+      <a href="/research/ai-verify/ai-verify">Open AI-verify (Case One&rsquo;s surface) &rarr;</a>
+      <a href="/research/mfg-congest/mfg-congest">Run the congestion verifier &rarr;</a>
+      
+      <a href="/contact">Challenge a certificate &rarr;</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> makes numerical and mathematical claims checkable &mdash; enclose
+        or refuse. A certificate that cannot go red is fake, so the failures are public.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded here with their date and their correction,
+        never quietly fixed.</p>
+    </div>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/errata">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+    <p class="byline">Carlos&nbsp;Toledo &middot; <a href="/contact">contact</a> &middot; Brazil, 2026</p>
+  </div>
+</footer>
+
+
+</body>
+</html>

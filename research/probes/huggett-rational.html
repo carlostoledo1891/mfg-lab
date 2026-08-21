@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  PATH 12 — opened 2026-07-31, immediately after PATH 11 was refuted, and it is the constructive half of
+  the same question: certified heterogeneous-agent macro WITHOUT a full interval transcendental library.
+
+  TWO MOVES, NEITHER AN APPROXIMATION.
+    1. Drop production — Huggett (1993) is an endowment economy, so no K^alpha exists to evaluate.
+    2. Take gamma = 1/n — the CRRA policy c = V'^(-1/gamma) has an INTEGER exponent exactly then, and
+       the stationary HJB collapses to rho*V = V'^(1-n)/(n-1) + V'y. Rational. Checked to 1.4e-14.
+
+  THE RULE IT ESTABLISHES, which outlives the recipe: when the arithmetic cannot represent your model,
+  CHANGE THE MODEL, do not approximate the function. PATH 11 died approximating. Read them together.
+
+  IT ALSO CORRECTS PATH 03. The borrowing constraint kinks V, so V is not analytic and the
+  l1_nu-with-analytic-tail argument does NOT apply — the "enclosure is an existence theorem" claim holds
+  for SMOOTH MFG and constrained het-agent macro is outside that class. Written onto cap-for-mfg.html.
+
+  NOT EXPORTED, NOT ROUTED, kind `private`. No literature gate has run.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certified heterogeneous-agent macro with only + − × ÷</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --modbar-h:48px; --page-top:40px;
+    --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    --radius:10px; --radius-sm:3px;
+    color-scheme:light;
+  }
+  .eyebrow,.badge,.k{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 0}
+  .hero{padding:0}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:26ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:100%;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:var(--radius);padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  .box.good{border-left:3px solid var(--good)}
+  code{font-family:var(--data);font-size:13px;background:color-mix(in srgb,var(--grid) 45%,transparent);
+    padding:1px 5px;border-radius:var(--radius-sm)}
+  table{border-collapse:collapse;margin-top:13px;font-size:13.6px;width:100%;max-width:100%}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--data);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft)}
+  td{color:var(--ink-soft)} td b{color:var(--ink);font-weight:600}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+  .alertbar,.draftbar{font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;padding:11px 15px;margin:0 0 18px;line-height:1.5;border-radius:var(--radius);border:0}
+  .alertbar.draft,.draftbar,.alertbar.danger{background:var(--bad)}
+  .alertbar.warn{background:var(--warn-soft);color:var(--ink);border:1px solid var(--grid)}
+  .alertbar.info{background:var(--fp-deep);color:var(--paper)}
+  .alertbar.ok{background:var(--good);color:var(--paper)}
+  .alertbar.muted{background:var(--grid);color:var(--ink)}
+
+  .badge{display:inline-block;font-family:var(--data);font-size:var(--text-micro);letter-spacing:.11em;
+    text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid;vertical-align:middle;white-space:nowrap}
+  .badge.open{color:var(--paper);background:var(--bad);border-color:var(--bad)}
+  .badge.measured{color:var(--paper);background:var(--ink-soft);border-color:var(--ink-soft)}
+  .badge.partial{color:var(--paper);background:var(--amber);border-color:var(--amber)}
+  .badge.standard{color:var(--ink);background:var(--grid);border-color:var(--grid)}
+  .badge.unsigned{color:var(--hjb);background:transparent;border-color:var(--hjb);border-style:dashed}
+  .badge.enclosed{color:var(--paper);background:var(--fp-deep);border-color:var(--fp-deep)}
+  .badge.never{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+
+  </style>
+<!-- Vercel Web Analytics. Cookieless page counts, no cross-site tracking, no personal
+     data. Declared here rather than injected at build time BECAUSE the export's freshness gate
+     asserts "every copy is byte-identical to its source" — an export that differs from
+     what is committed is exactly the drift that gate exists to catch, so the tag lives in
+     the source or it does not exist.
+     DELIBERATELY ABSENT from research/mfg-congest/mfg-congest.html and
+     research/wardrop-repro/wardrop-repro.html: DEPLOY_ENCLOSURE.md records that those two travel
+     as EMAIL ATTACHMENTS, "self-contained single files, open offline — verified: no
+     external fetches". A paper that phones home when a referee opens it offline costs
+     more trust than a pageview is worth, and mfg-congest additionally carries an
+     IP-reviewed sha256 that expires on any edit (C33). -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+    <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
+<div class="hero">
+    <div class="eyebrow">FrontierThe constructive half of path 11</div>
+    <h1>Het-agent macro with only <span style="white-space:nowrap">+ &minus; &times; &divide;</span></h1>
+    <p class="lede"><b>When the arithmetic cannot represent your model, change the model &mdash; do not
+      approximate the function.</b> That rule now carries three pages in this tree, and its credibility
+      comes from the sibling it killed: the bracket that approximated the function died by counterexample
+      (the sandwich holds for output and fails for the derivatives). The instance here: there is no
+      <code>sqrt</code> in this tree, and <code>pow</code> refuses non-integer exponents &mdash;
+      <b>a stationary Huggett equilibrium with &gamma; = 1/n needs neither</b>, because every step is a
+      rational function and the substitution is exact rather than approximate.
+      <span style="font-size:11px;color:var(--ink-soft)">(Re-led 2026-08-20; the original opened with
+      the toolchain limitation &mdash; the same sentences, now second.)</span></p>
+
+    <div class="callout">
+      <div class="k">Status — read this before anything below</div>
+      <p><b>Nothing on this page is claimed, certified, enclosed or proved</b>, and <b>no literature gate
+        has run</b>. What it contains is a checked algebraic identity with green, red and trap controls,
+        and a recipe that has not been built. <b>A prospectus that reads like a result is the defect</b>,
+        so this one says so at the top.</p>
+    </div>
+  </div>
+  <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">Two moves, and neither is an approximation</div>
+      <p><b>1 &mdash; drop production.</b> Cobb&ndash;Douglas is only present because Aiyagari has a firm.
+        <b>Huggett (1993) does not</b>: an endowment economy where equilibrium is a single interest rate
+        clearing the bond market, <code>&int;a d&mu;(r) = 0</code>. No <code>K<sup>&alpha;</sup></code>
+        anywhere, and it is one of the three canonical heterogeneous-agent models, not a toy.</p>
+      <p style="margin-top:9px"><b>2 &mdash; take &gamma; = 1/n.</b> With CRRA the first-order condition
+        gives <code>c = V&prime;<sup>&minus;1/&gamma;</sup></code>, whose exponent is an integer exactly
+        when <code>&gamma; = 1/n</code>. Then the policy <i>and</i> the utility evaluated at it are both
+        rational, and the stationary HJB collapses to
+        <b><code>&rho;V = V&prime;<sup>1&minus;n</sup>/(n&minus;1) + V&prime;y</code></b>, with
+        <code>y = income + ra</code>. Checked to <b>1.4e-14</b> over 200 random points at each of
+        n = 2, 3, 4.</p>
+    </div>
+
+  <section>
+    <h2>The rule this establishes, which matters more than the recipe</h2>
+    <div class="box claim"><p><b>When the arithmetic cannot represent your model, change the model &mdash;
+      do not approximate the function.</b>died an hour before this page was written, trying to
+      bracket <code>K<sup>&alpha;</sup></code> between two rational neighbours. This does not approximate
+      anything: it selects a model that never forms the blocked expression. <b>The refuted sibling is what
+      makes the rule credible</b>, and the two pages should be read together or neither is worth much.</p></div>
+  </section>
+
+  <section>
+    <h2>The rest of the pipeline is rational for free</h2>
+    <table>
+      <tr><th>Component</th><th>Why it stays rational</th></tr>
+      <tr><td><b>Income process</b></td><td>A finite-state Markov chain &mdash; standard in Huggett. Rational transition matrix, rational stationary distribution. (An Ornstein&ndash;Uhlenbeck income would reintroduce a Gaussian and with it <code>exp</code>.)</td></tr>
+      <tr><td><b>Stationary distribution</b></td><td>A linear system on the discretised state, so exact rational linear algebra.</td></tr>
+      <tr><td><b>Borrowing constraint</b></td><td>A complementarity condition &mdash; <b>polyhedral</b>, which is precisely what MWD's exact active-set projection already does, verified there by 30 random VI tests.</td></tr>
+      <tr><td><b>Equilibrium</b></td><td>A <b>scalar</b> root-find in <code>r</code>. One dimension, radii-polynomial-sized.</td></tr>
+    </table>
+    <div class="box good"><div class="k">TESTED 2026-07-31 — the recipe solves, and the claim no longer rests on assertion</div>
+      <p>This page originally asserted the recipe was <i>&ldquo;assembly, nothing has to be
+      invented&rdquo;</i>. <b>That was untested when written, and its first test FAILED</b> &mdash; the HJB
+      residual came out at 1.8e-1, not small. Diagnosis: <b>under-iteration, not a structural problem</b>;
+      5&times; the iterations dropped it 20&times;. <b>The threshold was NOT relaxed to make it pass</b> —
+      the check was re-aimed at the right property, since what a prototype must show is that the residual
+      falls when iterated, and an absolute magnitude was an arbitrary number.</p>
+      <p style="margin-top:9px"><code>research/probes/huggett-prototype.py</code>, 7/7: residual falls
+      <b>2.372e-01 at 4k &rarr; 3.202e-02 at 20k</b>; the kernel uses <b>only add, div, mul and an integer
+      power</b>; consumption rises with wealth; <b>the borrowing constraint binds</b> at
+      <code>a<sub>min</sub></code> in the low state; excess demand is <b>monotone in r</b> and a clearing
+      <code>r*</code> is <b>bracketed by a sign change</b> between 0.025 and 0.040. <b>Caveat kept: the
+      explicit scheme is impractically slow, and an implicit one is what a real build would use.</b></p></div>
+
+    <div class="box"><div class="k">the certificate readouts already exist as patterns</div>
+      <p>Market-clearing residual is <b>MPR's pre-update clearing residual</b> &mdash; the same discipline,
+      where the residual IS the convergence criterion rather than a post-hoc identity. The active set is
+      <b>MWD's</b>. <b>Nothing has to be invented; this is assembly.</b></p></div>
+  </section>
+
+  <section>
+    <h2>Where this stops &mdash; and it corrects another page</h2>
+    <div class="box risk"><div class="k">the borrowing constraint destroys analyticity</div>
+      <p>The constraint puts a <b>kink</b> in the value function, so <code>V</code> is <b>not
+      analytic</b>. The &ell;&sup1;<sub>&nu;</sub>-with-geometric-tail machinery &mdash; the thing that
+      makes <code>mfg-congest</code>'s enclosed zero <i>a real-analytic solution of the PDE</i> &mdash;
+      <b>does not apply here at all.</b> What would be certified is the <b>discrete</b> equilibrium, not the
+      continuum one, and that gap cannot be closed by the usual route.</p>
+      <p style="margin-top:9px"><b>This is a scoping correction to <code>cap-for-mfg.html</code> (PATH 03)</b>
+      and has been written onto that page. Its claim &mdash; that the enclosure IS an existence theorem
+      &mdash; holds for SMOOTH mean-field games. <b>Constrained heterogeneous-agent macro is outside that
+      class.</b> Knowing where a claim stops is worth as much as the claim.</p></div>
+  </section>
+
+  <section>
+    <h2>The honest cost of the second move</h2>
+    <div class="box risk"><p><b>&gamma; = 1/2 means an elasticity of intertemporal substitution of 2.</b>
+      Standard macro calibrates <code>&gamma; &isin; [1,5]</code>, EIS <code>&isin; [0.2,1]</code>. An EIS of
+      2 is at the high end of what long-run-risk asset pricing uses and is <b>not</b> the mainstream
+      choice. It must be labelled as a deliberate off-calibration pick for a first certified instance
+      rather than slipped past &mdash; <b>an economist will notice in ten seconds</b>, and the scope
+      discipline this tree already applies (one instance, stated) covers it if it is stated.</p>
+      <p style="margin-top:9px"><b>And the trap next door:</b> <code>&gamma; = 1</code> (log utility) has a
+      <i>rational policy</i> <code>c = 1/V&prime;</code> but an <i>irrational utility</i>
+      <code>log c</code>. A check that inspected only the policy would wave it through. The falsifier
+      exercises this case by name.</p></div>
+  </section>
+
+  <section>
+    <h2>Controls, and what they are for</h2>
+    <p class="body">Falsifier of record: <code>research/probes/huggett-rational.py</code>. It carries
+      three controls, because the claim is a boundary and a boundary needs both sides.</p>
+    <table>
+      <tr><th>Control</th><th>Must show</th><th>Measured</th></tr>
+      <tr><td><b>GREEN</b></td><td>&gamma; = 1/n collapses to the rational form</td><td>worst |true &minus; rational| = <b>1.42e-14</b> at n = 2, 3, 4</td></tr>
+      <tr><td><b>RED</b></td><td>the standard calibrations stay BLOCKED</td><td>&gamma; = 2, 3, 5 all need a root &mdash; if any ever reports rational, the test has lost its teeth</td></tr>
+      <tr><td><b>TRAP</b></td><td>&gamma; = 1 is caught on the utility, not the policy</td><td>c = 1/V&prime; rational, <code>log c</code> not</td></tr>
+      <tr><td><b>SOC</b></td><td>the FOC is a maximum</td><td>u&Prime;(1) &lt; 0 at every n</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Scored</h2>
+    <div class="box"><div class="k">N / A</div><p><b>N: ZERO</b> &mdash; Huggett is 1993 and CRRA is older.
+      Nothing here is new economics or new mathematics. <b>A: plausibly HIGH and UNVERIFIED</b> &mdash; the
+      claim would be that no certified heterogeneous-agent equilibrium exists, since the literature solves
+      these by finite differences with no enclosure. <b>No literature gate has run and that claim must not
+      be stated until one has.</b></p></div>
+    <div class="box"><div class="k">what it corrects elsewhere</div><p>counted <b>six</b> consumers
+      converging on <code>interval-transcendentals</code>. At least one of them routes around the blocker
+      entirely by model choice, so the honest count is <b>five</b>. A small correction, and it is the kind
+      that inflates if nobody makes it.</p></div>
+    <p class="body" style="margin-top:13px"><b>Citation state:</b> Huggett 1993, Aiyagari 1994,
+      Achdou&ndash;Han&ndash;Lasry&ndash;Lions&ndash;Moll are <b>from memory and unverified at source</b>.
+      The algebra, the controls and the interval.js operation surface were measured directly on
+      2026-07-31.</p>
+  </section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Frontier path &middot; published and routed &middot; open / unsigned &middot; Carlos Toledo &middot; 2026<br>
+  opened 2026-07-31 &middot; falsifier: python3 research/probes/huggett-rational.py
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/errata">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

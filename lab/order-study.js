@@ -12,7 +12,7 @@
    sets. The cause was exactly this: eps was measured at a fixed iteration
    tolerance, the residual stalled near 1e-6 on every grid, and the refinement
    study measured ITERATION error while everyone read it as an order.
-   `mfg-lab/docs/FINDINGS.md` has the full account. This file is that lesson
+   `research/mfg-lab/docs/FINDINGS.md` has the full account. This file is that lesson
    made mechanical, so nobody has to learn it the way we did.
 
    THE TEST, AND WHY IT NEEDS NO FABRICATED CONSTANT

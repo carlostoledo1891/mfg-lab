@@ -21,7 +21,7 @@ Two schemes:
   conservation comes from the flux form.  This is what the note runs and
   what the differential validates.
 * ``solve_field_upwind`` — the Achdou adjoint-matched pair for the same
-  Hamiltonian (port of ``sin-mfg/tools/continuum_reference.js``): shared
+  Hamiltonian (port of ``research/stock-constraint/tools/continuum_reference.js``): shared
   frozen interface velocities, FP = HJBᵀ exactly (including at clamped
   interfaces), symmetric reflecting diffusion folded into one implicit
   tridiagonal per slice — strict M-matrix, so positivity and exact mass
@@ -351,7 +351,7 @@ def welfare_of(price, fld, disp, P: Params):
 
 
 # ---------------- the adjoint-matched (Achdou) scheme ----------------
-# Port of sin-mfg/tools/continuum_reference.js: FP = HJBᵀ exactly.
+# Port of research/stock-constraint/tools/continuum_reference.js: FP = HJBᵀ exactly.
 
 def interface_alpha(u, pt):
     al = [0.0] * (NX + 1)

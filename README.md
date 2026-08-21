@@ -21,7 +21,7 @@ mathematical claim labeled **[PROVED] / [STANDARD] / [SKETCHED] / [OPEN]**.
 | **[`mfg-cap/`](mfg-cap/)** | computer-assisted proofs for a stationary mean-field game — existence, local uniqueness, a validated ergodic constant, density positivity, and **certified multiplicity** where uniqueness theory is silent. |
 | **[`mfg-lab/`](mfg-lab/)** · **[`sin-mfg/`](sin-mfg/)** | the two interactive artifacts, below. |
 | **[`mfg-lab/python/`](mfg-lab/python/)** | the Python package, held to the shipped JS by cross-language differentials. |
-| **[`technical-reports/`](technical-reports/)** | the proof-carrying technical reports — each a single self-contained page that embeds its own standard-library verifier for download. **Papers, CC-BY 4.0 — not MIT**; the verifiers inside them are MIT. See [`technical-reports/LICENSE.md`](technical-reports/LICENSE.md) and [`LICENSING.md`](LICENSING.md). |
+| **[`technical-reports/`](technical-reports/)** | the proof-carrying technical reports — each a single self-contained page that embeds its own standard-library verifier for download. **Papers, CC-BY 4.0 — not MIT**; the verifiers inside them are MIT. See [`LICENSE.md`](LICENSE.md) and [`LICENSING.md`](LICENSING.md). |
 
 ### `eqcert` — the toolkit
 
@@ -58,18 +58,18 @@ positive there. Every inequality is evaluated in outward-rounded interval
 arithmetic, so it holds for exact real arithmetic and not merely for the
 floating-point computation that suggested it.
 
-The page [`technical-reports/mfg-cap.html`](technical-reports/mfg-cap.html) is **generated** from
+The page [`research/mfg-cap/mfg-cap.html`](research/mfg-cap/mfg-cap.html) is **generated** from
 the kernels and gated on byte-identity, so what the browser shows is what the
 battery proved. What the literature check killed — three of the four claims that
 would have been natural to make — is recorded in
-[`mfg-cap/docs/FINDINGS_LIT_CAP.md`](mfg-cap/docs/FINDINGS_LIT_CAP.md), along
+[`research/mfg-cap/docs/FINDINGS_LIT_CAP.md`](research/mfg-cap/docs/FINDINGS_LIT_CAP.md), along
 with a sign error it caught in our own algebra.
 
 ## The two interactive artifacts
 
-Open either file in a browser — no build, no server, no libraries. The deployed homepage (`/`) is [`index.html`](index.html), the landing page for the whole body of work; the routed lab is at `/mfg-lab`.
+Open either file in a browser — no build, no server, no libraries. The deployed homepage (`/`) is [`index.html`](index.html), the landing page for the whole body of work; the routed lab is at `/research/mfg-lab/mfg-lab`.
 
-**[`mfg-lab/index.html`](mfg-lab/index.html)** — one page, eight live
+**[`research/mfg-lab/mfg-lab.html`](research/mfg-lab/mfg-lab.html)** — one page, eight live
 experiments, organised as an argument rather than a menu. Every section has its
 own address, so a result can be linked directly:
 
@@ -107,12 +107,12 @@ The eight experiments:
    also **proved**, not only certified: exact rational arithmetic for the
    strictly monotone scenario, a verified interval enclosure for the
    nonlinear one, and a refusal to certify the degenerate one
-   (`mfg-lab/tests/test-wardrop-interval.js`).
+   (`research/mfg-lab/tests/test-wardrop-interval.js`).
 8. The water value on a scenario tree — price formation with a stock
    constraint, solved exactly and certified by LP duality: zero duality gap,
    then the martingale identity read off the certified dual over interior
    nodes only. The kernel is embedded verbatim in this page and in
-   [`sin-mfg/water-value.html`](sin-mfg/water-value.html) — one kernel, two
+   [`research/stock-constraint/water-value.html`](research/stock-constraint/water-value.html) — one kernel, two
    artifacts, and the block between the `BEGIN VERBATIM` / `END VERBATIM`
    markers is identical in both, which you can diff. The standalone solver
    file and the battery that holds the two copies byte-identical are withheld
@@ -122,7 +122,7 @@ The eight experiments:
 The Certificates section states the standard, solver-structure matching, and
 lineage — every claim checkable against the code in the same file.
 
-**[`technical-reports/stock-constraint.html`](technical-reports/stock-constraint.html)** — a living research note:
+**[`research/stock-constraint/stock-constraint.html`](research/stock-constraint/stock-constraint.html)** — a living research note:
 the Brazilian interconnected system (SIN) as a mean-field game with an
 administered price band (the ANEEL PLD floor/cap as a first-class object), a
 storage crowd coupled to Hotelling hydro stock, formulated as a monotone
@@ -141,16 +141,16 @@ certificate.
 | battery | target |
 |---|---|
 | `core/interval/tests/test-eqcert.js` | the toolkit: interval arithmetic against exact rationals, the contraction operators, and the falsifier discipline |
-| `mfg-cap/tests/test-cap.js` | the computer-assisted proof: three independent witnesses for the solver, the validated enclosures, and six falsifiers each turning its own target red |
-| `mfg-cap/tests/test-artifact.js` | the page is generated, fresh, byte-identical to the kernels and numerically identical to them |
-| `mfg-lab/tests/smoke.js` | whole-artifact Proxy-DOM smoke (52 checks incl. routing, prose + design regressions) |
-| `mfg-lab/tests/test-wardrop.js` | Wardrop kernel (21 assertions, incl. Table I comparison and the projected-gradient duel) |
-| `mfg-lab/tests/test-wardrop-diff.js` | shipped kernel ≡ battery kernel differential |
-| `mfg-lab/tests/test-wardrop-interval.js` | the equilibrium **proved**: exact rational (S2), Krawczyk enclosure (S3), required refusal (S1); 15 checks + 5 falsifiers |
-| `mfg-lab/tests/test-transpose.js` | FP = HJBᵀ certified for the lab's continuum kernel |
-| `mfg-lab/tests/test-invariant.js` | GGR's §3.1 balance condition carried pathwise by the scheme (their relation, our certificate), ray unique within the linear ansatz, knife-edge under loading deformation; beyond-LQ first integrals obstructed (Lie-closure rank certificate) |
-| `sin-mfg/tests/test-sin.js` | SIN-MFG kernel battery (43 checks; two-layer: math + display path) |
-| `sin-mfg/tests/test-transpose-sin.js` | the Achdou adjoint-matched pair for the SIN Hamiltonian, `FP = HJBᵀ` exact |
+| `research/mfg-cap/tests/test-cap.js` | the computer-assisted proof: three independent witnesses for the solver, the validated enclosures, and six falsifiers each turning its own target red |
+| `research/mfg-cap/tests/test-artifact.js` | the page is generated, fresh, byte-identical to the kernels and numerically identical to them |
+| `research/mfg-lab/tests/smoke.js` | whole-artifact Proxy-DOM smoke (52 checks incl. routing, prose + design regressions) |
+| `research/mfg-lab/tests/test-wardrop.js` | Wardrop kernel (21 assertions, incl. Table I comparison and the projected-gradient duel) |
+| `research/mfg-lab/tests/test-wardrop-diff.js` | shipped kernel ≡ battery kernel differential |
+| `research/mfg-lab/tests/test-wardrop-interval.js` | the equilibrium **proved**: exact rational (S2), Krawczyk enclosure (S3), required refusal (S1); 15 checks + 5 falsifiers |
+| `research/mfg-lab/tests/test-transpose.js` | FP = HJBᵀ certified for the lab's continuum kernel |
+| `research/mfg-lab/tests/test-invariant.js` | GGR's §3.1 balance condition carried pathwise by the scheme (their relation, our certificate), ray unique within the linear ansatz, knife-edge under loading deformation; beyond-LQ first integrals obstructed (Lie-closure rank certificate) |
+| `research/stock-constraint/tests/test-sin.js` | SIN-MFG kernel battery (43 checks; two-layer: math + display path) |
+| `research/stock-constraint/tests/test-transpose-sin.js` | the Achdou adjoint-matched pair for the SIN Hamiltonian, `FP = HJBᵀ` exact |
 
 ### What is not here
 
@@ -165,8 +165,8 @@ withheld.** The water-value theorems, their proofs and the full certificate
 conditions — primal feasibility, the Hotelling trichotomy, the jump and wedge
 signs, complementary slackness, the zero duality gap, and the measured results
 they certify — are stated in
-[`sin-mfg/docs/SIN_MFG_Model_Spec_v0.3.md`](sin-mfg/docs/SIN_MFG_Model_Spec_v0.3.md)
-and [`sin-mfg/docs/FINDINGS_SIN.md`](sin-mfg/docs/FINDINGS_SIN.md), which ship in
+[`research/stock-constraint/docs/SIN_MFG_Model_Spec_v0.3.md`](research/stock-constraint/docs/SIN_MFG_Model_Spec_v0.3.md)
+and [`research/stock-constraint/docs/FINDINGS_SIN.md`](research/stock-constraint/docs/FINDINGS_SIN.md), which ship in
 full. What does not travel is the certified implementation of the solve. Note
 what that does and does not mean: the scenario-tree kernel itself **does** ship,
 embedded verbatim in both artifacts above, so the withheld file is a file and not
@@ -183,33 +183,33 @@ batteries (real Chromium; run `make venv` first).
 JS by a cross-language differential run at test time with sha256 provenance:
 
 - **Wardrop/HRF** (`mfglab.wardrop`): integrate → active-set Newton polish →
-  certificates; agreement with `mfg-lab/index.html` to < 1e-9.
+  certificates; agreement with `research/mfg-lab/mfg-lab.html` to < 1e-9.
 - **SIN-MFG continuum** (`mfglab.continuum`): the HJB/FP field solve, band
   clearing, hydro dispatch, Picard driver and DP audit, ported
-  statement-for-statement; agreement with `technical-reports/stock-constraint.html` at ~1e-16 on the
+  statement-for-statement; agreement with `research/stock-constraint/stock-constraint.html` at ~1e-16 on the
   equilibrium price path (same iteration count, same certificates). Also
   ships the Achdou adjoint-matched scheme (`solve_field_upwind`,
   FP = HJBᵀ exact — see
-  [`sin-mfg/tools/continuum_reference.js`](sin-mfg/tools/continuum_reference.js))
+  [`research/stock-constraint/tools/continuum_reference.js`](research/stock-constraint/tools/continuum_reference.js))
   running to its own certified equilibrium.
 
 ## Open problems
 
 The genuinely open mathematics is stated at collaborator precision —
 statement, hypotheses, known results, exact gap, candidate routes — in
-[`sin-mfg/docs/OPEN_PROBLEMS.md`](sin-mfg/docs/OPEN_PROBLEMS.md). These are
+[`research/stock-constraint/docs/OPEN_PROBLEMS.md`](research/stock-constraint/docs/OPEN_PROBLEMS.md). These are
 offered as questions; nothing there is presented as nearly-done.
 
 ## Documents
 
-- [`sin-mfg/docs/SIN_MFG_Model_Spec_v0.3.md`](sin-mfg/docs/SIN_MFG_Model_Spec_v0.3.md)
+- [`research/stock-constraint/docs/SIN_MFG_Model_Spec_v0.3.md`](research/stock-constraint/docs/SIN_MFG_Model_Spec_v0.3.md)
   — the model (v0.1 and v0.2 are kept as superseded drafts, corrections
   visible on purpose).
-- [`sin-mfg/docs/FINDINGS_SIN.md`](sin-mfg/docs/FINDINGS_SIN.md),
-  [`mfg-lab/docs/FINDINGS.md`](mfg-lab/docs/FINDINGS.md),
-  [`mfg-lab/docs/FINDINGS_LIT.md`](mfg-lab/docs/FINDINGS_LIT.md) — the defect
+- [`research/stock-constraint/docs/FINDINGS_SIN.md`](research/stock-constraint/docs/FINDINGS_SIN.md),
+  [`research/mfg-lab/docs/FINDINGS.md`](research/mfg-lab/docs/FINDINGS.md),
+  [`research/mfg-lab/docs/FINDINGS_LIT.md`](research/mfg-lab/docs/FINDINGS_LIT.md) — the defect
   and findings logs: every retraction, every measurement that hurt, kept.
-- [`sin-mfg/docs/pld-data-run.md`](sin-mfg/docs/pld-data-run.md) — recipe for
+- [`research/stock-constraint/docs/pld-data-run.md`](research/stock-constraint/docs/pld-data-run.md) — recipe for
   the hourly-PLD empirical check (public CCEE data; raw CSVs are
   re-downloadable and not redistributed here; the result is exploratory and
   carries an administered-price caveat, stated wherever it appears).
@@ -223,7 +223,7 @@ offered as questions; nothing there is presented as nearly-done.
 ## Citation & license
 
 MIT for the code (see [`LICENSE`](LICENSE)), CC-BY 4.0 for the papers under
-[`technical-reports/`](technical-reports/) (see [`technical-reports/LICENSE.md`](technical-reports/LICENSE.md))
+[`technical-reports/`](technical-reports/) (see [`LICENSE.md`](LICENSE.md))
 — full map in [`LICENSING.md`](LICENSING.md). The verifier each paper carries is
 MIT, not CC-BY, and says so inside the file. If you use this software or its
 results, please cite it — see `CITATION.cff`.
