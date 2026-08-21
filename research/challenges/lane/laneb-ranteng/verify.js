@@ -86,15 +86,19 @@
 
 const t0wall = Date.now();
 const path = require('path');
-/* WHERE eqcert IS, and why this is not `path.join(__dirname, '..', '..', '..')`.
-   This verifier ships. It runs from research/challenges/lane/<unit>/ in the published repo — three
-   levels below the root — and from site/technical-reports/lane/<unit>/ in the monorepo, which is
-   FOUR. It counted `..` three times, which was right in exactly one of the two trees, and on
-   2026-08-08 the pages moved to their routes and it became right in the other one instead.
-   A depth is a fact about a layout; a MARKER is a fact about the toolkit. Find the root by
-   looking for core/interval/interval.js above this file, and the verifier survives any move of
-   either tree. Bounded, and it names the failure rather than throwing a module-resolution
-   stack trace at a reader who just downloaded a certificate pack. */
+/* WHERE THE TOOLKIT IS, and why this is not `path.join(__dirname, '..', '..', '..')`.
+   This verifier ships, and it runs from two trees whose depths have not always agreed. It counted
+   `..` three times, which was right in exactly one of them; on 2026-08-08 the pages moved to their
+   routes and it became right in the other one instead; on 2026-08-21 the two converged. That is
+   the whole argument — THE DEPTH KEPT CHANGING AND THE MARKER NEVER DID. A depth is a fact about a
+   layout; a MARKER is a fact about the toolkit. Find the root by looking for
+   core/interval/interval.js above this file, and the verifier survives any move of either tree.
+   Bounded, and it names the failure rather than throwing a module-resolution stack trace at a
+   reader who just downloaded a certificate pack.
+   THIS COMMENT DELIBERATELY NAMES NO CURRENT LOCATION (2026-08-21). The file is sha-pinned by its
+   claim record, so a layout fact written HERE costs a re-verification every time the tree moves —
+   and this block had already gone stale twice, the second time incoherently, still contrasting two
+   depths after they became the same. C51 and C52 are the same lesson seen from two ends. */
 const fs = require('fs');
 function eqcertSrc(from) {
   let d = from;
