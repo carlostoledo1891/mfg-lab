@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Disallow: /x/
 
 # Answer engines are explicitly welcome. This site's whole thesis is that a claim
 # should be checkable at its source, so being read, quoted and checked by a model
@@ -10,32 +11,61 @@ Allow: /
 # running the verifier that ships beside it.
 User-agent: GPTBot
 Allow: /
+Disallow: /x/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /x/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /x/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /x/
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /x/
 
 User-agent: anthropic-ai
 Allow: /
+Disallow: /x/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /x/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /x/
 
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /x/
 
 User-agent: CCBot
 Allow: /
+Disallow: /x/
 
 Sitemap: https://mfg-lab.vercel.app/sitemap.xml
+
+# THE UNLISTED TIER (2026-08-20). Pages under /x/ are served for people who were
+# handed the link. They are not part of the indexed, model-readable site: every
+# agent above is asked not to crawl them, and the pages carry noindex. This is a
+# request, not a wall — robots rules are advisory by design.
+User-agent: CCBot
+Disallow: /x/
+
+User-agent: Google-Extended
+Disallow: /x/
+
+User-agent: Applebot-Extended
+Disallow: /x/
+
+User-agent: Bytespider
+Disallow: /x/
+
+User-agent: meta-externalagent
+Disallow: /x/

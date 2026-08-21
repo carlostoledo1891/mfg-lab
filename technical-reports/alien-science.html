@@ -101,6 +101,7 @@ p.body.tight{margin-top:12px}
 .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
 .box p{font-size:13.5px;line-height:1.65;color:var(--ink-soft)}
 .box p b{color:var(--ink);font-weight:600}
+.box p+p{margin-top:11px}
 .box.claim{border-left:3px solid var(--fp-deep)}
 .box.risk{border-left:3px solid var(--hjb)}
 .box.good{border-left:3px solid var(--good)}
@@ -272,17 +273,25 @@ ol.steps li{margin-bottom:10px} ol.steps b{color:var(--ink)}
   <div class="hero">
     <div class="eyebrow">Anthropic AARs &middot; capability novelty, not math novelty</div>
     <h1>Alien science needs a disposition, not a sermon</h1>
-    <p class="lede">Anthropic&rsquo;s Automated Alignment Researchers closed almost the entire
+    <p class="lede">A capability score and a machine-checked disposition can disagree about the
+      same artifact, and the disagreement is the object this report is built around. Here it is,
+      in one pair of rows: an idea reported at <b>PGR 0.78</b> whose clean algebraic fragment is
+      <span class="badge ok">CERTIFIED</span> at exact Bayes residual 0, and a channel mutant we planted in it &mdash; carrying the clean row's reported score, because nobody scored the mutant; same checker, opposite verdict &mdash; is <span class="badge bad">REFUSED</span> because that residual is no longer 0. Both verdicts
+      re-run in this browser with <b>no API key, no GPU and no spend</b>, and the shipped sample pack behind them holds <b>10</b> clean/mutant pairs with <b>mutant_certified&nbsp;=&nbsp;0</b> &mdash; as does the live harvested pack, 17 pairs, checked by the same battery.</p>
+    <p class="lede">The score in those rows is Anthropic&rsquo;s and stays theirs &mdash;
+      <b>not remeasured here</b>. Their Automated Alignment Researchers closed almost the entire
       weak-to-strong performance gap &mdash; <b>PGR 0.97 vs a human 0.23</b> at about
       <b>$22 per AAR-hour</b> &mdash; and named the binding constraint themselves:
       <b>evaluation becomes more critical than idea generation.</b>
-      They also named the ceiling: <b>reward hacking</b>, and <b>alien science</b>.</p>
+      They also named the ceiling: <b>reward hacking</b>, and <b>alien science</b>.
+      Remeasuring any of that means re-running 9&times; Opus&nbsp;4.6 &times; 5 days of chat
+      hill-climb. That spend was priced and declined, and what ships is the half a stranger can
+      re-run for nothing.</p>
 
     <div class="callout">
       <div class="k">Read before the pitch</div>
       <p>Interactive labs on this page are self-contained &mdash; no API key, no GPU.
-        Figures 0.97 / 0.23 / $22 / 0.94 / 0.47 remain <b>as reported by Anthropic</b>
-        (not remeasured here). <b>Full ~18k USD re-hill-climb refused.</b>
+        Figures 0.97 / 0.23 / 0.78 / $22 / 0.94 / 0.47 remain <b>as reported by Anthropic</b> (not remeasured here). <b>Full ~18k USD re-hill-climb refused.</b>
         Two algebraic fragments are <span class="badge ok">CERTIFIED</span>
         (swap-consistency; EM-channel Bayes). The attention object is
         <b>disagree</b>: reported EM PGR 0.78 × a planted channel mutant
@@ -290,6 +299,7 @@ ol.steps li{margin-bottom:10px} ol.steps b{color:var(--ink)}
         (see Prior art). We do not claim certificates dissolve alien science in general.</p>
     </div>
     <nav class="jump" aria-label="Try the instruments">
+      <a href="#disagree-summary">The disagreement</a>
       <a href="#try-now">Paste JSONL · dispose offline</a>
       <a href="#labs">Slider labs</a>
       <a href="#volume">Volume / API</a>
@@ -312,6 +322,11 @@ ol.steps li{margin-bottom:10px} ol.steps b{color:var(--ink)}
           <b>public on GitHub</b>
           (<a href="https://github.com/safety-research/automated-w2s-research">safety-research/automated-w2s-research</a>;
           no LICENSE file present as of 2026-07-31 &mdash; do not assume MIT reuse).</p>
+        <p class="tight"><b>That warning is a retraction.</b> An earlier draft of this report
+          asserted the upstream sandbox was MIT. Checking it at source returned
+          <code>license: null</code> from the GitHub API and a 404 for every <code>LICENSE</code>
+          path, so on 2026-07-31 the assertion was pulled rather than softened, here and in every
+          working note that carried it.</p>
       </div>
       <div class="box claim">
         <div class="k">their named ceiling</div>
@@ -655,6 +670,11 @@ ol.steps li{margin-bottom:10px} ol.steps b{color:var(--ink)}
         <p><b>REFUSED:</b> re-running 9&times; Opus&nbsp;4.6 &times; 5 days of chat hill-climb
           (~$22 / AAR-hour; ~18k USD total as reported). This path couples lanes and certifies
           formal fragments. Remeasured PGR requires Mode&nbsp;B/C provenance and a deliberate spend.</p>
+        <p class="tight"><b>Recorded as a decision, not a shortfall.</b> The figure was known
+          before any of this was built. The spend buys a number this report does not need &mdash;
+          it takes their PGR as reported and never re-attributes it &mdash; while the disposition
+          half costs nothing and is the half a reader can check. Naming the price we declined is
+          part of the record; a refusal with no number attached is not a refusal.</p>
       </div>
     </div>
   </section>

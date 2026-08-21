@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  PATH 4 of 5 — the ledger as an adversarial-mathematics corpus. Opened 2026-07-31.
+
+  Honest constraint stated on the page: 4 claims and 50 attacks is a SEED, not a corpus, and the ~$42 for
+  12 usable probe rows says collection is the expensive part.
+
+  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every file in _frontier/: it may state what it
+  INTENDS to certify and may never state that anything IS certified. "No literature gate has run."
+
+  CORRECTED 2026-08-20 — the sentence immediately above is kept in place, quoted, and FALSE (the quotation marks are this note's; nothing else about it was touched). The literature
+  gate RAN 2026-08-04 and returned OCCUPIED; the five occupiers are named on the page's own face and
+  the record is FINDINGS_LIT_ADVERSARIAL_CORPUS.md. The status callout carried the same false line and
+  is corrected the same way, in the open. Replaced, not deleted: this page was understating work it had
+  already done, which is the no-overclaim rule failing in the direction that gets no attention.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The ledger as an adversarial-mathematics corpus</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px; --nav-h:58px;
+    color-scheme:light;
+  }
+  .eyebrow,.badge,.k,.sitenav a,.sitemap a{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:14px;
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+  .hero{padding:44px 0 0}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:26ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:100%;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:19px;font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:9px;padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  .box.good{border-left:3px solid var(--good)}
+  code{font-family:var(--data);font-size:13px;background:color-mix(in srgb,var(--grid) 45%,transparent);
+    padding:1px 5px;border-radius:4px}
+  table{border-collapse:collapse;margin-top:13px;font-size:13.6px;width:100%;max-width:100%}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--data);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft)}
+  td{color:var(--ink-soft)} td b{color:var(--ink);font-weight:600}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+
+  /* ── SHARED SITE CHROME — copied from the conforming sibling in this directory,
+       site/technical-reports/cap-for-mfg.html (seed: research/_engine/paper.html). Added
+       2026-08-07, TREE_AUDIT plan item C: this page was born before "pages are born with
+       chrome" and carried neither topnav nor footer stack. Nothing else on the page moved. ── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Frontier path 04 of 05 &middot; The AI asset</div>
+    <h1>An adversarial-mathematics corpus</h1>
+    <p class="lede"><s>Nobody has a labelled corpus of <b>plausible-but-wrong mathematical claims with
+adjudicated verdicts</b>.</s> <b>STRUCK 2026-08-04 &mdash; that sentence was false and it was the headline.</b>
+The literature gate ran and returned <b>OCCUPIED</b>: ProcessBench (arXiv:2412.06559, ACL&nbsp;2025),
+PRMBench (arXiv:2501.03124, ACL&nbsp;2025), FindTheFlaws (arXiv:2503.22989), BrokenMath
+(arXiv:2510.04721) and REFUTE (arXiv:2502.19414) all build this corpus, and BrokenMath perturbs true
+statements into demonstrably false ones and scores whether the model detects it &mdash; this page's thesis in
+someone else's words, published October 2025. It is struck rather than deleted because a page that quietly
+loses its claim teaches nobody anything.
+<b>What survives is narrower and is stated as such:</b> every located occupier establishes ground truth by
+human annotation, an LLM judge, or a proof assistant on a formalised statement. This tree instead holds items
+at the level of a <i>research certificate</i>, adjudicated by an independent machine verifier that is itself
+demonstrated to go red &mdash; and holds far too few of them to support any inferential claim.
+See <code>FINDINGS_LIT_ADVERSARIAL_CORPUS.md</code>.</p>
+
+    <div class="callout">
+      <div class="k">Status — read this before anything below</div>
+      <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> No kernel, no certificate,
+        no falsifier and no ledger record. <b>The literature gate RAN 2026-08-04 and returned OCCUPIED</b>
+        (this callout said none had run; replaced, not deleted &mdash; the page was understating work it had
+        already done, and the five occupiers it returned are already named in the lede above). See
+        <code>FINDINGS_LIT_ADVERSARIAL_CORPUS.md</code>. It names a direction and
+        what would have to be true. <b>A prospectus that reads like a result is the defect</b>, so this one
+        says so at the top and is not published.</p>
+    </div>
+  </div>
+  <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">What is in the ledger already</div>
+      <p>4 claims &middot; 4 runs &middot; <b>50 attacks</b> &middot; 2 certs, with adjudicated verdicts,
+        mutation records that prove <b>both directions</b> (patched must fail AND clean must pass), a claim
+        <b>refuted and published as a result</b>, and a rung system that refuses to promote without a named
+        signature. The FrontierMath reading sharpened why this matters: <b>their format is claim-plus-verifier,
+        which is this tree's thesis in someone else's words.</b></p>
+    </div>
+
+  <section>
+    <h2>The eval nobody sells</h2>
+    <p class="body">Benchmarks ask whether a model can produce a right answer. <b>The unasked question is
+      whether a model can tell a real certificate from a convincing fake</b> &mdash; which is the actual
+      failure mode in AI-assisted mathematics, and the one this tree has documented on itself repeatedly:
+      a probe collector that truncated 91 of 100 rows and called the result &ldquo;returned&rdquo;; a
+      withholding gate that defaulted to PERMIT; a self-map mistaken for a contraction. <b>Every one of
+      those is a plausible-but-wrong artefact with a known ground truth.</b></p>
+    <div class="box claim"><p>A benchmark of <code>n</code> claim/certificate pairs, each labelled sound or
+      unsound with the defect named, on which a model's discrimination rate is measured &mdash; and which is
+      <b>re-runnable by a stranger with no dependencies</b>, unlike every incumbent eval.</p></div>
+  </section>
+
+  <section>
+    <h2>The honest constraint, stated first because it decides the path</h2>
+    <div class="box risk"><p><b>4 claims and 50 attacks is a seed, not a corpus.</b> Nothing inferential is
+      supportable at that size and it must not be described as a benchmark until it is one. The related
+      evidence is discouraging on cost: <b>the ai-verify probe run spent ~$42 for 12 usable rows</b>, and the
+      harness bug that caused most of that loss is fixed but the run has not been repeated. <b>Collection is
+      the expensive part and repeating it is a spend decision, not a code decision.</b></p>
+      <p style="margin-top:9px">The cheap version, which is worth doing regardless: <b>the mutants already
+      exist.</b> Every <code>mutation.last_red</code> record is a semantically broken artefact with a proof
+      that it is broken. Harvesting what has already been generated costs nothing new.</p></div>
+  </section>
+
+  <section>
+    <h2>Scored</h2>
+    <div class="box"><div class="k">N / A</div><p><b>N: LOW</b> &mdash; benchmark construction is not new
+      mathematics. <b>A: HIGH but gated on volume.</b> Both unverified; and the incumbents (evaluation
+      harness vendors, the FrontierMath programme itself) are a live occupancy question.</p></div>
+  </section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Frontier path &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record &middot; opened 2026-07-31
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

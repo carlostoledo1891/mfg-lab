@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Five silent stages: perturbation metrics of step-importance, run against our own certificate chain</title>
+<title>Five silent stages: a deterministic control for chain-of-thought perturbation metrics</title>
 <meta name="robots" content="index,follow">
-<meta name="description" content="A preregistered perturbation run — truncation and single-stage corruption, reconstructed from the chain-of-thought faithfulness literature — aimed at this site's own certified congestion-cap chain. The preregistration's headline prediction was falsified: five of fourteen stages were silent to the verdict tuple. Hardened the same day; the errata log holds the case.">
+<meta name="description" content="A preregistered perturbation run — truncation and single-stage corruption, reconstructed from the chain-of-thought faithfulness literature — aimed at a deterministic proof checker where every silence has a traceable cause: this site's own certified congestion-cap chain. These perturbations measure causal step-importance, not faithfulness. The headline prediction was falsified: five of fourteen stages were silent to the verdict tuple — slack, dead weight, downstream repair. The errata log holds the cases.">
 <meta name="author" content="Carlos Toledo">
 <link rel="canonical" href="https://www.carlostoledo.co/technical-reports/faithfulness-ceiling">
 <meta property="og:site_name" content="Carlos Toledo">
 <meta property="og:url" content="https://www.carlostoledo.co/technical-reports/faithfulness-ceiling">
-<meta property="og:title" content="Five silent stages: perturbation metrics aimed at our own certificate chain">
-<meta property="og:description" content="The preregistered prediction was 14/14 flips. The run measured 9/14 — five stages of a certified chain invisible to its own verdict, found by our own instrument, hardened the same day.">
+<meta property="og:title" content="Five silent stages: a deterministic control for chain-of-thought perturbation metrics">
+<meta property="og:description" content="The preregistered prediction was 14/14 flips. The run measured 9/14 — five stages of a certified chain invisible to its own verdict, each traced to slack, dead weight, or downstream repair. The metrics measure causal step-importance — and a system whose whole reasoning is on disk reproduces the silence signature.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://www.carlostoledo.co/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -20,7 +20,9 @@
 <!-- Built 2026-08-05; P7 hostile read applied same day (12 defects, 11 risks — all in the
      telling, none in the measurement; fixed in this file and recorded in the errata log).
      Every number on this page traces to golden-run-2026-08-05.json / run-2026-08-05.log, to
-     the certificate record the run pins, or to a body-level read recorded in src/PROTOCOL.md.
+     the certificate record the run pins, or to a body-level read recorded in src/PROTOCOL.md;
+     the addenda's re-measures trace to golden-run-2026-08-05-p2.json, golden-run-2026-08-06.json
+     and golden-run-2026-08-09.json (comment extended 2026-08-20 when the third note was added).
      FINDINGS_LIT.md §7 (forbidden sentences) binds this page in full. -->
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -135,23 +137,41 @@ pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(-
 <div class="wrap">
 
   <div class="pagestate"><b>Research note &mdash; not peer-reviewed.</b> A preregistered measurement
-    whose headline is a defect report about this shop&rsquo;s own certified artifact. Nothing on this
-    page is proved or verified by the run it reports; where <code>VERIFIED</code> or
+    with two headlines: a <b>control</b> for a chain-of-thought inference &mdash; a deterministic
+    system in which every silence has a traceable cause reproduces the silence signature that, on
+    models, is treated as evidence the reasoning was not load-bearing &mdash; and a <b>defect
+    report</b> about this shop&rsquo;s own certified artifact.
+    Nothing on this page is proved or verified by the run it reports; where <code>VERIFIED</code> or
     <code>PROVED</code> appears below, it is a checker&rsquo;s output string or a certificate
     record&rsquo;s verdict field, quoted as data. The blind spots reported here are recorded in
     the <a href="/defects">errata log</a> &mdash; found by this shop&rsquo;s own instrument, and
-    hardened the same day they were measured (addendum below).</div>
+    hardened the same day they were measured &mdash; a hardening that did not survive (both
+    addenda below).</div>
 
   <div class="eyebrow">faithfulness-ceiling &middot; preregistered perturbation run &middot; 2026-08-05</div>
-  <h1>We aimed two reconstructed perturbation families at our own certificate chain. Five of its fourteen stages are silent.</h1>
-  <p class="lede">The early-answering and adding-mistakes perturbations of Lanham et&nbsp;al.
+  <h1>We ran chain-of-thought perturbation metrics against a deterministic proof checker &mdash; a system whose whole reasoning is on disk. Five of its fourteen stages scored silent anyway.</h1>
+  <p class="lede"><b>What this page is a control for:</b> on a language model, a reasoning step
+    whose corruption leaves the final answer unchanged is treated as evidence the chain was not
+    doing the work. Here our reconstruction of the same two perturbation families runs against a
+    system where that inference can be checked: a deterministic proof checker, which has no
+    separate account of its reasoning to be post-hoc about &mdash; the computation <i>is</i> the
+    reasoning &mdash; and where the cause of every silence can be traced. <b>Five of its fourteen
+    stages are silent under corruption anyway</b>, each by a mechanism this page names per stage:
+    one output computed and printed but never read by the acceptance predicate, three perturbations
+    landing inside certified headroom, one corruption repaired by the chain&rsquo;s own downstream
+    refinement loop. <b>In a system like this one, silence under corruption cannot, by itself,
+    separate post-hoc reasoning from resilient computation &mdash; an existence proof about the
+    inference, not a measurement of any model.</b>
+    The general invalidation is not ours &mdash; Gur-Arieh, Marasovi&#263; &amp; Geva
+    (arXiv:2605.25052) score this metric family near chance as a faithfulness measure and rename
+    what it does track, <b>causal step-importance</b> &mdash; and our response variable is
+    observable: the checker&rsquo;s verdict tuple (exit code, verdict line, printed bound). What
+    this page adds is the mechanism, exhibited where every silence has a traceable cause.</p>
+  <p>The early-answering and adding-mistakes perturbations of Lanham et&nbsp;al.
     (arXiv:2307.13702) and Radhakrishnan et&nbsp;al. (arXiv:2307.11768) were <b>reconstructed from the
     papers&rsquo; text</b> &mdash; the supplementary repository ships prompts only, so there is no public
     protocol artifact to run &mdash; and applied to the certificate chain behind this shop&rsquo;s
-    certified congestion-cap claim. One renaming is load-bearing and comes first: per
-    Gur-Arieh, Marasovi&#263; &amp; Geva (arXiv:2605.25052), this metric family measures <b>causal
-    step-importance, not the faithfulness of anyone&rsquo;s reasoning</b> &mdash; and our response
-    variable is observable: the checker&rsquo;s verdict tuple (exit code, verdict line, printed bound).
+    certified congestion-cap claim.
     Every prediction was committed to a dated preregistration <b>before the harness existed</b>.
     Truncation landed at its pre-computed ceiling exactly &mdash; <b>a control, not a finding</b>.
     The corruption sweep is the result, and it <b>falsified the preregistration&rsquo;s headline
@@ -160,7 +180,9 @@ pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(-
     were both right; a third silent stage fell at a mechanism it had named without registering a
     site; two were genuinely unpredicted. As measured 2026-08-05, against the verifier the
     certificate then pinned, this chain <b>had five stages whose corruption its own verdict could
-    not see</b> &mdash; hardened the same day (addendum below).</p>
+    not see</b> &mdash; hardened the same day, the hardening lost a day later to an unrelated
+    commit, and the loss caught by this same instrument (both addenda below; the
+    <a href="/defects">errata log</a> carries the cases).</p>
 
   <div class="strip">
     <div class="cap">Measured &middot; <code>node test-faithfulness.js</code> &middot; exit 0 &middot; 185.4&nbsp;s &middot; 7/7 harness controls &middot; golden-run-2026-08-05.json</div>
@@ -217,6 +239,14 @@ pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(-
     ritual, so a verifier that moves out from under a published number goes red instead of quiet.
     The case is <a href="/defects">Case Six</a>.</div>
 
+  <div class="pagestate" style="margin-top:14px"><b>Third note, 2026-08-20.</b> The paragraph above
+    speaks as of its own date: the digests it names were the state on 2026-08-06. Since then the
+    harness reads the certificate record&rsquo;s pin at run time and the ritual runs that check;
+    the latest committed golden (<code>golden-run-2026-08-09.json</code>) matches the verifier on
+    disk (sha256 <code>7e97b7f2&hellip;</code>) and reproduces the same result &mdash; <b>9 of 14
+    tuple flips, the same five stages silent</b>. Restoring the hardening remains an open item,
+    stated here rather than implied away.</div>
+
   <h2>What was tested, and why the frame is narrow</h2>
   <p><b>Two perturbation families, rebuilt from the papers&rsquo; own text.</b> <i>Early answering</i>:
     cut the chain after each stage, demand the verdict, score the area between the same-answer curve
@@ -234,7 +264,7 @@ pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(-
   <p><b>The renaming is not a hedge; it is the finding of a paper we cite.</b> arXiv:2605.25052
     &mdash; read at body level, its PDF sha-pinned in the internal protocol record, discharging the
     literature gate&rsquo;s earlier do-not-cite listing &mdash; constructs tasks with ground-truth
-    faithfulness labels and scores this exact metric family at chance as a measure of model-CoT
+    faithfulness labels and scores this exact metric family near chance as a measure of model-CoT
     faithfulness (Adding Mistakes 0.51&nbsp;&plusmn;&nbsp;0.02 step-level / 0.51&nbsp;&plusmn;&nbsp;0.04
     CoT-level AUROC; Early Answering 0.51&nbsp;&plusmn;&nbsp;0.01 / 0.45&nbsp;&plusmn;&nbsp;0.03),
     diagnosing that the metrics <i>conflate importance with faithfulness</i>. On their home ground that is an invalidation. Here it is a renaming: what the
@@ -391,7 +421,8 @@ pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(-
     recorded by this harness. What the five measure is <b>observability</b>: at the recorded run,
     the verdict tuple was not a sufficient statistic for the chain&rsquo;s integrity, and an auditor
     watching only the checker&rsquo;s verdict would have missed corruption of five of the fourteen
-    stages &mdash; measured dead weight at one, measured parameter slack at four &mdash; in a chain
+    stages &mdash; measured dead weight at one, measured parameter slack at three, and one absorbed
+    by downstream repair &mdash; in a chain
     whose whole advertisement is that corruption anywhere flips it.</p>
 
   <h2>The baseline that makes it a measurement</h2>
@@ -434,7 +465,12 @@ pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(-
   <div class="caveat">
     <p><b>Nothing about any model&rsquo;s reasoning.</b> No model was perturbed, prompted or judged;
       no conclusion here bears on whether any chain-of-thought is faithful, and this run neither
-      confirms nor challenges the model-CoT results of the papers it reconstructs.</p>
+      confirms nor challenges the model-CoT results of the papers it reconstructs. The one
+      statement this page makes past its own chain is about the <i>inference</i>, not any model:
+      a system of this kind can produce the silence signature from slack, dead weight and
+      downstream repair alone, so silence alone cannot carry the post-hoc verdict &mdash; an
+      existence proof about the metric&rsquo;s reading, measured here on one deterministic
+      object.</p>
     <p><b>No shared scale with their Table&nbsp;1.</b> Their truncation-sensitivity figures
       (10.8&ndash;20.5) and corruption-sensitivity figures (9.6&ndash;33.6, across their three
       methods) are their object &mdash; a model&rsquo;s reasoning over 1200 QA questions &mdash; on a

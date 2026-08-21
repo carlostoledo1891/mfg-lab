@@ -162,18 +162,30 @@ ul.advances li{padding:13px 0;border-bottom:1px solid var(--grid)}
 
   <div class="eyebrow">Methods &middot; audit &middot; 14 August 2026</div>
   <h1>An independent audit of OpenAI&rsquo;s ten-proofs</h1>
-  <p class="lede">On 1 August 2026 OpenAI published <i>Ten Advances in Mathematics and
-    Theoretical Computer Science</i> &mdash; 253 pages, author &ldquo;OpenAI,&rdquo; no
-    human names &mdash; with a Lean repository holding its entire verification story.
-    This page reports <b>an independent audit</b> of that repository, unaffiliated with
-    OpenAI: the tree built at its pinned commit, every claimed declaration checked
-    through the kernel, the repository&rsquo;s own cross-kernel audit protocol executed,
-    all twelve challenge statements read against the manuscript&rsquo;s theorems, and the
-    week-one revision diffed against the original. The one-sentence result: <b>at challenge level, we
-    found no place where the machine-checked statement is weaker than the
-    paper&rsquo;s claim &mdash; every discrepancy we found there runs the other
-    way</b> &mdash; and the precise list of what that does and does not establish is
-    the last section of this page.</p>
+  <p class="lede">A reader who &ldquo;runs all the challenges&rdquo; in the Lean repository
+    behind OpenAI&rsquo;s <i>Ten Advances in Mathematics and Theoretical Computer Science</i>
+    has checked <b>13 of the 16 numbered main claims</b> &mdash; and <b>at challenge level, we
+    found no place where the machine-checked statement is weaker than the paper&rsquo;s claim;
+    every discrepancy we found there runs the other way</b>. The gap is in the artifact&rsquo;s
+    <i>verification surface</i>, not in its mathematics: the tree builds at its pinned commit,
+    all twelve declarations the manifest names depend on exactly
+    <code>[propext, Classical.choice, Quot.sound]</code>, and two of the three claims the
+    challenge set does not reach are machine-checked in the tree anyway &mdash; chapter 5&rsquo;s
+    headline circuit bound outright, chapter 1&rsquo;s second theorem in the half the tree
+    carries &mdash; merely outside the manifest. The third is chapter 3, where the
+    chapter&rsquo;s stated theorem and the pinned Lean statement are two different sentences.</p>
+
+  <p class="lede" style="margin-top:12px">The manuscript went up on 1 August 2026 &mdash; 253
+    pages, author &ldquo;OpenAI,&rdquo; no human names &mdash; with that repository holding its
+    entire verification story. This page reports <b>an independent audit</b> of the repository,
+    unaffiliated with OpenAI; a prior public build attempt is credited below &mdash; Curtis Pyke
+    (<a href="https://kingy.ai/news/openai-astra-ten-math-results-evidence/">kingy.ai</a>,
+    1 August), who built most of the tree within a day of release. What was done here: the tree built at its
+    pinned commit, every claimed declaration checked through the kernel, the repository&rsquo;s
+    own cross-kernel audit protocol executed, all twelve challenge statements read against the
+    manuscript&rsquo;s theorems, and the week-one revision diffed against the original. Kernel-clean
+    is not theorem-true, and the precise list of what that does and does not establish is the last
+    section of this page.</p>
 
   <section>
     <h2>The object, at pinned bytes</h2>
@@ -430,13 +442,20 @@ ul.advances li{padding:13px 0;border-bottom:1px solid var(--grid)}
         the manifest and the challenge set. A reader who &ldquo;runs all the
         challenges&rdquo; has checked <b>13 of the 16 numbered main claims</b>.</li>
     </ul>
-    <p>Chapter 3 deserves its own sentence, because it is the sharpest seam we found:
-      the chapter&rsquo;s stated Theorem 1.1 (&ldquo;the unit group
+  </section>
+
+  <section>
+    <h2>Chapter 3: a two-way seam, asserted by nothing but proximity</h2>
+    <p>The sharpest seam this audit found runs in both directions. The chapter&rsquo;s stated
+      Theorem 1.1 (&ldquo;the unit group
       L<sub>F&#8322;</sub>(1,2)<sup>&times;</sup> is not sofic&rdquo;) is <i>not</i>
       the pinned Lean statement, and the pinned Lean statement is <i>not</i> stated in
-      the paper. Neither object is wrong; their correspondence is asserted by nothing
-      but proximity. That is precisely the kind of gap a verification appendix would
-      close, and this manuscript has none.</p>
+      the paper. Neither object is wrong; <b>their correspondence is asserted by nothing
+      but proximity.</b> That is precisely the kind of gap a verification appendix would
+      close, and this manuscript has none. It is also why the coverage number above is a
+      statement about the verification surface and not about the mathematics: what a
+      challenge pins and what a chapter claims are separate objects, and only reading both
+      tells you whether they meet.</p>
   </section>
 
   <section>
@@ -521,6 +540,31 @@ ul.advances li{padding:13px 0;border-bottom:1px solid var(--grid)}
         absence</b>, and one prior publication
         found by anyone falsifies it. Corrections are wanted and are published,
         dated, in the <a href="/defects">errata</a>.</p>
+      <p><b>Note added 2026-08-16 &mdash; two of those four residues discharged.</b> The
+        paragraph above is what this page said on 14 August and is kept as written. Since
+        then, one scoped dispatch read the two that could be read. <b>Chapter 3&rsquo;s
+        Proposition 2.3 proof body: read whole in the 6 August PDF, and it matches the credit
+        it was given.</b> Its route is Kun&rsquo;s expander decomposition, a size-concentration
+        step, an almost-bijective component matching and a repair into Sym(Q<sub>n</sub>),
+        concluding through the chapter&rsquo;s own Theorem 2.2 &mdash; that is,
+        Kun&ndash;Thom&rsquo;s Theorem 1.1 with its Remark 1.2. The 1&rarr;6 August restructure
+        moved internal glue rather than what the proof leans on, so Kun and Thom&rsquo;s
+        4 August credit line, read verbatim at source, still describes the restructured proof.
+        The caveats stand: that credit predates the restructure by two days, and the added
+        &ldquo;infinite&rdquo; hypothesis reported above is unaffected. <b>Chapter 4&rsquo;s
+        normality flag: it now carries its citation.</b> The classical bridge is Blackadar,
+        <i>Operator Algebras</i> (Encyclopaedia of Mathematical Sciences 122, Springer 2006),
+        <b>III.2.2.1</b> with <b>III.2.2.2</b>, read at the author-hosted full text: a
+        *-isomorphism of von Neumann algebras is automatically normal. Sharper, for any referee
+        conversation: the Lean <code>normal</code> field is satisfied automatically by every
+        star-algebra equivalence &mdash; the projection order is algebraic and transports through
+        the equivalence and its inverse &mdash; so it imposes nothing beyond the equivalence
+        itself: redundant but harmless, with no hypothesis missing for the case chapter 4 uses.
+        The flag stays listed, because that equivalence was not machine-checked; it is a cited
+        definitional choice now rather than an open shrug. <b>Still standing exactly as written
+        above:</b> chapter 1&rsquo;s fixed-universe property-(T) idiom, and the one displayed
+        formula in chapter 2&rsquo;s source. Nothing in this note upgrades any Lean-side verdict
+        anywhere on this page.</p>
     </div>
   </section>
 

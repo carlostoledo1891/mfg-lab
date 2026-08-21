@@ -135,8 +135,11 @@ p b{color:var(--ink)}
     from the weakest prior evidence to the strongest, and rebuilt each check from scratch: our own
     arithmetic, no shared code, a planted bug in every verifier to prove the check can fail.
     <b>Five are CONFIRMED on the layer we checked; one is PARTIAL &mdash; its machine-checkable
-    fragment confirmed in full, its analytic core not audited.</b> Total runtime: under five
-    seconds.</p>
+    fragment confirmed in full, its analytic core not audited.</b> No mathematical error turned up;
+    what did is fine print &mdash; <b>two presentation defects in one published manuscript</b> (one in its constant, one in a face inequality of the same paper: a
+    rounded final decimal printed with an expansion&rsquo;s trailing ellipsis, and a face inequality
+    that naive interval evaluation cannot certify at the printed radii) &mdash; and only a certified
+    expansion of our own could adjudicate either. Total runtime: under five seconds.</p>
 
   <div class="tw"><table>
     <tr><th>Claim</th><th>Verdict</th><th>What existed before</th><th>What we ran</th><th>Time</th></tr>
@@ -166,7 +169,7 @@ p b{color:var(--ink)}
       <td>24 disjoint Krawczyk boxes + interval Hessian nondegeneracy</td><td class="mono">0.1 s</td></tr>
   </table></div>
 
-  <h2>What a confirmation is worth</h2>
+  <h2 id="worth">What a confirmation is worth</h2>
   <p>We went looking for errors in AI-claimed mathematics and found no mathematical error. On the
     layers we checked, five claims are confirmed outright and the sixth &mdash; Ran&ndash;Teng
     &mdash; is confirmed on every fragment a machine can check, with its analytic core left
@@ -197,6 +200,23 @@ p b{color:var(--ink)}
       proof, or Maxwell-refutation Theorem 1&rsquo;s asymptotic statement. And in every case our
       implementation and the author&rsquo;s share the manuscript&rsquo;s formulation: an error
       identical in both would pass.</p>
+  </div>
+
+  <div class="strip">
+    <div class="cap">What the lane is for</div>
+    <p style="font-family:var(--ui);font-size:17px;line-height:1.5;letter-spacing:-.012em;color:var(--ink);max-width:64ch;margin-bottom:0">&ldquo;A
+      refutation would have been a fact about one paper; a confirmation from an independent
+      implementation is a fact about the <i>infrastructure</i> — it says the checking layer can be
+      reconstructed by a stranger, cheaply, and that doing so is currently nobody&rsquo;s
+      job.&rdquo;</p>
+    <div class="note">The pivot sentence of <a href="#worth">What a confirmation is worth</a>,
+      above &mdash; the second sentence of that section's closing paragraph, not its last &mdash;
+      promoted here 2026-08-20 because it is what the six units add up to. It is left where it was
+      written, and the section still closes on what follows it: the discipline this shop holds
+      itself to elsewhere. <b>Scope, since a pull-quote travels further than the paragraph it came
+      from:</b> &ldquo;nobody&rsquo;s job&rdquo; is this lane&rsquo;s own experience across the six
+      claims it checked and the search recorded in their verdicts &mdash; a bounded observation, not
+      a survey of the field.</div>
   </div>
 
   <div class="foot">research/challenges &middot; six verifiers, each <code>node verify.js</code>,

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  DRAFT PROSPECTUS — tropical-relu. Owner ruling 2026-07-30: "Those pages will be drafts for now."
+
+  NOT EXPORTED, NOT ROUTED, kind `private` in PAGES.json. This is deliberate and it is the whole
+  design. Five pages built on the PAPER template, carrying the same chrome and the same implied
+  authority while carrying no evidence, would have been five more unbacked drafts — the exact
+  species archived as notes earlier the same day. A prospectus that looks like a report IS the
+  defect, whatever its prose says.
+
+  THE RULE: this file may state what it INTENDS to certify. It may never state that anything IS
+  certified, enclosed, proved or verified. The day this earns a certificate it stops being a
+  prospectus and becomes a report at /technical-reports/<slug>.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[REOPENED as an artifact] Tropical certification of ReLU decision boundaries — draft prospectus</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.ro .k,.ro .v,.meta,.k{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:14px;
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+
+  /* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+  .topbar{border-bottom:1px solid var(--grid);background:var(--card)}
+  .topbar .wrap{max-width:var(--nav-max);width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+    font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{font-family:var(--data);font-size:12px;color:var(--ink-soft);font-weight:500;margin:0;max-width:none;letter-spacing:0}
+  .nav{display:flex;align-items:center;gap:22px}
+  .nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .nav a:hover{color:var(--fp-deep)}
+  .nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .nav{gap:14px} .nav a{font-size:10.5px;letter-spacing:.05em} }
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  @media(max-width:430px){ .brand .sub{display:none} }
+  
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+  .hero{padding:44px 0 0}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:22ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:70ch;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:19px;font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:9px;padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Draft prospectus 01 of 05 &middot; Tropical geometry &amp; min-plus algebra</div>
+    <h1>Tropical certification of ReLU decision boundaries</h1>
+    <p class="lede">Target: <b>Frontier AI labs · high-consequence ML</b></p>
+
+    <div class="callout">
+      <div class="k">Status — read this before anything below</div>
+      <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> There is no kernel, no
+        certificate, no falsifier and no ledger record behind it. It states a field, the first claim in
+        that field that would be <i>decidable</i>, what a certificate would have to assert, and what
+        would have to exist before any of it could be attempted. <b>A prospectus that reads like a result
+        is the defect</b>, so this one says so at the top and is not published.</p>
+    </div>
+
+    <div class="callout" style="border-color:var(--hjb);background:color-mix(in srgb,var(--hjb) 6%,transparent)">
+      <div class="k" style="color:var(--hjb)">Occupancy check, 2026-07-30 &mdash; KILLED &middot; OCCUPIED</div>
+      <p><b>KILLED by the occupancy check, 2026-07-30, and by the paper you would never find searching
+   "tropical".</b> A min-max (max-affine) representation of a ReLU network <b>IS</b> its tropical
+   rational form &mdash; arXiv:1805.07091 (Zhang, Naitzat, Lim, ICML 2018) proves the equivalence and
+   relates decision boundaries to tropical hypersurfaces. So certified robustness stated over min-max
+   representations already occupies this slot under a different word, and that result exists:
+   <b>arXiv:2310.04916, Anderson&ndash;Pfrommer&ndash;Sojoudi, "Tight Certified Robustness via Min-Max
+   Representations of ReLU Neural Networks"</b> &mdash; tight certificates over convex attack sets,
+   worst-case attacks solved exactly. <b>It never uses the word "tropical."</b> Meanwhile
+   &alpha;,&beta;-CROWN (arXiv:2103.06624, NeurIPS 2021) does branch-and-bound over ReLU splits, which
+   <i>is</i> enumeration of the tropical polyhedral structure, in a competition-hardened tool.
+   The only surviving fragment would be a <i>benchmarking</i> note, not a mathematical one.</p>
+      <p style="margin-top:9px"><b>Evidence and its holes:</b> 13 queries, 8 fetches, <b>abstract-level
+        metadata only</b> &mdash; no body was read, no MathSciNet/zbMATH/Scopus, no VNN-COMP or CAPD
+        publication lists. This is a scoping pass. It tested occupancy, <b>not feasibility</b>. Full
+        record and its falsifier: the mission's literature gate findings, held internally.</p>
+    </div>
+  </div>
+
+<div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">RESCORED 2026-07-30 &mdash; REOPENED — as an artifact, never as mathematics</div>
+      <p><b>The first verdict on this page was scored on ONE axis: is the mathematics new. That axis
+      contradicts this programme's own record.</b> mfg-congest is not new mathematics &mdash; it is the
+      first validated ENCLOSURE of known mathematics. wardrop-repro is explicitly a REPRODUCTION.
+      stock-constraint certifies an LP duality argument a century old. <b>None of the delivered work
+      here is novel mathematics and all of it is valuable</b>, so killing new ideas by a standard the
+      existing work would itself fail was an error.</p>
+      <p style="margin-top:9px"><b>Academic novelty:</b> ZERO — certified robustness over min-max representations is published (arXiv:2310.04916), and min-max IS the tropical form.</p>
+      <p style="margin-top:6px"><b>Artifact value &mdash; does a CHECKABLE version exist?</b> HIGH, and this is the miss. alpha,beta-CROWN and its peers emit a VERDICT from a large solver. The verdict is not independently checkable — you trust the tool. A zero-dependency certificate for a small network, re-runnable by a stranger in seconds, DOES NOT EXIST and is exactly what this tree builds.</p>
+      <p style="margin-top:9px">The honest pitch is not 'a new verification method'. It is 'the incumbent's answer, made checkable by someone who does not trust the incumbent'. That is a smaller and far more defensible claim, and it is this programme's thesis applied to NN safety. Scope: small networks, where completeness is affordable.</p>
+    </div>
+  <section>
+    <h2>What it is</h2>
+    <p class="body">The tropical semiring replaces addition with <b>min</b> and multiplication with <b>+</b>. Under it a
+    polynomial becomes a piecewise-linear convex function &mdash; and a feedforward ReLU network is
+    <b>exactly</b> a tropical rational function, not an approximation of one. The network's decision
+    boundary is therefore a polyhedral object with an exact combinatorial description.</p>
+  </section>
+
+  <section>
+    <h2>Why it is a frontier</h2>
+    <p class="body">It converts a black box into a geometry. Instead of sampling a network to look for adversarial
+    examples, the active-facet structure can in principle be enumerated, which is the difference between
+    "we did not find one" and "there is none".</p>
+  </section>
+
+  <section>
+    <h2>The first decidable claim</h2>
+    <p class="body">Not a research programme &mdash; <b>one statement that is either true or false</b>, small
+      enough to be attacked. Everything else follows from having one of these.</p>
+    <div class="box claim"><div class="k">the claim</div><p>For a fixed small ReLU network N, a point x&#8320;, and a radius &epsilon;: <b>no input within the
+    &epsilon;-ball of x&#8320; changes the network's argmax class.</b></p></div>
+    <div class="box"><div class="k">what a certificate would assert</div><p>An interval enclosure of every active tropical facet within the ball, and the sign of the
+    margin on each &mdash; so the conclusion holds for <i>every</i> real input in the ball, not for the
+    ones that were sampled.</p></div>
+    <div class="box"><div class="k">what would falsify it</div><p>A single input inside the &epsilon;-ball that flips the class. The falsifier is a search that
+    must be run against a deliberately mis-certified network and shown to find it.</p></div>
+  </section>
+
+  <section>
+    <h2>What must exist first</h2>
+    <p class="body">An exact min-plus layer representation over rationals; an interval facet enumerator; and a
+    margin bound that survives outward rounding. None of these exist here yet.</p>
+  </section>
+
+  <section>
+    <h2>The honest risk</h2>
+    <div class="box risk"><p><b>This is the most crowded of the five and the honest risk is that it is already solved.</b>
+    Certified adversarial robustness is an established field with strong incumbents &mdash;
+    &alpha;&beta;-CROWN, DeepPoly, Marabou, MILP encodings &mdash; several of them competition-winning.
+    A tropical formulation earns its place only if it certifies something they cannot, or certifies the
+    same thing with a structurally simpler falsifier. Until that comparison is run and lost or won,
+    this page claims nothing.</p></div>
+  </section>
+
+  <section>
+    <h2>Literature occupancy</h2>
+    <p class="body"><b>An occupancy check is a precondition, not a formality.</b> No claim here may be
+      called ours until a literature gate has returned a verdict on this specific niche &mdash; not on the
+      field, which in every one of these five is old and well populated, but on the narrow question of
+      whether <i>certified, rigorously enclosed</i> results already exist in it. Any of these five may be
+      killed by that check, and killing four of five now would be a good outcome.</p>
+  </section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Draft prospectus &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record
+</div></div></footer>
+
+</body>
+</html>

@@ -216,6 +216,17 @@ p b{color:var(--ink)}
     verification radii are too coarse for the naive method a reader would first try. Confirmation
     plus sharpened fine print is what the lane is for.</p>
 
+  <p><b>Part of the independent-verification lane &mdash; this page is unit 5 of six.</b> The
+    collective verdict &mdash; five CONFIRMED, one PARTIAL, under five seconds of total runtime
+    &mdash; and the list of what none of the six establishes are on
+    <a href="/technical-reports/verification-lane">the lane index</a>.</p>
+  <p><b>The program that produced every number above is published:</b>
+    <a href="/technical-reports/lane/laneb-lemniscate/verify.js" download>verify.js</a> &mdash; plain
+    Node, <code>node verify.js</code>, no third-party packages. It runs from its own directory in
+    the published repository, where it finds the interval toolkit (<code>core/interval</code>) by
+    walking up from itself; taken out of that tree it stops on a named error saying which toolkit
+    it needs.</p>
+
   <div class="foot">research/challenges/laneb-lemniscate &middot; <code>node verify.js</code> — own
     implementation, eqcert intervals + fixed-point BigInt layer + AD + Krawczyk, 26 checks, 4/4
     mutation controls rejected, &lt; 0.1 s &middot; VERDICT.md — full record, sources pinned by sha256

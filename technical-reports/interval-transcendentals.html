@@ -18,10 +18,22 @@
   core/interval/tests/test-transcendental.js (both verified on disk before this edit). The
   footer now states the retirement and keeps what is still true: no certificate on this page,
   no ledger record. The original lines stay above, per the append-only rule.
+
+  LEDE INVERTED 2026-08-20. The page had gone on leading with "the library has no transcendental
+  functions at all" for nineteen days after its own status box recorded the opposite — a status
+  inversion: the wall was reported as whole in the first sentence and as substantially demolished
+  four lines below it. The lede now leads with what ships and what remains (fractional powers,
+  erf), the ORIGINAL lede sentence is kept verbatim underneath it as a dated originally-said note
+  rather than deleted, and the status box gains a dated line recording that two published pages
+  (verify-maxwell, verify-lemniscate) now require core/interval/transcendental.js — checked on
+  disk that day, both verifiers read from it. The page title was re-pointed in the same edit for the
+  same reason: it still sold "the one missing piece", which the body no longer says. NOT touched,
+  deliberately: the sandbox-draft chrome and page state, the "no certificate on this page · no
+  ledger record" line, the aerospace standing instruction, and the Still-open list.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interval transcendentals — the one missing piece four things wait on</title>
+<title>Interval transcendentals — what ships, and what four things still wait on</title>
 <meta name="robots" content="index,follow">
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -147,9 +159,21 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <div class="hero">
     <div class="eyebrow">Frontier capability &middot; The shared blocker</div>
     <h1>Interval transcendentals</h1>
-    <p class="lede"><code>core/interval/interval.js:94</code> throws on non-integer exponents, and the library has <b>no
-transcendental functions at all</b>. Four separate things in this tree stop there. <b>Written down because
-the convergence is invisible when each is written up on its own.</b></p>
+    <p class="lede">Sound interval <code>exp</code>, <code>log</code>, <code>sin</code>, <code>cos</code> and
+<code>tanh</code> ship in <code>core/interval/transcendental.js</code> with their own battery, and two
+published pages already rest on them &mdash; the
+<a href="/technical-reports/verify-maxwell">Maxwell &epsilon;&nbsp;=&nbsp;1/6 counterexample</a> and the
+<a href="/technical-reports/verify-lemniscate">Erd&#337;s&nbsp;#1038 decimals</a>, whose verifiers both
+require that module. <b>What is left of the wall is fractional powers and erf</b>:
+<code>core/interval/interval.js:94</code> still throws on non-integer exponents. Four separate things in
+this tree stopped at that wall, and this page exists <b>because the convergence is invisible when each is
+written up on its own.</b></p>
+    <p class="lede" style="font-size:13.5px;margin-top:11px"><b>What this lede said when the page opened,
+kept as written:</b> &ldquo;<code>core/interval/interval.js:94</code> throws on non-integer exponents, and
+the library has <b>no transcendental functions at all</b>. Four separate things in this tree stop there.&rdquo;
+That was true on <b>2026-07-31</b> and false from <b>2026-08-01</b>, when the five functions above shipped.
+The sentence is dated rather than deleted; the inversion is recorded here so the page does not read as if it
+had always known.</p>
 
     <div class="callout">
       <div class="k">Status — read this before anything below</div>
@@ -162,6 +186,13 @@ the convergence is invisible when each is written up on its own.</b></p>
         (exported); <code>tanh</code>/<code>sin</code>/<code>cos</code> unblocked
         for edge-of-chaos / aerospace / Path&nbsp;5 arithmetic (instances still to build).
         <b>Still open:</b> fractional powers, erf, full aerospace report.</p>
+      <p style="margin-top:9px"><b>Added 2026-08-20:</b> the module is now load-bearing under two
+        published verification pages, not only a capability with consumers in prospect &mdash;
+        <a href="/technical-reports/verify-maxwell">verify-maxwell</a> pulls interval
+        <code>exp</code>/<code>log</code> from it, and
+        <a href="/technical-reports/verify-lemniscate">verify-lemniscate</a> reaches <code>log</code>
+        through it for an atanh series with an explicit tail bound. Checked on disk on the date of this
+        line; the <b>Still open</b> list above is unchanged.</p>
     </div>
   </div>
   <div class="callout" style="border-color:var(--hjb);background:color-mix(in srgb,var(--hjb) 6%,transparent)">
@@ -173,6 +204,16 @@ the convergence is invisible when each is written up on its own.</b></p>
         <code>exp</code> for Gaussian quadrature and <code>tanh</code>/<code>erf</code> for the activation.
         <b>Any MFG instance with a non-polynomial Hamiltonian or an exponential coupling</b> &mdash; which is
         most of them outside this tree's current corpus.</p>
+      <p style="margin-top:10px"><b>Dated note 2026-08-20 &mdash; the wall moved on 2026-08-01 and this
+        block is kept as written.</b> The four are still four, but they no longer share one wall.
+        <code>exp</code>, <code>log</code>, <code>sin</code>, <code>cos</code> and <code>tanh</code>
+        shipped, so Path 6&rsquo;s Gaussian quadrature and its <code>tanh</code> activation are no longer
+        blocked on the library &mdash; what is still missing for it is <code>erf</code>. The exponential
+        couplings in the fourth item are unblocked for the same reason. What remains genuinely blocked
+        is <b>fractional powers</b> and <b>erf</b>, and the aerospace instruction below is unaffected by
+        any of this: it was never about which functions exist. The eyebrow on this page still reads
+        &ldquo;the shared blocker&rdquo;, which was true when the page opened and is now only partly
+        true; it is dated here rather than rewritten.</p>
     </div>
 
   <section>

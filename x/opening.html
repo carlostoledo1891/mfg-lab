@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  THE OPENING — built 2026-07-31. Three things and nothing else: a command that runs, a button that
+  breaks it, and one paragraph about a mistake.
+
+  WHY IT IS SHORT. The argument for this artefact is that the strongest opening is small. A long page
+  would refute its own thesis, so the temptation to add a fourth section should be resisted.
+
+  DIFFERENT FROM EVERY OTHER _frontier PAGE, deliberately. The others are prospectuses that must claim
+  nothing. This one RE-RUNS an already-minted claim and its certificate (verdict PROVED, both held in the
+  ledger; ids deliberately unprinted — they name records that never ship) and claims nothing NEW. Its status box says exactly that instead of the
+  boilerplate, because applying the boilerplate here would be false in the other direction.
+
+  EVERY NUMBER BELOW IS COPIED FROM THAT CERTIFICATE RECORD AND GATED.
+  This page's own battery compares them digit-for-digit against that record, re-derives the
+  discriminant and the radius, and proves the refusal control fires. Hand-run, NOT wired into
+  `make check` — no new gate was added to the ritual.
+
+  CORRECTED 2026-08-20. The two sentences above were true the day this page was built and are kept
+  as written rather than edited, but they stopped being true on 2026-08-07: test-opening.js JOINED
+  the ritual that day, inside the `check-frontier-pages` target, which `check:` requires — so it
+  runs on every `make check` and every `make verify`, not by hand. It was wired only once it was
+  honestly green. The repo's wiring gate had found it unreached AND red at 19 of 21: this page
+  displayed verifier 67822a77… / kernel 9e36a799…, which the certificate does not pin. Re-verifying
+  the cert's pins against the bytes on disk settled which side was stale — they matched EXACTLY, so
+  the certificate was current and the PAGE was wrong. The page was re-pinned (the certificate was
+  not re-minted, by owner ruling) and the battery has reported 21 checks, 0 failures since.
+  Re-measured 2026-08-20 against the Makefile and by running the battery: 21/0, exit 0.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A certificate, and a button that breaks it</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --amber:#475569; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px; --nav-h:58px;
+    color-scheme:light;
+  }
+  .eyebrow,.k,.v,.cmd,.ro{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:14px;
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px}
+  .hero{padding:52px 0 0}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(27px,4vw,40px);letter-spacing:-.028em;line-height:1.08;margin:11px 0 0;max-width:20ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:16.5px;line-height:1.62;max-width:64ch;margin-top:16px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  section{padding:40px 0 0}
+  h2{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:12px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:15px;line-height:1.7;max-width:70ch}
+  p.body b{color:var(--ink);font-weight:600}
+  .cmd{background:var(--ink);color:#EFF2F4;font-family:var(--data);font-size:13.5px;border-radius:9px;
+    padding:15px 17px;overflow-x:auto;white-space:nowrap}
+  .cmd .p{color:#7C8A96}
+  .meta{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);line-height:1.75;margin-top:11px;
+    word-break:break-all}
+  .meta b{color:var(--ink);font-weight:600}
+  .note{border-left:3px solid var(--amber);background:color-mix(in srgb,var(--amber) 7%,transparent);
+    border-radius:0 8px 8px 0;padding:13px 16px;margin-top:14px;max-width:74ch}
+  .note p{font-size:13.8px;line-height:1.65;color:var(--ink-soft)}
+  .note b{color:var(--ink);font-weight:600}
+
+  /* ── the widget ─────────────────────────────────────────────────────────── */
+  .panel{background:var(--card);border:1px solid var(--grid);border-radius:11px;padding:20px;margin-top:14px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .ctl{margin-bottom:15px}
+  .ctl label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    font-family:var(--data);font-size:12px;color:var(--ink-soft);margin-bottom:6px}
+  .ctl label b{color:var(--ink);font-weight:600;font-size:13px}
+  .ctl input[type=range]{width:100%;accent-color:var(--fp-deep);display:block}
+  .verdict{border-radius:9px;padding:15px 17px;margin-top:4px;border:1px solid var(--grid)}
+  .verdict.ok{background:color-mix(in srgb,var(--good) 8%,transparent);border-color:var(--good)}
+  .verdict.no{background:color-mix(in srgb,var(--hjb) 7%,transparent);border-color:var(--hjb)}
+  .verdict .tag{font-family:var(--data);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .verdict.ok .tag{color:var(--good)} .verdict.no .tag{color:var(--hjb)}
+  .verdict .why{font-size:13.6px;line-height:1.6;color:var(--ink-soft);margin-top:8px}
+  .ro{font-family:var(--data);font-size:12.5px;color:var(--ink-soft);margin-top:9px;line-height:1.7}
+  .ro b{color:var(--ink);font-weight:600}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+  button{font-family:var(--data);font-size:12px;letter-spacing:.04em;padding:9px 15px;border-radius:7px;
+    border:1px solid var(--grid);background:var(--card);color:var(--ink);cursor:pointer}
+  button:hover{background:color-mix(in srgb,var(--grid) 40%,transparent)}
+  button.brk{border-color:var(--hjb);color:var(--hjb)}
+  footer{margin-top:60px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 34px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.75;color:var(--ink-soft)}
+
+  /* ── SHARED SITE CHROME — adapted from the seed research/_engine/paper.html; identical
+       markup and CSS to the conforming _frontier siblings (cap-for-mfg.html et al). ───────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  .sitenav a,.nav a,.sitemap a{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  @media(max-width:430px){ .brand .sub{display:none} }
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">one certificate, start to finish</div>
+    <h1>A certificate, and a button that breaks it</h1>
+    <p class="lede">A mean-field game with congestion has a solution at one instance. <b>You do not have to
+      believe that.</b> Below is the command that checks it on your machine with no dependencies, a control
+      that makes the same certificate refuse, and the mistake this made before it was right.</p>
+
+    <div class="note">
+      <p><b>What is and is not claimed here.</b> This page re-runs a claim and its certificate, verdict <b>PROVED</b>, already minted in the
+      ledger. Their identifiers are not printed here: claim and certificate ids name records that do
+      not ship, and pointing a reader at one they cannot open is an appeal to invisible authority. It claims nothing new. Scope is one instance
+        &mdash; <b>A=5, &gamma;=0.5, &sigma;=0.5, a=&frac12;, N=20 cosine modes</b> &mdash; and no
+        surrounding law over any parameter is asserted.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>1 &middot; The check</h2>
+    <div class="cmd"><span class="p">$</span> python3 research/ai-verify/python/verify_congest.py</div>
+    <div class="meta">
+      Python standard library only &mdash; no numpy, no install, no network, no account.<br>
+      <b>real 5.42 / 5.48 / 5.55 s</b>, three consecutive runs, measured 2026-07-31 on the author's machine.<br>
+      verifier <b>sha256 7e97b7f2f3997ebee3e914b510fb5d7499e923c868d22b3e8a099d007f0f9a07</b><br>
+      It ends by printing <b>CONGEST CAP: VERIFIED</b>, and it carries <b>7 falsifiers, all proved able to
+      go red</b>. Cross-language agreement against the JavaScript kernel: <b>0.00e+00</b>.
+    </div>
+    <div class="note">
+      <p><b>A correction, found while building this page.</b> The figure &ldquo;2.33 s&rdquo; is quoted
+        elsewhere in this repository for this verifier. <b>2.33 s is real and reproducible</b> &mdash; 2.33,
+        2.33, 2.35 on three runs &mdash; <b>but it belongs to a different file</b>,
+        <code>research/mfg-congest/python/verify_congest.py</code>, a sibling with a different sha256. The
+        verifier this certificate pins is the one above, and it takes about <b>5.4 s</b>. Two records were
+        each correct about a different file and had been welded into one composite figure. The composite is
+        retired here rather than repeated.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>2 &middot; The break</h2>
+    <p class="body">The certificate closes because a radii polynomial is negative on a bracket of radii
+      <i>and</i> the map is a strict contraction there. Those are two conditions, not one. Press
+      <b>break it</b>: the radius walks up the bracket until <b>p(r) is still negative but &kappa; crosses
+      1</b> &mdash; the old acceptance test passes and the theorem does not apply. Nothing degrades or
+      warns; it refuses.</p>
+
+    <div class="panel">
+      <div class="ctl"><label>defect <span>Y&#8320;</span> <b id="vY"></b></label>
+        <input type="range" id="sY" min="-16" max="-2" step="0.01" value="-13.522"></div>
+      <div class="ctl"><label>contraction <span>Z&#8321;</span> <b id="vZ1"></b></label>
+        <input type="range" id="sZ1" min="0" max="1.4" step="0.001" value="0.9271316"></div>
+      <div class="ctl"><label>curvature <span>Z&#8322;</span> <b id="vZ2"></b></label>
+        <input type="range" id="sZ2" min="1" max="200" step="0.1" value="63.4386788"></div>
+      <div class="ctl"><label>radius <span>r</span> &mdash; anywhere p(r) &lt; 0 <b id="vR"></b></label>
+        <input type="range" id="sR" min="0" max="1" step="0.0001" value="0"></div>
+
+      <div id="verdict" class="verdict"><div class="tag" id="vTag"></div><div class="why" id="vWhy"></div></div>
+      <div class="ro" id="vRo"></div>
+
+      <div class="btns">
+        <button id="bClose" type="button">restore the certified values</button>
+        <button id="bRefuse" class="brk" type="button">break it &mdash; walk r past &kappa; = 1</button>
+      </div>
+    </div>
+    <div class="meta">
+      Certified bounds, copied from the certificate record and gated against it, digit for digit, by
+      this page's own battery:
+      <b>Y&#8320; = 3.0067633837811714e-14</b>, <b>Z&#8321; = 0.9271316033691069</b>,
+      <b>Z&#8322; = 63.43867878981078</b>, giving <b>r = 4.332607412139519e-13</b> and density
+      <b>min m &ge; 0.5889178299249256</b> over the whole ball.<br>
+      That gate is <b>21 checks</b>, and it has been red. When it was wired into the ritual on
+      <b>7 August 2026</b> it reported <b>19 of 21</b> &mdash; not because the certificate had
+      drifted but because this page carried two hashes the certificate does not pin. Re-verifying
+      the certificate against the bytes on disk settled which side was stale: the certificate was
+      current, the page was wrong. The page was corrected, and the gate has reported <b>21 checks,
+      0 failures</b> since.
+    </div>
+  </section>
+
+  <section>
+    <h2>3 &middot; What this got wrong</h2>
+    <p class="body">Until 30 July 2026 the acceptance test was <b>p(r) &lt; 0</b>, and the code said it had
+      shown a contraction. <b>It had not.</b> p(r) &lt; 0 gives a <i>self-map</i> of the ball, and a self-map
+      of a ball in an infinite-dimensional Banach space need not have a fixed point at all &mdash; the two
+      conditions part company at the vertex of p, where the contraction factor
+      <b>&kappa; = Z&#8321; + Z&#8322;r</b> equals exactly 1. A concrete witness sits in the source today:
+      a triple whose <b>p(r) &lt; 0 holds while &kappa; = 1.0166</b>, which the old test would have accepted
+      and which proves nothing. <b>No gate caught this and none could have</b> &mdash; every test passed,
+      because the code did exactly what it was written to do; it was found by reading the acceptance
+      condition against the theorem it was supposed to be enforcing. The fix checks &kappa; &lt; 1 at the
+      smallest closing radius. At the instance above <b>&kappa; = 0.92713&hellip;</b>, so this enclosure
+      survived the correction. <b>It did not have to, and that is the point.</b></p>
+  </section>
+</div>
+
+<footer><div class="wrap"><div class="foot">
+  Draft &middot; unlisted &mdash; this footer read “not published, not routed, not exported” until
+      2026-08-20, when the ruling of that date made this tier a public surface: the page now ships at
+      an unindexed address, unlinked and unlisted, readable by whoever holds it &middot; Carlos Toledo &middot; 2026<br>
+  Re-runs an already-minted certificate (PROVED). Claims nothing new. Kernel sha256 385ca537…, verifier sha256 c886a856….<br>
+  <span style="opacity:.72">Hashes re-pinned 2026-08-07: this page displayed 67822a77… / 9e36a799…, which its own gate
+  (<code>test-opening.js</code> A6/A7) had been refusing. the certificate's pins were re-verified against the bytes on disk and matched exactly, so the certificate was current and this page was stale &mdash; the page was corrected, the
+  certificate was not re-minted.</span>
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+<script>
+'use strict';
+/* The radii polynomial, evaluated for display only. The certified bounds are the ones printed above and
+   gated by test-opening.js; this widget exists to show that moving them makes the verdict REFUSE. */
+var CERT = { Y0: 3.0067633837811714e-14, Z1: 0.9271316033691069, Z2: 63.43867878981078,
+             r: 4.332607412139519e-13, disc: 0.005309803223742246, minM: 0.5889178299249256 };
+function $(id){ return document.getElementById(id); }
+function ex(x){ var s = x.toExponential(3).split('e'); return s[0] + '×10' + sup(s[1]); }
+function sup(e){ var n = parseInt(e,10), out = n < 0 ? '⁻' : '', d = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  String(Math.abs(n)).split('').forEach(function(c){ out += d[+c]; }); return out; }
+
+function run(){
+  var Y0 = Math.pow(10, parseFloat($('sY').value));
+  var Z1 = parseFloat($('sZ1').value);
+  var Z2 = parseFloat($('sZ2').value);
+  $('vY').textContent  = ex(Y0);
+  $('vZ1').textContent = Z1.toFixed(7);
+  $('vZ2').textContent = Z2.toFixed(4);
+
+  var disc = (1 - Z1) * (1 - Z1) - 2 * Z2 * Y0;
+  var box = $('verdict'), tag = $('vTag'), why = $('vWhy'), ro = $('vRo');
+  function refuse(msg){ box.className = 'verdict no'; tag.textContent = 'REFUSED';
+                        why.innerHTML = msg; ro.textContent = ''; }
+
+  if (Z1 >= 1) {
+    $('vR').textContent = '—';
+    return refuse('Z₁ ≥ 1 — the approximate inverse is not a contraction at <i>any</i> radius. ' +
+                  'Nothing is enclosed, and no smaller ball helps.');
+  }
+  if (disc < 0) {
+    $('vR').textContent = '—';
+    return refuse('the discriminant is negative — the defect Y₀ is too large for this curvature. ' +
+                  'The polynomial has no real root, so there is no radius at which the argument closes.');
+  }
+
+  /* p(r) < 0 on (rMin, rMax). The radius slider moves logarithmically across that bracket, because it
+     spans about ten orders of magnitude at the certified bounds. */
+  var s = Math.sqrt(disc);
+  var rMin = ((1 - Z1) - s) / Z2, rMax = ((1 - Z1) + s) / Z2;
+  var t = parseFloat($('sR').value);
+  var r = (rMin > 0) ? Math.exp(Math.log(rMin) + t * (Math.log(rMax) - Math.log(rMin)))
+                     : rMin + t * (rMax - rMin);
+  $('vR').textContent = ex(r);
+
+  var p = 0.5 * Z2 * r * r - (1 - Z1) * r + Y0;   /* the ½-variant: disc = (1-Z1)² - 2·Z2·Y0 */
+  var kappa = Z1 + Z2 * r;
+
+  if (!(p < 0)) {
+    return refuse('p(r) ≥ 0 — this radius is outside the bracket where the polynomial is negative.');
+  }
+  if (!(kappa < 1)) {
+    return refuse('<b>p(r) = ' + ex(p) + ' &lt; 0, so the OLD acceptance test passes here.</b> ' +
+                  'But κ = Z₁ + Z₂r = ' + kappa.toFixed(4) + ' ≥ 1, so the map is a <i>self-map</i> of ' +
+                  'the ball and not a contraction on it. A self-map of a ball in an infinite-dimensional ' +
+                  'space need not have a fixed point. <b>Nothing is proved, and until 2026-07-30 this ' +
+                  'was accepted.</b>');
+  }
+  box.className = 'verdict ok'; tag.textContent = 'ENCLOSED';
+  why.innerHTML = 'a strict contraction on the ball of radius r — existence and local uniqueness follow.';
+  ro.innerHTML = 'radius <b>r = ' + ex(r) + '</b> &nbsp;·&nbsp; p(r) = <b>' + ex(p) +
+                 '</b> &nbsp;·&nbsp; contraction factor <b>κ = ' + kappa.toFixed(6) + '</b>' +
+                 ' &nbsp;·&nbsp; κ reaches 1 at <b>r = ' + ex((1 - Z1) / Z2) + '</b>';
+}
+['sY','sZ1','sZ2','sR'].forEach(function(id){ $(id).addEventListener('input', run); });
+$('bClose').addEventListener('click', function(){
+  $('sY').value = Math.log(CERT.Y0) / Math.LN10; $('sZ1').value = CERT.Z1;
+  $('sZ2').value = CERT.Z2;
+  /* land on the CERTIFIED radius, which sits strictly inside the bracket. Landing on rMin itself
+     would put p(r) at a root, where p = 0 and the widget must (correctly) refuse. */
+  var d0 = (1-CERT.Z1)*(1-CERT.Z1) - 2*CERT.Z2*CERT.Y0, s0 = Math.sqrt(d0);
+  var a = ((1-CERT.Z1) - s0)/CERT.Z2, b = ((1-CERT.Z1) + s0)/CERT.Z2;
+  $('sR').value = String((Math.log(CERT.r) - Math.log(a)) / (Math.log(b) - Math.log(a)));
+  run();
+});
+/* The interesting break is not a crude one. Walk r up the bracket until κ crosses 1 while p(r) is
+   still negative — the exact gap between the old acceptance test and what the theorem needs. */
+$('bRefuse').addEventListener('click', function(){
+  var Y0 = Math.pow(10, parseFloat($('sY').value)),
+      Z1 = parseFloat($('sZ1').value), Z2 = parseFloat($('sZ2').value);
+  var disc = (1 - Z1) * (1 - Z1) - 2 * Z2 * Y0;
+  if (Z1 >= 1 || disc < 0) { run(); return; }
+  var s = Math.sqrt(disc), rMin = ((1 - Z1) - s) / Z2, rMax = ((1 - Z1) + s) / Z2;
+  var rK = (1 - Z1) / Z2 * 1.0005;                       /* just past κ = 1 */
+  var target = Math.min(rK, rMax * 0.999);
+  $('sR').value = (rMin > 0)
+    ? String((Math.log(target) - Math.log(rMin)) / (Math.log(rMax) - Math.log(rMin)))
+    : String((target - rMin) / (rMax - rMin));
+  run();
+});
+run();
+</script>
+
+</body>
+</html>

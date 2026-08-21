@@ -216,6 +216,17 @@ p b{color:var(--ink)}
     knows exactly which sentences of that proof a machine has checked and which still rest on the
     referees.</p>
 
+  <p><b>Part of the independent-verification lane &mdash; this page is unit 4 of six.</b> The
+    collective verdict &mdash; five CONFIRMED, one PARTIAL, under five seconds of total runtime
+    &mdash; and the list of what none of the six establishes are on
+    <a href="/technical-reports/verification-lane">the lane index</a>.</p>
+  <p><b>The program that produced every number above is published:</b>
+    <a href="/technical-reports/lane/laneb-ranteng/verify.js" download>verify.js</a> &mdash; plain
+    Node, <code>node verify.js</code>, no third-party packages. It runs from its own directory in
+    the published repository, where it finds the interval toolkit (<code>core/interval</code>) by
+    walking up from itself; taken out of that tree it stops on a named error saying which toolkit
+    it needs.</p>
+
   <div class="foot">research/challenges/laneb-ranteng &middot; <code>node verify.js</code> — own
     implementation on the eqcert stack, 43 checks, 5/5 mutation controls rejected, 41 ms &middot;
     VERDICT.md — full record, sources pinned by sha256 (arXiv:2602.18918, arXiv:2605.06743, ELA 40

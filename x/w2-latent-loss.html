@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- DRAFT — sandbox. Owner: "Not all need to go to program, its a sandbox only" and
+     "must save all drafts due to its characteristics on the same theme". Kept with the other
+     _frontier drafts. Never routed, never exported, kind `private`.
+     FEASIBILITY IS THE NEW QUESTION HERE. The hard constraint applied throughout: this tree does
+     validated numerics and ships zero-dependency verifiers. It CANNOT train neural networks — no
+     GPU, no torch, no datasets. A proposal whose proof is an experiment is infeasible here whatever
+     its mathematical merit, and saying so is not modesty, it is scope. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[OCCUPIED, and infeasible here] Replacing an L&#8322; latent loss with optimal transport</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.ro .k,.ro .v,.meta,.k{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:14px;
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+
+  /* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+  .topbar{border-bottom:1px solid var(--grid);background:var(--card)}
+  .topbar .wrap{max-width:var(--nav-max);width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+    font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{font-family:var(--data);font-size:12px;color:var(--ink-soft);font-weight:500;margin:0;max-width:none;letter-spacing:0}
+  .nav{display:flex;align-items:center;gap:22px}
+  .nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .nav a:hover{color:var(--fp-deep)}
+  .nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  @media(max-width:640px){ .nav{gap:14px} .nav a{font-size:10.5px;letter-spacing:.05em} }
+  @media(max-width:760px){
+    .sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}
+  }
+  @media(max-width:430px){ .brand .sub{display:none} }
+  
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+  .hero{padding:44px 0 0}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:22ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:70ch;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:19px;font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:9px;padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Sandbox draft 08 &middot; Wasserstein latent loss &middot; W&#8322; for JEPA</div>
+    <h1>Replacing an L&#8322; latent loss with optimal transport</h1>
+
+    <div class="callout" style="border-color:var(--hjb);background:color-mix(in srgb,var(--hjb) 6%,transparent)">
+      <div class="k" style="color:var(--hjb)">Feasibility verdict &mdash; OCCUPIED, and infeasible here</div>
+      <p><b>Two independent kills.</b> Occupancy: Wasserstein objectives in deep learning are a
+   crowded, mature area &mdash; the WGAN lineage from 2017 and Sinkhorn divergences as differentiable
+   losses (Genevay, Peyr&eacute;, Cuturi) are standard practice, not an undiscovered frontier.
+   Feasibility: the deliverable is again <b>a trained model with a different loss function</b>, which
+   this tree cannot produce or evaluate. The "via dual Monge&ndash;Amp&egrave;re" phrasing is the only
+   part that might distinguish it from entropic practice, and that is a numerical-methods choice
+   rather than a new object.</p><p style="margin-top:9px"><b>Occupancy check &mdash; worse than expected.</b> <b>LeJEPA (Balestriero &amp; LeCun, arXiv:2511.08544)</b> occupies the distributional-objective slot and <b>explicitly routes around transport distances</b> in favour of linear-cost characteristic-function matching. The proposal is the option the field's flagship considered and did not take. The dual Monge&ndash;Amp&egrave;re route is separately occupied (arXiv:1908.10962). <b>And this tree killed it twice already:</b> CERT_FAMILY records that the 1-D scalar-index sequence module "kills Monge&ndash;Amp&egrave;re" for want of a 2-D Banach algebra, and CERT_TRANSFER logs the Sinkhorn gauge-nullspace blocker as "FAR, not NEXT".</p>
+    </div>
+
+    <div class="callout">
+      <div class="k">Status</div>
+      <p><b>Nothing here is claimed, certified or proved.</b> No kernel, no certificate, no falsifier,
+        no ledger record. A sandbox note. <b>The feasibility verdict above is this repo's own
+        judgement</b>; the occupancy half is commissioned and provisional until it returns.</p>
+    <p style="margin-top:9px"><b>The full record is one file, not repeated here.</b> 11 queries, 12 fetches,
+        20 identifiers, the query and fetch logs, the DO-NOT-WRITE list and the holes the pass did not
+        cover: the mission's literature gate record, held internally. <b>Deliberately not duplicated
+        onto this page</b> &mdash; two copies of a finding drift, and that is the defect that put a
+        retracted density floor on five shipping surfaces earlier the same day. <b>Occupancy was
+        adjudicated; FEASIBILITY WAS ONLY SCREENED</b> against this repo's capability filter, executed
+        nothing, and measured no interval width.</p></div>
+  </div>
+
+  <section><h2>What it is</h2><p class="body">Use the W&#8322; distance from Monge&ndash;Kantorovich transport as the JEPA predictor loss
+    instead of L&#8321;/L&#8322;/cosine, so the predictor routes latent distributions along geodesics.</p></section>
+  <section>
+    <h2>The claim, and whether it is decidable</h2>
+    <div class="box claim"><div class="k">the claim</div><p>That a W&#8322; latent loss prevents representation collapse better than the heuristic
+    metrics. <b>Empirical, and settled by training.</b></p></div>
+    <div class="box"><div class="k">is there a certificate here WE could build?</div><p><b>None.</b> The transport machinery adjacent to this tree certifies a <i>solved discrete
+    instance</i>; it says nothing about whether a loss function trains better.</p></div>
+  </section>
+  <section><h2>The honest risk</h2><div class="box risk"><p>If anything the risk runs the other way: claiming novelty here would be dismissed
+    immediately by anyone who has read the generative-modelling literature since 2017.</p></div></section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Sandbox draft &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; feasibility judged, occupancy pending
+</div></div></footer>
+
+</body>
+</html>

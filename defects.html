@@ -743,6 +743,14 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
         recorded what was true when it was written &mdash; and the write-up's numbers stay as
         measured. What changed is a <i>status</i>, which is a claim about the present tense, and it
         now says the fix did not hold.</p>
+
+      <p class="note"><b>Dated note, 2026-08-20.</b> The clauses above saying no gate runs the
+        harness were true on 6 August and are the record of that day. Since then a pin check joined the build ritual: it compares the verifier
+        on disk against the certificate record&rsquo;s own pin, so a verifier regenerated out from
+        under a published number now goes red instead of quiet. The latest committed golden
+        (<code>golden-run-2026-08-09.json</code>) matches the verifier on disk and reproduces
+        9 of 14 &mdash; the measurement stands; the hardening remains un-restored, and this case
+        stays open until it is.</p>
     </div>
   </section>
 

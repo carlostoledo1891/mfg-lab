@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="Commercial offer artifact: an enumeration-blindness audit with kill-controls, both directions always. Exhibit: a public project's suite stays green (exit 0) after losing 91.8% of its executed cases, and goes red on a single flipped value. Gated; the owner decides reach.">
+<title>The gate audit — measure what your CI's green actually certifies</title>
+<!--
+  BORN GATED 2026-08-19 — the gate-audit commercial offer as a page, per owner ruling
+  ("build a html artifact, keep gated"). OWNER SENDS / OWNER TAILORS: generic "gate audit"
+  vocabulary throughout; every client-specific fact — name, stack, pricing, scope
+  boundaries, engagement terms — is the owner's and is deliberately absent from this page.
+  Nothing here is sent, quoted, or filed anywhere by an agent; the page is shared
+  person-to-person by the owner, and promotion out of site/_gated/ is one git mv, taken
+  only by the owner, only for reach.
+  Gate: research/vacuous-green/oss-demo-jsonschema/test-offer-page.js — parses the rendered
+  prune table and the headline figures back out of these bytes and holds them equal to
+  oss-demo-data.json, asserts chrome + robots-noindex + the gated banner, refuses pricing
+  tokens, and carries a red control (an altered-number temp copy must fail the equality).
+  Sources: research/vacuous-green/oss-demo-jsonschema/{FINDINGS.md, RUN_LOG.md,
+  oss-demo-data.json, demo.html} — the measurement is COMMITTED, not re-run.
+-->
+<style>
+  :root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A;
+    --fp:#6F93A1; --fp-deep:#4F6F7A;
+    --hjb:#B42318; --bad:#B42318;
+    --warn:#475569; --amber:#475569;
+    --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --slate-1:#F1F5F9; --slate-2:#E2E8F0; --slate-3:#94A3B8; --slate-4:#334155;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px;
+    --nav-h:58px; --page-top:40px; --section-top:46px;
+    --card-pad:18px; --card-gap:14px; --radius:10px; --radius-sm:3px;
+    --text-h1:clamp(28px,4vw,42px);
+    --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+    --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+    color-scheme:light;
+  }
+  .mono,.status,.eyebrow,.ro .v,.ro .k,table.mono td,table.mono th,.badge{
+    font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:var(--text-body);line-height:1.65;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;font-kerning:normal;}
+  body{padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 88px}
+  .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.028em;line-height:1.12;margin:10px 0 14px;color:var(--ink);text-wrap:balance}
+  h1 .soft{color:var(--ink-soft)}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;margin-bottom:10px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  p{margin:0 0 12px;max-width:72ch}
+  ul{margin:0 0 12px 18px;max-width:70ch}
+  li{margin-bottom:8px}
+  h3.sec{font-family:var(--ui);font-size:var(--text-h3);font-weight:600;letter-spacing:-.012em;margin:var(--section-top) 0 16px;padding-top:22px;border-top:1px solid var(--grid)}
+  .card{position:relative;background:var(--card);border:1px solid var(--grid);width:100%;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);border-radius:var(--radius);padding:var(--card-pad);margin:0 0 18px}
+  h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.018em;margin:0 0 12px;text-wrap:balance}
+  h2 .tag{font-family:var(--data);font-size:var(--text-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:8px;font-weight:400}
+  .note{font-size:var(--text-small);line-height:1.65;color:var(--ink-soft);margin-top:14px;max-width:none}
+  .note b{color:var(--ink);font-weight:600}
+  .banner{display:flex;gap:12px;align-items:flex-start;background:var(--warn-soft);
+    border:1px solid var(--grid);border-radius:var(--radius);padding:14px 16px;margin:8px 0 28px}
+  .banner .bico{font-size:18px;flex:none;color:var(--warn)} .banner .btxt{font-size:13px;line-height:1.65;color:var(--ink)}
+  .banner .btxt b{font-weight:600}
+  table.mono{border-collapse:collapse;width:100%;max-width:100%;font-family:var(--data);font-size:11.5px;margin:10px 0 4px}
+  table.mono th{text-align:left;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--grid);
+    padding:8px 10px;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
+  table.mono td{padding:8px 10px;border-bottom:1px solid var(--grid);color:var(--ink);line-height:1.5}
+  table.mono td.bad{color:var(--bad)}
+  table.mono td.good{color:var(--good)}
+  .tblwrap{overflow-x:auto}
+  .readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px 18px;margin:18px 0 8px}
+  .ro .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft)}
+  .ro .v{font-family:var(--data);font-size:17px;line-height:1.35;color:var(--ink);position:relative;padding-left:14px}
+  .ro .v.small{font-size:13.5px}
+  .ro .v::before{content:'';position:absolute;left:0;top:.52em;width:7px;height:7px;
+    border:1px solid var(--grid);background:transparent}
+  .ro .v.ok::before{background:var(--good);border-color:var(--good)}
+  .ro .v.bad::before{background:var(--bad);border-color:var(--bad)}
+  .scope{border:1px solid var(--grid);border-left:3px solid var(--accent);border-radius:var(--radius-sm);background:var(--card);padding:14px 16px;margin:18px 0}
+  .scope .t{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .scope p{max-width:none;font-size:var(--text-small);line-height:1.65;color:var(--ink-soft)}
+  .scope p b{color:var(--ink)}
+  code{font-family:var(--data);font-size:.9em;background:var(--grid);padding:1px 5px;border-radius:var(--radius-sm);color:var(--ink)}
+  pre.mono{font-family:var(--data);font-size:12px;line-height:1.6;background:var(--card);border:1px solid var(--grid);
+    border-radius:var(--radius);padding:13px 15px;overflow:auto;width:100%;max-width:100%;margin:16px 0 8px;color:var(--ink)}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover{color:var(--fp-deep)}
+  @media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} }
+  @media(max-width:760px){
+    .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar{display:none}
+  }
+  .sitefoot,footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-cred,.cred{max-width:var(--read-max);width:100%;margin:0 auto;padding:26px 20px 4px}
+  .foot-cred-in,.cred{font-size:13px;line-height:1.64;color:var(--ink-soft)}
+  .foot-cred-in p,.cred p{margin:0 0 9px;max-width:none} .foot-cred-in p:last-child,.cred p:last-child{margin:0}
+  .foot-cred-in b,.cred b{color:var(--ink);font-weight:600}
+  .foot-cred-in a,.cred a{color:var(--fp-deep);font-weight:500;text-decoration:none}
+  .foot-cred-in a:hover,.cred a:hover{text-decoration:underline}
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+  .foot{font-family:var(--data);font-size:11.5px;color:var(--ink-soft);line-height:1.8;margin-top:34px;padding-top:15px;border-top:1px solid var(--grid)}
+  .foot a{color:var(--accent-deep)}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">gate audit &middot; commercial offer artifact &middot; exhibit measured 2026-08-19</div>
+  <h1>Your suite is green. <span class="soft">How much of it still ran?</span></h1>
+  <p class="lede">We ran this audit, uninvited and read-only, on a well-maintained public
+    open-source project &mdash; the reference JSON Schema validator for Python, whose suite runs
+    8,512 tests and passes clean. We deleted its entire enumerated conformance corpus &mdash;
+    91.8% of the executed cases &mdash; and the suite reported an unqualified green:
+    &ldquo;701 passed&rdquo;, exit&nbsp;0. Then we flipped a single expected value in one
+    surviving case, and the same suite went red &mdash; exit&nbsp;1, exactly 1 failure, naming
+    exactly that case. <b>Every test that runs is judged honestly; nothing notices whether what
+    runs is still there.</b> That is the shape this audit finds: your green certifies what was
+    evaluated, and says nothing about how much was.</p>
+
+  <div class="readouts">
+    <div class="ro"><div class="k">baseline</div><div class="v ok">8512 collected &middot; 8280 passed</div></div>
+    <div class="ro"><div class="k">conformance corpus deleted</div><div class="v bad">701 collected &middot; still green</div></div>
+    <div class="ro"><div class="k">executed cases lost, verdict unmoved</div><div class="v bad">&minus;91.8%</div></div>
+    <div class="ro"><div class="k">kill-control: one flipped value</div><div class="v ok">exit 1 &middot; 1 failed</div></div>
+  </div>
+
+  <div class="banner">
+    <span class="bico">&#9888;</span>
+    <span class="btxt"><b>Why this page is gated.</b> It is a commercial offer artifact, shared
+    person-to-person by the owner, who alone decides its reach. The exhibit it carries is a
+    measurement of a public project's test harness, made respectfully on a local clone: no issue
+    filed, nothing sent upstream, and any disclosure to that project is the owner's decision
+    alone. No client names and no pricing appear on this page &mdash; tailoring is the owner's,
+    before any send. The page stays in the tree, unindexed, until the owner decides otherwise.</span>
+  </div>
+
+  <h3 class="sec">What the audit is</h3>
+  <p>Measure whether your CI's green means anything. A test suite asserts that everything it ran
+    was acceptable; it is silent about how much it ran &mdash; and those are different properties,
+    independently variable, of which only the first ever appears in the summary line. This audit
+    measures the second one: for each component of your checking layer, we narrow the input it
+    enumerates &mdash; fixtures, golden files, generated cases, discovered tests &mdash; re-run
+    it, and watch whether the verdict moves.</p>
+  <p>Every finding ships with a <b>kill-control</b>: a deliberate single-value corruption the same
+    component must catch, proving the component is alive and the blindness is specific &mdash; not
+    an artifact of a broken harness or a broken measurement. Both directions, always: no blindness
+    verdict without its red proof, and no green trusted until it has been shown able to go red.</p>
+
+  <h3 class="sec">The exhibit, in numbers</h3>
+  <div class="card">
+    <h2>Three prune levels, all green <span class="tag">python-jsonschema at eda97790 &middot; measured 2026-08-19</span></h2>
+    <p class="note" style="margin-top:0">The project's conformance loader sweeps its vendored
+    suite with an unpinned glob: 417 case files are reached only by that glob, CI carries no
+    test-count pin, and coverage is informational. The loader was pointed at pruned copies of the
+    suite (deterministic keep-every-Nth over the glob-swept files); the tree stayed importable,
+    and only the enumeration shrank:</p>
+    <div class="tblwrap"><table class="mono" id="prune-table">
+      <tr><th>run</th><th>keep rule</th><th>case files</th><th>collected</th><th>&Delta; collected</th><th>result</th><th>exit</th></tr>
+      <tr><td>baseline</td><td>all</td><td>417 of 417</td><td>8512</td><td>&mdash;</td><td>8280 passed, 232 skipped</td><td class="good">0</td></tr>
+      <tr><td>30% prune</td><td>i%10&gt;=3</td><td>279 of 417</td><td>6141</td><td class="bad">&minus;27.9%</td><td>5951 passed, 190 skipped</td><td class="bad">0 &mdash; green</td></tr>
+      <tr><td>80% prune</td><td>i%5==0</td><td>91 of 417</td><td>2271</td><td class="bad">&minus;73.3%</td><td>2207 passed, 64 skipped</td><td class="bad">0 &mdash; green</td></tr>
+      <tr><td>100% prune</td><td>none</td><td>0 of 417</td><td>701</td><td class="bad">&minus;91.8%</td><td>701 passed, 0 skipped</td><td class="bad">0 &mdash; green</td></tr>
+    </table></div>
+    <p class="note">The kill-control, in a copy of the 80%-pruned suite: one expectation flipped
+    (<span class="mono">tests/draft7/additionalItems.json</span>, <span class="mono">"valid": true → false</span>)
+    &rarr; exit 1, 2206 passed, and the single failure is exactly the mutated case,
+    <code>TestDraft7::test_additionalItems_additionalItems_as_schema_additional_items_match_schema</code>.
+    Every surviving case is honestly adjudicated &mdash; which is what makes the green at
+    &minus;91.8% a finding about <em>enumeration</em>, not about correctness. The boundary is
+    exact, and instructive: about a dozen optional files are opened by <em>literal path</em> and
+    are loud when one is removed (collection error before any test runs, exit 2) &mdash; that is
+    what a defended enumeration looks like, and the 417 glob-swept files have no equivalent guard.</p>
+  </div>
+
+  <h3 class="sec">What you receive</h3>
+  <ul>
+    <li><b>A findings page</b> in the format of the demo exhibit: every number generated from the
+      measurement logs by a collector that refuses on any unparsed field, with a battery proving
+      the page equals the data &mdash; the deliverable is held to the same standard it audits you
+      against.</li>
+    <li><b>Per-component adjudication</b> of your checking layer: <b>BLIND</b> (verdict unmoved
+      while the enumerated domain shrank), <b>DEFENDED</b> (a census, count pin, or collection
+      guard fired), or <b>N/A</b> (the component reads a declared list &mdash; nothing to
+      collapse &mdash; stated as instrument reach, never folded into a reassuring green).</li>
+    <li><b>Kill-control proofs</b> for every adjudicated component: the recorded run showing the
+      same harness catching a single corrupted value, so each BLIND verdict is evidence about
+      enumeration, not a dead harness.</li>
+    <li><b>The raw run log</b> &mdash; every command, count, and exit code &mdash; delivered
+      beside the findings.</li>
+  </ul>
+
+  <h3 class="sec">What this is not</h3>
+  <p>This is <b>not mutation testing</b>, and a good mutation score does not answer it. Mutation
+    testing perturbs code semantics over the set of tests that execute; this audit perturbs the
+    enumeration that decides what executes. The surfaces are disjoint: a suite can carry a perfect
+    mutation score over its surviving cases and still stay green after losing most of them,
+    because every adequacy measure is computed over the tests that ran. Coverage does not close
+    the gap either &mdash; data-driven cases share code paths, so a fixture corpus can shrink
+    drastically while line and branch coverage barely move.</p>
+
+  <div class="scope">
+    <div class="t">Scope, stated</div>
+    <p><b>The audited project comes out clean where it was tested:</b> its adjudication of what
+    runs is honest &mdash; <em>proven</em>, by the kill-control above &mdash; and the finding is
+    confined to the layer that decides what runs. The exhibit measurement was made respectfully,
+    read-only, on a local clone; the absence of an enumeration census is the industry default,
+    not that project's defect, which is exactly why it is worth measuring.</p>
+    <p><b>No client names appear on this page, and no pricing:</b> the numbers above are the
+    exhibit's own, not a quote. Scope, terms, and tailoring are agreed person-to-person with the
+    owner before any engagement.</p>
+  </div>
+
+  <div class="foot">
+    Offer artifact of research unit <code>vacuous-green</code> &middot; born gated 2026-08-19
+    &middot; every number on this page traces to
+    <span class="mono">research/vacuous-green/oss-demo-jsonschema/oss-demo-data.json</span>,
+    computed by <span class="mono">collect_oss.js</span> from the committed
+    <span class="mono">RUN_LOG.md</span> and raw pytest logs of 2026-08-19 (adjudication:
+    <span class="mono">FINDINGS.md</span> beside them; exhibit page:
+    <span class="mono">demo.html</span>) &middot; battery:
+    <span class="mono">node research/vacuous-green/oss-demo-jsonschema/test-offer-page.js</span>
+    (inside <span class="mono">make check-vacuous-green</span>) parses the table and headline
+    figures back out of these bytes and holds them equal to the JSON, with a red control that
+    proves the equality can fail.
+  </div>
+</div>
+
+<footer class="sitefoot">
+  <div class="foot-cred">
+    <div class="foot-cred-in">
+      <p><b>Carlos Toledo</b> builds computer-assisted proofs and the checks that keep them
+        honest. This page is the practice offered outward: a green result proves nothing until
+        the check behind it has been shown to notice both a wrong value and a shrunken domain
+        &mdash; this audit measures the second, and proves the first.</p>
+      <p>Built on the open-source <a href="https://github.com/carlostoledo1891/mfg-lab/tree/main/eqcert" target="_blank" rel="noopener"><code>eqcert</code></a>
+        certification kernel (MIT). <a href="/contact">Get in touch</a>.</p>
+    </div>
+  </div>
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

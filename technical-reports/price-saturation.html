@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="price-saturation — a coordination thesis about recovered curtailed energy under price saturation, harvested faithfully from the dropped Fleet lab and then REFUTED on the 122-day ONS population. Nothing here is publishable; the refutation is the result.">
-<title>price-saturation — the coordination thesis, refuted on real ONS days</title>
+<title>price-saturation — five gates that never ran, and the claim they were guarding</title>
 <!--
   site/technical-reports/price-saturation.html — the unit's TECHNICAL REPORT.
 
@@ -12,13 +12,17 @@
   subject so one directory can hold several papers later.
 
   THIS PAGE REPORTS A REFUTATION, and that is not a framing choice. README.md's first line is
-  "Status: HARVEST COMPLETE, CLAIM REFUTED, NOTHING PUBLISHABLE." tests/test-thesis-122.js is
-  RED BY DESIGN and its own trailer says: "No prose may assert the claim while this is red."
-  So no prose here asserts it.
+  "Status: HARVEST COMPLETE, CLAIM REFUTED, RECORDED." tests/test-thesis-122.js is RED BY DESIGN
+  and its own trailer says: "No prose may assert the claim while this is red." So no prose here
+  asserts it. The README's earlier "NOTHING PUBLISHABLE" clause was withdrawn 2026-08-21 with its
+  reason recorded there; the refutation is unchanged and a ledger record now governs this unit.
 
-  EVERY NUMBER WAS PRINTED BY A BATTERY IN THE SESSION THAT WROTE THIS PAGE (2026-07-29), by
-  `make check-price-saturation` and `make price-saturation-thesis`. The check id is named beside
-  each figure. Nothing is quoted from memory.
+  EVERY NUMBER WAS PRINTED BY A BATTERY. Written 2026-07-29 from `make check-price-saturation` and
+  `make price-saturation-thesis`, with the check id named beside each figure. RE-DERIVED 2026-08-21
+  after the thesis battery was found unrunnable — it had died at its first precondition since the
+  harvested kernel moved to core/fleet/fleet.js — and every figure reproduced exactly on today's
+  kernel. tests/test-page.js re-derives them from the falsifier's own output on every run, so a
+  figure here cannot drift from the battery that produced it. Nothing is quoted from memory.
 
   BADGE VOCABULARY: the REPORT SPINE (standard / measured / partial / notrun / never / open),
   deliberately NOT `.badge.proved` or `.badge.prospective` — the seed marks both DEPRECATED as
@@ -150,23 +154,36 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 </header>
 
 <div class="wrap">
-<div class="alertbar draft" role="status">claim refuted &middot; nothing publishable</div>
-  <div class="eyebrow">price-saturation &middot; validated numerics &middot; a refutation, reported as the result</div>
-  <h1>The coordination thesis does not hold on the ONS population.</h1>
-  <p class="lede">The thesis was that a coordinated battery fleet recovers at least as much curtailed energy as a greedy
-  one once price saturation is accounted for. The kernel behind it was harvested faithfully out of the dropped
-  Fleet lab, byte-for-byte, with its falsifier run while the originals still existed. Then it was tested against
-  <b>122 real ONS days instead of the 4-day illustration</b> &mdash; and it fails. <b>This page reports that
-  failure, because the failure is the result.</b></p>
+  <div class="eyebrow">price-saturation &middot; validated numerics &middot; a negative result and how it stayed hidden</div>
+  <h1>Five gates guarded the claim. None of them had ever run.</h1>
+  <p class="lede">A Python suite reported <b>9 passed, 5 skipped</b>, and had reported it since the day it was
+  written. The five skips were every real-data gate the project had. Their data path resolved to
+  <code>&lt;repo&gt;/pld-data/</code>, one directory away from where the bundle actually sat &mdash;
+  <code>.work/pld-data/</code>, which is gitignored &mdash; so the condition guarding them was never once
+  satisfied. The claim they existed to test was the one a commercial track was built on. When the data was
+  finally put where a gate could see it, <b>the claim failed on 32 of 122 real days</b>.</p>
 
   <div class="banner">
     <span class="bico">&#9873;</span>
-    <span class="btxt"><b>Status, verbatim from <code>README.md</code>: &ldquo;HARVEST COMPLETE, CLAIM REFUTED,
-    NOTHING PUBLISHABLE.&rdquo;</b> <code>tests/test-thesis-122.js</code> is <b>RED and that red is correct</b>.
-    Its own trailer states the rule this page obeys: <i>&ldquo;Narrow the claim until this is green &mdash;
-    never the reverse, and never by changing the data the gate reads. No prose may assert the claim while this
-    is red.&rdquo;</i> So nothing below asserts it. <b>No ledger claim governs this unit</b>, and none should:
-    there is no result here to govern.</span>
+    <span class="btxt"><b>Both halves of that sentence are still checkable in this repository today.</b>
+    <code>research/fleet/python/tests/test_fleet.py:140</code> resolves the bundle to
+    <code>&lt;repo&gt;/pld-data/ons/</code>, which does not exist; <code>.work/pld-data/</code> does, and
+    <code>.work/</code> is gitignored. Line 149 skips with the message <i>&ldquo;ONS bundle not built &mdash;
+    real-data gates DID NOT run&rdquo;</i>, and five of the file&rsquo;s fourteen tests sit behind it.
+    A suite that says <i>passed</i> beside <i>skipped</i> is telling you the truth and being read as if it
+    said something else.</span>
+  </div>
+
+  <div class="card">
+    <p class="note"><b>What this page is.</b> A refutation, measured on a real population, with the two
+    controls a refutation usually lacks: a second implementation in a second language agreeing on every
+    day, and a named threat to its own validity that is left standing rather than argued away. The thesis
+    under test &mdash; that a coordinated battery fleet recovers at least as much curtailed energy as a
+    greedy one &mdash; is <b>refuted</b>, the battery is <b>red</b>, and the red is the correct state.
+    <code>tests/test-thesis-122.js</code> states the only legitimate response: <i>&ldquo;Narrow the claim
+    until this is green &mdash; never the reverse, and never by changing the data the gate reads. No prose
+    may assert the claim while this is red.&rdquo;</i> Nothing below asserts it, and no narrowed version is
+    offered, because none has been earned.</p>
   </div>
 
   <div class="card">
@@ -268,6 +285,14 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     <div class="note">This is why the figure <b>&ldquo;zero of 122 days&rdquo;</b> is retracted and banned by
     name in this repository. It was true of the illustration and false of the data, and the two were conflated.
     The measured statement is the table above: <b>32 of 122 at 4 GW</b>.</div>
+    <p class="note"><b>And the four days were not the whole of it.</b> The real-data gates existed. Five of
+    them, written, committed, and named for exactly the things that mattered &mdash; provenance, floor
+    calibration, per-day certification, recovery scaling, and the price-saturation finding this unit is named
+    after. Every one sat behind a fixture that skipped when the ONS bundle was missing, and the path it
+    checked was never the path the bundle was at. So the suite ran nine tests, skipped five, and reported
+    that honestly to nobody who read it as a warning. <b>The illustration was too small AND the instrument
+    that would have caught it was never switched on</b>; either alone is a mistake, and together they are
+    how a claim reaches a commercial track untested.</p>
   </div>
 
   <h3 class="sec">The harvest, which did succeed <span class="badge measured">13 checks green, 2026-07-29</span></h3>
@@ -299,7 +324,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
       <tr><td>The coordination thesis holds on the ONS population</td><td><span class="badge never">refuted</span></td><td>C2, C3a, C3b all FAIL &mdash; 32, 33 and 33 violating days of 122. The battery is red and the red is the correct state</td></tr>
       <tr><td>The 4-day illustration is representative of the population</td><td><span class="badge never">refuted</span></td><td>C4 &mdash; 0 violations on the sample, 32 on the population</td></tr>
       <tr><td>A narrower claim that IS supportable</td><td><span class="badge open">open</span></td><td>Not attempted here. Narrowing is the only legitimate response and it has not been done, so nothing narrower is asserted either</td></tr>
-      <tr><td>Any rung on the lab's evidence ladder</td><td><span class="badge notrun">no record</span></td><td><b>No ledger claim exists for this unit</b>, and with the thesis refuted none should. A rung is derived from a claim record; there is no record and no rung</td></tr>
+      <tr><td>Any rung on the lab's evidence ladder</td><td><span class="badge notrun">off-ladder</span></td><td><b>A refutation is a record, not the absence of one.</b> This page previously said no claim record should govern this unit because the thesis was refuted. That reasoning does not survive the ladder it appeals to: the lab's evidence ladder carries <b>refuted</b> as an explicit off-ladder status, and records at that status already existed. A claim killed by its own falsifier is the cleanest object such a ladder can hold &mdash; the falsifier fired, and the firing is the evidence. A record now governs this unit at that status</td></tr>
     </tbody>
   </table>
 
@@ -318,9 +343,33 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   itself a claim and needs its own falsifier. The one that would settle it is written down: re-score both
   fleets on the objective each actually optimises and show whether the ordering flips. Until that runs, this
   page reports the count and not the cause.</p>
-  <p class="note"><b>Sandbox face.</b> This page ships as an honest draft with a page-state banner;
-  it is not a cleared report. The unit exists as the record that the claim did not survive contact
-  with the data.</p>
+  <div class="card">
+    <h2>It happened again, here, to the gate that caught it <span class="tag">measured 2026-08-21</span></h2>
+    <p class="note" style="margin-top:0">The battery that produces every number above &mdash;
+    <code>tests/test-thesis-122.js</code>, the one this page names as its provenance &mdash; <b>could not
+    run.</b> Migration phase 6 consolidated the harvested kernel: <code>.migration/moves.json</code> records
+    <code>research/price-saturation/kernel/fleet.js &rarr; core/fleet/fleet.js</code>. The sibling battery
+    <code>test-harvest-diff.js</code> was re-pointed at the time and stayed green. This one was not. It died
+    at its first precondition, before computing anything, and had done so since 2026-07-28.</p>
+    <p class="note"><b>That is the same defect this page is about, one level up.</b> The original was five
+    gates whose data path resolved to nothing, reported as <i>skipped</i> beside <i>passed</i>. This was one
+    gate whose <i>subject</i> path resolved to nothing, reported as a failed precondition &mdash; and a gate
+    that cannot reach its subject is not red, it is absent, while looking exactly like the thing it is
+    supposed to look like when it is working. The unit documenting how a claim went untested had itself
+    stopped testing it.</p>
+    <p class="note"><b>Repaired 2026-08-21, and the numbers survived.</b> Re-pointed to the moved kernel and
+    re-run, the battery reproduces every figure on this page exactly: worst |&Delta;| 8.527e-14 at
+    2025-09-07, 122/122 verdict agreement with JS 32 and Python 32, 32/33/33 violations at 4/2/1 GW, worst
+    deficits &minus;3.4752e-1, &minus;8.6538e-2 and &minus;2.0607e-2 GWh all on 2025-01-27, the 64/58
+    saturation split, and C4's 0/0/0 on the illustration. <b>The refutation is not stale; it reproduces on
+    today's kernel.</b> Had the numbers moved, this paragraph would be reporting that instead.</p>
+  </div>
+
+  <p class="note"><b>What would change this page.</b> Not a softer claim &mdash; the calibration experiment
+  named above. Rebuild the population under a second defensible calibration and report the violation count
+  under both. If 32/122 does not survive it, nothing on this front survives, the refutation included, and
+  this page would then be reporting its own withdrawal. That is the only route by which anything here moves,
+  and it is written down so that it can be taken by someone who disagrees.</p>
 
   <div class="foot">
     price-saturation &middot; harvest green, thesis <b>RED by design</b> &mdash; the red is the correct state

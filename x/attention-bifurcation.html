@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- DRAFT — sandbox. Owner: "Not all need to go to program, its a sandbox only" and
+     "must save all drafts due to its characteristics on the same theme". Kept with the other
+     _frontier drafts. Never routed, never exported, kind `private`.
+     FEASIBILITY IS THE NEW QUESTION HERE. The hard constraint applied throughout: this tree does
+     validated numerics and ships zero-dependency verifiers. It CANNOT train neural networks — no
+     GPU, no torch, no datasets. A proposal whose proof is an experiment is infeasible here whatever
+     its mathematical merit, and saying so is not modesty, it is scope. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[PURSUE — narrowed] A certified critical threshold for attention clustering</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+    --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+    --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A; --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55; --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+    --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+    --nav-max:1120px; --read-max:900px; --nav-h:58px;
+    color-scheme:light;
+  }
+  .eyebrow,.nav a,.badge,.ro .k,.ro .v,.meta,.k{font-variant-numeric:tabular-nums;
+    font-feature-settings:'tnum' 1,'zero' 1}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{
+    animation-duration:.001ms !important;transition-duration:.001ms !important}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:14px;
+    line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-optical-sizing:auto;padding-top:var(--nav-h)}
+  a{color:var(--fp-deep)}
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+
+  /* ── SHARED SITE CHROME — adapted from the seed research/_engine/paper.html; identical
+       markup and CSS to the conforming _frontier siblings (cap-for-mfg.html et al). ───────── */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+  .topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+    letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+  .brand .sub{color:var(--ink-soft);font-weight:500;font-size:13.5px}
+  .sitenav,.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .sitenav a,.nav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitenav a:hover,.nav a:hover{color:var(--fp-deep)}
+  .sitenav a[aria-current="page"],.nav a[aria-current="page"]{color:var(--ink);font-weight:600}
+  .sitenav a,.nav a,.sitemap a{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
+  @media(max-width:760px){.sitenav,.nav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .sitenav::-webkit-scrollbar,.nav::-webkit-scrollbar{display:none}}
+  @media(max-width:430px){ .brand .sub{display:none} }
+  .sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+    font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+  .sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .sitemap a:hover{color:var(--fp-deep)}
+  .sitefoot{margin-top:48px;border-top:1px solid var(--grid);background:var(--card)}
+  .foot-base{max-width:var(--read-max);width:100%;margin:0 auto;padding:16px 20px 36px;font-family:var(--data);
+    font-size:11px;line-height:1.5;color:var(--ink-soft)}
+  
+  .wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:0 20px}
+  .hero{padding:44px 0 0}
+  .eyebrow{font-family:var(--data);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  h1{font-family:var(--ui);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:22ch;text-wrap:balance}
+  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.68;max-width:70ch;margin-top:15px;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+  .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
+  .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{font-size:14px;line-height:1.64;color:var(--ink-soft)}
+  .callout p b{color:var(--ink);font-weight:600}
+  section{padding:34px 0 0}
+  h2{font-family:var(--ui);font-size:19px;font-weight:600;letter-spacing:-.016em;margin-bottom:9px;text-wrap:balance}
+  p.body{color:var(--ink-soft);font-size:14.6px;line-height:1.66;max-width:100%}
+  p.body b{color:var(--ink);font-weight:600}
+  .box{background:var(--card);border:1px solid var(--grid);border-radius:9px;padding:17px 19px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .box .k{font-family:var(--data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .box p{font-size:14.4px;line-height:1.66;color:var(--ink-soft)}
+  .box p b{color:var(--ink);font-weight:600}
+  .box.claim{border-left:3px solid var(--fp-deep)}
+  .box.risk{border-left:3px solid var(--hjb)}
+  footer{margin-top:52px;border-top:1px solid var(--grid);background:var(--card)}
+  footer .wrap{padding:22px 20px 30px}
+  .foot{font-family:var(--data);font-size:11px;line-height:1.7;color:var(--ink-soft)}
+
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/technical-reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/defects">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Sandbox draft 09 &middot; Metastable clustering &middot; latent bifurcation certification</div>
+    <h1>A certified critical threshold for attention clustering</h1>
+
+    <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">Feasibility verdict &mdash; THE ONE — feasible and aligned</div>
+      <p><b>The only one of the four that is both feasible here and aligned with what this tree
+   already does</b> &mdash; and it is the geometry thesis applied to attention. Attention dynamics on
+   N tokens are a <b>finite-dimensional</b> dynamical system; certifying where a bifurcation occurs
+   means certifying where an eigenvalue crosses zero, bracketed by interval arithmetic. That is
+   exactly the machinery in <code>eqcert</code>, and exactly the shape of the existing refusal-frontier
+   work (closes at A = 5, refuses at A = 6).</p>
+    </div>
+
+    <div class="callout">
+      <div class="k">Status</div>
+      <p><b>Nothing here is claimed, certified or proved.</b> No kernel, no certificate, no falsifier,
+        no ledger record. A sandbox note. <b>The feasibility verdict above is this repo's own
+        judgement</b>; the occupancy half is commissioned and provisional until it returns.</p>
+    <p style="margin-top:9px"><b>The full record is one file, not repeated here.</b> 11 queries, 12 fetches,
+        20 identifiers, the query and fetch logs, the DO-NOT-WRITE list and the holes the pass did not
+        cover: the mission's literature gate record, held internally. <b>Deliberately not duplicated
+        onto this page</b> &mdash; two copies of a finding drift, and that is the defect that put a
+        retracted density floor on five shipping surfaces earlier the same day. <b>Occupancy was
+        adjudicated; FEASIBILITY WAS ONLY SCREENED</b> against this repo's capability filter, executed
+        nothing, and measured no interval width.</p></div>
+  </div>
+
+<div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">RESCORED 2026-07-30 &mdash; CONFIRMED — and the novelty-zero finding stops being an objection</div>
+      <p><b>The first verdict on this page was scored on ONE axis: is the mathematics new. That axis
+      contradicts this programme's own record.</b> mfg-congest is not new mathematics &mdash; it is the
+      first validated ENCLOSURE of known mathematics. wardrop-repro is explicitly a REPRODUCTION.
+      stock-constraint certifies an LP duality argument a century old. <b>None of the delivered work
+      here is novel mathematics and all of it is valuable</b>, so killing new ideas by a standard the
+      existing work would itself fail was an error.</p>
+      <p style="margin-top:9px"><b>Academic novelty:</b> ZERO — Geshkovski et al. prove the clustering theorem; Lessard-Pugliese make certified bifurcation brackets routine.</p>
+      <p style="margin-top:6px"><b>Artifact value &mdash; does a CHECKABLE version exist?</b> HIGH. No certified, re-runnable, finite-n bracket for an attention system exists as an artifact. The method is off-the-shelf; the artifact is not.</p>
+      <p style="margin-top:9px">Under the corrected scoring this was never damaged. 'We applied standard validated-continuation machinery to a new object AND SHIPPED IT RE-RUNNABLE' is the whole product.</p>
+    </div>
+  <section><h2>What it is</h2><p class="body">Attention layers form semantic clusters. In mean-field particle systems, clusters appear
+    through <b>phase transitions at critical interaction parameters</b> &mdash; a smooth distribution
+    splitting into metastable groups. The proposal is to certify where that happens.</p></section>
+  <section>
+    <h2>The claim, and whether it is decidable</h2>
+    <div class="box claim"><div class="k">the claim</div><p><b>For a specific finite attention model: the critical parameter at which clustering onsets
+    lies in a certified bracket [c&#8331;, c&#8330;]</b> &mdash; a location, not an asymptotic
+    statement. Decidable, small, and attackable.</p></div>
+    <div class="box"><div class="k">is there a certificate here WE could build?</div><p><b>Yes, and it reuses the stack unchanged:</b> interval arithmetic, an enclosed eigenvalue
+    crossing, a bracketed threshold, and a falsifier that plants a model whose true threshold is
+    outside the claimed bracket.</p></div><div class="box risk" style="margin-top:12px"><div class="k">occupancy check, 2026-07-30 &mdash; confirmed feasible, and priced honestly</div>
+      <p><b>The asymptotic theorem is OCCUPIED DEFINITIVELY.</b> Geshkovski, Letrouit, Polyanskiy and
+      Rigollet prove tokens cluster as t&nbsp;&rarr;&nbsp;&infin;, with the limiting object determined
+      by the <b>spectrum of the value matrix</b> (arXiv:2305.05465, NeurIPS 2023; companion in Bull.
+      AMS 2025). <b>Their theorem may not be restated as a finding.</b></p>
+      <p style="margin-top:9px"><b>And the METHOD is occupied too</b> &mdash; this is the pattern that
+      killed the sheaf proposal. Lessard &amp; Pugliese (arXiv:2404.00535, Linear Algebra Appl. 728
+      (2026)) give a complete template: two-parameter continuation, Newton&ndash;Kantorovich for
+      rigorous existence, a Gershgorin argument that exactly one eigenvalue has zero real part, and a
+      rigorous enclosure of the normal-form coefficient. <b>So what is left is an INSTANCE, not a
+      method, and the mathematical novelty is zero.</b> The honest framing is "we applied standard
+      validated-continuation machinery to a new object", never "we developed a certification
+      technique".</p>
+      <p style="margin-top:9px"><b>Why it is still the one:</b> with <b>prescribed</b> weights the
+      self-attention flow is a finite-dimensional ODE with analytic right-hand side &mdash; <b>no
+      training is needed to define the object</b>, because the theorems are about fixed,
+      time-independent weights. Interval exp, exact rationals and Krawczyk are what
+      <code>eqcert</code> already holds.</p>
+      <p style="margin-top:9px"><b>Three costed caveats:</b> enclosure width grows with nd, so this
+      lives at small n and d&nbsp;=&nbsp;1,2, <b>not model scale</b>; the softmax makes the field
+      rational-in-exponentials, needing care where the denominator is near-degenerate; and
+      <b>prescribed weights are NOT a trained Transformer</b> &mdash; any sentence implying "we
+      certified when model X collapses" is forbidden.</p>
+      <p style="margin-top:9px"><b>The narrowing goes into the claim BEFORE work starts: prescribed
+      weights, finite n, certified parameter bracket.</b> Strip any of the three and it collapses into
+      their theorem plus their method.</p></div>
+  </section>
+  <section><h2>The honest risk</h2><div class="box risk"><p><b>Two real ones.</b> First, the asymptotic result is likely already proved &mdash;
+    Geshkovski, Letrouit, Polyanskiy and Rigollet have rigorous work on clustering in self-attention
+    dynamics; if the critical threshold is in there, this dies. Second, and this is the failure mode
+    that killed the sheaf proposal: <b>validated continuation and rigorous bifurcation analysis are a
+    mature generic technology</b> (Zgliczy&nacute;ski school, CAPD). If pointing an existing validated
+    continuation tool at attention dynamics is the whole contribution, that is an application note,
+    not a discovery. <b>Occupancy check commissioned; this verdict is provisional until it returns.</b></p></div></section>
+</div>
+<footer><div class="wrap"><div class="foot">
+  Sandbox draft &middot; not published, not routed, not exported &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; feasibility judged, occupancy pending
+</div></div></footer>
+<footer class="sitefoot">
+  <nav class="sitemap" aria-label="Site map">
+    <a href="/technical-reports">Reports</a>
+    <a href="/stack">Stack</a>
+    <a href="/defects">Errata</a>
+    <a href="/about">About</a>
+    <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+  </nav>
+  <div class="foot-base">Carlos&nbsp;Toledo &middot; carlos@carlostoledo.co &middot; Brazil, 2026</div>
+</footer>
+
+</body>
+</html>

@@ -361,7 +361,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     <canvas id="cvWall"></canvas>
     <div class="note"><b>This panel illustrates the mechanism, not a certified instance.</b> It shows the structural reason
     the paper's scope is bounded: as <b>r &rarr; m&#772;&#8320;</b> the certified floor reaches zero and the reciprocal bound diverges, so
-    the validator returns a refusal — which, mapped as a curve A&#8902;(&sigma;,a), would itself be a contribution (that map is future work):
+    the validator returns a refusal — which, mapped as a curve A&#8902;(&sigma;,a), would itself be a contribution (that map is future work; the &sigma;-slice at a = &frac12; is measured below &mdash; and the mechanism there is <i>not</i> this one: it is Z<sub>1</sub> &rarr; 1):
     certified where it works, honest refusal where it does not, the edge reported not tuned.</div>
   </div>
 
@@ -374,7 +374,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
       <tr><td>0.5</td><td>1/2</td><td>0.5</td><td>14</td><td>7.75e&minus;15</td><td>0.9736</td><td>0.5268</td></tr>
     </tbody>
   </table>
-  <div class="note"><b>Still to build:</b> the boundary map A&#8902;(&sigma;,a) — the amplitude beyond which m<sub>min</sub>&nbsp;&rarr;&nbsp;0 and the proof refuses —
+  <div class="note"><b>Still to build:</b> the boundary map A&#8902;(&sigma;,a) &mdash; the amplitude at which the proof refuses. <b>Corrected 2026-08-21:</b> this read &ldquo;the amplitude beyond which m<sub>min</sub> &rarr; 0 and the proof refuses&rdquo;, and that mechanism is <i>refuted</i> at a = &frac12; &mdash; the density-vacuum gate never fired once on the evaluated map. What binds is Z<sub>1</sub> &rarr; 1; see the measured section below &mdash;
   reported as the certified edge, exactly as mfg-cap's multiplicity radius degraded under concentration (min&nbsp;m&nbsp;&rarr;&nbsp;4.3e&minus;4).</div>
 
   <h3 class="sec">A witness that shares no code with the certificate <span class="badge mtest">mutation-tested</span></h3>
@@ -440,7 +440,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   <span class="badge prospective">prospective</span> &mdash; pre-registered, the <i>shape</i> of the claim fixed in advance but the
   number not yet computed; <span class="badge open">open</span> &mdash; the honest frontier, known and not done. This page reports a
   completed <i>enclosure</i>: the kernel is built and mutation-tested (revert a check, it goes red), so every congestion-<i>result</i>
-  row below is <span class="badge mtest">mutation-tested</span>. Only the honest frontier — the concentrated regime and the refusal map A&#8902;(&sigma;,a) —
+  row below is <span class="badge mtest">mutation-tested</span>. Only the honest frontier &mdash; the concentrated regime and the <i>a</i> axis of the refusal map A&#8902;(&sigma;,a); the &sigma;-slice at a = &frac12; is measured below &mdash;
   stays <span class="badge open">open</span>.
   <b>Deliberately absent: the words <i>proved</i> and <i>certified</i> as a status.</b> Both are rungs on this project's evidence
   ladder — rung 5 needs a named human signature, rung 4 needs a ledger certificate record — and no such record covers
@@ -460,9 +460,60 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
       <tr><td>Full even+odd local uniqueness at r&nbsp;&approx;&nbsp;7.75e&minus;15</td><td><span class="badge mtest">mutation-tested</span></td><td>Stage&nbsp;2.2: &Phi; preserves parity &rArr; D&Phi; block-diagonal &rArr; Y&#8320; unchanged. Odd-block Z&#8321; enclosed with the same approximate-inverse + analytic-tail structure as the even block (Z&#8321;<sup>odd</sup>&nbsp;=&nbsp;Z&#8321;<sup>even</sup>&nbsp;=&nbsp;0.5267562117334962 at A=0.3; both worst columns <code>tail(analytic)</code>). Radii polynomial consumes Z&#8321;&nbsp;=&nbsp;max(Z&#8321;<sup>even</sup>,&nbsp;Z&#8321;<sup>odd</sup>). Gated by the congestion validate battery P1b/D1b</td></tr>
       <tr><td>Ergodic form collapses to a scalar ODE for every a &isin; (0,1] &mdash; so the target is the DISCOUNTED system</td><td><span class="badge mtest">mutation-tested</span></td><td>tests/test-reduction.js, 5 checks; workflow reduction agent</td></tr>
       <tr><td>The a = ½ augmented-system algebra (the equations above)</td><td><span class="badge mtest">mutation-tested</span></td><td>D&Phi; checked against finite differences (test D1) and the enclosure closes on it (validation battery)</td></tr>
-      <tr><td>Concentrated / near-vacuum regime, and the endpoints a &rarr; 0, 1</td><td><span class="badge open">open</span></td><td>the reciprocal bound diverges as m<sub>min</sub>&rarr;0 &mdash; the honest frontier</td></tr>
+      <tr><td>Concentrated / near-vacuum regime, and the endpoints a &rarr; 0, 1</td><td><span class="badge open">open</span></td><td>the reciprocal bound would diverge as m<sub>min</sub>&rarr;0, but the evaluated map never gets there (smallest certified min m = 0.539) &mdash; the honest frontier</td></tr>
     </tbody>
   </table>
+
+  <h3 class="sec">Where the method refuses, and why <span class="tag">added 2026-08-21 &middot; &sigma;-slice at a = &frac12;</span></h3>
+  <div class="caveat">
+    <p><b>The (&sigma;,&nbsp;a) map is still future work, and the sentences above saying so are correct</b>
+    &mdash; the <i>a</i> axis is unevaluated, because the validator hard-codes a&nbsp;=&nbsp;&frac12; and a general
+    a&nbsp;=&nbsp;1/q needs a new reciprocal closure, a new tail inverse, new analytic tail components and a
+    new Z<sub>2</sub> for a degree-(q+1) term. What this page has been silent about is the slice that
+    <i>was</i> measured, and the mechanism underneath it, which is the more useful half.</p>
+
+    <p><b>The refusal is not the density vacuuming.</b> The prospective reading &mdash; that there is an
+    amplitude beyond which m<sub>min</sub>&nbsp;&rarr;&nbsp;0 &mdash; does not survive contact with the sweep. In the
+    sweep recorded on <b>2026-07-28</b> (204 evaluated points, 86 refusals), the count of refusals
+    attributable to a positivity failure of <i>m</i>, and to a non-positive w-branch, were <b>both zero</b>: the proof stops because the approximate inverse stops being one (Z<sub>1</sub> &rarr; 1), <b>not because the density approaches zero</b>. At the boundary itself &mdash; the first certified-to-refused transition &mdash; the mode is <code>Z1_GE_1</code> at every evaluated &sigma;. Away from it the other named modes do occur: of those 86 refusals, 66 are <code>Z1_GE_1</code> and the remaining 20 are non-finite candidates, a non-positive s&#772;<sub>0</sub>, or a non-positive discriminant. The vacuum mode is the one that never appears at all. <b>Read those two counts as of that date.</b> The ceiling below was re-derived on
+    2026-08-21 against the kernels as they stand; that sweep was not, and the kernel bytes have moved
+    since it ran. The mechanism is what the re-derivation confirms; the sweep's tallies are quoted from
+    the record, not re-measured today, and this page would rather say so than let one date stand for two
+    different amounts of checking.</p>
+
+    <p><b>That coefficient gives an N-free ceiling.</b> The binding term is the reciprocal tail
+    c<sub>Mrecip</sub>&nbsp;=&nbsp;&#8214;w&#8727;w&#8214;<sub>&nu;</sub>&nbsp;/&nbsp;(2s&#772;<sub>0</sub>), whose denominator is a scalar
+    with no derivative and is therefore N-free &mdash; measured 1.9770 &rarr; 1.9721 across N = 14 &rarr; 40 at &sigma; = 0.1, recorded 2026-07-28. Since Z<sub>1</sub>&nbsp;&ge;&nbsp;c<sub>Mrecip</sub>, the amplitude
+    A<sub>rec</sub>(&sigma;) at which c<sub>Mrecip</sub>&nbsp;=&nbsp;1 forces a refusal <i>at every N</i>. It came out
+    bit-identical across N&nbsp;=&nbsp;14, 20, 28, 40:</p>
+    <table class="mono">
+      <thead><tr><th style="text-transform:none">&sigma;</th><th style="text-transform:none">A<sub>rec</sub> &mdash; N-free ceiling</th><th style="text-transform:none">A&#8902;/A<sub>rec</sub>, N = 14 &rarr; 40</th></tr></thead>
+      <tbody>
+        <tr><td>0.1</td><td>[0.56975, 0.56982]</td><td>0.8483 &rarr; 0.9358</td></tr>
+        <tr><td>0.5</td><td>[5.94849, 5.94922]</td><td>0.9021 &rarr; 0.9547</td></tr>
+        <tr><td>1.2</td><td>[31.24951, 31.25391]</td><td>0.9052 &rarr; 0.9558</td></tr>
+      </tbody>
+    </table>
+    <p>A cheap a-priori predictor of where this method refuses, computable from the candidate alone,
+    before any interval arithmetic is run. It is corroborated by an independent route that can go red:
+    recomputing &#8214;w&#8727;w&#8214;<sub>&nu;</sub> by sampling 1/m pointwise agrees to 5.77e&minus;15, inside a <i>derived</i> bound of 1.82e&minus;12 (truncation 3.44e&minus;16 plus a roundoff term); with the reciprocal deliberately built wrong the same check fails at 5.0e&minus;1 &mdash; 2.7e11 times that bound. <b>Re-derived 2026-08-21</b> on the kernels as they stand today: every value <b>in the table above</b> reproduced the 2026-07-28 record exactly, and both controls fired as recorded. The denominator series below it comes from the N-refinement, which was <b>not</b> re-run.</p>
+
+    <p><b>Both halves, and neither may be dropped.</b> A&#8902; at a fixed N is a <b>resolution artefact at the
+    5&ndash;10% level</b>: it rises monotonically with N and has not converged by N&nbsp;=&nbsp;40, so the fixed-N
+    boundary is a lower bound on the ceiling and must never be read as &ldquo;the boundary&rdquo;. Whether
+    A&#8902;(N) reaches A<sub>rec</sub> is <b>not established</b> &mdash; N&nbsp;&gt;&nbsp;40 is unevaluated. And the
+    ceiling itself is a property of <i>this</i> construction, not of the PDE: it is set by closing the
+    half-integer power with m&middot;w&sup2;&nbsp;=&nbsp;1 and inverting the reciprocal tail by the scalar
+    1/(2s&#772;<sub>0</sub>); A<sub>rec</sub> swings about 6% across &nu;&nbsp;&isin;&nbsp;[1.00, 1.10]. A different
+    closure would move it.</p>
+
+    <p><b>Not evaluated, stated so it cannot be assumed.</b> The <i>a</i> axis, in full. N&nbsp;&gt;&nbsp;40.
+    &sigma; outside [0.1,&nbsp;1.2], and between the evaluated &sigma;. &gamma;&nbsp;&ne;&nbsp;0.5, which is
+    load-bearing for the even-subspace restriction. rCap&nbsp;&ne;&nbsp;1e&minus;2. And <b>the refused region was
+    not probed for whether a solution exists there</b> &mdash; it is not our claim either way, and it must
+    never be reported as one. Gomes&ndash;Mitake&rsquo;s existence theorem is untouched everywhere on this
+    slice, including throughout the refused region.</p>
+  </div>
 
   <h3 class="sec">What this will not claim</h3>
   <div class="caveat">
