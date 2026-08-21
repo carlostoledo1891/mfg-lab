@@ -2,21 +2,25 @@
 <html lang="en">
 <head>
 <!--
-  STARTER REPORT — FrontierMath "Degree vs Sensitivity for Boolean Functions", assessed 2026-07-31.
-  Written at the owner's request, against a proposal to take the mean-field limit of the Boolean
-  hypercube and replace an SOS/SDP certificate with an HJB viscosity solution.
+  PATH 6 — OPENED FROM THE ATTACHED SURVEY, 2026-07-31.
+  Pandey & Xu, "Mean Field Theory and its application to deep learning", May 2019 (NYU). A survey; NO
+  identifier is stated in the supplied PDF and none has been invented here.
 
-  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every other file in _frontier/.
+  WHY IT MATTERS MORE THAN A SURVEY SHOULD: chi_1 = 1, the "edge of chaos", is a scalar critical equation
+  in two parameters, defined by Gaussian integrals over a nonlinear activation. That is a certified
+  bifurcation-bracket target -- AND at chi_1 = 1 the correlation map's fixed point is exactly
+  non-hyperbolic, which makes it a candidate for the NONLINEAR instance with geometric refusal that
+   the multiplicity programme has been waiting for.
 
-  THIS ONE IS A KILL, and it is structural rather than occupancy, so it does not come back under
-  a rescoring. It is written out in full anyway: a direction that was assessed and killed with a
-  stated reason is worth more than one that was never looked at, and SCORING.json's own record
-  keeps the dead ones for exactly that reason.
+  It is blocked on interval transcendentals. So are aerospace and Path 5. See interval-transcendentals.html.
+
+  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every file in _frontier/: it may state what it
+  INTENDS to certify and may never state that anything IS certified. No literature gate has run.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>[STARTER REPORT — KILLED, structural] Degree vs sensitivity for Boolean functions</title>
-<meta name="robots" content="index,follow">
+<title>The edge of chaos — a certifiable critical manifold</title>
+<meta name="robots" content="noindex, nofollow">
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -33,8 +37,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
     --radius:10px; --radius-sm:3px;
     color-scheme:light;
   }
-  .eyebrow,.nav a,.badge,.ro .k,.ro .v,.meta,.k{font-variant-numeric:tabular-nums;
-    font-feature-settings:'tnum' 1,'zero' 1}
+  .eyebrow,.badge,.k{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'zero' 1}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{
     animation-duration:.001ms !important;transition-duration:.001ms !important}}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -45,7 +48,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .hero{padding:0}
   .eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
   h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.026em;line-height:1.1;margin:11px 0 0;max-width:26ch;text-wrap:balance}
-  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:70ch;margin-top:15px;text-wrap:pretty}
+  .lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.68;max-width:100%;margin-top:15px;text-wrap:pretty}
   .lede b{color:var(--ink);font-weight:600}
   .callout{margin-top:26px;border:1px solid var(--grid);border-radius:var(--radius);background:color-mix(in srgb,var(--amber) 7%,transparent);padding:16px 18px;width:100%;box-shadow:inset 3px 0 0 var(--amber);}
   .callout .k{font-family:var(--data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
@@ -62,6 +65,7 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .box p b{color:var(--ink);font-weight:600}
   .box.claim{border-left:3px solid var(--fp-deep)}
   .box.risk{border-left:3px solid var(--hjb)}
+  .box.good{border-left:3px solid var(--good)}
   code{font-family:var(--data);font-size:13px;background:color-mix(in srgb,var(--grid) 45%,transparent);
     padding:1px 5px;border-radius:var(--radius-sm)}
   table{border-collapse:collapse;margin-top:13px;font-size:13.6px;width:100%;max-width:100%}
@@ -139,121 +143,104 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <div class="wrap">
     <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
 <div class="hero">
-    <div class="eyebrow">FrontierMath starter report 02 of 02 &middot; Combinatorics</div>
-    <h1>Degree vs sensitivity for Boolean functions</h1>
-    <p class="lede">FrontierMath open problem, verbatim: <b>&ldquo;Improve the exponent in the upper bound
-      that degree has over sensitivity.&rdquo;</b> Assessed against a proposal to take the mean-field limit
-      of the hypercube and replace an SOS certificate with an HJB viscosity solution.</p>
+    <div class="eyebrow">FrontierOpened from the MFT survey</div>
+    <h1>The edge of chaos, certified</h1>
+    <p class="lede">Deep-learning mean-field theory has a <b>phase boundary</b>: <code>&chi;&#8321;(&sigma;<sub>w</sub>,
+&sigma;<sub>b</sub>) = 1</code>. It is a scalar critical equation in two parameters &mdash; small, nonlinear,
+and <b>exactly the shape this tree encloses</b>.</p>
 
     <div class="callout">
       <div class="k">Status — read this before anything below</div>
       <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> No kernel, no certificate,
-        no falsifier, no ledger record. It assesses a direction and kills it, with the reason stated so the
-        kill can itself be attacked.</p>
-    </div>
-
-    <div class="callout" style="border-color:var(--hjb);background:color-mix(in srgb,var(--hjb) 6%,transparent)">
-      <div class="k" style="color:var(--hjb)">Verdict 2026-07-31 &mdash; KILLED &middot; STRUCTURAL</div>
-      <p><b>Two independent structural objections, either of which is fatal on its own.</b> The proposal
-        targets a bottleneck that is not the bottleneck, and its central mechanism dissolves the only object
-        the problem is about. Detail below. Under <code>SCORING.json</code>'s rule &mdash; <i>structural kills
-        survive a rescoring, occupancy kills do not</i> &mdash; this one stays dead, in the same category as
-        <code>rotor-trajectory</code>.</p>
+        no falsifier and no ledger record. <b>The literature gate RAN 2026-08-04 and returned PARTIAL</b> (this callout said none had run; replaced, not deleted). The theory is Poole et al. arXiv:1606.05340 and Schoenholz et al. arXiv:1611.01232 and is <b>textbook</b>; the floating-point value is routine; only the <i>certificate</i> was not located &mdash; and the gate additionally rules it <b>FOLKLORE-ADJACENT</b>, since bracket-and-test, Krawczyk and self-validating quadrature each reach it in under a page. Kuehn &amp; Queirolo already published <i>Computer Validation of Neural Network Dynamics: A First Case Study</i> (DCDS-B 30(6):2073&ndash;2093, 2025). And the object certified would be the critical point <b>of the infinite-width approximation</b>, not of any finite network. See <code>FINDINGS_LIT_EDGE_OF_CHAOS.md</code>. It names a direction and
+        what would have to be true. <b>A prospectus that reads like a result is the defect</b>, so this one
+        says so at the top and is not published.</p>
     </div>
   </div>
+  <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
+      <div class="k" style="color:var(--fp-deep)">The object, as the survey states it</div>
+      <p>A length map gives the fixed point <code>q*</code>:
+        <code>q<sup>l</sup> = &sigma;<sub>w</sub>&sup2; &int;Dz &phi;(&radic;q<sup>l-1</sup> z)&sup2; +
+        &sigma;<sub>b</sub>&sup2;</code>. The correlation map then has a fixed point at <code>c* = 1</code>
+        whose stability is the slope
+        <code>&chi;&#8321; = &sigma;<sub>w</sub>&sup2; &int;Dz [&phi;&prime;(&radic;q* z)]&sup2;</code>.
+        <b><code>&chi;&#8321; &lt; 1</code> ordered</b> (inputs converge, gradients vanish);
+        <b><code>&chi;&#8321; &gt; 1</code> chaotic</b> (inputs decorrelate, gradients explode);
+        <b><code>&chi;&#8321; = 1</code> the edge</b>, where very deep networks become trainable.</p>
+    </div>
 
   <section>
-    <h2>Objection 1 — the named bottleneck is not the bottleneck</h2>
-    <p class="body">The proposal states the obstacle as: <i>&ldquo;bounding degree against sensitivity
-      typically requires constructing an explicit Sum-of-Squares certificate via Semidefinite Programming
-      &hellip; without an SDP solver, generating exact rational certificates is blocked.&rdquo;</i></p>
-    <p class="body" style="margin-top:11px"><b>The relationship was settled in 2019 and not by an SDP.</b>
-      Huang proved the Sensitivity Conjecture &mdash; <code>arXiv:1907.00847</code>, <i>&ldquo;Induced
-      subgraphs of hypercubes and a proof of the Sensitivity Conjecture&rdquo;</i> &mdash; giving
-      <code>deg(f) &le; s(f)&sup2;</code>. The proof is a short spectral argument: a signed adjacency matrix
-      of the hypercube with eigenvalues <code>&plusmn;&radic;n</code>, plus Cauchy interlacing. There is no
-      semidefinite program in it, and there is no SOS certificate to replace. <b>A method whose entire
-      selling point is &ldquo;bypasses SDP&rdquo; bypasses something that is not in the way.</b></p>
+    <h2>Why this is a certification target and not just a formula</h2>
+    <p class="body">Everything in it is a <b>scalar fixed point plus a Gaussian integral</b>. There is no
+      PDE, no discretisation, no forward&ndash;backward coupling, and the whole system is two-dimensional in
+      parameters. A radii-polynomial or Krawczyk enclosure of <code>(q*, &chi;&#8321;&minus;1) = 0</code>
+      with outward-rounded quadrature is a <b>small</b> problem by this tree's standards.</p>
+    <div class="box claim"><div class="k">the first decidable claim</div><p>For a fixed activation and a
+      stated box of <code>&sigma;<sub>b</sub></code>: <b>the critical <code>&sigma;<sub>w</sub></code> lies
+      in an explicit interval</b>, certified, with the enclosure of <code>q*</code> carried through the
+      quadrature tail rather than assumed.</p></div>
+    <div class="box"><div class="k">and the reason it belongs to Path 2</div><p><b>At
+      <code>&chi;&#8321; = 1</code> the fixed point is exactly non-hyperbolic</b> &mdash; the derivative
+      equals one. Contraction cannot hold there, and it fails <i>for a geometric reason rather than a
+      representational one</i>. C1 has been waiting for a genuinely
+      NONLINEAR instance with geometric refusal, because S1 is affine. <b>This is a candidate for that
+      instance</b>, and the refusal is predicted by the theory before it is measured &mdash; which is the
+      strongest form of red control this tree has.</p></div>
   </section>
 
   <section>
-    <h2>Objection 2 — the mean-field limit destroys the object</h2>
-    <p class="body">Sensitivity <code>s(f)</code> is defined by counting, at a specific input
-      <code>x &isin; {0,1}&#8319;</code>, how many <b>single-coordinate flips</b> change the value of
-      <code>f</code>. It is a maximum over points of a count over discrete neighbours.</p>
-    <div class="box risk"><p><b>In a mean-field limit there are no coordinates to flip.</b> Passing to a
-      continuous measure space as <code>n &rarr; &infin;</code> replaces the hypercube's vertex-and-edge
-      structure with a density. The Hamming neighbour relation &mdash; the <i>only</i> structure
-      <code>s(f)</code> is defined against &mdash; is precisely what is quotiented away. The quantity the
-      problem asks about is not merely hard to compute in the limit; <b>it is not definable there.</b></p>
-      <p style="margin-top:9px">Worse for the proposal's actual goal. Improving an exponent in this area is
-      done by <b>extremal constructions at finite n</b> &mdash; exhibiting specific functions whose degree is
-      large and sensitivity small. Those constructions live entirely in the finite combinatorial structure the
-      limit erases. The mechanism deletes the search space it was brought in to search.</p></div>
+    <h2>The blocker, and it is shared</h2>
+    <div class="box risk"><p><b>Arithmetic unblocked 2026-08-01:</b> <code>eqcert</code> now ships
+      sound interval <code>exp</code>, <code>log</code>, <code>sin</code>, <code>cos</code>,
+      <code>tanh</code> (see <a href="interval-transcendentals.html">Interval transcendentals</a>).
+      <b>Still open on this page:</b> the actual &chi;&#8321;=1 enclosure instance, Gaussian
+      quadrature wiring, and <code>erf</code> if the activation needs it. Fractional powers remain
+      refused. The shared wall moved from &ldquo;no transcendentals&rdquo; to &ldquo;build the
+      instance.&rdquo;</p></div>
   </section>
 
   <section>
-    <h2>The requisite this report could not resolve — stated, not guessed</h2>
-    <p class="body">FrontierMath's public listing gives only a one-line summary per problem; <b>the individual
-      problem page and its verifier were not readable in this pass.</b> That leaves one requisite genuinely
-      open, and it is the one that decides what the problem even asks.</p>
-    <div class="box"><div class="k">open requisite</div>
-      <p><b>Is the exponent 2 known to be tight?</b> The scoping search returned a statement that it cannot be
-      improved below 2, attributed to a variant of the Chung&ndash;Füredi&ndash;Graham&ndash;Seymour example.
-      If that refers to <code>deg</code> versus <code>s</code>, then the exponent is optimal and the open
-      problem must concern the <i>constant</i>, or a neighbouring pair such as approximate degree
-      (<code>arXiv:2010.12629</code> treats degree vs approximate degree and the quantum implications of
-      Huang's theorem). <b>The search result may have conflated the two pairs. This report does not resolve
-      it and does not assert either reading.</b></p>
-      <p style="margin-top:9px">Recording it rather than picking one is deliberate. The most expensive
-      documented error in this tree came from two internal records disagreeing about one paper &mdash; both
-      right, about different versions &mdash; and being repeated outward. <b>An unresolved requisite named as
-      unresolved costs nothing; a guessed one costs a correction in public.</b></p></div>
-  </section>
-
-  <section>
-    <h2>Scored on the two axes</h2>
-    <div class="box"><div class="k">N — academic novelty</div>
-      <p><b>Not reached.</b> Novelty is not the binding constraint when the mechanism cannot represent the
-      quantity. There is nothing to score.</p></div>
-    <div class="box"><div class="k">A — artifact value: does a checkable version exist?</div>
-      <p><b>LOW, and the one salvage is not recommended.</b> A zero-dependency exact-rational verifier that
-      checks Huang's interlacing bound on explicit small-<code>n</code> functions would be re-runnable and
-      genuinely checkable &mdash; the shape this tree ships. But it verifies a short published proof on tiny
-      instances, which is a teaching exercise, not a contribution, and it does nothing at all for the open
-      exponent. <b>Named so it is on the record as considered and declined, not overlooked.</b></p></div>
-  </section>
-
-  <section>
-    <h2>What would overturn this kill</h2>
-    <p class="body">A structural kill should still say what would break it, or it is just an opinion with a
-      badge.</p>
-    <div class="box claim"><p><b>One thing would do it:</b> a formulation in which sensitivity is recovered
-      <i>exactly</i> at finite <code>n</code> as the value of a variational problem &mdash; not approximated
-      in a limit, and not bounded above by one. If <code>s(f)</code> were the exact optimum of a finite
-      optimisation whose dual object this tree can enclose, both objections fall at once: the discrete
-      neighbour structure would be retained, and the certificate would have something to certify.</p>
-      <p style="margin-top:9px">No such formulation is known to this report, and it is not obvious one exists.
-      But it is decidable, someone else may already have it, and it is the only door left open.</p></div>
+    <h2>Other things the survey hands over</h2>
+    <div class="box"><div class="k">a contradiction between two published theories</div><p>Yang et al. (ICLR
+      2019) derive that <b>BatchNorm CAUSES gradient explosion</b>, enlarging gradient norm by ~1.47 per
+      layer, with a linear activation minimising the explosion rate to <code>(b&minus;2)/(b&minus;3)</code>
+      for batch size <code>b</code>. The survey notes this is <i>&ldquo;at odds with several other theories
+      that postulate the stability benefits of BatchNorm&rdquo;</i>. <b>Two published accounts disagree</b>
+      &mdash; the exact shape of the Wardrop lesson. The <code>(b&minus;2)/(b&minus;3)</code> half is a
+      rational function and needs <i>no</i> transcendentals to certify.</p></div>
+    <div class="box"><div class="k">the sixth refusal kind</div><p>Wainwright&ndash;Jordan, as reported by
+      the survey: mean-field variational inference's optimisation becomes <b>increasingly non-convex as more
+      dependencies are broken</b> &mdash; if the variational family had more structure, certain local optima
+      would not exist. <b>The simplification made for tractability is what manufactures the obstruction.</b>
+      That is <i>approximation-induced refusal</i>, now entry six in <code>refusal-taxonomy.html</code>, and
+      it arrived from outside MFG entirely.</p></div>
+    <div class="box"><div class="k">a field that says its own results are non-rigorous</div><p>The survey's
+      own words: results are <i>&ldquo;correct in the weak sense&hellip; only exact under strict
+      assumptions&rdquo;</i>; the one-hidden-layer restriction is <i>&ldquo;unacceptable&rdquo;</i>; the
+      particle-descent continuity equation is <i>&ldquo;not rigorously shown to be convergent in realistic
+      settings&rdquo;</i>; the multilayer extension was attempted <i>&ldquo;non-rigorously&rdquo;</i>.
+      <b>A field naming its own rigour gap is naming this tree's product.</b></p></div>
   </section>
 
   <section>
     <h2>Citations and the holes in them</h2>
-    <p class="body">Identifiers and titles confirmed at search level on 2026-07-31.
-      <b>No paper body was read; no MathSciNet, zbMATH or Scopus pass; the FrontierMath problem page itself
-      returned only a one-line summary.</b> This pass tested premises, not the mathematics. Anything repeated
-      outward is citation-checked at source first.</p>
+    <p class="body"><b>Every reference below is transcribed from the supplied survey's own bibliography and
+      NONE has been verified at source.</b> The survey itself carries no identifier in the supplied PDF and
+      no arXiv number has been invented for it. Citations are checked at source before any of this travels.</p>
     <table>
-      <tr><th>Reference</th><th>Used here for</th></tr>
-      <tr><td><b>Huang</b>, <i>Induced subgraphs of hypercubes and a proof of the Sensitivity Conjecture</i>, <code>arXiv:1907.00847</code></td><td>Objection 1: the bound is <code>deg(f) &le; s(f)&sup2;</code> and the proof is spectral, not an SDP</td></tr>
-      <tr><td><i>Degree vs. Approximate Degree and Quantum Implications of Huang's Sensitivity Theorem</i>, <code>arXiv:2010.12629</code></td><td>The open requisite: the neighbouring pair the search result may have conflated</td></tr>
-      <tr><td>Chung&ndash;Füredi&ndash;Graham&ndash;Seymour example (variant)</td><td>Cited by the search result as the tightness witness. <b>Not verified at source.</b></td></tr>
+      <tr><th>As listed in the survey</th><th>Used here for</th></tr>
+      <tr><td>Poole, Lahiri, Raghu, Sohl-Dickstein, Ganguli, <i>Exponential expressivity&hellip; through transient chaos</i>, NeurIPS 2016</td><td>the length map, the C-map, <code>&chi;&#8321;</code></td></tr>
+      <tr><td>Schoenholz, Gilmer, Ganguli, Sohl-Dickstein, <i>Deep information propagation</i>, <code>arXiv:1611.01232</code></td><td>the gradient side of the same boundary</td></tr>
+      <tr><td>Yang, Pennington, Rao, Sohl-Dickstein, Schoenholz, <i>A mean field theory of batch normalization</i>, ICLR 2019</td><td>the BatchNorm contradiction, 1.47, <code>(b&minus;2)/(b&minus;3)</code></td></tr>
+      <tr><td>Xiao, Bahri, Sohl-Dickstein, Schoenholz, Pennington, ICML 2018 (PMLR v80)</td><td>the CNN boundary and Delta-Orthogonal init</td></tr>
+      <tr><td>Mei, Montanari, Nguyen, PNAS 115(33):E7665&ndash;E7671, 2018</td><td>SGD as Wasserstein gradient flow</td></tr>
+      <tr><td>Wainwright &amp; Jordan, 2008</td><td>the sixth refusal kind</td></tr>
     </table>
   </section>
 </div>
 <footer><div class="wrap"><div class="foot">
-  Starter report &middot; published and routed &middot; open / unsigned &middot; Carlos Toledo &middot; 2026<br>
-  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record &middot; assessed 2026-07-31 &middot; KILLED, structural
+  Frontier path &middot; published and routed &middot; open / unsigned &middot; Carlos Toledo &middot; 2026<br>
+  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record &middot; opened 2026-07-31
 </div></div></footer>
 <footer class="sitefoot">
   <nav class="sitemap" aria-label="Site map">

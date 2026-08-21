@@ -4,6 +4,91 @@
  "rewrites": [],
  "redirects": [
   {
+   "source": "/technical-reports/cap-for-mfg",
+   "destination": "/x/cap-for-mfg",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/catalogue",
+   "destination": "/x/catalogue",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/certified-multiplicity",
+   "destination": "/x/certified-multiplicity",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/certified-price-formation",
+   "destination": "/x/certified-price-formation",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/circuit-path-truncation",
+   "destination": "/x/circuit-path-truncation",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/degree-sensitivity",
+   "destination": "/x/degree-sensitivity",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/edge-of-chaos",
+   "destination": "/x/edge-of-chaos",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/equilibrium-geometry",
+   "destination": "/x/equilibrium-geometry",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/geometry-approaches",
+   "destination": "/x/geometry-approaches",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/interval-transcendentals",
+   "destination": "/x/interval-transcendentals",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/refusal-as-output",
+   "destination": "/x/refusal-as-output",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/refusal-taxonomy",
+   "destination": "/x/refusal-taxonomy",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/seaport-uniqueness",
+   "destination": "/x/seaport-uniqueness",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/cobb-douglas-bracket",
+   "destination": "/x/cobb-douglas-bracket",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/huggett-rational",
+   "destination": "/x/huggett-rational",
+   "permanent": true
+  },
+  {
+   "source": "/technical-reports/rational-attention",
+   "destination": "/x/rational-attention",
+   "permanent": true
+  },
+  {
+   "source": "/program",
+   "destination": "/x/program",
+   "permanent": true
+  },
+  {
    "source": "/mfg-lab/mfg-lab",
    "destination": "/mfg-lab",
    "permanent": true

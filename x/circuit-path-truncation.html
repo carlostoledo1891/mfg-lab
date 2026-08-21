@@ -2,19 +2,24 @@
 <html lang="en">
 <head>
 <!--
-  PATH 2 of 5 — certified multiplicity / the equilibrium manifold. Opened 2026-07-31.
+  PATH 10 — extracted 2026-07-31 from Elhage et al., "A Mathematical Framework for Transformer Circuits",
+  transformer-circuits.pub, 2021.
 
-  Highest academic novelty of the five. Blocked on a genuinely NONLINEAR instance with geometric
-  refusal. S1 is affine and never needed interval arithmetic.
-  edge-of-chaos.html, opened the same day from the MFT survey, is a candidate for exactly that instance.
+  WEAKEST OF THE THREE and the page says so. Read via a SUMMARISER, not the paper. Five years old in a
+  field that has moved enormously (sparse autoencoders, attribution graphs), so occupancy risk is HIGH.
 
-  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every file in _frontier/: it may state what it
-  INTENDS to certify and may never state that anything IS certified. No literature gate has run.
+  IT ALSO CARRIES AN UNRESOLVED CONTRADICTION, recorded rather than silently settled: the fetched summary
+  states "No eigenvalue/spectral arguments are employed", while my own recollection of the paper is that
+  OV-circuit eigenvalues are used to argue copying behaviour. Two sources disagree. NOTHING on this page is
+  built on the eigenvalue reading.
+
+  NOT EXPORTED, NOT ROUTED, kind `private`. It may state what it INTENDS to certify and may never state
+  that anything IS certified. No literature gate has run.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certified multiplicity — the dimension of the equilibrium set</title>
-<meta name="robots" content="index,follow">
+<title>Certified truncation of circuit path expansions</title>
+<meta name="robots" content="noindex, nofollow">
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -137,63 +142,79 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <div class="wrap">
     <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
 <div class="hero">
-    <div class="eyebrow">Frontier path 02 of 05 &middot; The research bet</div>
-    <h1>Certified multiplicity</h1>
-    <p class="lede">Everyone proves <b>uniqueness</b> under Lasry&ndash;Lions monotonicity. Almost nobody exhibits the
-<b>dimension of the equilibrium set</b> when monotonicity fails &mdash; and this tree already computed one
-exactly, over the rationals, and filed it as a validation detail.</p>
+    <div class="eyebrow">FrontierExtracted from transformer-circuits, 2021</div>
+    <h1>Certified path truncation</h1>
+    <p class="lede">The transformer-circuits framework writes a model's output as a <b>sum over paths</b>. In two-layer toy
+models that sum is finite and enumerable. <b>The paper's own central open question is whether the framework
+scales &mdash; and the obstruction to scaling is a truncation with no tail bound.</b></p>
 
     <div class="callout">
       <div class="k">Status — read this before anything below</div>
       <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> No kernel, no certificate,
-        no falsifier, no ledger record, and <b>no literature gate has run on it</b>. It names a direction and
-        what would have to be true. <b>A prospectus that reads like a result is the defect</b>, so this one
-        says so at the top and is not published.</p>
+        no falsifier, no ledger record, and <b>no literature gate has run on it</b>. It names a direction
+        extracted from someone else's published work and what would have to be true for it to be ours.
+        <b>A prospectus that reads like a result is the defect</b>, so this one says so at the top.</p>
     </div>
   </div>
   <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
-      <div class="k" style="color:var(--fp-deep)">What is already in hand</div>
-      <p>S1's equilibrium face is <b>exactly 6-dimensional over the rationals</b>, with <code>ker(J)</code>
-        exactly equal to that face &mdash; nullity 6, no gauge. Alongside it, a measured non-uniqueness that
-        was demonstrated rather than hidden: <b>S1 totals unique across reseeds to 6.8e-14 while the SPLIT
-        moves by ~5.9</b>, because <code>c = j&sup1;+j&sup2;</code> is monotone but not strictly. That pair
-        &mdash; a certified invariant and a certified degree of freedom in the same equilibrium &mdash; is
-        the shape of the result.</p>
+      <div class="k" style="color:var(--fp-deep)">The opening, in one line</div>
+      <p>Path expansion expresses the output as a sum over end-to-end paths; with attention patterns frozen
+        those paths are <b>linear compositions of weight matrices</b>. At two layers you enumerate them all.
+        At ninety-six you cannot &mdash; you keep the paths you can interpret and drop the rest.
+        <b>A truncated expansion with no bound on the discarded remainder is an uncontrolled approximation,
+        and bounding a discarded tail is the one thing this tree does best.</b></p>
     </div>
 
   <section>
-    <h2>Why it is the research bet</h2>
-    <p class="body">Uniqueness proofs are a sufficient condition applied where it holds. The interesting
-      regime is where it does not, and there the literature mostly reports &ldquo;multiple equilibria may
-      exist&rdquo;. <b>Exact rational face computation turns that sentence into an integer.</b> Not
-      &ldquo;we found two solutions&rdquo; &mdash; <i>the solution set is a face of dimension d, and here is
-      the proof.</i></p>
+    <h2>The first decidable claim</h2>
+    <div class="box claim"><p>For a given model and a chosen set <code>S</code> of retained paths:
+      <b>the contribution of every path outside <code>S</code> is bounded in norm by an explicit
+      &epsilon;</b>, computed with outward-rounded arithmetic. An interpretability claim of the form
+      <i>&ldquo;this behaviour is implemented by these heads&rdquo;</i> then carries a number saying how much
+      of the model's behaviour it does <b>not</b> account for.</p></div>
+    <div class="box"><div class="k">what would falsify it</div><p>A path outside <code>S</code> whose
+      measured contribution exceeds the bound &mdash; found by direct evaluation on a planted example. The
+      bound must be shown to go red on a deliberately understated &epsilon;.</p></div>
   </section>
 
   <section>
-    <h2>The blocker, named before it is worked</h2>
-    <div class="box risk"><p><b>S1 is AFFINE.</b> It never needed interval arithmetic to close, so it cannot
-      exercise the bound C1 is meant to state (<i>named, not started</i>).
-      A method demonstrated only on the case that does not need it is a method without a subject.</p>
-      <p style="margin-top:9px"><b>Candidate instance, opened the same day:</b>
-      <code>edge-of-chaos.html</code>. The mean-field neural-network fixed point <code>q* = V(q*)</code> is
-      genuinely nonlinear, and at <code>&chi;&#8321; = 1</code> the correlation map's fixed point is exactly
-      non-hyperbolic &mdash; derivative equal to one. <b>That is a geometric degeneracy in a nonlinear
-      system</b>, which is precisely what C1 has been waiting for. It carries its own blocker; see that page.</p></div>
+    <h2>The unresolved contradiction, recorded rather than settled</h2>
+    <div class="box risk"><p><b>The fetched summary of the paper states that &ldquo;no eigenvalue/spectral
+      arguments are employed&rdquo;. My own recollection is that the paper uses OV-circuit eigenvalues to
+      argue copying behaviour in one-layer models.</b> Those cannot both be right about the same text. The
+      summary is a machine reading; the recollection is unsourced. <b>Neither is authority, so nothing on
+      this page rests on the eigenvalue reading</b>, and resolving it requires reading the paper itself.</p>
+      <p style="margin-top:9px">Written this way deliberately. The most expensive documented error in this
+      tree came from two records disagreeing about one paper and the discrepancy being resolved silently in
+      favour of the convenient one.</p></div>
   </section>
 
   <section>
-    <h2>Scored, and the honest risk</h2>
-    <div class="box"><div class="k">N / A</div><p><b>N: HIGHEST of the five</b> &mdash; nearest to genuinely
-      new territory. <b>A: HIGH.</b> Both unverified.</p></div>
-    <div class="box risk"><p><b>Highest occupancy risk of the five.</b> Degenerate-equilibrium structure is
-      studied in variational analysis, bifurcation theory and algebraic geometry under other names. <b>Run
-      the literature gate before investing</b>, and expect it to bite.</p></div>
+    <h2>The honest risk, and it is the largest in the set</h2>
+    <div class="box risk"><p><b>Occupancy risk is HIGH and probably fatal.</b> The paper is from 2021 and
+      mechanistic interpretability has moved enormously since &mdash; sparse autoencoders, attribution
+      graphs, and successor work from the same group. The question <i>&ldquo;how much of the model does this
+      circuit explain&rdquo;</i> is unlikely to be unasked five years on. <b>A literature gate is not
+      optional here, it is the first move,</b> and this direction should be expected to die to it.</p>
+      <p style="margin-top:9px"><b>Second risk: the source was not read.</b> Everything above rests on a
+      summariser's rendering of the paper, not the paper. Any real work starts by reading it properly.</p></div>
+    <div class="box"><div class="k">and the paper's own stated limits</div><p>MLP layers are described as
+      <b>&ldquo;a major weakness of our work&rdquo;</b>; layer normalisation is set aside; biases are folded
+      into weights; only attention-only models of at most two layers are analysed. <b>A tail bound over
+      attention paths that ignores MLPs bounds the wrong remainder</b> &mdash; which may be the structural
+      objection that kills this before the literature does.</p></div>
+  </section>
+
+  <section>
+    <h2>Scored</h2>
+    <div class="box"><div class="k">N / A</div><p><b>N: unknown, plausibly nonzero</b> as an application of
+      validated numerics to interpretability; <b>A: unknown.</b> Both unverified, and given the two risks
+      above <b>this is the one of the three to gate first and abandon fastest.</b></p></div>
   </section>
 </div>
 <footer><div class="wrap"><div class="foot">
   Frontier path &middot; published and routed &middot; open / unsigned &middot; Carlos Toledo &middot; 2026<br>
-  no kernel &middot; no certificate &middot; no falsifier &middot; no ledger record &middot; opened 2026-07-31
+  extracted from external published work &middot; opened 2026-07-31
 </div></div></footer>
 <footer class="sitefoot">
   <nav class="sitemap" aria-label="Site map">

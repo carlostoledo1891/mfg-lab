@@ -259,7 +259,21 @@ function onDisk(rel) {
 function fsCandidates(route) {
   const rel = norm(route).replace(/^\/+/, '');
   if (!rel) return ['index.html'];
-  return CLEAN ? [rel, rel + '.html', rel + '/index.html'] : [rel, rel + '/index.html'];
+  /* THE UNLISTED TIER. /x/<basename> exists only in the EXPORT: the builder flattens every
+     tracked page under site/_gated/ into x/. In the source tree the page is still at its
+     gated path, so a route resolved here must be offered those candidates too, or every
+     301 into the tier reads as a route serving no file. Added 2026-08-21, when the site
+     minimisation pointed seventeen 301s at /x/ and this resolver called all of them dead
+     while the pages were present and shipping. It knew about redirects and rewrites and
+     did not know the tier existed. */
+  const base = CLEAN ? [rel, rel + '.html', rel + '/index.html'] : [rel, rel + '/index.html'];
+  const m = /^x\/([^/]+?)(?:\.html)?$/.exec(rel);
+  if (m) {
+    for (const dir of ['_gated', '_gated/technical-reports']) {
+      base.push(dir + '/' + m[1] + '.html');
+    }
+  }
+  return base;
 }
 
 /* THE PIPELINE: redirects -> FILESYSTEM -> rewrites, in that order, which is Vercel's.
@@ -351,6 +365,7 @@ const SELFFILE = path.relative(ROOT, ART).split(path.sep).join('/');    // e.g. 
 const isSelf = (f) => f === SELFFILE || f === SELFFILE.replace(/^(site|research)\//, '');
 const siteLinks = [...html.matchAll(/href="(\/[^"]*)"/g)].map(m => norm(m[1].split('#')[0]));
 const reachedFiles = new Set();
+const tierRetired = [];
 for (const r of new Set(siteLinks)) { const s = serve(r); if (s.file) reachedFiles.add(s.file); }
 for (const [src] of ROUTES) {
   const s = serve(src);
@@ -359,9 +374,29 @@ for (const [src] of ROUTES) {
      skip counted as a pass — so it is neither: it is left to the assertion that owns it. */
   if (!s.file) continue;
   const self = isSelf(s.file);
+  /* THE UNLISTED TIER IS ORPHANED BY CONSTRUCTION, and that is the contract, not a defect.
+     tools/check-gated-excluded.js U6 FORBIDS a listed page from linking into /x/. So a route
+     retired into the tier can satisfy neither gate: link it and U6 goes red, leave it and I1b
+     does. The two assertions contradict each other on exactly this set, and the contradiction
+     is resolved in U6's favour because unreachability from the listed surface IS what unlisted
+     means. Exempted here, and COUNTED OUT LOUD below rather than silently skipped (C53) —
+     an exemption nobody can see is how a gate stops meaning anything. */
+  /* BOTH TREES. In the monorepo the tier page is at site/_gated/...; in the EXPORT the builder
+     has flattened it to x/<basename>.html. This file's own header warns that a page can be
+     "orphaned by itself in one tree and not the other", and that is exactly what a predicate
+     matching only one spelling would produce here. */
+  const intoTier = /(^|\/)_gated\//.test(s.file) || /(^|\/)x\/[^/]+\.html$/.test(s.file);
+  if (intoTier) { tierRetired.push(src + ' -> /x/' + s.file.split('/').pop().replace(/\.html$/, '')); continue; }
   ok(self || reachedFiles.has(s.file),
      'I1b no deployed route is orphaned: ' + src + ' -> ' + s.file + (self ? ' (self)' : ''));
 }
+if (tierRetired.length) {
+  console.log('   I1b ' + tierRetired.length + ' route(s) retired INTO the unlisted tier and exempted from the orphan check —\n'
+    + '        unreachable from the listed surface is what unlisted MEANS, and U6 forbids linking them:\n        '
+    + tierRetired.join('\n        '));
+}
+ok(tierRetired.every((t) => / -> \/x\//.test(t)),
+   'I1c every orphan exemption is a 301 into /x/ and nothing else (' + tierRetired.length + ' exempted)');
 
 /* --------------------------------- I2 · in-page routes are real routes */
 const artRoutes = new Set([...html.matchAll(/data-route="([^"]+)"/g)].map(m => m[1]));

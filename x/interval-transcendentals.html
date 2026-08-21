@@ -2,24 +2,39 @@
 <html lang="en">
 <head>
 <!--
-  PATH 10 — extracted 2026-07-31 from Elhage et al., "A Mathematical Framework for Transformer Circuits",
-  transformer-circuits.pub, 2021.
+  PATH 7 — THE SHARED BLOCKER, opened 2026-07-31.
 
-  WEAKEST OF THE THREE and the page says so. Read via a SUMMARISER, not the paper. Five years old in a
-  field that has moved enormously (sparse autoencoders, attribution graphs), so occupancy risk is HIGH.
+  Not a research direction. A CAPABILITY. It is here because three named directions and one commercial
+  track all stop at the same missing piece, and that fact is invisible when each is written up separately.
 
-  IT ALSO CARRIES AN UNRESOLVED CONTRADICTION, recorded rather than silently settled: the fetched summary
-  states "No eigenvalue/spectral arguments are employed", while my own recollection of the paper is that
-  OV-circuit eigenvalues are used to argue copying behaviour. Two sources disagree. NOTHING on this page is
-  built on the eigenvalue reading.
+  NOT EXPORTED, NOT ROUTED, kind `private`. Same rule as every file in _frontier/: it may state what it
+  INTENDS to certify and may never state that anything IS certified. No literature gate has run.
 
-  NOT EXPORTED, NOT ROUTED, kind `private`. It may state what it INTENDS to certify and may never state
-  that anything IS certified. No literature gate has run.
+  CORRECTED 2026-08-13 (P6 polish). Two stale claims, both older than the facts that falsified
+  them: (1) the line above — this page has been exported and routed since the 2026-07-31 publish
+  wave (its footer's publication line was corrected in P4 the same night); (2) the footer's
+  "no kernel · no falsifier" line — false since the page's own dated Advance of 2026-08-01,
+  when sound interval exp/log/sin/cos/tanh shipped in core/interval/transcendental.js WITH
+  core/interval/tests/test-transcendental.js (both verified on disk before this edit). The
+  footer now states the retirement and keeps what is still true: no certificate on this page,
+  no ledger record. The original lines stay above, per the append-only rule.
+
+  LEDE INVERTED 2026-08-20. The page had gone on leading with "the library has no transcendental
+  functions at all" for nineteen days after its own status box recorded the opposite — a status
+  inversion: the wall was reported as whole in the first sentence and as substantially demolished
+  four lines below it. The lede now leads with what ships and what remains (fractional powers,
+  erf), the ORIGINAL lede sentence is kept verbatim underneath it as a dated originally-said note
+  rather than deleted, and the status box gains a dated line recording that two published pages
+  (verify-maxwell, verify-lemniscate) now require core/interval/transcendental.js — checked on
+  disk that day, both verifiers read from it. The page title was re-pointed in the same edit for the
+  same reason: it still sold "the one missing piece", which the body no longer says. NOT touched,
+  deliberately: the sandbox-draft chrome and page state, the "no certificate on this page · no
+  ledger record" line, the aerospace standing instruction, and the Still-open list.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certified truncation of circuit path expansions</title>
-<meta name="robots" content="index,follow">
+<title>Interval transcendentals — what ships, and what four things still wait on</title>
+<meta name="robots" content="noindex, nofollow">
 <style>
 html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
@@ -142,79 +157,107 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <div class="wrap">
     <div class="alertbar draft" role="status">sandbox draft &middot; not reviewed &middot; page state: open / unsigned</div>
 <div class="hero">
-    <div class="eyebrow">FrontierExtracted from transformer-circuits, 2021</div>
-    <h1>Certified path truncation</h1>
-    <p class="lede">The transformer-circuits framework writes a model's output as a <b>sum over paths</b>. In two-layer toy
-models that sum is finite and enumerable. <b>The paper's own central open question is whether the framework
-scales &mdash; and the obstruction to scaling is a truncation with no tail bound.</b></p>
+    <div class="eyebrow">Frontier capability &middot; The shared blocker</div>
+    <h1>Interval transcendentals</h1>
+    <p class="lede">Sound interval <code>exp</code>, <code>log</code>, <code>sin</code>, <code>cos</code> and
+<code>tanh</code> ship in <code>core/interval/transcendental.js</code> with their own battery, and two
+published pages already rest on them &mdash; the
+<a href="/technical-reports/verify-maxwell">Maxwell &epsilon;&nbsp;=&nbsp;1/6 counterexample</a> and the
+<a href="/technical-reports/verify-lemniscate">Erd&#337;s&nbsp;#1038 decimals</a>, whose verifiers both
+require that module. <b>What is left of the wall is fractional powers and erf</b>:
+<code>core/interval/interval.js:94</code> still throws on non-integer exponents. Four separate things in
+this tree stopped at that wall, and this page exists <b>because the convergence is invisible when each is
+written up on its own.</b></p>
+    <p class="lede" style="font-size:13.5px;margin-top:11px"><b>What this lede said when the page opened,
+kept as written:</b> &ldquo;<code>core/interval/interval.js:94</code> throws on non-integer exponents, and
+the library has <b>no transcendental functions at all</b>. Four separate things in this tree stop there.&rdquo;
+That was true on <b>2026-07-31</b> and false from <b>2026-08-01</b>, when the five functions above shipped.
+The sentence is dated rather than deleted; the inversion is recorded here so the page does not read as if it
+had always known.</p>
 
     <div class="callout">
       <div class="k">Status — read this before anything below</div>
-      <p><b>Nothing on this page is claimed, certified, enclosed or proved.</b> No kernel, no certificate,
-        no falsifier, no ledger record, and <b>no literature gate has run on it</b>. It names a direction
-        extracted from someone else's published work and what would have to be true for it to be ours.
-        <b>A prospectus that reads like a result is the defect</b>, so this one says so at the top.</p>
+      <p><b>Advance 2026-08-01:</b> sound interval <code>exp</code>, <code>log</code>,
+        <code>sin</code>, <code>cos</code>, <code>tanh</code> ship in
+        <code>core/interval/transcendental.js</code> (battery
+        <code>core/interval/tests/test-transcendental.js</code>, in <code>make check-eqcert</code>).
+        Consumers: softmax H/PR + continuous-&beta; on
+        <a href="/technical-reports/attention-geometry">attention geometry</a>
+        (exported); <code>tanh</code>/<code>sin</code>/<code>cos</code> unblocked
+        for edge-of-chaos / aerospace / Path&nbsp;5 arithmetic (instances still to build).
+        <b>Still open:</b> fractional powers, erf, full aerospace report.</p>
+      <p style="margin-top:9px"><b>Added 2026-08-20:</b> the module is now load-bearing under two
+        published verification pages, not only a capability with consumers in prospect &mdash;
+        <a href="/technical-reports/verify-maxwell">verify-maxwell</a> pulls interval
+        <code>exp</code>/<code>log</code> from it, and
+        <a href="/technical-reports/verify-lemniscate">verify-lemniscate</a> reaches <code>log</code>
+        through it for an atanh series with an explicit tail bound. Checked on disk on the date of this
+        line; the <b>Still open</b> list above is unchanged.</p>
     </div>
   </div>
-  <div class="callout" style="border-color:var(--fp-deep);background:color-mix(in srgb,var(--fp-deep) 6%,transparent)">
-      <div class="k" style="color:var(--fp-deep)">The opening, in one line</div>
-      <p>Path expansion expresses the output as a sum over end-to-end paths; with attention patterns frozen
-        those paths are <b>linear compositions of weight matrices</b>. At two layers you enumerate them all.
-        At ninety-six you cannot &mdash; you keep the paths you can interpret and drop the rest.
-        <b>A truncated expansion with no bound on the discarded remainder is an uncontrolled approximation,
-        and bounding a discarded tail is the one thing this tree does best.</b></p>
+  <div class="callout" style="border-color:var(--hjb);background:color-mix(in srgb,var(--hjb) 6%,transparent)">
+      <div class="k" style="color:var(--hjb)">Four things, one wall</div>
+      <p><b>Aerospace</b> &mdash; blocked, and the standing instruction is <i>do not send a report until the
+        Rust kernel exists</i>, because an uncertified report under a certification brand is the one
+        liability that cannot be repaired. <b>Path 5, certified price formation</b> &mdash; the same wall
+        sits on the critical route to a December deadline. <b>Path 6, the edge of chaos</b> &mdash; needs
+        <code>exp</code> for Gaussian quadrature and <code>tanh</code>/<code>erf</code> for the activation.
+        <b>Any MFG instance with a non-polynomial Hamiltonian or an exponential coupling</b> &mdash; which is
+        most of them outside this tree's current corpus.</p>
+      <p style="margin-top:10px"><b>Dated note 2026-08-20 &mdash; the wall moved on 2026-08-01 and this
+        block is kept as written.</b> The four are still four, but they no longer share one wall.
+        <code>exp</code>, <code>log</code>, <code>sin</code>, <code>cos</code> and <code>tanh</code>
+        shipped, so Path 6&rsquo;s Gaussian quadrature and its <code>tanh</code> activation are no longer
+        blocked on the library &mdash; what is still missing for it is <code>erf</code>. The exponential
+        couplings in the fourth item are unblocked for the same reason. What remains genuinely blocked
+        is <b>fractional powers</b> and <b>erf</b>, and the aerospace instruction below is unaffected by
+        any of this: it was never about which functions exist. The eyebrow on this page still reads
+        &ldquo;the shared blocker&rdquo;, which was true when the page opened and is now only partly
+        true; it is dated here rather than rewritten.</p>
     </div>
 
   <section>
-    <h2>The first decidable claim</h2>
-    <div class="box claim"><p>For a given model and a chosen set <code>S</code> of retained paths:
-      <b>the contribution of every path outside <code>S</code> is bounded in norm by an explicit
-      &epsilon;</b>, computed with outward-rounded arithmetic. An interpretability claim of the form
-      <i>&ldquo;this behaviour is implemented by these heads&rdquo;</i> then carries a number saying how much
-      of the model's behaviour it does <b>not</b> account for.</p></div>
-    <div class="box"><div class="k">what would falsify it</div><p>A path outside <code>S</code> whose
-      measured contribution exceeds the bound &mdash; found by direct evaluation on a planted example. The
-      bound must be shown to go red on a deliberately understated &epsilon;.</p></div>
+    <h2>Why this is a frontier page and not a ticket</h2>
+    <p class="body">Because the honest accounting changes the priority. Each of the four reads as
+      <i>&ldquo;blocked on engineering&rdquo;</i> in isolation, which sounds like a reason to work on
+      something else. <b>Together they say the opposite: one bounded piece of arithmetic unlocks a
+      commercial track with a clock, a research bet that has been waiting for an instance, and an entire
+      class of MFG problems currently out of reach.</b></p>
+    <p class="body" style="margin-top:11px">It is also the only item in the set whose scope is genuinely
+      <i>known</i>. Rigorous interval <code>exp</code>, <code>log</code>, <code>sin</code>/<code>cos</code>,
+      <code>tanh</code> and fractional powers with correct outward rounding are <b>solved problems with
+      published algorithms</b> &mdash; MPFI, Arb, CAPD and Boost.Interval all ship them. This is
+      implementation against a known specification, not research.</p>
   </section>
 
   <section>
-    <h2>The unresolved contradiction, recorded rather than settled</h2>
-    <div class="box risk"><p><b>The fetched summary of the paper states that &ldquo;no eigenvalue/spectral
-      arguments are employed&rdquo;. My own recollection is that the paper uses OV-circuit eigenvalues to
-      argue copying behaviour in one-layer models.</b> Those cannot both be right about the same text. The
-      summary is a machine reading; the recollection is unsourced. <b>Neither is authority, so nothing on
-      this page rests on the eigenvalue reading</b>, and resolving it requires reading the paper itself.</p>
-      <p style="margin-top:9px">Written this way deliberately. The most expensive documented error in this
-      tree came from two records disagreeing about one paper and the discrepancy being resolved silently in
-      favour of the convenient one.</p></div>
+    <h2>What must be true of it, and this is where the care goes</h2>
+    <div class="box claim"><p><b>Outward rounding must be provable, not asserted.</b> The five that do not
+      bend include <i>outward-rounded arithmetic where a bound is claimed</i> and <i>every check can go
+      red</i>. A transcendental that is merely accurate is worse than none: it makes every downstream
+      certificate <b>look</b> sound while resting on an unproved bound &mdash; the exact species as the
+      <code>radiiPolynomial</code> self-map/contraction gap, one layer lower and under everything.</p></div>
+    <div class="box"><div class="k">the falsifier</div><p>Directed-rounding test vectors where the true
+      value is known to lie outside a naively-rounded interval, plus mutation: an implementation with the
+      rounding mode flipped must turn a passing certificate red. <b>If a wrong rounding mode does not break
+      a downstream certificate, the certificate was not using the bound.</b></p></div>
   </section>
 
   <section>
-    <h2>The honest risk, and it is the largest in the set</h2>
-    <div class="box risk"><p><b>Occupancy risk is HIGH and probably fatal.</b> The paper is from 2021 and
-      mechanistic interpretability has moved enormously since &mdash; sparse autoencoders, attribution
-      graphs, and successor work from the same group. The question <i>&ldquo;how much of the model does this
-      circuit explain&rdquo;</i> is unlikely to be unasked five years on. <b>A literature gate is not
-      optional here, it is the first move,</b> and this direction should be expected to die to it.</p>
-      <p style="margin-top:9px"><b>Second risk: the source was not read.</b> Everything above rests on a
-      summariser's rendering of the paper, not the paper. Any real work starts by reading it properly.</p></div>
-    <div class="box"><div class="k">and the paper's own stated limits</div><p>MLP layers are described as
-      <b>&ldquo;a major weakness of our work&rdquo;</b>; layer normalisation is set aside; biases are folded
-      into weights; only attention-only models of at most two layers are analysed. <b>A tail bound over
-      attention paths that ignores MLPs bounds the wrong remainder</b> &mdash; which may be the structural
-      objection that kills this before the literature does.</p></div>
-  </section>
-
-  <section>
-    <h2>Scored</h2>
-    <div class="box"><div class="k">N / A</div><p><b>N: unknown, plausibly nonzero</b> as an application of
-      validated numerics to interpretability; <b>A: unknown.</b> Both unverified, and given the two risks
-      above <b>this is the one of the three to gate first and abandon fastest.</b></p></div>
+    <h2>The honest risk</h2>
+    <div class="box risk"><p><b>Scope creep into a general-purpose interval library.</b> The temptation is to
+      build what Arb built. The defence is that this tree needs a <i>named, closed</i> list of functions,
+      each with test vectors and a mutation proof, and nothing else &mdash; and that the list should be
+      derived from the four consumers above rather than from completeness. <b>A library nobody's certificate
+      depends on is a tax charged in attention</b>, which is the standard this tree already applies to
+      gates.</p></div>
   </section>
 </div>
 <footer><div class="wrap"><div class="foot">
   Frontier path &middot; published and routed &middot; open / unsigned &middot; Carlos Toledo &middot; 2026<br>
-  extracted from external published work &middot; opened 2026-07-31
+  opened 2026-07-31 &middot; the blocker retired 2026-08-01: sound interval exp, log, sin, cos, tanh
+  ship in the public interval library with their own battery &middot; no certificate on this page &middot;
+  no ledger record
 </div></div></footer>
 <footer class="sitefoot">
   <nav class="sitemap" aria-label="Site map">
