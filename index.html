@@ -289,9 +289,9 @@ p b{color:var(--ink)}
   <p class="h2note"><b>In plain terms:</b> I build verification harnesses and evaluations
     that cannot be gamed &mdash; and prove it, live, on this site.</p>
 
-  <p class="h2note">Three readers, three doors: if you referee or review mathematics,
-    <a href="#start">start here</a> &middot; if you build or grade evaluations, start with
-    <a href="/research/evidence-first-bench/evidence-first-bench">the graders, graded</a> &middot; if you
+  <p class="h2note">Three readers, three doors: if you build or grade evaluations, start with
+    <a href="/research/evidence-first-bench/evidence-first-bench">the graders, graded</a> &middot; if you referee or review mathematics,
+    <a href="#start">start here</a> &middot; if you
     dispatch or price hydro, start with
     <a href="/research/stock-constraint/stock-constraint">a power system priced live</a> &middot;
     and what earns the word &ldquo;certificate&rdquo; here at all:
@@ -310,11 +310,42 @@ p b{color:var(--ink)}
         <a href="#run">The commands are below.</a></li>
       <li><span class="st">node &middot; ~1 min</span>Watch a verdict flip: one run says
         CERTIFIED, the same run with a planted mutant says REFUSED &mdash; proof the first
-        answer could have come out differently. <a href="#run">Also below.</a></li>
+        answer could have come out differently, the discrimination a grader needs and often
+        lacks. <a href="#run">Also below.</a></li>
     </ul>
     <div class="foot">The rule behind all three: <b>a check that cannot go red proves
       nothing</b> &mdash; so every check on this site has already been shown failing on a
       deliberately broken copy of its own program.</div>
+  </div>
+
+  <h2>What I build</h2>
+  <div class="engage">
+    <div class="cap">Six capabilities, one rule underneath</div>
+    <ul>
+      <li><span class="st">eval-validity measurement</span>Ask it of the test suite, not the
+        model: can it tell a correct answer from a plausible wrong one? Measured per item, each
+        wrong candidate shipping a witness. <a
+        href="/research/evidence-first-bench/evidence-first-bench">HumanEval, graded</a>.</li>
+      <li><span class="st">verification harnesses</span>Numerical and mathematical claims
+        re-checked without trusting how they were produced &mdash; a model&rsquo;s, a
+        paper&rsquo;s, or my own &mdash; in exact and interval arithmetic that yields
+        machine-checkable ground truth.</li>
+      <li><span class="st">two-direction falsifiers</span>Every check is proven able to fail: it
+        runs on a deliberately broken copy of its own program and must go red, then green again on
+        the clean one. A check that cannot go red proves nothing.</li>
+      <li><span class="st">independent re-verification</span>AI-claimed and published results
+        re-derived by a different route and filed at the source. <a
+        href="/research/challenges/verification-lane">Six, re-verified</a>.</li>
+      <li><span class="st">reproducible by construction</span>Every number ships with the program
+        that produced it &mdash; beside the page, or running live inside it, so no claim needs my
+        word for it.</li>
+      <li><span class="st">adversarial self-testing</span>Mutation, planted failures, and
+        predictions registered before the run &mdash; the same scrutiny turned on my own work,
+        its misses published in the <a href="/errata">errata</a>.</li>
+    </ul>
+    <div class="foot">One rule underneath all six: <b>green proves nothing until it can go
+      red.</b> Built in Node and Python; the full toolchain, with its own code on the page, is at
+      <a href="/stack">/stack</a>.</div>
   </div>
 
   <h2 id="start">Start here &mdash; for a reviewer with ten minutes</h2>
@@ -325,6 +356,29 @@ p b{color:var(--ink)}
     <a href="/reports">hub&rsquo;s</a> convention: a plain date is printed by the page
     itself; &dagger; marks first publication to the repository.</p>
   <ul class="notes">
+    <li>
+      <div class="k">Measuring the evaluator &middot; HumanEval &middot; 2026-08-08</div>
+      <a class="t" href="/research/evidence-first-bench/evidence-first-bench">24 of 163 HumanEval items accept
+        a solution proved wrong &mdash; and a perfect mutation score did not predict it</a>
+      <dl class="beats">
+        <dt>The claim</dt>
+        <dd>HumanEval is a standard benchmark for code generation. A model that passes an item is
+          recorded as having solved it &mdash; which assumes the item&rsquo;s own test suite can
+          tell a correct solution from a wrong one.</dd>
+        <dt>What I did</dt>
+        <dd>Asked that of the benchmark instead of the model, per item, with no model in the loop.
+          First by mutating each reference solution mechanically; then with realistic wrong
+          solutions, <b>each shipping a witness</b> &mdash; one concrete input where it provably
+          differs from the reference. A candidate whose witness fails to separate it is discarded
+          and counted in neither denominator.</dd>
+        <dt>What happened</dt>
+        <dd><b>24 of 163 items &mdash; 14.7% &mdash; accepted a solution proved wrong.</b> 18 of
+          those had been rated fine by mutation testing, and 10 of them killed <i>every</i>
+          mutant: a perfect score. <b>Scope, stated:</b> one benchmark, one adversary, one
+          candidate per item &mdash; so 14.7% is a rate for this adversary, not a constant.</dd>
+      </dl>
+      <p>Reproduce Path A in about 30 seconds, Python standard library only.</p>
+    </li>
     <li>
       <div class="k">Number theory &middot; Erd&#337;s #290 &middot; live in the page &middot; 2026-08-03</div>
       <a class="t" href="/research/challenges/erdos290">The proof you can attack: five exceptional
@@ -351,29 +405,6 @@ p b{color:var(--ink)}
       </dl>
       <p>No install: press &ldquo;break it&rdquo; on the page. Or run theorem.js &mdash; about
         fifteen seconds, plain Node.</p>
-    </li>
-    <li>
-      <div class="k">Measuring the evaluator &middot; HumanEval &middot; 2026-08-08</div>
-      <a class="t" href="/research/evidence-first-bench/evidence-first-bench">24 of 163 HumanEval items accept
-        a solution proved wrong &mdash; and a perfect mutation score did not predict it</a>
-      <dl class="beats">
-        <dt>The claim</dt>
-        <dd>HumanEval is a standard benchmark for code generation. A model that passes an item is
-          recorded as having solved it &mdash; which assumes the item&rsquo;s own test suite can
-          tell a correct solution from a wrong one.</dd>
-        <dt>What I did</dt>
-        <dd>Asked that of the benchmark instead of the model, per item, with no model in the loop.
-          First by mutating each reference solution mechanically; then with realistic wrong
-          solutions, <b>each shipping a witness</b> &mdash; one concrete input where it provably
-          differs from the reference. A candidate whose witness fails to separate it is discarded
-          and counted in neither denominator.</dd>
-        <dt>What happened</dt>
-        <dd><b>24 of 163 items &mdash; 14.7% &mdash; accepted a solution proved wrong.</b> 18 of
-          those had been rated fine by mutation testing, and 10 of them killed <i>every</i>
-          mutant: a perfect score. <b>Scope, stated:</b> one benchmark, one adversary, one
-          candidate per item &mdash; so 14.7% is a rate for this adversary, not a constant.</dd>
-      </dl>
-      <p>Reproduce Path A in about 30 seconds, Python standard library only.</p>
     </li>
     <li>
       <div class="k">Computer-assisted proof &middot; Maxwell 1873 &middot; 2026-08-04</div>
