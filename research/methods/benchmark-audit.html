@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Auditing benchmarks from the outside: two free probes (SWE-bench Verified, BigCodeBench).
+
+  FAIRNESS, binding on every line: this is a SCREEN, not a verdict. Patch-shape divergence is not
+  evidence of error or gaming; a strong test rejecting a trivial body is a benchmark working. No
+  model is named as cheating. Both benchmarks are credited; the honest finding is that the reachable
+  free audits keep finding them WELL-BUILT.
+
+  Every number is a DATED RECORD (2026-08-22), not a live readout — the audits fetch the network and
+  execute code, so they cannot run inside make check. The page is pinned to committed result snapshots
+  (data/swe-screen-results.json, data/bigcodebench-audit-results.json) by tests/test-benchmark-audit.js,
+  which also carries a red control. The two audit scripts ship (audits/) so a reader can re-run them.
+
+  Chrome (topnav, footer, :root tokens) is house chrome, verbatim from cheap-certificates.html.
+  DELIBERATELY ABSENT: any hiring ask; any accusation; any claim of novelty.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditing benchmarks from the outside — Carlos Toledo</title>
+<meta name="description" content="Two free probes that audit SWE-bench and BigCodeBench from the outside — a validated, red-controlled pipeline, and the honest finding that where the free data reaches, the benchmarks are well-built, and the teeth sit behind gated data.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://www.carlostoledo.co/research/methods/benchmark-audit">
+<meta property="og:url" content="https://www.carlostoledo.co/research/methods/benchmark-audit">
+<meta property="og:title" content="Auditing benchmarks from the outside">
+<meta property="og:description" content="Two free probes (SWE-bench, BigCodeBench) and one honest pattern: where the free data reaches, the benchmarks are well-built; where the teeth are, the data is gated.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.carlostoledo.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.carlostoledo.co/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","url":"https://www.carlostoledo.co/research/methods/benchmark-audit","headline":"Auditing benchmarks from the outside","datePublished":"2026-08-22","author":{"@type":"Person","name":"Carlos Toledo","email":"carlos@carlostoledo.co","url":"https://www.carlostoledo.co/about"}}
+</script>
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.crumb{display:flex;align-items:center;gap:7px;font-family:var(--data);font-size:11px;color:var(--ink-soft);min-width:0;overflow:hidden;white-space:nowrap}
+.crumb a{color:var(--ink-soft);text-decoration:none}
+.crumb a:hover{color:var(--fp-deep)}
+.crumb .s{opacity:.6}
+.crumb .here{color:var(--ink)}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} .crumb{display:none} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+blockquote{border-left:2px solid var(--grid);padding:4px 0 4px 17px;margin:14px 0;
+  font-size:13.5px;color:var(--ink-soft);max-width:76ch}
+section ul{list-style:none;margin:4px 0 12px;padding:0;border-top:1px solid var(--grid)}
+section ul li{padding:11px 0;border-bottom:1px solid var(--grid);font-size:13.5px;
+  line-height:1.6;color:var(--ink-soft);max-width:80ch}
+section ul li b{color:var(--ink);font-weight:600}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/reports">technical-reports</a><span class="s">/</span><span class="here">benchmark-audit</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+    </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">Methods &middot; reconnaissance &middot; 22 August 2026</div>
+  <h1>Auditing benchmarks from the outside</h1>
+  <p class="lede">A leaderboard reports <b>pass or fail</b>. Can an outsider check the passes &mdash;
+    for free, from public data, with a witness for every flag? Two probes, two benchmarks, and one
+    honest pattern: <b>where the free data reaches, the benchmarks turn out well-built; where the
+    teeth are, the data is gated.</b></p>
+
+  <section>
+    <h2>What this is &mdash; and is not</h2>
+    <p><strong>A screen, not a verdict.</strong> Patch-shape divergence is not evidence of error or
+      gaming, and a test that rejects a trivial answer is a benchmark <em>working</em>. No model is
+      named as cheating. Both benchmarks are credited. The value here is a validated instrument and an
+      honest map of what the free data can and cannot support. Every number is a dated record
+      (2026-08-22); re-run the two scripts below to refresh.</p>
+  </section>
+
+  <section>
+    <h2>Probe 1 &mdash; SWE-bench Verified: the coverage wall</h2>
+    <p>When a model is marked resolved, how far does its patch diverge in shape &mdash; files, lines,
+      hunks &mdash; from the human gold fix? From the git-tracked data alone: <strong>134 submissions
+      carry <span class="mono">results.json</span>, but only 13 carry <span class="mono">patch_stats.json</span>,
+      and all 13 are from 2023&ndash;2024.</strong> Not one current model is reachable for free &mdash;
+      the actual patches are behind the project's S3.</p>
+    <p>Among the six 2024 submissions with a readable sample (&ge;100 resolved), the share of resolved
+      patches that diverge <em>extremely</em> from the gold fix (3&times; its files, 5&times; its size,
+      or near-empty where the gold is substantial): appmap-navie/gpt-4o <b>16.8%</b>, SWE-agent/gpt-4
+      <b>14.3%</b>, Amazon-Q <b>12.9%</b> and <b>10.2%</b>, AutoCodeRover <b>7.8%</b>, Factory Droid
+      <b>4.9%</b>. A real but modest signal &mdash; on stale models, and shape is not correctness.</p>
+    <p><strong>Per-instance attribution is impossible here, and that is a proof, not an assumption.</strong>
+      The gold patch for a fixed instance is constant, so if the stats were ordered like the resolved
+      list, the same instance would report the same gold shape across submissions. It does not &mdash;
+      <b>664 conflicts</b> &mdash; which proves the two arrays are ordered differently. Aggregate
+      divergence survives; named-instance callouts do not, and were dropped.</p>
+  </section>
+
+  <section>
+    <h2>Probe 2 &mdash; BigCodeBench: the pipeline works, the benchmark is strong</h2>
+    <p>Here the data <em>is</em> reachable: tasks as public JSON, per-model generations as a 161&nbsp;MB
+      GitHub release, a local Python oracle. So the full outside-auditor runs &mdash; assemble the
+      solution, run the benchmark's own test, verdict by exit code (a timeout is
+      <span class="mono">INOPERATIVE</span>, never a pass). The cheapest false-pass question: does a
+      task's test wave through a constant return?</p>
+    <p><strong>Red control first</strong> (a screen that cannot go red proves nothing): against the real
+      test, <span class="mono">return 1.0</span> is rejected (<b>FAIL</b>, caught); against a
+      deliberately weakened test it sails through (<b>PASS</b>, flagged); the canonical solution stays
+      green. The detector is not blind.</p>
+    <p>Pointed at real tasks: <strong>0 of the 7 stdlib-only tasks accepted any trivial solution</strong>
+      (<span class="mono">return 0 / None / 1.0 / [] / "" / {}</span>). BigCodeBench's tests are strong
+      &mdash; exactly what you expect of a benchmark built to be the strict successor to HumanEval. Low
+      yield for the weak-test angle; the pipeline, though, reaches current models and is ready to scale.</p>
+  </section>
+
+  <section>
+    <h2>What the reconnaissance found</h2>
+    <p>The same shape twice, and it is the useful result: <strong>the reachable, free audits keep finding
+      the benchmarks well-built.</strong> SWE-bench's free layer cannot touch a current model;
+      BigCodeBench's tests reject the cheap exploits. The teeth for an outside audit live where the data
+      is gated &mdash; SWE-bench's actual patches (a free account, real effort), whose per-instance tests
+      are weaker and whose patches are known to be gameable. The instrument is built, validated, and
+      current-model-capable on BigCodeBench; the next move is the gated pull, not another free screen.</p>
+    <ul>
+      <li><b>Higher-yield angle, documented not yet run:</b> reproduction and flakiness of published
+        passes &mdash; re-run each solution K times and flag those that do not hold up. On a
+        139-library benchmark that is where fragility hides.</li>
+      <li><b>The prize stays SWE-bench:</b> the same pipeline, the repo's own test harness as oracle,
+        once the patches are pulled.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Run it yourself</h2>
+    <p>Both scripts ship here. The SWE screen needs only network; the BigCodeBench auditor needs Python
+      and, to audit real downloaded generations at scale, a sandbox &mdash; never <span class="mono">exec</span>
+      untrusted model code on a bare machine.</p>
+    <pre style="overflow-x:auto">git clone --depth 1 https://github.com/carlostoledo1891/mfg-lab
+cd mfg-lab/research/methods/audits
+node swe_patch_screen.js         # the 13/134 coverage wall + 664-conflict proof
+python3 bigcodebench_audit.py    # the red control, then 0-of-7 on the sample</pre>
+  </section>
+
+  <div class="foot">research/methods/benchmark-audit.html &middot; born 2026-08-22 &middot; every number
+    is a dated record pinned to committed result snapshots by tests/test-benchmark-audit.js, with a red
+    control &middot; a screen, not a verdict; shape is not correctness; no model is accused &middot; no
+    external fonts, scripts, stylesheets or images; the one script is same-origin, cookieless page
+    counting &middot; text CC&#8209;BY&nbsp;4.0</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/errata">errata log</a>, never quietly fixed.</p>
+    </div>
+    <nav class="sitemap" aria-label="Site map">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+      <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+    </nav>
+    <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+      programs MIT</p>
+  </div>
+</footer>
+
+</body>
+</html>
