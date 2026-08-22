@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Cheap certificates: a map of the claim-shapes this site can certify, F6 (sum-of-squares) opened,
+  and an exact re-verification of a machine-DISCOVERED Lyapunov function.
+
+  METHOD CREDIT, binding on every line: the certificate methods here are CLASSICAL and are credited
+  in the body, never claimed -- sum-of-squares / Positivstellensatz (Hilbert 1888, Motzkin 1967,
+  Parrilo 2000), exact rational SOS (Peyrl & Parrilo 2008), SOS-Lyapunov (Ahmadi & Parrilo). This
+  page demonstrates a CAPABILITY; it does not assert a new theorem.
+
+  FAIRNESS, binding: the re-verified paper (Mitrai & Tang, arXiv:2606.10045, 2026) is rigorous and
+  self-aware -- it states itself that its 3.97 coefficient is incorrect. This re-verification
+  CONFIRMS its valid discovery and CORROBORATES that statement. No error is claimed against them.
+
+  Every number is re-derived by the two shipped programs the page links (sos_certificate.py,
+  reverify_lyapunov.py), each self-checking with a nonzero exit on failure and a red control; the
+  page battery (tests/test-cheap-certs.js) re-runs them and pins these numbers to the page bytes.
+
+  Chrome (topnav, footer, :root tokens) is house chrome, verbatim from certificate-falsifiers.html.
+  DELIBERATELY ABSENT: any hiring ask; any novelty claim; any adjective about the re-verified authors.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheap certificates — Carlos Toledo</title>
+<meta name="description" content="A map of the claim-shapes this shop can certify cheaply, the sum-of-squares family opened with an exact global bound, and an exact re-verification of a 2026 machine-discovered Lyapunov function — the classical methods credited, run it yourself in exact arithmetic.">
+<meta name="author" content="Carlos Toledo">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://www.carlostoledo.co/research/methods/cheap-certificates">
+<meta property="og:url" content="https://www.carlostoledo.co/research/methods/cheap-certificates">
+<meta property="og:title" content="Cheap certificates: proofs you check faster than you find">
+<meta property="og:description" content="A map of the claim-shapes this shop certifies cheaply, the sum-of-squares family opened with an exact global bound, and an exact re-verification of a 2026 machine-discovered Lyapunov function.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.carlostoledo.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.carlostoledo.co/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","url":"https://www.carlostoledo.co/research/methods/cheap-certificates","headline":"Cheap certificates: proofs you check faster than you find","datePublished":"2026-08-21","author":{"@type":"Person","name":"Carlos Toledo","email":"carlos@carlostoledo.co","url":"https://www.carlostoledo.co/about"}}
+</script>
+<style>
+html{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --paper:#F8F8FA; --ink:#0F172A; --ink-soft:#64748B; --grid:#E2E8F0; --card:#FFFFFF;
+  --accent:#6F93A1; --accent-deep:#4F6F7A; --fp:#6F93A1; --fp-deep:#4F6F7A;
+  --hjb:#B42318; --warn:#475569; --amber:#475569; --bad:#B42318; --good:#2F6F55;
+  --good-soft:#E8F2EC; --warn-soft:#F1F5F9;
+  --ui:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --data:ui-monospace,SFMono-Regular,Menlo,'IBM Plex Mono',monospace;
+  --read-max:900px; --nav-max:1120px; --nav-h:58px; --page-top:40px; --radius:10px; --radius-sm:3px;
+  --text-display:clamp(30px,4.6vw,50px); --text-h1:clamp(28px,4vw,42px);
+  --text-h2:22px; --text-h3:16px; --text-lede:16.5px; --text-body:14px;
+  --text-small:12.5px; --text-tiny:11px; --text-micro:8px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--text-body);
+  line-height:1.65;-webkit-font-smoothing:antialiased;padding-top:var(--nav-h)}
+a{color:var(--fp-deep)}
+
+/* ── SHARED SITE CHROME — identical markup and CSS on every page ─────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:saturate(1.5) blur(12px);-webkit-backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--grid)}
+.topbar-in{max-width:var(--nav-max);width:100%;margin:0 auto;padding:0 20px;height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;
+  font-size:15.5px;letter-spacing:-.015em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand .mk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+  border-radius:7px;background:var(--fp-deep);color:var(--paper);font-size:14px}
+.crumb{display:flex;align-items:center;gap:7px;font-family:var(--data);font-size:11px;color:var(--ink-soft);min-width:0;overflow:hidden;white-space:nowrap}
+.crumb a{color:var(--ink-soft);text-decoration:none}
+.crumb a:hover{color:var(--fp-deep)}
+.crumb .s{opacity:.6}
+.crumb .here{color:var(--ink)}
+.sitenav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.sitenav a{font-family:var(--data);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitenav a:hover{color:var(--fp-deep)}
+@media(max-width:640px){ .sitenav{gap:14px} .sitenav a{font-size:10.5px;letter-spacing:.05em} .crumb{display:none} }
+@media(max-width:760px){
+  .sitenav{overflow-x:auto;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .sitenav::-webkit-scrollbar{display:none}
+}
+footer{margin-top:56px;border-top:1px solid var(--grid);background:var(--card)}
+footer .wrap{padding:24px 20px 32px}
+.cred{font-size:13px;line-height:1.64;color:var(--ink-soft);max-width:100%}
+.cred b{color:var(--ink);font-weight:600}
+.sitemap{display:flex;flex-wrap:wrap;gap:6px 14px;max-width:var(--read-max);width:100%;margin:0 auto;padding:12px 20px 0;
+  font-family:var(--data);font-size:10.5px;letter-spacing:.04em}
+.sitemap a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.sitemap a:hover{color:var(--fp-deep)}
+.byline{font-family:var(--data);font-size:11px;color:var(--ink-soft);margin-top:14px}
+/* ── END SHARED SITE CHROME ──────────────────────────────────────────────── */
+.wrap{max-width:var(--read-max);width:100%;margin:0 auto;padding:var(--page-top) 20px 60px}
+code,.mono{font-family:var(--data);font-size:.92em;font-variant-numeric:tabular-nums}
+code{background:color-mix(in srgb,var(--grid) 45%,transparent);padding:1px 5px;border-radius:var(--radius-sm)}
+
+.eyebrow{font-family:var(--data);font-size:var(--text-tiny);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--ui);font-weight:600;font-size:var(--text-h1);letter-spacing:-.025em;
+  line-height:1.12;margin:10px 0 14px;text-wrap:balance}
+.lede{color:var(--ink-soft);font-size:var(--text-lede);line-height:1.62;max-width:70ch;text-wrap:pretty}
+.lede b{color:var(--ink);font-weight:600}
+
+h2{font-family:var(--ui);font-size:var(--text-h2);font-weight:600;letter-spacing:-.016em;margin:38px 0 10px;
+  padding-top:22px;border-top:1px solid var(--grid);text-wrap:balance}
+p{margin-bottom:11px;max-width:76ch}
+p b{color:var(--ink)}
+
+.caveat{border-left:2px solid var(--warn);padding:4px 0 4px 17px;margin:14px 0}
+.caveat p{font-size:14px;color:var(--ink-soft)}
+blockquote{border-left:2px solid var(--grid);padding:4px 0 4px 17px;margin:14px 0;
+  font-size:13.5px;color:var(--ink-soft);max-width:76ch}
+section ul{list-style:none;margin:4px 0 12px;padding:0;border-top:1px solid var(--grid)}
+section ul li{padding:11px 0;border-bottom:1px solid var(--grid);font-size:13.5px;
+  line-height:1.6;color:var(--ink-soft);max-width:80ch}
+section ul li b{color:var(--ink);font-weight:600}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--grid);
+  font-family:var(--data);font-size:11px;color:var(--ink-soft)}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="Carlos Toledo"><span class="mk">&#8718;</span>Carlos&nbsp;Toledo</a>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="/reports">technical-reports</a><span class="s">/</span><span class="here">cheap-certificates</span></nav>
+    <nav class="sitenav" aria-label="Primary">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+    </nav>
+    </div>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow">Methods &middot; a capability, shown running &middot; 21 August 2026</div>
+  <h1>Cheap certificates: proofs you check faster than you find</h1>
+  <p class="lede">A certificate is <b>cheap to check even when it was expensive to find</b>. That
+    one asymmetry is what this shop runs on: hand the search to whoever is best at it &mdash; a
+    solver, a paper&rsquo;s authors, a language model &mdash; and keep the part that has to be
+    right: the <b>exact verification, and the falsifier that makes it go red</b>. This page maps
+    the families of claim that admit such a certificate, opens one the site had not used, and
+    points it at a machine-generated result to show what it does.</p>
+
+  <section>
+    <h2>The families, by the shape of the claim</h2>
+    <p>Read a claim&rsquo;s logical shape and the cheapest certificate follows. Each family below
+      already appears somewhere on this site; each ships a falsifier, because a check that cannot
+      go red proves nothing.</p>
+    <ul>
+      <li><b>Witness (&exist;).</b> &ldquo;For all x, P(x)&rdquo; is <i>false</i> &mdash; one exact
+        point where P fails is the whole proof. <span class="st">counterexamples, benchmark
+        false-passes</span></li>
+      <li><b>Exhaustion (bounded &forall;).</b> &ldquo;P holds on this finite set&rdquo; &mdash; an
+        exact verdict per element plus a conservation identity. <span class="st">exact enumeration
+        searches</span></li>
+      <li><b>Enclosure.</b> &ldquo;This equation has a unique root near x&#8320;&rdquo; &mdash; one
+        certified interval-Newton contraction step. <span class="st">the mean-field-game
+        certificates here</span></li>
+      <li><b>Obstruction.</b> &ldquo;No structure of this type exists&rdquo; &mdash; an invariant it
+        would force, shown violated. <span class="st">the no-gradient certificate here</span></li>
+      <li><b>Discrimination.</b> &ldquo;This test separates right from wrong&rdquo; &mdash; a
+        right-accepted and a wrong-rejected witness. <span class="st">the evaluator-grading work
+        here</span></li>
+      <li><b>Sum of squares.</b> &ldquo;p(x) &ge; 0 everywhere&rdquo;, or a global bound &mdash; a
+        decomposition p = &Sigma; q<sub>i</sub><sup>2</sup> checked by exact algebra. <span
+        class="st">opened below</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Sum of squares, opened: a global bound in one identity</h2>
+    <p>&ldquo;For every real x, p(x) is at least &gamma;&rdquo; is a statement about infinitely
+      many points. A sum-of-squares decomposition p(x) &minus; &gamma; = &Sigma;
+      q<sub>i</sub>(x)<sup>2</sup> collapses it to one algebraic identity an exact-rational checker
+      confirms in a single pass. Worked exactly:</p>
+    <p>the global minimum of
+      p(x) = x<sup>4</sup> &minus; 8x<sup>3</sup> + 26x<sup>2</sup> &minus; 32x + 18 is
+      <b>exactly 5, attained at x = 1</b> &mdash; which you cannot read off the coefficients &mdash;
+      certified by
+      p(x) &minus; 5 = (x<sup>2</sup> &minus; 4x + 3)<sup>2</sup> + (2x &minus; 2)<sup>2</sup>.</p>
+    <p>The overclaim &ldquo;p &ge; 6&rdquo; is refuted the opposite way, by one exact witness:
+      p(1) = 5 &lt; 6. Two certificate families on one object, opposite directions.</p>
+    <p><b>The method is classical, and credited, not new here:</b> Hilbert (1888), Motzkin (1967),
+      Parrilo (2000); exact rational sum-of-squares is Peyrl &amp; Parrilo (2008). What is new to
+      this site is the family running under its own exact-arithmetic discipline, with a falsifier.</p>
+  </section>
+
+  <section>
+    <h2>Pointed at a machine-generated result</h2>
+    <p>Sum of squares certifies stability. For a polynomial system &#7819; = f(x), a function V
+      that is a sum of squares (so positive) whose rate of change along the flow &minus;&#7791; is
+      also a sum of squares (so the energy strictly falls) is a Lyapunov certificate of global
+      asymptotic stability &mdash; the classical construction of Ahmadi &amp; Parrilo.</p>
+    <p>Mitrai &amp; Tang (<span class="mono">arXiv:2606.10045</span>, 2026) use constrained symbolic
+      regression to <i>discover</i> Lyapunov functions from data. For their system</p>
+    <pre style="overflow-x:auto">x&#8321;&#775; = &minus;x&#8321; + 4x&#8322;
+x&#8322;&#775; = &minus;x&#8321; &minus; x&#8322;&#179;</pre>
+    <p>the method discovers V = x<sub>1</sub><sup>2</sup> + 4x<sub>2</sub><sup>2</sup>. Re-verified
+      here exactly over the rationals, it holds <i>everywhere</i>:
+      &#7791; = &minus;2x<sub>1</sub><sup>2</sup> &minus; 8x<sub>2</sub><sup>4</sup>, so
+      <b>&minus;&#7791; = 2&middot;x<sub>1</sub><sup>2</sup> + 8&middot;(x<sub>2</sub><sup>2</sup>)<sup>2</sup></b>
+      is an exact sum of squares, zero only at the origin. The machine&rsquo;s answer is confirmed a
+      valid <i>global</i> certificate &mdash; not merely valid on the sampled data it was fit to,
+      which is the guarantee a data fit does not give.</p>
+    <p>The authors also report under-sampled runs returning
+      x<sub>1</sub><sup>2</sup> + 2x<sub>2</sub><sup>2</sup>,
+      x<sub>1</sub><sup>2</sup> + 3x<sub>2</sub><sup>2</sup>, and a floating-point
+      x<sub>1</sub><sup>2</sup> + 3.97x<sub>2</sub><sup>2</sup>, and <b>they state plainly that the
+      3.97 coefficient is incorrect.</b> Exact re-verification agrees, and says where: each has a
+      rational point near the origin at which &#7791; &gt; 0 (for 3.97, at
+      x = (3/200000, 1/1000)). This is a <b>clean re-verification</b> &mdash; it validates the
+      correct discovery and corroborates the authors&rsquo; own account of the wrong ones. No error
+      is claimed against their work; the exact coefficient 4 is precisely what cancels the cross
+      term the others leave behind.</p>
+  </section>
+
+  <section>
+    <h2>Run it yourself</h2>
+    <p>Nothing installed beyond Python&rsquo;s standard library &mdash; exact rational arithmetic,
+      no floating point, no solver.</p>
+    <pre style="overflow-x:auto">git clone --depth 1 https://github.com/carlostoledo1891/mfg-lab
+cd mfg-lab/research/methods
+python3 sos_certificate.py       # the global bound + red control
+python3 reverify_lyapunov.py     # the AI Lyapunov function, re-verified</pre>
+    <p>Each prints its checks and exits nonzero if any fails. Both carry their red controls: a
+      corrupted certificate is refused, and an overclaim is met with its exact witness.</p>
+  </section>
+
+  <section>
+    <h2>What this is, and is not</h2>
+    <p>This is a capability shown running, not a new theorem. The certificate methods are classical
+      and credited above. What the page demonstrates is the discipline applied end to end: an exact,
+      machine-checkable certificate; a falsifier that makes it fail on demand; and an independent
+      exact re-verification of a result a machine produced &mdash; the guarantee a sampled check
+      does not provide.</p>
+  </section>
+
+  <div class="foot">research/methods/cheap-certificates.html &middot; born 2026-08-21 &middot; every
+    number here is re-derived by the two programs it links, each shown failing on a broken copy
+    &middot; the certificate methods are classical and credited above &middot; no external fonts,
+    scripts, stylesheets or images; the one script is same-origin, cookieless page counting &middot;
+    text CC&#8209;BY&nbsp;4.0</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cred">
+      <p><b>Carlos Toledo</b> &middot; computer-assisted proof and validated numerics.
+        These notes are self-published and not peer-reviewed. Every number is produced by a
+        program published beside it, and every check has been shown to fail on a deliberately
+        broken copy of that program.</p>
+      <p><b>Corrections are wanted, and they are published.</b> Errors found in this work &mdash;
+        including by its author &mdash; are recorded with their date and their correction in the
+        <a href="/errata">errata log</a>, never quietly fixed.</p>
+    </div>
+    <nav class="sitemap" aria-label="Site map">
+      <a href="/reports">Reports</a>
+      <a href="/stack">Stack</a>
+      <a href="/errata">Errata</a>
+      <a href="/about">About</a>
+      <a href="mailto:carlos@carlostoledo.co">carlos@carlostoledo.co</a>
+    </nav>
+    <p class="byline">carlos@carlostoledo.co &middot; Brazil, 2026 &middot; text CC&#8209;BY&nbsp;4.0,
+      programs MIT</p>
+  </div>
+</footer>
+
+</body>
+</html>
